@@ -21,7 +21,7 @@ Crosslight 器件仿真软件（LASTIP / APSYS / PICS3D / CSuprem）
 | LASTIP | 边发射激光器仿真 | in-plane laser, gain, waveguide |
 | APSYS | 通用器件/LED/OLED 仿真 | LED, RC-LED, ray tracing |
 | PICS3D | 3D 仿真 / VCSEL | 3D, vertical-cavity laser |
-| CSuprem | 工艺仿真 | process, doping, diffusion |
+| CSuprem | 工艺仿真（复杂结构建模） | process, doping, diffusion，详见 [[03-功能模块/CSuprem特殊结构建模]] |
 | LayerBuilder/Layer3d/GeoEditor | 结构/网格构建 | .str, .geo, mesh |
 | CrosslightView | 结果可视化 | .std, .plt, .str, .dat |
 
