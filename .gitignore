@@ -1,7 +1,10 @@
 # Obsidian（窗口状态与缓存不入库）
-.obsidian/workspace.json
-.obsidian/workspace-mobile.json
+.obsidian/workspace*
 .obsidian/cache
+
+# 临时与日志文件
+*.tmp
+*.log
 
 # IDE / 系统文件
 .vs/
