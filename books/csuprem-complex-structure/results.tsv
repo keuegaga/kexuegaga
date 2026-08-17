@@ -1,0 +1,2 @@
+timestamp	commit	skill	old_score	new_score	status	dimension	note	eval_mode
+2026-08-17T16:00	baseline	csuprem-complex-structure-modeling	-	73.2	baseline	-	初始评估；runtime_warn=0；dim8=dry_run（子agent盲测不可用，环境降级）；test-prompts.json 复用 cangjie 阶段4 的 9 条（darwin 兼容）	dry_run
