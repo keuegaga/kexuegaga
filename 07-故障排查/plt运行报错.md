@@ -4,7 +4,7 @@ type: error
 product: Crosslight
 version: 2024
 status: draft
-source: "培训总结 §3③；[[99-原始资料/教程与问答/Common_QAs.pdf]]（Output Data Organization）"
+source: "[[99-原始资料/专题/培训总结.pdf]] §3③；[[99-原始资料/教程与问答/Common_QAs.pdf]]（Output Data Organization）"
 ---
 
 # plt 运行报错
