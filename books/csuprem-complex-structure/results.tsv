@@ -1,3 +1,4 @@
 timestamp	commit	skill	old_score	new_score	status	dimension	note	eval_mode
 2026-08-17T16:00	baseline	csuprem-complex-structure-modeling	-	73.2	baseline	-	初始评估；runtime_warn=0；dim8=dry_run（子agent盲测不可用，环境降级）；test-prompts.json 复用 cangjie 阶段4 的 9 条（darwin 兼容）	dry_run
 2026-08-17T16:15	fb0e95a	csuprem-complex-structure-modeling	73.2	1-0 better	keep	失败模式编码+检查点	paired 主流程评估 fallback（3 个 judge spawn 均未收到任务）；dim3 失败模式升级为三段式表、dim4 加 🔴 CHECKPOINT；其余维度无回退；估算绝对分 73.2→78.0	paired
+2026-08-17T16:30	cfc96ab	csuprem-complex-structure-modeling	78.0	1-0 better	keep	可执行具体性+工作流	paired 主流程评估 fallback（judge spawn 已知不可用，round1 实证）；E 段补输入/输出速查表 + 每步真实命令示例；dim5 提升、dim2 随簇提升；估算绝对分 78.0→81.0	paired
