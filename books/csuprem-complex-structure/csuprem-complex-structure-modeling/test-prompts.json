@@ -1,0 +1,73 @@
+{
+  "skill": "csuprem-complex-structure-modeling",
+  "version": "0.1.0",
+  "source_book": "CSuprem User's Manual V3.0 + 2D/3D Tutorial — Crosslight Software Inc.",
+  "darwin_compatible": true,
+  "test_cases": [
+    {
+      "id": "should-trigger-01",
+      "type": "should_trigger",
+      "prompt": "我要在 CSuprem 里建一个带浅沟槽隔离（STI）的结构，etch 命令怎么用？",
+      "expected_behavior": "激活 csuprem-complex-structure-modeling，按 line/region/bound 搭骨架，给出 mask+etch（含 avoidmask/多边形）命令序列",
+      "notes": "正面场景：工艺仿真结构建模，明确提及 CSuprem 与 etch"
+    },
+    {
+      "id": "should-trigger-02",
+      "type": "should_trigger",
+      "prompt": "怎么把已有的 2D 工艺输入文件转成 3D？zmesh.zst 和 z_structure 怎么写？",
+      "expected_behavior": "激活本 skill，给出 2D→3D 转换清单（mode/3d_mesh、etch 逐 segm、zplanes=1、quasi3d 先行）",
+      "notes": "正面场景：2D→3D 转换方法论"
+    },
+    {
+      "id": "should-trigger-03",
+      "type": "should_trigger",
+      "prompt": "CSuprem 导出的结构怎么给 APSYS 用？suprem_property 和 contact 编号怎么对上？",
+      "expected_behavior": "激活本 skill，给出 export（xpsize/repair.mesh）+ suprem_import + begin_zmater/suprem_property/suprem_contact 编号契约",
+      "notes": "正面场景：工艺→器件导出对接链路"
+    },
+    {
+      "id": "should-trigger-04",
+      "type": "should_trigger",
+      "prompt": "我有 GDSII 版图，想用 CSuprem 做 3D 结构，GDS2MASK 怎么用？",
+      "expected_behavior": "激活本 skill，说明 GDS2MASK 切平面并强调关键平面先过 2D 验证",
+      "notes": "正面场景：GDSII 导入"
+    },
+    {
+      "id": "should-not-trigger-01",
+      "type": "should_not_trigger",
+      "prompt": "帮我建一个普通 FP 激光器的 .layer 结构，然后跑仿真",
+      "expected_behavior": "不应激活本 skill，应走 pics3d-laser-workflow / LayerBuilder 直接定义 .layer 的路线",
+      "notes": "诱饵：规则分层器件不应引入工艺仿真"
+    },
+    {
+      "id": "should-not-trigger-02",
+      "type": "should_not_trigger",
+      "prompt": "仿真不收敛，怀疑网格太粗，怎么加密？",
+      "expected_behavior": "不应激活本 skill，应激活 mesh-quality 或 convergence-debugging",
+      "notes": "跨 skill 混淆诱饵（硬性要求）：网格/收敛问题归网格与调试技能"
+    },
+    {
+      "id": "should-not-trigger-03",
+      "type": "should_not_trigger",
+      "prompt": "帮我查一下 bias 参数的可选值和默认值",
+      "expected_behavior": "不应激活本 skill，纯参数查询（知识库核心参数笔记）",
+      "notes": "诱饵：纯信息查询"
+    },
+    {
+      "id": "edge-01",
+      "type": "edge_case",
+      "prompt": "我想做 VCSEL 的 3D 结构，能用 CSuprem 吗？",
+      "expected_behavior": "边界判断：VCSEL 常规结构走 pics3d-laser-workflow/LayerBuilder；若确实需要工艺历史（如 DBR 刻蚀台阶）才用本 skill 的刻蚀/3D 部分，并提示 CSuprem 无 GaN 光电器件工艺示例",
+      "notes": "边界：器件类型决定路线归属"
+    },
+    {
+      "id": "edge-02",
+      "type": "edge_case",
+      "prompt": "CSuprem 里 GaN 激光器结构怎么建？",
+      "expected_behavior": "边界判断：可给出 CSuprem 通用流程，但明确提示材料宏/工艺参数需自行扩展、无官方 GaN 示例；GaN 物理问题转 gan-wurtzite-mqw",
+      "notes": "边界：Si 工艺文档对化合物半导体的覆盖局限"
+    }
+  ],
+  "minimum_pass_rate": 0.8,
+  "notes": "4 条 should_trigger + 3 条 should_not_trigger（含 1 条跨 skill 混淆诱饵）+ 2 条 edge_case。诱饵容错 0。"
+}

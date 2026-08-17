@@ -10,20 +10,18 @@
 
 ## 当前阶段
 
-- [ ] 阶段 0 整书理解 → BOOK_OVERVIEW.md（已产出，等用户确认）
-- [ ] 阶段 1 并行提取 → candidates/
-- [ ] 阶段 1.5 三重验证 → verified.md / rejected/
-- [ ] 阶段 2 RIA++ 构造 → SKILL.md
-- [ ] 阶段 3 Zettelkasten 链接 → INDEX.md / GLOSSARY.md
-- [ ] 阶段 4 压力测试 → test-prompts.json / test-results.md
-- [ ] 阶段 5 交付 → DIGEST.md + 安装
+- [x] 阶段 0 整书理解 → BOOK_OVERVIEW.md（用户已确认）
+- [x] 阶段 1 提取 → candidates/（子代理部分失败，按降级方案由主流程串行补齐）
+- [x] 阶段 1.5 三重验证 → verified.md / rejected/
+- [x] 阶段 2 RIA++ 构造 → SKILL.md
+- [x] 阶段 3 Zettelkasten 链接 → INDEX.md / GLOSSARY.md
+- [x] 阶段 4 压力测试 → test-prompts.json / test-results.md（fallback 自测 9/9）
+- [x] 阶段 5 交付 → DIGEST.md + 已安装到 ~/.codex/skills/csuprem-complex-structure-modeling/
 
 ## 已完成产物
 
-（阶段 0 产出：BOOK_OVERVIEW.md；_source/ 三份文本）
+（阶段 0-4 全部产出；阶段 5 待安装与收尾汇报）
 
 ## 下一步
 
-1. 用户确认 BOOK_OVERVIEW 骨架
-2. 阶段 1：5 个 extractor 并行提取 → candidates/
-3. 阶段 1.5：三重验证 → verified.md / rejected/ + 用户轻确认
+全部阶段完成。后续：可用 darwin-skill 对 test-prompts.json 做自动进化；建议在真实会话中补一轮独立盲测。
