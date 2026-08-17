@@ -1,0 +1,52 @@
+{
+  "skill": "material-macros",
+  "version": "0.1.0",
+  "source_book": "Crosslight Device Simulation Software General Manual — Crosslight Software Inc.",
+  "darwin_compatible": true,
+  "test_cases": [
+    {
+      "id": "should-trigger-01",
+      "type": "should_trigger",
+      "prompt": "我的 AlGaN 宏里带隙参数想用更新的实验数据，怎么安全地改而不影响其他项目？",
+      "expected_behavior": "激活 material-macros，给出 use_macrofile 或 .sol 内覆盖的正确做法，警告别改默认宏",
+      "notes": "正面场景: 自定义材料参数"
+    },
+    {
+      "id": "should-trigger-02",
+      "type": "should_trigger",
+      "prompt": "掺杂我按 cm^-3 填的，为什么结果怪怪的？",
+      "expected_behavior": "激活 material-macros，指出单位制要求 m^-3 并给出换算",
+      "notes": "正面场景: 单位换算错误"
+    },
+    {
+      "id": "should-trigger-03",
+      "type": "should_trigger",
+      "prompt": "load_macro 和 get_active_layer 有什么区别？有源区该怎么配宏？",
+      "expected_behavior": "激活 material-macros，解释被动/主动宏分工与有源区双宏要求",
+      "notes": "正面场景: 宏体系理解"
+    },
+    {
+      "id": "should-not-trigger-01",
+      "type": "should_not_trigger",
+      "prompt": "帮我查一下 electron_mobility 的默认参数值",
+      "expected_behavior": "不激活本 skill 的自定义流程部分——这是参数查询，给出查询路径即可，不展开自定义操作",
+      "notes": "诱饵: 参数查询与修改的边界"
+    },
+    {
+      "id": "should-not-trigger-02",
+      "type": "should_not_trigger",
+      "prompt": "我的 GaN 量子阱波长偏蓝，是不是自洽求解没开？",
+      "expected_behavior": "不激活本 skill，应激活 gan-wurtzite-mqw（物理建模问题）",
+      "notes": "跨 skill 混淆诱饵: GaN 物理"
+    },
+    {
+      "id": "edge-01",
+      "type": "edge_case",
+      "prompt": "我想定义一种新材料，既有应变阱又有组分渐变，宏怎么写？",
+      "expected_behavior": "激活本 skill，用 variation=function/table 语法与覆盖语句组合实现，并提示复杂 MQW 需 cx- 宏（配合 qw-model-selection）",
+      "notes": "边界: 复杂自定义宏跨材料与模型"
+    }
+  ],
+  "minimum_pass_rate": 0.8,
+  "notes": "至少 3 条 should_trigger + 2 条 should_not_trigger + 1 条 edge_case；诱饵含同书兄弟 skill 场景。"
+}

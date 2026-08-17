@@ -1,0 +1,52 @@
+{
+  "skill": "vcsel-modeling",
+  "version": "0.1.0",
+  "source_book": "Crosslight Device Simulation Software General Manual — Crosslight Software Inc.",
+  "darwin_compatible": true,
+  "test_cases": [
+    {
+      "id": "should-trigger-01",
+      "type": "should_trigger",
+      "prompt": "VCSEL 的 spacer 厚度怎么定？RTG 预览显示纵模离增益峰太远。",
+      "expected_behavior": "激活 vcsel-modeling，给出 λ/n 初值+RTG 预览迭代法",
+      "notes": "正面场景: spacer 设计"
+    },
+    {
+      "id": "should-trigger-02",
+      "type": "should_trigger",
+      "prompt": "VCSEL 的 DBR 怎么建模才能省网格？电学用平均材料，光学怎么处理？",
+      "expected_behavior": "激活 vcsel-modeling，给出平均材料电学网格 + vertical_dbr_layer_mater 光学周期的双轨建模",
+      "notes": "正面场景: DBR 双轨建模"
+    },
+    {
+      "id": "should-trigger-03",
+      "type": "should_trigger",
+      "prompt": "GaN VCSEL 用圆柱坐标怎么设置模式求解？",
+      "expected_behavior": "激活 vcsel-modeling，给出 cylindrical axis=y + vcsel_model fiber-like EIM 设置，并提示叠加 gan-wurtzite-mqw",
+      "notes": "正面场景: 圆柱坐标模式求解"
+    },
+    {
+      "id": "should-not-trigger-01",
+      "type": "should_not_trigger",
+      "prompt": "帮我解释一下 VCSEL 的工作原理",
+      "expected_behavior": "不激活本 skill，纯知识问答",
+      "notes": "诱饵: 知识查询"
+    },
+    {
+      "id": "should-not-trigger-02",
+      "type": "should_not_trigger",
+      "prompt": "边发射 DFB 的相移光栅怎么设计？",
+      "expected_behavior": "不激活本 skill，应激活 dfb-dbr-grating-design（边缘发射耦合波路径）",
+      "notes": "跨 skill 混淆诱饵: 边发射光栅"
+    },
+    {
+      "id": "edge-01",
+      "type": "edge_case",
+      "prompt": "我的 VCSEL 顶部输出功率比底部小，正常吗？",
+      "expected_behavior": "激活本 skill 分析 DBR 反射率不对称与功率分配（顶部少层输出大），提示核对层序与反射率设置",
+      "notes": "边界: 功率分配诊断"
+    }
+  ],
+  "minimum_pass_rate": 0.8,
+  "notes": "至少 3 条 should_trigger + 2 条 should_not_trigger + 1 条 edge_case；诱饵含同书兄弟 skill 场景。"
+}

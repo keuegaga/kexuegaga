@@ -1,0 +1,1180 @@
+=== PAGE 1352 ===
+1350 THEORYOFPOWERSPECTRUM
+
+
+=== PAGE 1353 ===
+Appendix F
+NOMENCLATURE
+ffi ff
+A Coe cientforband-gapnarrowinge ects.
+x
+a ,a LatticeconstantsofGaAs(a )andInGaAs(a).
+0 0
+ffi
+B Radiativerecombinationcoe cient.
+B ,B ,B Complex wave amplitudes of the optical wave propagating
+1 2 z
+fromrighttoleftinalaser.
+B Constantusedinmathematicalfittings.
+k
+b Sheardeformationpotential.
+ffi
+C ,C Auger recombination coe cients, for electrons (n) and holes
+n p
+(p).
+ffi
+c ,c Electron(n),hole(p)capturecoe cientsofthejthdeeptrap.
+nj pj
+c Velocityoflightinvacuum.
+,
+c c Elasticconstants.
+11 12
+D ,D Densityofstatesoftheconductionandvalenceband.
+c v
+E ,E Shallowdonor(D)andacceptor(A)levels.
+D A
+E0,E0,E0 Energyminimumsoftheithandthejthlevels,andthedi ff er-
+i j ij
+encebetweenthem,. Theireferstothevalencebandsub-band
+levelsand jreferstotheconductionbandsub-bandlevels.
+, ff
+E E Photonenergyandenergydi erencebetweentheithandjth
+ij
+levels.
+E ,E Quasi-Fermienergiesofelectrons(n)andholes(p).
+fn fp
+E Bandgap.
+g
+E Unstrainedbandgap.
+g0
+∆
+E Shift in ionization energy of a dopant due to Poole-Frenkel
+PF
+ff
+e ect.
+δ
+E Hydrostaticstrainenergy.
+hy
+δ
+E Energyassociatedwithshearstrain.
+sh
+F Electricfieldintensity.
+F Lorentzianshapefunction.
+l
+
+
+=== PAGE 1354 ===
+1352 NOMENCLATURE
+F ,F Threshold electric field used in the electron (n) and hole (p)
+0n 0p
+mobilitymodels.
+F 1/2 Fermiintegraloforderone-half.
+f , f Occupancyofthedonor(D)andacceptor(A)levels.
+D A
+f Occupancyofthejthdeeptraplevel.
+tj
+f, f Fermifunctionsfortheithandthe jthlevel.
+i j
+′ ′
+f , f IntegratedFermifunctionsfortheithandthejthlevels.
+i j
+g Interbandlocalgain.
+g , g Localgainduetotransitionbetweentheithandthejthlevels,
+ij
+andthelocalgainofthematerial.
+g , g Degeneraciesoftheshallowdonor(d)andacceptor(a).
+d a
+H Hamiltonianmatrixelementbetweentheithandthejthstates.
+ij
+h(x) stepfunctionofvariablex.
+ℏ
+h, Plank’sconstants.
+I ,I The integrals needed to evaluate the quantum well gain and
+1 2
+spontaneousemissionrate.
+J , J Electron(n)andhole(p)currentfluxdensities.
+n p
+J , J Electron(n)andhole(p)currentfluxdensitiesonthesurface.
+sn sp
+J , J Electron (n) and hole (p) current flux densities across the het-
+hn hp
+erojunction.
+J Currentfluxsource.
+source
+k Boltzmannconstant.
+L Lasercavitylength.
+L() Linesshapefunctionforgainbroadening.
+m Electronmass
+0
+ff
+m,m ,m Relative e ective masses of the i th and the j th level and the
+i j ij
+ff
+reducede ectivemassbetweentheithandthejthlevel. Their
+/ = / + /
+relationisdefinedby1 m 1 m 1 m . Indicesiandjrefer
+ij i j
+heretoquantumwellsub-bands.
+ff
+m ,m Bulke ectivemassesforelectrons(n)andholes(p).
+n p
+m ,m Thesameasm andm ,respectively.
+e h n p
+ff
+m ,m Bulk e ective masses for electrons (n) and holes (p) on the
+bn bp
+barriersideoftheheterojunction.
+ff
+m Relative e ective mass of the L-band used in the quantum
+zl
+levelcalculation.
+ff
+m ,m ,m E ectiveholemassesinthex,yandzdirection.
+vx vy vz
+M , M , M , Momentummatrixelementsforbulkmaterial,betweentheith
+0 ij lh
+M andthejthstates,involvinglight-andheavy-holetransitions,
+hh
+respectively.
+N Totalnumberofgridpointsinthesimulationspace. Alsoused
+forthetotalnumberoflongitudinallayers.
+N Numberofgridpointsassociatedwithaboundaryofinterest.
+b
+
+
+=== PAGE 1355 ===
+NOMENCLATURE 1353
+N ,N Doping density of shallow donors (D) and shallow acceptors
+D A
+(A).
+N Densityofthejthdeeptrap.
+tj
+n Electronconcentrationordensity.
+n Electron concentration or density on the barrier side of the
+b
+hetero-junction.
+n Electron concentration or density on the barrier side of the
+b0
+hetero-junctionwhenitsquasi-Fermilevelcoincideswiththat
+ontheotherside.
+n Electronconcentrationordensityonthesurface.
+s
+n Realpartofrefractiveindex.
+n Intrinsiccarrierdensity.
+i
+n Thesurfaceconcentrationofaquantumwell,equaltothebulk
+2D
+densitytimesthelayerthickness.
+N ,N Referencedopingdensityinelectron(n)andhole(p)mobility
+rn rp
+equations.
+P Probabilityofatransitionfromtheithtothejthlevel.
+ij
+p Holeconcentrationordensity.
+p Hole concentration or density on the barrier side of the het-
+b
+erojunction.
+p Hole concentration or density on the barrier side of the het-
+b0
+erojunction when its quasi-Fermi level coincides with that on
+theotherside.
+p Holeconcentrationordensityonthesurface.
+s
+j
+Q Energydensityofthe jthemittedlongitudinalmode.
+em
+j
+Q Energy density of the jth longitudinal mode within the laser
+cav
+cavity.
+q Electroniccharge.
+tj tj
+R ,R Electron(n)andhole(p)recombinationratesperunitvolume
+n p
+throughthejthdeeptrap.
+R ,Rb ,R qw Spontaneous recombination rate per unit volume, also called
+sp sp sp
+the radiative recombination rate, and the same quantity in
+bulk(b)andinthequantumwell(qw).
+qw
+r Frequencydependentspontaneousrecombinationrateforthe
+sp
+quantumwell.
+R Resistanceassociatedwithaboundarycondition.
+s
+R Stimulatedrecombinationrateperunitvolume.
+st
+R Augerrecombinationrateperunitvolume.
+au
+eff ff
+r ,r Singlefacetreflectivityande ectivereflectivityofalaser.
+m m
+T Absolutetemperature.
+T Thescatteringkernelforcarrier-carrierscattering.
+scat
+t Thicknessofthequantumwell.
+
+
+=== PAGE 1356 ===
+1354 NOMENCLATURE
+V Electricalpotential.
+V Electricalpotentialonthesurface.
+s
+V Appliedelectricalpotential.
+applied
+v Volume.
+v ,v Average thermal velocity of electrons (n) and holes (p). The
+n p
+averageistakenoverallthreedimensions.
+therm therm
+v ,v Average thermal velocity of electrons (n) and holes (p). The
+n p
+averageistakenonlyoverthedimensionalofinterest.
+therm therm
+v ,v Averagethermalvelocityofelectrons(n)andholes(p)located
+bn bp
+onthebarriersideoftheheterojunction. Theaverageistaken
+onlyoverthedimensionalofinterest.
+v ,v Saturationvelocityforelectrons(n)andholes(p).
+sn sp
+W Carrierenergy.
+W Electronenergy.
+n
+W Holeenergy.
+n
+We,Wh E ff ective width of the wave functions for electron and hole in
+j i
+thejthandithsubbands,respectively.
+,
+x y Spatial coordinates used in the model. The x-axis is paral-
+lel to the quantum well. x is also used elsewhere as the Al
+compositioninAlGaAsortheIncompositioninInGaAs.
+αα ffi
+Local loss coe cient due to loss other than interband recom-
+qw
+bination,andlocallossinthequantumwell.
+α
+Internal loss defined as the weighed average of the local loss
+int
+α
+.
+α α
+, Constants used in doping dependent mobility functions for
+n p
+electrons(n)andholes(p).
+α α ffi
+, Coe cientsofthefreecarrierabsorptionforelectrons(n)and
+fn fp
+holes(p)inthequantumwell.
+α ffi
+Absorptioncoe cientforregionsoutsidethequantumwell.
+0
+β β β
+, , Complexeigenvaluesofthewaveequationanditsreal(1)and
+1 2
+ff
+imaginary(2)parts. Theyarealsoconsiderede ectiveindices.
+α ffi
+Optical loss coe cient due to emission of light in the lasing
+em
+mode.
+α ffi
+Optical loss coe cient due to emission of light in the jth lon-
+emj
+gitudinalmode.
+β
+Constantusedintheholemobilityequation.
+p
+∆
+Spin-orbitsplittingofthevalencebandenergy.
+∆a
+TransitionenergyshifttermintheAsadabroadeningmodel.
+ij
+δ
+Constant. Valueis1fordeepdonorsand0fordeepacceptors
+δ
+when used to represent electrical charge. Also used as a -
+function.
+ϵ
+Dielectricconstantofvacuum.
+0
+
+
+=== PAGE 1357 ===
+NOMENCLATURE 1355
+ϵ
+RelativeDCorlowfrequencydielectricconstant.
+dc
+ϵ ϵ ϵ
+, , Complexopticaldielectricconstantanditsreal(1)andimagi-
+1 2
+ϵ
+nary (2) parts. is also used, under a completely context, for
+ffi
+non-lineargaincoe cient.
+ϵg ϵα
+, Imaginary parts of the dielectric constant corresponding to
+2 2
+gain due to interband transition and loss due to other mecha-
+nisms,respectively.
+ε
+Strain.
+Γ
+Energy level broadening parameter, or the half width of the
+Lorentzianbroadeningfunction.
+Γ
+Themaximumenergylevelbroadeningparameter,orthehalf
+0
+widthoftheLorentzianbroadeningfunction.
+Γ
+The energy level broadening parameter, or the half width of
+a
+the Lorentzian broadening function, as used in the Asada’s
+broadeningmodel.
+γ ,γ ,γ
+Luttingernumbers.
+1 2 3
+γ
+Constantrelatingtheopticalwaveamplitudetoelectricfield.
+γ γ
+, Adjustable constants for the electron (n) and hole (p)
+n p
+thermionicemissionmodel,usedtoaccountfortunnelingand
+ff
+othere ects.
+γ γ
+, Adjustable constants for the electron (n) and hole (p)
+hn hp
+thermionic emission model for heterojunctions, used to ac-
+ff
+countfortunnelingandothere ects.
+χ ffi
+A nity.
+χ ffi
+A nityofareferencematerial.
+λ
+Opticalwavelength.
+λ
+Opticalwavelengthofthejthlongitudinalmode.
+j
+µ µ
+, Mobilityofelectrons(n)andholes(p).
+n p
+µ µ
+, Lowfieldelectron(n)andhole(p)mobilities.
+0n 0p
+µ µ
+, Minimumelectron(n)andhole(p)mobilities.
+1n 1p
+µ µ
+, Maximumelectron(n)andhole(p)mobilities.
+2n 2p
+ν
+FunctionusedintheFermi-Directstatistics.
+ρ ρ ρ
+, , Densityofstatesfortheithandthejthlevels,andthereduced
+i j ij
+density of states for transition between the j th and the i th
+levels.
+ϕ ϕ
+, Quasi-Fermipotentialforelectrons(n)andholes(p).
+n p
+ϕ
+Schottkybarrierheight.
+b
+ρ0, ρ0, ρ0
+Constantsforthetwo-dimensionaldensityofstatesfortheith
+i j ij
+andthejthlevels,andreduceddensityofstatesfortransition
+betweentheithandthejthlevels. Forexample
+ρ0 =
+m
+/πℏ2t.
+i i
+σ σ
+, Electron(n)andhole(p)capturecrosssectionsofthejthdeep
+nj pj
+trap.
+τ
+Intra-bandscatteringlifetime.
+
+
+=== PAGE 1358 ===
+1356 NOMENCLATURE
+τ τ
+, Electron(n)andhole(p)lifetimeduetothe jthtrap.
+nj pj
+τ τ
+, Hole-hole scattering life time for the Asada gain broadening
+h v
+τ = τ
+model. 2 .
+h v
+ω
+Angularfrequencyoftheopticalwave.
+ω ω
+a , β SORparametersusedforthewaveequation.
+ξ
+FunctionusedintheFermi-Diracstatistics.
+ζ ζ ζ ff ζ
+, , Variable related to the e ective masses. is also used for half
+n p
+ff
+theshearstrainenergyforadi erentcontext.
+<>
+Averagewith
+|
+W
+|2
+asweight.
+
+
+=== PAGE 1359 ===
+Appendix G
+POST-PROCESSING & PLOTTING
+VARIABLES
+G.1 Bias-dependent Variables
+Bias-dependentvariablesrefertoquantitiescharacterizingthewholedevicerather
+thanalocalvalueataparticularmeshpoint. Theycanbeplottedusingplot_scan
+oranalyzedusingcommandssuchasfourier_power.
+TableG.1: Bias-dependentvariables
+Variable Definition
+all_mode_power Emittedlaserpowerforalllateralmodesinunits
+ofmW(LASTIP).Thisvalueisscaledbythede-
+vicelengthtoconverttheraw2Dvalue. 1
+all_mode_micav_power Emitted microcavity laser power for all lateral
+/
+modes(PICS3D).UnitsinW mfor2DandWfor
+3D.
+bottom_led_power LED power emitted from the bottom of the de-
+vice.
+bottom_led_power_te LED power emitted from the bottom of the de-
+vice(TEmode).
+bottom_led_power_tm LED power emitted from the bottom of the de-
+vice(TMmode).
+Continuedonnextpage
+1Startingwiththe2012version,thisvalueisnolongerscaledbyafactoroftwotoaccountfor
+impliedsymmetry
+
+
+=== PAGE 1360 ===
+1358 POST-PROCESSING&PLOTTINGVARIABLES
+TableG.1–continuedfrompreviouspage
+Variable Definition
+change_layer_thickness Scalingfactoronthethicknessofthelayerspec-
+ifiedin set_scan_layer.
+current_i Totalcurrent(sumofelectron,holeanddisplace-
+mentcurrent)atelectrodei.
+→−
+disp_curr_i Displacement current (time derivative of D) at
+electrodei.
+ff ff
+e ective_index Real e ective refractive index for a waveguide
+device.
+ffi ffi ffi
+e ciency Laser emission power e ciency (or slope e -
+ciency)(LASTIP).
+elec_curr_i Electroncurrentatelectrodei
+hole_curr_i Holecurrentatelectrodei.
+laser_current_i Total injection current into a laser diode in mA
+(LASTIP)1. This value is scaled by the device
+lengthtoconverttheraw2Dvalue.
+laser_power Emitted laser power for a single mode in units
+of mW (LASTIP)1. This value is scaled by the
+devicelengthtoconverttheraw2Dvalue.
+ffi / ffi /
+led_curr_e LED luminosity current e ciency (cd A)
+(APSYS).
+ffi ffi
+led_e LEDinternalquantume ciency(APSYS).
+ff ff
+led_e x1 Similartoled_e z1.
+ff ff
+led_e x2 Similartoled_e z1.
+ff ff
+led_e y1 Similartoled_e z1.
+ff ff
+led_e y2 Similartoled_e z1.
+ff ffi
+led_e z1 LEDpowerextractione ciencyfromfacet1(i.e.,
+leftorbottomfacet)facingthez-directionbased
+onthe(cubic)broad-areaLEDmodel. Thisresult
+ff
+may be di erent from that calculated from the
+raytracingmodel.
+ff ff
+led_e z2 Similartoled_e z1above.
+led_power Total amount of emitted optical power from all
+facets of an LED (APSYS) in the (cubic) broad-
+ff
+areaLEDmodel. Thismaybedi erentfromthe
+optical power calculated from the ray tracing
+model.
+Continuedonnextpage
+
+
+=== PAGE 1361 ===
+G.1Bias-dependentVariables 1359
+TableG.1–continuedfrompreviouspage
+Variable Definition
+led_power_te Total amount of emitted optical power (TE
+mode) from all facets of an LED (APSYS) in the
+(cubic)broad-areaLEDmodel. Thismaybedif-
+ferent from the optical power calculated from
+theraytracingmodel.
+led_power_tm Total amount of emitted optical power (TM
+mode) from all facets of an LED (APSYS) in the
+(cubic)broad-areaLEDmodel. Thismaybedif-
+ferent from the optical power calculated from
+theraytracingmodel.
+led_spon_power Total power generated from spontaneous emis-
+sioneventsinsideaLED(APSYS).
+led_spon_power_te Total power (TE mode) generated from sponta-
+neousemissioneventsinsideaLED(APSYS).
+led_spon_power_tm Totalpower(TMmode)generatedfromsponta-
+neousemissioneventsinsideaLED(APSYS).
+light Incident light power to a photodetector, mod-
+ulator, SOA or any other light-sensitive device.
+Additional sources of light defined in separate
+=
+commands will be labeled lighti(i 2..9), in the
+orderinwhichtheyappearintheinput.
+micav_laser_power Emitted microcavity laser power for specified
+/
+mode(PICS3D).UnitsinW mfor2DandWfor
+3D.
+=
+more_bias_vari(i 1..9) Special variable created by using various state-
+mentssuchasbias_output_near_point.
+ffi ffi
+pd_e ciency External quantum e ciency of a photodetector
+2.
+pd_responsivity Responsivityofaphotodetector2.
+peak_gain Peakmodalgaininawaveguidedevice.
+rtg_ase_left Amplified spontaneous emission from the
+left facet for a particular longitudinal mode
+(PICS3D).
+rtg_ase_left_allmode Amplified spontaneous emission from the left
+facetforallmodes(PICS3D).
+rtg_ase_right Amplified spontaneous emission from the
+right facet for a particular longitudinal mode
+(PICS3D).
+Continuedonnextpage
+2Thistermdoesnotincludedarkcurrenteffects
+
+
+=== PAGE 1362 ===
+1360 POST-PROCESSING&PLOTTINGVARIABLES
+TableG.1–continuedfrompreviouspage
+Variable Definition
+rtg_ase_right_allmode Amplified spontaneous emission from the right
+facetforallmodes(PICS3D).
+rtg_ase_2facet_allmode Amplified spontaneous emission from both
+facetsforallmodes(PICS3D).
+ffi ffi
+rtg_ase_e ciency Externalquantume ciencyforamplifiedspon-
+taneousemissionsource(PICS3D).
+ffi ffi
+rtg_e ciency External quantum e ciency for laser device
+(PICS3D).
+rtg_left_power LeftpoweremissioninRTGmodel(PICS3D).
+rtg_left_power_allmode All-mode left power emission in RTG model
+(PICS3D).
+rtg_peak_wavelength Wavelength of peak mode in RTG model
+(PICS3D).
+rtg_photon_num PhotonnumberinRTGmodel(PICS3D).
+rtg_photon_num_allmode All-mode photon number in RTG model
+(PICS3D).
+rtg_right_power Left facet power emission in RTG model
+(PICS3D).
+rtg_right_power_allmode Right facet power emission in RTG model
+(PICS3D).
+rtg_surf_power Surface emitting power (for 2nd order grating)
+inRTGmodel(PICS3D).
+rtg_surf_power_allmode All-modesurfaceemittingpower(for2ndorder
+grating)inRTGmodel(PICS3D).
+rtg_wavelength WavelengthinRTGmodel(PICS3D).
+rtg_wave_phase Phase shift of input wave in RTG model
+(PICS3D).
+rtg_2facet_power 2-facetpowerforaparticularmode(PICS3D).
+rtg_2facet_power_allmode All-modepowerforaparticularmode(PICS3D).
+rtg_smsr Side mode suppression ratio (PICS3D). This is
+based on the photon number of each mode, as
+definedinAppendixE.
+sum_space_charge Sumofspacechargeoveraregion.
+temp_max Maximumtemperatureindevice.
+time Time in picoseconds used in a transient simula-
+tion.
+top_led_power LEDpoweremittedfromthetopofthedevice.
+top_led_power_te LED power (TE mode) emitted from the top of
+thedevice.
+Continuedonnextpage
+
+
+=== PAGE 1363 ===
+G.2ScalarVariables 1361
+TableG.1–continuedfrompreviouspage
+Variable Definition
+top_led_power_tm LED power (TM mode) emitted from the top of
+thedevice.
+total_joule_heat IntegratedtotalJouleheat.
+total_optic_heat Totalheatduetoopticalabsorption.
+total_peltier_heat IntegratedtotalPeltierheat.
+total_recomb_heat Integratedtotalrecombinationheat.
+total_thomson_heat IntegratedtotalThomsonheat.
+/
+tunneling_enhancement Maximum tunneling enhancement increase to
+ff
+theclassicaldrift-di usioncurrent.
+virtual_time A universal scaling factor for DC sources in the
+minispicemodel.
+volt_res_i Thevoltageatboundaryiinamixed-modesim-
+ulation,includingtheexternalresistor.3
+voltage_i Voltageatelectrodei.
+wavelength Laser emission wavelength at peak modal gain
+(LASTIP).
+wavelength_scan Wavelength of the optical pump, correponding
+tothe“light”variable.
+G.2 Scalar Variables
+Scalarvariablesarestructuralquantitiesdefinedforeverymeshpointofthedevice.
+They depend on also depend on bias but are only printed at certain data sets, as
+defined in the scan statement. These quantities may be plotted using statements
+suchasplot_1dandplot_2d.
+TableG.2: Scalarvariables
+Variable Definition
+absorption background optical absorption not including
+/
+gain lossfromactivelayers.
+acceptor_conc acceptorconcentration.
+Continuedonnextpage
+3The definitions voltage_i and volt_res_i switched in v.2015due to various improvementsin
+themixed-modemodel.
+
+
+=== PAGE 1364 ===
+1362 POST-PROCESSING&PLOTTINGVARIABLES
+TableG.2–continuedfrompreviouspage
+Variable Definition
+acceptor_conc2 acceptorconcentration(level2).
+all_conc bothelectronandhole.
+all_heat allheatsources.
+band energyband. (forplot_1dandlplot_xy)
+bulk_bandgap bandgap of bulk material; in a QW region, the
+heavyholebandgapisusedevenifthelighthole
+bandgapissmaller.
+bulk_elec_conc bulkelec. concentrationinQWsystem.
+bulk_hole_conc bulkholeconcentrationinQWsystem.
+central_area localsurfaceareaaroundmeshpoint.
+ch_val_band crystalfieldholevalencebandedgeforwurtzite
+structures.
+compact_iqe localizedphotonconversione
+ffi
+ciency:
+Rsp(x,y,z)
+.
+J(x,y,z)
+contact_num contact number; only used for special “contact”
+material.
+cond_band conductionband.
+disp_curr_mag magnitudeofdisplacementcurrent.
+disp_curr_x displacementcurrentx-component.
+disp_curr_y displacementcurrenty-component.
+disp_curr_z displacementcurrentz-component.
+donor_conc donorconcentration.
+donor_conc2 donorconcentration(level2).
+ff
+efb_cond_band conduction band in e ective QW miniband
+model.
+ff
+efb_val_band valencebandine ectiveQWminibandmodel.
+ff
+efm_cond_band conduction band in e ective bulk medium
+model.
+ff
+efm_val_band valencebandine ectivebulkmediummodel.
+elec_conc electronconcentration.
+elec_curr_mag magnitudeofelectroncurrent.
+elec_curr_x electroncurrentx-component.
+elec_curr_y electroncurrenty-component.
+elec_curr_z electroncurrentz-component.
+ff
+elec_di magnitude of the electron concentration gradi-
+|∇ |
+ent n.
+elec_di ff _gain electrondi ff erentialgain(cm2).
+elec_imref electronIMREF.
+elec_mobility averagenodalelectronmobility.
+Continuedonnextpage
+
+
+=== PAGE 1365 ===
+G.2ScalarVariables 1363
+TableG.2–continuedfrompreviouspage
+Variable Definition
+exciton_dipole_source excitondipolesourcedensity.
+exciton_singlet singletexcitondensity.
+exciton_triplet tripletexcitondensity.
+fdfd_efield_r_real real part of optical field component E from mi-
+r
+crocavityvectorialmodesolver.
+fdfd_efield_r_imag imaginary part of optical field component E
+r
+frommicrocavityvectorialmodesolver.
+fdfd_efield_r_mag magnitude of optical field component E from
+r
+microcavityvectorialmodesolver.
+fdfd_efield_r_phase complex phase of optical field component E
+r
+frommicrocavityvectorialmodesolver.
+fdfd_efield_x_real real part of optical field component E from mi-
+x
+crocavityvectorialmodesolver.
+fdfd_efield_x_imag imaginary part of optical field component E
+x
+frommicrocavityvectorialmodesolver.
+fdfd_efield_x_mag magnitude of optical field component E from
+x
+microcavityvectorialmodesolver.
+fdfd_efield_x_phase complex phase of optical field component E
+x
+frommicrocavityvectorialmodesolver.
+fdfd_efield_y_real real part of optical field component E from mi-
+y
+crocavityvectorialmodesolver.
+fdfd_efield_y_imag imaginary part of optical field component E
+y
+frommicrocavityvectorialmodesolver.
+fdfd_efield_y_mag magnitude of optical field component E from
+y
+microcavityvectorialmodesolver.
+fdfd_efield_y_phase complex phase of optical field component E
+y
+frommicrocavityvectorialmodesolver.
+fdfd_efield_z_real real part of optical field component E from mi-
+z
+crocavityvectorialmodesolver.
+fdfd_efield_z_imag imaginary part of optical field component E
+z
+frommicrocavityvectorialmodesolver.
+fdfd_efield_z_mag magnitude of optical field component E from
+z
+microcavityvectorialmodesolver.
+fdfd_efield_z_phase complex phase of optical field component E
+z
+frommicrocavityvectorialmodesolver.
+fdfd_efield_phi_real realpart of optical field component Eϕ from mi-
+crocavityvectorialmodesolver.
+fdfd_efield_phi_imag imaginary part of optical field component Eϕ
+frommicrocavityvectorialmodesolver.
+Continuedonnextpage
+
+
+=== PAGE 1366 ===
+1364 POST-PROCESSING&PLOTTINGVARIABLES
+TableG.2–continuedfrompreviouspage
+Variable Definition
+fdfd_efield_phi_mag magnitude of optical field component Eϕ from
+microcavityvectorialmodesolver.
+fdfd_efield_phi_phase complex phase of optical field component Eϕ
+frommicrocavityvectorialmodesolver.
+fdfd_hfield_r_real real part of optical field component H from mi-
+r
+crocavityvectorialmodesolver.
+fdfd_hfield_r_imag imaginary part of optical field component H
+r
+frommicrocavityvectorialmodesolver.
+fdfd_hfield_r_mag magnitude of optical field component H from
+r
+microcavityvectorialmodesolver.
+fdfd_hfield_r_phase complex phase of optical field component H
+r
+frommicrocavityvectorialmodesolver.
+fdfd_hfield_x_real realpartofopticalfieldcomponentH frommi-
+x
+crocavityvectorialmodesolver.
+fdfd_hfield_x_imag imaginary part of optical field component H
+x
+frommicrocavityvectorialmodesolver.
+fdfd_hfield_x_mag magnitude of optical field component H from
+x
+microcavityvectorialmodesolver.
+fdfd_hfield_x_phase complex phase of optical field component H
+x
+frommicrocavityvectorialmodesolver.
+fdfd_hfield_y_real realpartofopticalfieldcomponentH frommi-
+y
+crocavityvectorialmodesolver.
+fdfd_hfield_y_imag imaginary part of optical field component H
+y
+frommicrocavityvectorialmodesolver.
+fdfd_hfield_y_mag magnitude of optical field component H from
+y
+microcavityvectorialmodesolver.
+fdfd_hfield_y_phase complex phase of optical field component H
+y
+frommicrocavityvectorialmodesolver.
+fdfd_hfield_z_real realpartofopticalfieldcomponentH frommi-
+z
+crocavityvectorialmodesolver.
+fdfd_hfield_z_imag imaginary part of optical field component H
+z
+frommicrocavityvectorialmodesolver.
+fdfd_hfield_z_mag magnitude of optical field component H from
+z
+microcavityvectorialmodesolver.
+fdfd_hfield_z_phase complex phase of optical field component H
+z
+frommicrocavityvectorialmodesolver.
+fdfd_hfield_phi_real realpartofopticalfieldcomponentHϕ frommi-
+crocavityvectorialmodesolver.
+Continuedonnextpage
+
+
+=== PAGE 1367 ===
+G.2ScalarVariables 1365
+TableG.2–continuedfrompreviouspage
+Variable Definition
+fdfd_hfield_phi_imag imaginary part of optical field component Hϕ
+frommicrocavityvectorialmodesolver.
+fdfd_hfield_phi_mag magnitude of optical field component Hϕ from
+microcavityvectorialmodesolver.
+fdfd_hfield_phi_phase complex phase of optical field component Hϕ
+frommicrocavityvectorialmodesolver.
+field_mag electrical field magnitude (from Poisson equa-
+tion).
+field_x electric field x-component (from Poisson equa-
+tion).
+field_y electric field y-component (from Poisson equa-
+tion).
+hci_surf_trap surface trap density from the
+hot_carrier_injectionmodel.
+heat_flux_density_mag heatfluxmagnitude.
+heat_flux_density_x heatfluxx-component.
+heat_flux_density_y heatfluxy-component.
+heat_flux_density_z heatfluxz-component.
+hole_conc holeconcentration.
+hole_curr_mag magnitudeofholecurrent.
+hole_curr_x holecurrentx-component.
+hole_curr_y holecurrenty-component.
+hole_curr_z holecurrentz-component.
+hole_di ff _gain holedi ff erentialgain(cm2).
+hole_imref holeIMREF.
+hole_mobility averagenodalholemobility.
+hot_elec_flux magnitude of energy flux from hot electrons in
+thehydrodynamicmodelofEq.5.4.
+hot_elec_gen energy generation rate from hot electrons in the
+hydrodynamicmodelofEq.5.4.
+hot_hole_flux magnitude of energy flux from hot holes in the
+hydrodynamicmodelofEq.5.4.
+hot_hole_gen energygenerationratefromhotholesinthehy-
+drodynamicmodelofEq.5.4.
+ff ff
+hydrogen_di use the impurity profile after a di use command.
+For historical reasons, this variable is named
+basedontheassumptionthattheimpuritybeing
+ff
+di usedishydrogen.
+Continuedonnextpage
+
+
+=== PAGE 1368 ===
+1366 POST-PROCESSING&PLOTTINGVARIABLES
+TableG.2–continuedfrompreviouspage
+Variable Definition
+ff
+hydrogen_initial the initial impurity profile before the di use
+commandiscalled.
+ffi
+impact_alpha_n electronimpactionizationcoe cient.
+ffi
+impact_alpha_p holeimpactionizationcoe cient.
+impact_ionization totalimpactionizationrate.
+incident_power sameasoptical_energy.
+index_change refractiveindexchangefromequilibriumvalue.
+interband_pumping opticallypumpedinterbandabsorption.
+interface_length equivalent interface length around mesh point;
+this value only considers ALL mesh triangle
+edges touching something other than the ma-
+terialnumberoflocalthemeshpoint.
+joule_heat Jouleheatsource.
+kpref_val_band reference valence band edge for wurtzite struc-
+tures.
+lattice_temp latticetemperature.
+lh_val_band lightholevalencebandedge.
+linear_acceptor_conc acceptorconcentrationinlinearscale.
+linear_bulk_elec bulk elec. concentration in QW system (linear
+scale).
+linear_bulk_hole bulk hole concentration in QW system (linear
+scale).
+linear_donor_conc donorconcentrationinlinearscale.
+linear_elec_conc electronconcentrationinlinearscale.
+linear_heat Heatsourcelinearincurrent.
+linear_hole_conc holeconcentrationinlinearscale.
+linear_rec_elec sameasrec_elec_concbutinlinearscale.
+linear_rec_hole sameasrec_hole_concbutinlinearscale.
+linear_subb_elec QWsubbandelec. concentration(linearscale).
+linear_subb_hole QWsubbandholeconcentration(linearscale).
+local_gain localopticalgain.
+lower_elec_imref IMREF of the lower electron state in the split-
+statemodel
+lower_hole_imref IMREF of the lower hole state in the split-state
+model
+lower_elec electron concentration in the lower state in the
+split-statemodel
+lower_hole holeconcentrationinthelowerstateinthesplit-
+statemodel
+Continuedonnextpage
+
+
+=== PAGE 1369 ===
+G.2ScalarVariables 1367
+TableG.2–continuedfrompreviouspage
+Variable Definition
+magnetic_field_mag magnitudeoffluxdensity(B)pseudo-vector.
+magnetic_field_x x-component of magnetic flux density (B)
+pseudo-vector.
+magnetic_field_y y-component of magnetic flux density (B)
+pseudo-vector.
+magnetic_field_z z-component of magnetic flux density (B)
+pseudo-vector.
+magnetic_potential_mag magnitudeofmagneticvectorpotential(A).
+magnetic_potential_x x-componentofmagneticvectorpotential(A).
+magnetic_potential_y y-componentofmagneticvectorpotential(A).
+magnetic_potential_z z-componentofmagneticvectorpotential(A).
+material_num internalmaterialnumber.
+negative_fix_charge negativefixedspacecharge.
+ff ff
+negf_elec_di sameaselec_di butforNEGFtransport.
+occup_trap occupancyoftrap.
+optic_heat opticalheatsource.
+optical_energy relative energy distribution scaled to incident
+lightenergydensity.
+optical_gen opticalgenerationrateinducedbyincidentlight.
+optical_gen_led opticalgenerationrateinresonant-cavitymodel,
+inducedbytrappedspontaneousemission.
+outer_interface_length equivalent interface length around mesh point;
+thisvalueonlyconsidersonlythemeshtriangle
+edgestouchingtheouteredgesofthesimulation
+domain.
+peltier_heat Peltierheatsource.
+polar_vector Total polarization vector; sum of spontaneous
+andstrain-inducedpolarization.
+piezo_stress_xx PiezoelectricstresscomponentinSAWAVEsim-
+ulation.
+piezo_stress_xy PiezoelectricstresscomponentinSAWAVEsim-
+ulation.
+piezo_stress_xz PiezoelectricstresscomponentinSAWAVEsim-
+ulation.
+piezo_stress_yy PiezoelectricstresscomponentinSAWAVEsim-
+ulation.
+piezo_stress_yz PiezoelectricstresscomponentinSAWAVEsim-
+ulation.
+Continuedonnextpage
+
+
+=== PAGE 1370 ===
+1368 POST-PROCESSING&PLOTTINGVARIABLES
+TableG.2–continuedfrompreviouspage
+Variable Definition
+piezo_stress_zz PiezoelectricstresscomponentinSAWAVEsim-
+ulation.
+piezo_vector Strain-inducedpolarizationvector.
+piezo_vector_external Polarizationvectorduetoexternalstress.
+positive_fix_charge positivefixedspacecharge.
+potential potential.
+qdot_electron electron concentration in the embedded quan-
+tumdot
+qdot_hole hole concentration in the embedded quantum
+dot
+radiation_heat radiationheatsourceterm.
+real_index realindex.
+rec_elec_conc electron concentration participated in recombi-
+nationonlyasopposedtothatintransport.
+rec_hole_conc hole concentration participated in recombina-
+tiononlyasopposedtothatintransport.
+recomb_aug Augerrecombinationrate.
+recomb_heat recombinationheatsource.
++
+recomb_rad radiativerecombinationrate(TE TM).
+recomb_rad_te radiativerecombinationrate(TE).
+recomb_rad_tm radiativerecombinationrate(TM).
+recomb_srh SRHrecombinationrate.
+recomb_st stimulatedrecombinationrate.
+space_charge netspacecharge.
+spatial_grad_thermal_power_n magnitude of spatial gradient of electron ther-
+∇
+moelectric power P ; this terms controls the
+n
+combinedPeltierandThomsonheat.
+spatial_grad_thermal_power_p magnitude of spatial gradient of hole thermo-
+∇
+electric power P this terms controls the com-
+p
+binedPeltierandThomsonheat.
+stress_xx normalstressinxdirection.
+stress_xy shearstress(xy).
+stress_xz shearstress(xz).
+stress_yy normalstressinydirection.
+stress_yz shearstress(yz).
+stress_zz normalstressinzdirection.
+subb_elec_conc QWsubbandelec. concentration.
+subb_hole_conc QWsubbandholeconcentration.
+Continuedonnextpage
+
+
+=== PAGE 1371 ===
+G.3VectorialVariables 1369
+TableG.2–continuedfrompreviouspage
+Variable Definition
+temp_grad_thermal_power_n magnitude of temperature-driven gradient for
+electronthermoelectricpower(
+∂Pn ∇
+T).
+∂T
+temp_grad_thermal_power_p magnitude of temperature-driven gradient for
+holethermoelectricpower(
+∂Pp∇
+T).
+∂T
+thermal_power_n electronthermoelectricpower(P )
+n
+thermal_power_p holethermoelectricpower(P )
+p
+thomson_heat Thomsonheatsource.
+total_curr_mag magnitudeoftotalcurrent.
+total_curr_x totalcurrentx-component.
+total_curr_y totalcurrenty-component.
+total_curr_z totalcurrentz-component.
+trap_conc trapconcentration.
+trapped_elec_conc trappedelectronconcentration
+trap_level traplevel.
+ff
+tunnel_enhancement enhancement factor applied to drift-di usion
+currentinthetunnelingandNEGFmodels.
+val_band valence(alsoheavyhole)bandedge.
+wave_2ndwavel SOATravelingWave(2ndwavelength).
+wave_real_part Realpartoftheopticalmode. Notethattheopti-
+calwaveisnormalizedtowithinacomplexcon-
+ff
+stant;onlythespatialdi erenceissignificant.
+wave_imag_part Imaginary part of the optical mode. See above
+commentfornormalization.
+wave_intensity relativewaveintensity.
+wave_intensity_all_modes waveintensityofallmodes.
+G.3 Vectorial Variables
+Vectorial variables, like scalar variables, are structural quantities defined at every
+mesh point of the device. The corresponding vector field may be plotted using
+statementssuchasplot_2dandvplot_xy:
+
+
+=== PAGE 1372 ===
+1370 POST-PROCESSING&PLOTTINGVARIABLES
+TableG.3: Vectorialvariables
+Variable Definition
+elec_curr electroncurrent
+hole_curr holecurrent
+disp_curr displacementcurrent
+elec_field electricfield(static)
+total_curr totalcurrent
+flowline_curr flowlineplotoftotalcurrent
+G.4 Diagnostic Variables
+Diagnosticvariablesareusedtostudytheevolutionofthesimulationstateoutside
+of the regular printing of data sets. Because of the immense amount of data that
+wouldotherwiseberequired,onlyvariablesselectedbytheuseraresaved. Thisis
+donewithcommandssuchasbias_output_spatial_integralandothercommands
+withasimilarnamingscheme.
+Variables Defined On FEM Mesh
+These variables are defined on the finite element mesh that is used to solve the
+ff
+Drift-Di usionmodel.
+TableG.4: Diagnosticfiniteelementvariables
+Variable Definition
+electron Electronconcentration
+exciton_dipole_source Organicexcitondipolesource
+exciton_singlet Organicexciton(singlestate)concentration
+exciton_triplet Organicexciton(tripletstate)concentration
+field_x x-component of electric field vector at near-DC
+frequencies
+field_y y-component of electric field vector at near-DC
+frequencies
+field_z z-component of electric field vector at near-DC
+frequencies
+Continuedonnextpage
+
+
+=== PAGE 1373 ===
+G.4DiagnosticVariables 1371
+TableG.4–continuedfrompreviouspage
+Variable Definition
+field_mag Magnitudeofelectricfieldvectoratnear-DCfre-
+quencies
+field_mag_2d Sameasfield_magexceptlimitedtoxandycom-
+ponents
+hole Holeconcentration
+impact_alpha_n Electronionizationratealpha
+n
+impact_alpha_p Holeionizationratealpha
+p
+impact_elec_rate Electronimpactionizationgenerationrate
+impact_hole_rate Holeimpactionizationgenerationrate
+impact_ionization Totalimpactionizationgenerationrate
+index_change Refractiveindexchange
+lattice_temp Temperature
+modal_index_change Sameasindex_change;nameisahistoricalarte-
+fact. Modal value only in the context of certain
+commands;otherwisealocalvalue.
+optical_gain_bandtoband Materialinterbandgain;excludesregionswhich
+arelossyintheabsenceofpopulationinversion
+optical_gen Opticalgenerationrate
+optical_loss Sumofallinternalopticallossterms
+optical_loss_bandtoband Optical loss from interband transitions; ex-
+cludes regions which are covered by opti-
+cal_gain_bandtoband
+optical_loss_backg Backgroundloss
+optical_loss_ncarr Electronfreecarrierloss
+optical_loss_pcarr Holefreecarrierloss
+optical_loss_two_photon Lossfromtwo-photonabsorptionprocess
+optical_loss_mirror Optical mirror loss; only defined for 2D Fabry-
+Perot models (LASTIP) and microcavity. Does
+notexistinthecontextofPICS3Dround-tripgain
+models.
+optical_net_gain Sum of all internal gain and loss terms; equal to
+mirrorlossforalasingmode
+potential Electricalpotential
+recomb_all Sumofallrecombinationrates
+recomb_aug Augerrecombinationrate
+recomb_rad Radiativerecombinationrate
+recomb_rad_te Radiativerecombinationrate(TEonly)
+recomb_rad_tm Radiativerecombinationrate(TMonly)
+recomb_srh SRHrecombinationrate
+Continuedonnextpage
+
+
+=== PAGE 1374 ===
+1372 POST-PROCESSING&PLOTTINGVARIABLES
+TableG.4–continuedfrompreviouspage
+Variable Definition
+recomb_st Stimulatedrecombinationrate
+unity Specialvariable,alwaysequaltoone
+Variables Defined On 1D Optical Mesh
+These variables are defined for the round-trip gain version of the PICS3Dmodel
+andonlyexistona1Dmeshusedforopticalpropagation. Mostofthesequantities
+aretiedtoaspecificlongitudinalmode.
+TableG.5: Diagnosticz-variables
+Variable Definition
+alpha_l_over_2 Optical propagation constant (net modal gain),
+scaledbylength
+delta_beta_l Detuning of propagation constant from refer-
+encepoint,scaledbylength
+density_mode_average Wave-averagedcarrierdensity;onlyrelevantfor
+opticalsectionsthatdonotcorrespondtoaFEM
+meshsegment
+ffi
+kappa_l_real Realpartofgratingcoe cient,scaledbylength
+ffi
+kappa_l_imag Imaginary part of grating coe cient, scaled by
+length
+ff
+phase_index E ective index for the 1D optical propagation
+model
+

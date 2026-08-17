@@ -1,0 +1,1943 @@
+=== PAGE 1280 ===
+1278 WAVEEQUATIONFORPERFECTLYMATCHEDLAYER
+= = /
+relatedby c b 1 a. Wemaysimplifytheaboveequationasfollows:
+" ! !#
+→− ∂2E ∂2E ∂2E ∂2E →−
+[
+Λ
+]
+−1∇×
+[
+Λ
+]
+−1∇×
+E
+= y − x − x − z
+i
+∂ x ∂ y ∂ y2 ∂ z2 ∂ x ∂ z
+" ! !#
+∂2E ∂2E
+1
+∂2E ∂2E →−
++ z − y − y − x
+j
+∂ y ∂ z ∂ z2 c2 ∂ x2 ∂ x ∂ y
+" ! !#
+1
+∂2E ∂2E ∂2E ∂2E →−
++ x − z − z − y
+k (A.4)
+c2 ∂ x ∂ z ∂ x2 ∂ y2 ∂ y ∂ z
+Itisusefultoconsiderthefollowingexpression:
+!
+1 →− 1 ∂ E ∂ E ∂ E
+∇ ∇· Λ = ∇ x + y + x
+( [ ]E)
+c c2 ∂ x ∂ y ∂ z
+!
+→− ∂ 1 ∂ E ∂ E ∂ E
+= x + y + x
+i
+∂ x c2 ∂ x ∂ y ∂ z
+!
+→− ∂ 1 ∂ E ∂ E ∂ E
++ x + y + x
+j
+∂ y c2 ∂ x ∂ y ∂ z
+!
+→− ∂ 1 ∂ E ∂ E ∂ E
++ x + y + x
+k (A.5)
+∂ z c2 ∂ x ∂ y ∂ z
+Based on the first Maxwell equation, the above equation should be zero. Thus,
+we may subtract it from Eq. A.4 so that the cross terms may be canceled out. We
+obtainthefollowing:
+!
+→−
+1
+∂2E ∂2E ∂2E →−
+[
+Λ
+]
+−1∇×
+[
+Λ
+]
+−1∇×
+E
+= − x + x + x
+i
+c2 ∂ x2 ∂ y2 ∂ z2
+!
+1
+∂2E ∂2E ∂2E →−
+− y + y + y
+j
+c2 ∂ x2 ∂ y2 ∂ z2
+!
+1
+∂2E ∂2E ∂2E →−
+− z + z + z
+k (A.6)
+c2 ∂ x2 ∂ y2 ∂ z2
+Orsimply:
+!
+→−
+1
+∂2 ∂2 ∂2 →−
+[
+Λ
+]
+−1∇×
+[
+Λ
+]
+−1∇×
+E
+= − + +
+E (A.7)
+c2∂ x2 ∂ y2 ∂ z2
+ThewaveequationinthePMLcanbethuswritteninthefollowingform:
+!
+1
+∂2 ∂2 ∂2 →− →−
++ + E + k2E = 0 (A.8)
+c2∂ x2 ∂ y2 ∂ z2
+
+
+=== PAGE 1281 ===
+Appendix B
+MATERIAL PARAMETERS
+B.1 Introduction
+Mostmaterialparametersimplementedinthesimulationsoftwarearewellestab-
+lisheddatatakenfromRefs. suchas[1],[160]and[161]. Theyarespecifiedoutside
+the program in the form of input statements. Since there are a large number of
+semiconductor parameters for a device, these material statements are collected
+togetherasmacros.
+To ensure a rapid update of the most recent material parameters, the material
+macro library is in a simple editable text format. Should the user have better
+/
+knowledgeofthematerialparametersthanthoselistedinthemacrolibrary,he she
+is encouraged to revise the library or override the parameters in the macro by
+re-issuing an input material statement after the macros have been loaded. It
+is also possible to define an entirely new macro in a separate text file in the
+simulationdirectory: theprogramcanmakeuseofthiscustommacrofilewiththe
+use_macrofilestatement.
+In this appendix, we only provide a full listing of a few typical material macro
+parameters for the purpose of illustration. For a full listing of all macros, consult
+the“crosslight.mac”and“more.mac”filesintheinstallationdirectory. Thesefiles
+arethedefaultmacrodatabaseandshouldusuallynotbeeditedbytheusersince
+ff
+they a ect all simulations. Instead, use custom macro files or override input
+statementsasdescribedabove.
+A full list of macros is also visible when using the LayerBuilder and GeoEditor
+GUIprogramstodefinethematerialsinaparticularlayerorpolygon.
+/
+Note that certain macros, especially for ternary quaternary III-V materials, are
+designedforthecasewherethematerialislattice-matchedtoaparticularsubstrate
+(GaAs or InP). Make sure to read the header section of each macro to ensure you
+
+
+=== PAGE 1282 ===
+1280 MATERIALPARAMETERS
+areusingthecorrectmacroandmaterialparametersforyoursimulation.
+B.2 Rules for macros
+The rules for macros are detailed in the header of the crosslight.mac file. For the
+sakeofconvenience,hereisacopy.
+$ IMPORTANT: Please do not use any invisible characters such as tabs in macro
+$*****************MATERIAL MACRO*********************************
+$
+$ Copyright (c) 1995-present Crosslight Software Inc..
+$ All rights reserved.
+$
+$ What Is A Macro
+$
+$ A macro is a collection of input statements (or commands).
+$ A statement starts with a keyword followed by parameters
+$ specified with "=".
+$ A statement for material parameters overrides a
+$ previous statement with the same keyword.
+$ To make changes of the parameters in a macro, just re-issue
+$ the statement with different parameters after the macro call
+$ in the input file. You can also change the parameters in the
+$ macro directly.
+$
+$ For example, if you are unhappy with the bandgap in gaas macro,
+$ you can do the following:
+$ load_macro name=gaas mater=#m
+$ band_gap value=1.425 mater=#m
+$
+$
+$ Two Types of Macros
+$
+$ For device simulation, you may need two types of macros:
+$
+$ 1) Bulk material macros. These are given lower case macro names
+$ such as "algaas". They are referred to by "load_macro" in the
+$ input files. You must specify bulk material macro for
+$ all material layers. They specify general material
+$ parameters such as bandgap, mobility, index, etc.
+$
+
+
+=== PAGE 1283 ===
+B.2Rulesformacros 1281
+$ 2) Active layer macros. These are given mixed case macro names
+$ such as "AlGaAs". These are only needed for active layers in a
+$ laser diode or quantum well layers in other devices. Quantum
+$ subbands and/or optical processes are considered in these layers.
+$ If there are overlaps with 1), the parameters (such as bandgap)
+$ in active layer macros will override those in 1). Active layer
+$ macro with prefix cx- (such as cx-InGaAsP/InP)
+$ are "complex active layers" which may be used to define
+$ active or quantum regions of complex structures.
+$
+$ You must use both "bulk material macro" and "active layer macro"
+$ if you have an active region or a quantum region.
+$
+$
+$ Syntax
+$
+$ Comments start with "$". A line to be continued terminates
+$ with "&&". Symbol definition within a function terminates with ";".
+$ A statement starts with a keyword followed by parameters
+$ specified with "=". Space, ",", "(", ")", "[", "]", "{" and
+$ "}" with a statement are ignored by the program. The length
+$ of a statement line must not exceed 80 characters. The tab key is
+$ not to be used in any statements.
+$
+$ A math function is declared using variation=function and
+$ followed in the next few lines by
+$
+$ function(var1,var2,var3,...)
+$ for logical_expression_1
+$ complete_function_definition_1
+$ for logical_expression_2
+$ complete_function_definition_2
+$ for logical_expression_3
+$ complete_function_definition_3
+$ ...
+$ for else
+$ complete_function_definition_N
+$ end_function
+$
+$ The logical_exression takes the format
+$ expr1<expr2 or expr1<expr2<expr3
+$ It also supports one of | (logical OR) or & (logical AND) operator.
+$ to use "for else" as a case indicator. The following lines are legal:
+
+
+=== PAGE 1284 ===
+1282 MATERIALPARAMETERS
+$
+$ function(x,y,xlam)
+$ for 1.24/xlam<bulk_xfunc1
+$ complete_function_definition_1
+$ for 0.5<y
+$ complete_function_definition_2
+$ for y>0.1&xlam<0.8
+$ complete_function_definition_3
+$ for x<0.8|xlam<0.8
+$ complete_function_definition_4
+$ for else
+$ complete_function_definition_5
+$ end_function
+$
+$ Please note that ">" really means "greater than or equal". Similarly
+$ "<" means "less than or equal". For continuous
+$ numerical functions, there is no difference between "greater than or equal"
+$ and simply "greater than".
+$
+$ The case indicator above separates the function into branches
+$ of complete function definitions (like having different functions).
+$
+$ Within each branch of complete function definition, a set of
+$ new and more convenient logical switches can be used in the following form
+$
+$ if(expression1) then
+$ else if(expression2) then
+$ else if(expression3) then
+$ ...
+$ else
+$ endif
+$
+$ The "then" word is optional, so is the "if" following the "else".
+$ The program looks for expressions within the
+$ bracket. The following format is equivalent to the above.
+$
+$ if(expression1)
+$ else (expression2)
+$ else (expression3)
+$ ...
+$ else
+$ endif
+$
+
+
+=== PAGE 1285 ===
+B.2Rulesformacros 1283
+$ It is also possible to use an if-else-endif branching within another
+$ if-else-endif. The hierarchy may reach 99 and within
+$ each hierarchy, there can be 29 branches.
+$ For example the following complicated logical branches are
+$ supported:
+$
+$ if(adfa.eq.k) then
+$ some_definition_lines
+$
+$ if(5<x*y)
+$ some_definition_lines
+$ else if(wavelength>1.9)
+$ some_definition_lines
+$ endif
+$
+$ some_definition_lines
+$ else if (bulk_xfunc1>2.5) then
+$ some_definition_lines
+$ endif
+$
+$
+$ Please note that a complete function definition can not
+$ exceed 3000 characters. If you need to construct a function
+$ with many logical branches of long math expressions,
+$ it is recommended that you use the conventional
+$ "for" logical branching method.
+$
+$ The logical expressions in "for" and "if-then-else" must
+$ not exceed 80 characters. The math expressions follow the
+$ same syntax as for function definition detailed as follows.
+$
+$ For a function definition, there can be more than one
+$ math expressions. The "=" symbol is used to define intermediate
+$ variables. Expression without "=" is interpreted as the returned
+$ function value and causes the evaluation procedure to exit the function.
+$ All expressions should be separated by ";" or "end-of-line".
+$ An expression longer than 80 characters will be jointed
+$ by the next line regardless of existence of "&&" at the end of the line.
+$
+$ The mathematical operators +, -, *, /, **
+$ follow those of C/FORTRAN [** means pow() or power() in C] languages.
+$ All intrinsic mathematic functions appearing in the
+$ FORTRAN language, such as sin(), cos(),
+
+
+=== PAGE 1286 ===
+1284 MATERIALPARAMETERS
+$ sqrt(), log(), log10(), exp(), etc., can be used without modification.
+$
+$ Tables
+$
+$ In addition to analytical functions, parameters can also be specified
+$ by numerical tables expressed in the form of an n-dimensional matrix:
+$ para(j1,j2,...,jn). The index in each dimension corresponds to an
+$ independent variable (such as composition or temperature).
+$ The change of such a variable with the index is not necessarily of equal
+$ interval but must be in ascending order. The table must be presented in
+$ a column-wise manner and the left most index changes the fastest.
+$ Blank lines may be inserted anywhere inside the table. For example:
+$
+$ electron_mass variation=table
+$ table(x,y)
+$ x(1) y(1) matrix(1,1)
+$ x(2) y(1) matrix(2,1)
+$ x(3) y(1) matrix(3,1)
+$
+$ x(1) y(2) matrix(1,2)
+$ x(2) y(2) matrix(2,2)
+$ x(3) y(2) matrix(3,2)
+$
+$ end_table
+$
+$
+$ Units
+$
+$ Dimensions are in micron meters. Band parameters and
+$ potentials are in eV or volts. All others are in MKS units.
+$ For example mobility is in m^2/(volt*sec), band_gap in eV
+$ and dopant concentration in 1/m^3.
+$
+$ Symbol Definition
+$
+$ max_electron_mob Maximum dopant dependent elec. mobility.
+$ min_electron_mob Minimum dopant dependent elec. mobility.
+$ electron_ref_dens Reference impurity density in
+$ Dopant dependent elec. mobility function
+$ alpha_n exponent in dopant dependent elec. mobility
+$ function.
+$ max_hole_mob Corresponding symbol for holes.
+$ min_hole_mob ...
+
+
+=== PAGE 1287 ===
+B.2Rulesformacros 1285
+$ hole_ref_dens ...
+$ alpha_p ...
+$ tau_energy Energy relaxation time in hydrodynamic model.
+$ lifetime_n Minority n-carrier (electron) life time.
+$ Deep trap specification will override this.
+$ lifetime_p Minority p-carrier (hole) life time.
+$ Deep trap specification will override this.
+$ radiative_recomb Radiative recombination constant.
+$ other symbols Obvious.
+$
+$
+$ Special Symbols, Temperature, Doping, etc.
+$
+$ "temper" is reserved as a variable for the lattice temperature
+$ when constructing a material macro. The unit is degrees Kelvin.
+$ If you use any other symbol for temperature within a macro,
+$ it may not work for the thermal modeling option.
+$ Please note that in a simulation
+$ involving setting the environmental temperature, it is not
+$ sufficient to set the temperature parameter in a material
+$ macro. You must also use the "temperature" statement.
+$ The temperature parameter in a macro is used to evaluate the
+$ material properties (such as bandgap) at a particular temperature,
+$ while the "temperature" statement is used to model the
+$ carrier statistics at that temperature.
+$
+$ Similarly, "doping_n", "doping_p", and "trap_1", "trap_2", ..., "trap_9"
+$ are reserved variable symbols in a function definition. The units are
+$ in 1/m**3. "wavelength" is another reserved variable with unit of
+$ micron meters.
+$
+$ # is used together with a symbol to denote a numerical value
+$ to be supplied by the user. For example, in
+$
+$ load_macro name=gaas mater=#m
+$
+$ #m is used to mean a numerical value denoting the material
+$ number in a device. For example, if your device has GaAs bulk
+$ material as material number 2, then the above statement should be
+$ written as
+$
+$ load_macro name=gaas mater=2
+$
+
+
+=== PAGE 1288 ===
+1286 MATERIALPARAMETERS
+$
+$ Macro Styles and Function Formats
+$
+$ An advanced feature of Crosslight Software macro is its ability
+$ to define mathematical functions external to the simulation
+$ program. Such functions are evaluated dynamically at run-time.
+$
+$ Currently, there are two kinds of macros with different formats of
+$ functions: a) the older "fix-arguement-style" macros and
+$ b) the more recent "free-arguement-style" macros. The older macros
+$ are included here for compatibility reason and the newer formats are
+$ highly recommended. The two formats are explained as follows.
+$
+$ a) Fix-Arguement-Style Macros
+$
+$ The rules for function variables/arguements are rather strict.
+$ If a function is used for a physical quantity (presented as
+$ a statement), there should be exactly the same number of
+$ of function variables as that used in the "load_macro" or
+$ "get_active_layer" statement. For example, if you use
+$ (x,temper) as the variables in "load_macro", all functions
+$ within the macro must have these two variables even if
+$ all of them do not use the two variables. When calling such a macro,
+$ the following can be used:
+$
+$ load_macro name=algaas.temp var1=0.3 var2=300
+$
+$ Since all functions of such a style have the same number of
+$ arguments, the program knows which value supplied belongs to which
+$ argument in a function. Please note that when calling these kinds
+$ of macros, the user must supply all values of the arguments even
+$ if they are reserved symbols such as "temper", "doping_n", etc.
+$
+$ b) Free-Argument-Style Macros
+$
+$ The use of free-style format is more based on the need of variables.
+$ A function passes and uses as many function arguments as it needs.
+$ For example, the bandgap can pass and use both the composition
+$ and temperature as (x,temper). But for the effective mass, only
+$ the composition is needed and passed as (x). The evaluation of such
+$ a macro is based on symbol matching, i.e., the user must specify
+$ both the symbol and the value of the symbol when calling the macro,
+$ such as in the following call.
+
+
+=== PAGE 1289 ===
+B.2Rulesformacros 1287
+$
+$ load_macro name=algaas.temp var1=0.3 var2=300 &&
+$ var_symbol1=x var_symbol2=temper
+$
+$ The user may skip the specification of reserved internal arguments
+$ such as "temper", "doping_n", etc., because the program already
+$ knows their values. For example, the following may be used instead of
+$ the above.
+$
+$ load_macro name=algaas.temp var1=0.3 var_symbol1=x
+$
+$
+$ Searching For a Macro
+$
+$ The macro files can contain both the older and newer style macros
+$ with the same macro name. The search of the correct version depends
+$ on how the macro is called. If a macro does not require
+$ any user-supplied macro variables, the simulator will use the first
+$ macro it encounters in the search. For macro requiring user-supplied
+$ variables (or function arguments), if "var_symbol" is not specified
+$ in a macro call, older style macro is assumed and user must strictly
+$ align all variables in a macro call. The user is encouraged
+$ to convert to the newer style because all future new macros will
+$ be created and maintained in the newer free-style.
+$
+$ Please also note that the older style (fix-argument-style) may be
+$ regarded as a special case of free-style macro with many un-used
+$ function variables listed in all macro functions. Or in another word
+$ the older macro can be loaded also with a complete listing of
+$ "var_symbol". In fact when the program detects a "load_macro" or
+$ "get_active_layer" without any "var_symbol", it will search all the
+$ macro functions and supply the necessary "var_symbol". In the case
+$ of a macro call fits more than one macros in the macro library, the
+$ simulator will always use the first one it encounters.
+$
+$ For the free-style macros to be recognized by the graphic user
+$ interface (GUI) such as LayerBuilder and GeoEditor, it must be labeled
+$ as [free-style] in the remarks before the macro. Otherwise, it will be
+$ treated as an older style macro.
+$
+$
+$ Mobility Parameter Specifications
+$
+
+
+=== PAGE 1290 ===
+1288 MATERIALPARAMETERS
+$ In Crosslight device simulator, the dopant dependent low field mobility
+$ takes the following form:
+$
+$ mu_low_field=mu_min+(mu_max-mu_min)/(1+(total_doping/ref_dens)**alpha)
+$
+$ The current version of the simulator supports two versions of
+$ parameter specifications. The older version is to specify the
+$ following four parameters for electrons:
+$ max_electron_mob, min_electron_mob, electron_ref_dens, and alpha_n.
+$ The program computes the above for each mesh point and average them
+$ in mid-point between two nodes. Then the mid-point quantities of the
+$ above is used in the dopant dependent formula at every iteration.
+$
+$ To speed up the computation, a more efficient version of parameter
+$ specification is to directly evaluate the dopant dependence for
+$ for statement of "electron_mobility", as in the following example.
+$
+$ electron_mobility variation=function
+$ function(doping_n,doping_p,trap_1)
+$ mu_max=0.14;
+$ mu_min=0.0055;
+$ ref_dens=1.07d23;
+$ alpha=0.73;
+$ total_doping=doping_n+doping_p+trap_1;
+$ mu_min+(mu_max-mu_min)/(1+(total_doping/ref_dens)**alpha)
+$ end_function
+$
+$ Speed-up is achieved because we need to evaluate the formula
+$ once only at the time of processing the macro data.
+$
+$ The two versions of parameters specification are equivalent in theory
+$ but may result in some difference if the mesh is rough because of the
+$ non-linearity of the dopant dependent formula. Also, difference in
+$ number of trap types may also make a difference. The older version
+$ of specification automatically takes into account all trap densities
+$ while the user need to explicitly specify the number of traps to
+$ be used in the dopant dependent formula.
+$
+$
+$ use_macro_file macro1=my_old_macro1 macro2=my_old_macro2
+$
+$ The simulation software will first search macros in the above
+$ statement before searching the default crosslight.tab/more.tab.
+
+
+=== PAGE 1291 ===
+B.2Rulesformacros 1289
+$ Please note that that included macros must be placed in the
+$ same directory as the input files.
+$
+$
+$ Crosslight Quaternary Parameter Interpolation Scheme
+$
+$ For quaternary material such as In(1-x)Ga(x)As(y)P(1-y), experimental
+$ data for arbitrary (x,y) normally do not exist. However, data are available
+$ for ternaries [such as In(1-x)Ga(x)As] and for the lattice matched line:
+$ fm(xm,ym)=0. Therefore, any reasonable interpolation scheme must
+$ satisfy experimental data for all the ternaries and at the matched line.
+$
+$ Crosslight macros use the following interpolation scheme:
+$
+$ Let us take the bandgap as an example:
+$ Given bandgap of matched line (xm,ym): Eg0_match(ym)
+$ and measured ternary bandgaps, we interpolate as follows.
+$ If (x,y) is within the left side of the matched line (xm,ym):
+$
+$ Eg0=Eg0_bilin(x,y)+(x/xm)*(Eg0_match(y)-Eg0_bilin(xm,y))
+$
+$ If (x,y) is within the right side of the matched line (xm,ym):
+$
+$ Eg0=Eg0_bilin(x,y)+[(1-x)/(1-xm)]*(Eg0_match(y)-Eg0_bilin(xm,y))
+$
+$ where Eg0_bilin(x,y) is bi-linear interpolation from ternaries as proposed
+$ in the paper of Adachi,
+$ [Adachi,S. "Material parameters of In(1-x)Ga(x)As(y)P(1-y) and related
+$ binaries." J. Appl. Phys. Vol. 53 No. 12, Dec. 1982, pgs 8775-92.]
+$
+$ The Crosslight formula ensures that the unstrained bandgap
+$ agrees with experiment at ternaries and at the matched line (xm,ym).
+$ For any other composition, we draw horizontal line across
+$ (x,y) and linearly interpolate given the three known points:
+$ (0,y), (xm,y), (1,y)
+$
+$ Supported Intrinsic Math Functions
+$
+$ Math functions are directly taken from Fortran90 and accuracy of
+$ double precision is already used. Please note that the following
+$ symbols are reserved for math functions and these should not be used
+$ for user-defined variables. Also, version 2009 and later supports
+$ multiple variable instrinsic functions, such as atan2(x1,x2)
+
+
+=== PAGE 1292 ===
+1290 MATERIALPARAMETERS
+$ and max(x1,x2,...).
+$
+$ function-symbol equivalent double-precision version remark
+$ log dlog
+$ log10 dlog10
+$ exp dexp
+$ asin dasin
+$ acos dacos
+$ atan datan
+$ sin dsin
+$ cos dcos
+$ tan dtan
+$ sinh dsinh
+$ cosh dcosh
+$ tanh dtanh
+$ erf derf
+$ erfc derfc
+$ sqrt dsqrt
+$ abs dabs
+$ atan2 datan2 2-variable function
+$ max multiple-variable function
+$ maxval same as max()
+$ min multiple-variable function
+$ minval same as min()
+$
+$ Band Offsets and Alignments
+$
+$ For bulk macro, the band alignment is solely determined by the
+$ affinity parameter. For active_layer macro, the band alignment
+$ is determined by band_offset, band_discont, or band_discont_right.
+$ band_discont and band_discont_right override band_offset. Then
+$ band alignment settings in active_layer macro override the affinity
+$ setting in bulk macro.
+$
+$ For quantum well with strain in well and/or barrier, it may be confusing
+$ to use band_offset since hydrostatic strain changes the bandgap. Such
+$ change may be partitioned between the conduction and
+$ valence band with a certain ratio.
+$
+$ The shear strain may split the HH/LH/CH valence bands, making the
+$ bandgap multi-valued. Different use of band_offset is controlled by
+$ the command zincblende_offset_model or wurtzite_offset_model, for
+$ zincblende or wurtzite material, respectively.
+
+
+=== PAGE 1293 ===
+B.3Zincblendepassivemacro 1291
+$
+$
+$ Supported Internal and External Functions
+$
+$ Crosslight macro system supports user-defined external and internal
+$ functions. User-defined external function uses names like
+$ bulk_xfunck (k=1,...,9) for bulk macros and ext_funck (k=1,...,9)
+$ for active_layers.
+$ They can be defined in the same way as other predefined functions
+$ such as for band_gap and affinity, and supports symbolic math expressions
+$ and tables. The advantage is that they can be repeatedly used in
+$ defining other quantities. For example, one may define a temperature
+$ dependent external function and repeatedly use it in band_gap, affinity,
+$ mobility and other physical variables which may use the same temperature
+$ dependent function.
+$
+$ The other type of function is "internal function", in the form of
+$ intern_funck (k=1,...,9). These are more flexible and are treated
+$ in a manner as the math intrinsic functions such as sin() and cos().
+$ They are user-defined within the same macro and can use both math
+$ expression and tables. The function arguements are completely independent
+$ of variables passed when loading a macro. The difference between
+$ user-defined internal and external functions are as follows:
+$ Function arguements for external functions must be passed from macro
+$ loading. For example, the argument "x" is passed through
+$ load_macro name=algaas mater= 1 &&
+$ var_symbol1=x var1= 0.7100E+00
+$ Also, temperature, doping concetration and other reserved variables are
+$ automatically passed to it. The user has no way of changing the
+$ input arguements. For internal functions, the input arguements
+$ are supplied when being used within a function definition. The input
+$ arguements may or may not be related to macro loading. Also, user
+$ may operate on the input variables before passing it as internal
+$ a function arguement.
+$
+$=============================================================
+B.3 Zincblende passive macro
+Atypicalpassivemacroforazincblendematerial(Al x Ga 1−x As)islistedhere.
+$***********************************
+
+
+=== PAGE 1294 ===
+1292 MATERIALPARAMETERS
+$ macro algaas
+$ for bulk Al(x)Ga(1-x)As
+$ Lattice matched to GaAs
+$ [free-style]
+$ Temperature dependent version of macro algaas
+$ Renamed from algaas.temp
+$ Typical use:
+$ load_macro name=algaas var1=#x mater=#m &&
+$ var_symbol1=x
+$ parameter_range x=[0 1]
+$ parameter_range temper=[77 600]
+$ parameter_range doping_n=[1.e20 1.e26]
+$ parameter_range doping_p=[1.e20 1.e26]
+$ parameter_range trap_1=[1.e18 1.e24]
+$***********************************
+begin_macro algaas
+material type=semicond band_valleys=(1 1) &&
+el_vel_model=n.gaas hole_vel_model=beta
+dielectric_constant variation=function
+function(x)
+13.1 - 3 * x
+end_function
+electron_mass variation=function
+function(x)
+for 0.<x<0.45
+0.067 + 0.083 * x
+for 0.45<x<1.
+0.85 - 0.14 * x
+end_function
+hole_mass variation=function
+function(x)
+( ( 0.087 + 0.063 * x ) ** (3 / 2)
++ ( 0.62 + 0.14 * x ) ** (3 / 2) ) ** (2 / 3)
+end_function
+band_gap variation=function
+function(x,temper)
+for 0.<x<0.45
+shift=-5.5e-4 * temper**2 /(temper+225)+9.4285712E-02 ;
+1.424 + 1.247 * x +shift
+for 0.45<x<1.
+
+
+=== PAGE 1295 ===
+B.3Zincblendepassivemacro 1293
+shift=-5.5e-4 * temper**2 /(temper+225)+9.4285712E-02 ;
+1.9 + 0.125 * x + 0.143 *x * x +shift
+end_function
+affinity variation=function
+function(x,temper)
+for 0<x<0.45
+offset=0.6;
+shift=-5.5e-4 * temper**2 /(temper+225)+9.4285712E-02 ;
+4.07 - 0.748 * x-offset*shift
+for 0.45<x<1.
+offset=0.6;
+shift=-5.5e-4 * temper**2 /(temper+225)+9.4285712E-02 ;
+3.7964 - 0.14 * x-offset*shift
+end_function
+electron_mobility variation=function
+function(x,temper,doping_n,doping_p,trap_1)
+for 0<x<0.45
+fac=(300/temper)**2.3;
+mu_max=0.85 * exp(-18.516 * x ** 2 )*fac;
+mu_min=0;
+ref_dens=1.69d23;
+alpha=0.436;
+total_doping=doping_n+doping_p+trap_1;
+mu_min+(mu_max-mu_min)/(1+(total_doping/ref_dens)**alpha)
+for 0.45<x<1.
+fac=(300/temper)**2.3;
+mu_max=0.02*fac;
+mu_min=0;
+ref_dens=1.69d23;
+alpha=0.436;
+total_doping=doping_n+doping_p+trap_1;
+mu_min+(mu_max-mu_min)/(1+(total_doping/ref_dens)**alpha)
+end_function
+hole_mobility variation=function
+function(x,temper,doping_n,doping_p,trap_1)
+dope=1.e22 ;
+tfac1=(temper/300)**2.3 ;
+tfac2=(temper/300)**1.5 ;
+fac=1/( tfac1 + 1.6e-24*dope*tfac2 );
+
+
+=== PAGE 1296 ===
+1294 MATERIALPARAMETERS
+mu_max=(0.04 - 0.048 * x + 0.02 * x * x)*fac;
+mu_min=0;
+ref_dens=2.75d23;
+alpha=0.395;
+total_doping=doping_n+doping_p+trap_1;
+mu_min+(mu_max-mu_min)/(1+(total_doping/ref_dens)**alpha)
+end_function
+beta_n value=2.
+electron_sat_vel variation=function
+function(x,temper)
+for 0<x<0.45
+fac=(300/temper)**2.3;
+0.77e5 * (1 - 0.44 * x )*fac
+for 0.45<x<1.
+fac=(300/temper)**2.3;
+8.e4*fac
+end_function
+beta_p value=1.
+hole_sat_vel variation=function
+function(temper)
+dope=1.e22 ;
+tfac1=(temper/300)**2.3 ;
+tfac2=(temper/300)**1.5 ;
+fac=1/( tfac1 + 1.6e-24*dope*tfac2 );
+1.d5*fac
+end_function
+norm_field value=4.e5
+tau_energy value=1.e-13
+radiative_recomb value=1.d-16
+auger_n value=1.5e-42
+auger_p value=1.5e-42
+lifetime_n value=1.e-7
+lifetime_p value=1.e-7
+real_index variation=function
+function(x)
+3.65-0.73*x
+end_function
+absorption value=0.
+
+
+=== PAGE 1297 ===
+B.4Zincblendeactivemacro 1295
+thermal_kappa value=46.
+end_macro algaas
+B.4 Zincblende active macro
+A typical active macro for a zincblende material (Al x Ga 1−x As) is listed here. This
+ff
+is a QW macro with the barrier and well having a di erent Al%: note how the
+parameters depend on both the well and barrier compositions. Parameters from
+this macro will override values defined in the passive macros for the well and
+barriersifthereisaconflict.
+$ ******************************************************
+$ acitve layer macro : Al(xw)Ga(1-xw)As/Al(xb)Ga(1-xb)As
+$ [free-style]
+$ xw, xb=Al comp. in well, barrier, temper=well temperature
+$ Typical use:
+$ get_active_layer name=AlGaAs/AlGaAs mater=#m &&
+$ var1=#xw var2=#xb var_symbol1=xw var_symbol2=xb
+$ parameter_range xw=[0 1]
+$ parameter_range xb=[0 1]
+$ parameter_range temper=[77 600]
+$ ******************************************************
+$
+begin_active_layer AlGaAs/AlGaAs
+$
+layer_type type=unstrained_well valley_gamma=1 valley_l=4 &&
+valley_hh=1 valley_lh=1
+$
+eg0_well variation=function
+function(xw,temper)
+for 0.<xw<0.45
+shift0=-5.5d-4*300.**2/(300.+225.) ;
+shift=-5.5d-4*temper**2/(temper+225.) ;
+1.424+1.247*xw+shift-shift0
+for 0.45<xw<1.
+shift0=-5.5d-4*300.**2/(300.+225.) ;
+shift=-5.5d-4*temper**2/(temper+225.) ;
+1.9+.125*xw+0.143*xw**2+shift-shift0
+end_function
+$
+lband_well value=0.28
+
+
+=== PAGE 1298 ===
+1296 MATERIALPARAMETERS
+$
+eg0_bar variation=function
+function(xb,temper)
+for 0.<xb<0.45
+shift0=-5.5d-4*300.**2/(300.+225.) ;
+shift=-5.5d-4*temper**2/(temper+225.) ;
+1.424+1.247*xb+shift-shift0
+for 0.45<xb<1.
+shift0=-5.5d-4*300.**2/(300.+225.) ;
+shift=-5.5d-4*temper**2/(temper+225.) ;
+1.9+.125*xb+0.143*xb**2+shift-shift0
+end_function
+$
+lband_bar value=0.28
+$
+$ revised jun04
+$delta_so_well value=0.366
+delta_so_well variation=function
+function(xw,xb,temper)
+0.343-0.0628*xw
+end_function
+delta_so_bar variation=function
+function(xw,xb,temper)
+0.343-0.0628*xb
+end_function
+$
+band_offset value=0.6
+$
+mass_gamma_well variation=function
+function(xw)
+0.067+0.083*xw
+end_function
+$
+mass_gamma_bar variation=function
+function(xb)
+0.067+0.083*xb
+end_function
+$
+mass_l_well variation=function
+function(xw)
+0.56+0.1*xw
+end_function
+$
+
+
+=== PAGE 1299 ===
+B.4Zincblendeactivemacro 1297
+mass_l_bar variation=function
+function(xb)
+0.56+0.1*xb
+end_function
+$
+gamma1_well variation=function
+function(xw)
+g1ga=6.9 ;
+g1al=3.45 ;
+g1ga*(1.-xw)+g1al*xw
+end_function
+$
+gamma2_well variation=function
+function(xw)
+g2ga=2.2 ;
+g2al=0.68 ;
+g2ga*(1.-xw)+g2al*xw
+end_function
+$
+gamma3_well variation=function
+function(xw)
+g3ga=2.9 ;
+g3al=1.29 ;
+g3ga*(1.-xw)+g3al*xw
+end_function
+$
+a_well variation=function
+function(xw)
+dhga=-9.8 ;
+dhal=-9.8 ;
+dhga* (1. - xw) +dhal*xw
+end_function
+$
+b_well variation=function
+function(xw)
+duga=-1.76 ;
+dual=-1.76 ;
+duga*(1.-xw)+dual*xw
+end_function
+$
+c11_well variation=function
+function(xw)
+
+
+=== PAGE 1300 ===
+1298 MATERIALPARAMETERS
+c11ga=11.9 ;
+c11al=12.02 ;
+c11ga*(1.-xw)+c11al*xw
+end_function
+$
+c12_well variation=function
+function(xw)
+c12ga=5.38 ;
+c12al=5.70 ;
+c12ga*(1.-xw)+c12al*xw
+end_function
+$
+gamma1_bar variation=function
+function(xb)
+g1ga=6.9 ;
+g1al=3.45 ;
+g1ga*(1.-xb)+g1al*xb
+end_function
+$
+gamma2_bar variation=function
+function(xb)
+g2ga=2.2 ;
+g2al=0.68 ;
+g2ga*(1.-xb)+g2al*xb
+end_function
+$
+gamma3_bar variation=function
+function(xb)
+g3ga=2.9 ;
+g3al=1.29 ;
+g3ga*(1.-xb)+g3al*xb
+end_function
+$
+a_bar variation=function
+function(xb)
+dhga=-9.8 ;
+dhal=-9.8 ;
+dhga*(1.-xb)+dhal*xb
+end_function
+$
+b_bar variation=function
+function(xb)
+duga=-1.76 ;
+
+
+=== PAGE 1301 ===
+B.4Zincblendeactivemacro 1299
+dual=-1.76 ;
+duga*(1.-xb)+dual*xb
+end_function
+$
+c11_bar variation=function
+function(xb)
+c11ga=11.9 ;
+c11al=12.02 ;
+c11ga*(1.-xb)+c11al*xb
+end_function
+$
+c12_bar variation=function
+function(xb)
+c12ga=5.38 ;
+c12al=5.70 ;
+c12ga*(1.-xb)+c12al*xb
+end_function
+$
+kane_para_f_well variation=function
+function(xw)
+gaas=-1.94;
+alas=-0.48;
+(1-xw)*gaas+xw*alas
+end_function
+kane_para_f_bar variation=function
+function(xb)
+gaas=-1.94;
+alas=-0.48;
+(1-xb)*gaas+xb*alas
+end_function
+lattice_constant value=5.65325
+$
+end_active_layer AlGaAs/AlGaAs
+
+
+=== PAGE 1302 ===
+1300 MATERIALPARAMETERS
+B.5 Wurtzite passive macro
+Thissectionshowsthepassivemacroofacommonwurtzitematerial(In x Ga 1−x N).
+Notehowthestrainparametersarecritical.
+$**********************************************
+$ [free-style]
+$ macro ingan
+$ Bulk In(x)Ga(1-x)N parameters
+$ Contributors: Peter Mensz, Khalid Shahzad (and maybe) others.
+$ Changed by Kehl Sink 6/10/99
+$ changed by Joachim Piprek 12/2/99 + 1/7/00
+$ revised By zqli 05/2005 for band gap and bowing
+$ InN band gap of 0.71 is from T Matsuoka et al.
+$ Appl. Phys. Lett., 12, 1246(2002)
+$ revised jul07
+$ 1) use unstrained offset 2) include temper. 3) reduce lifetime
+$ Typical use:
+$ load_macro name=ingan var1=#x mater=#m var_symbol1=x
+$ parameter_range x=[0 1]
+$ parameter_range temper=[77 600]
+$ *********************************************
+begin_macro ingan
+material type=wurtzite band_valleys=(1 1) &&
+el_vel_model=beta hole_vel_model=beta
+$
+$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+$ bowing=3. & band-structure parameters
+$ according to JAP Vol 89 No 11 pp 5815-5875
+$ modified by George Xiao on Aug. 29, 2006
+$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+$
+$---wurtzite parameters-----------
+$---These are the same as in corresponding Active Layer Macro
+$---Please see references therein
+lattice_base value=3.189
+lattice_c_base value=5.185
+lattice_bulk variation=function
+function(x,temper)
+3.189*(1-x)+3.545*x
+end_function
+lattice_c_bulk variation=function
+
+
+=== PAGE 1303 ===
+B.5Wurtzitepassivemacro 1301
+function(x)
+gan=5.185;
+inn=5.718;
+gan*(1-x)+inn*x
+end_function
+$
+eg0_bulk variation=function
+function(x,temper)
+eg0gan=3.507-9.09d-4*temper**2/(830+temper);
+eg0inn=0.735-2.45d-4*temper**2/(624+temper);
+bowing=3.0;
+(1.0-x)*eg0gan+eg0inn*x-bowing*x*(1-x)
+end_function
+$
+delta1_bulk variation=function
+function(x,temper)
+gan=0.019;
+inn=0.041;
+gan+(inn-gan)*x
+end_function
+$
+delta2_bulk variation=function
+function(x,temper)
+gan=0.0047;
+inn=0.00033;
+gan+(inn-gan)*x
+end_function
+$
+delta3_bulk variation=function
+function(x,temper)
+gan=0.0047;
+inn=0.00033;
+gan+(inn-gan)*x
+end_function
+$
+mass_gamma_bulk variation=function
+function(x)
+gan=0.20;
+inn=0.12;
+gan+(inn-gan)*x
+end_function
+$
+tmass_gamma_bulk variation=function
+
+
+=== PAGE 1304 ===
+1302 MATERIALPARAMETERS
+function(x)
+gan=0.20;
+inn=0.12;
+gan+(inn-gan)*x
+end_function
+$
+a1_bulk variation=function
+function(x,temper)
+inn=-8.21;
+gan=-6.56;
+gan+(inn-gan)*x
+end_function
+$
+a2_bulk variation=function
+function(x,temper)
+inn=-0.68;
+gan=-0.91;
+gan+(inn-gan)*x
+end_function
+$
+a3_bulk variation=function
+function(x,temper)
+inn=7.57;
+gan=5.65;
+gan+(inn-gan)*x
+end_function
+$
+a4_bulk variation=function
+function(x,temper)
+inn=-5.23;
+gan=-2.83;
+gan+(inn-gan)*x
+end_function
+$
+a5_bulk variation=function
+function(x,temper)
+inn=-5.11;
+gan=-3.13;
+gan+(inn-gan)*x
+end_function
+$
+a6_bulk variation=function
+function(x,temper)
+
+
+=== PAGE 1305 ===
+B.5Wurtzitepassivemacro 1303
+inn=-5.96;
+gan=-4.86;
+gan+(inn-gan)*x
+end_function
+$
+c33_bulk variation=function
+function(x,temper)
+gan=398;
+inn=224;
+gan+(inn-gan)*x
+end_function
+$
+c13_bulk variation=function
+function(x,temper)
+gan=106;
+inn=92;
+gan+(inn-gan)*x
+end_function
+c11_bulk variation=function
+function(x,temper)
+gan=390;
+inn=271;
+gan+(inn-gan)*x
+end_function
+c12_bulk variation=function
+function(x,temper)
+gan=145;
+inn=124;
+gan+(inn-gan)*x
+end_function
+c44_bulk variation=function
+function(x,temper)
+gan=105;
+inn=46;
+gan+(inn-gan)*x
+end_function
+$
+$ GaN values for def. pot.
+$
+
+
+=== PAGE 1306 ===
+1304 MATERIALPARAMETERS
+d1_bulk variation=function
+function(x,temper)
+gan=-3.0;
+inn=-3.0;
+gan+(inn-gan)*x
+end_function
+$
+d2_bulk variation=function
+function(x,temper)
+gan=3.6;
+inn=3.6;
+gan+(inn-gan)*x
+end_function
+$
+d3_bulk variation=function
+function(x,temper)
+gan=8.82;
+inn=8.82;
+gan+(inn-gan)*x
+end_function
+$
+d4_bulk variation=function
+function(x,temper)
+gan=-4.41;
+inn=-4.41;
+gan+(inn-gan)*x
+end_function
+d5_bulk variation=function
+function(x,temper)
+gan=-4.00;
+inn=-2.33;
+gan+(inn-gan)*x
+end_function
+d6_bulk variation=function
+function(x,temper)
+gan=-4.00;
+inn=-2.33;
+d5=gan+(inn-gan)*x;
+d3=8.82;
+(d3+4*d5)/sqrt(2)
+end_function
+
+
+=== PAGE 1307 ===
+B.5Wurtzitepassivemacro 1305
+$
+$a_bulk value=-4.08
+$ac_bulk value=-8.61
+$
+a_bulk variation=function
+function(x,temper)
+gan=-8.16;
+inn=-3.5;
+gan+(inn-gan)*x
+end_function
+$
+ac_bulk variation=function
+function(x,temper)
+gan=-4.08;
+inn=-3.5;
+gan+(inn-gan)*x
+end_function
+$
+$---end of wurtzite parameters-----------
+$
+dielectric_constant variation=function
+function(x,temper)
+gan=9.5;
+inn=15;
+gan+(inn-gan)*x
+end_function
+$
+$ k.p theory: unstrained ref. bandgap=eg0+delta1+delta2
+$
+affinity variation=function
+function(x,temper)
+gan=4.07;
+eg0gan=3.507-9.09d-4*temper**2/(830+temper);
+eg0inn=0.735-2.45d-4*temper**2/(624+temper);
+bowing=3.0;
+egx=(1.0-x)*eg0gan+eg0inn*x-bowing*x*(1-x);
+$
+delta1_gan=0.019;
+delta1_inn=0.041;
+delta1_x=delta1_gan+(delta1_inn-delta1_gan)*x;
+$
+delta2_gan=0.0047;
+
+
+=== PAGE 1308 ===
+1306 MATERIALPARAMETERS
+delta2_inn=0.00033;
+delta2_x=delta2_gan+(delta2_inn-delta2_gan)*x;
+$
+$egx_ref=egx+delta1_x+delta2_x;
+$eg0gan_ref=eg0gan+delta1_gan+delta2_gan;
+egx_ref=egx;
+eg0gan_ref=eg0gan;
+off=0.67;
+gan-(egx_ref-eg0gan_ref)*off
+end_function
+$
+max_electron_mob variation=function
+function(x,temper)
+684.d-4*(300/temper)**1.5
+end_function
+min_electron_mob variation=function
+function(x,temper)
+386.d-4*(300/temper)**1.5
+end_function
+electron_ref_dens value=1.d23
+alpha_n value=1.37
+beta_n value=1.
+electron_sat_vel value=1.d5
+norm_field value=2.1e7
+$ from [7]
+max_hole_mob value=2.0d-4
+min_hole_mob value=2.0d-4
+hole_ref_dens value=2.75d23
+alpha_p value=0.395
+beta_p value=1.
+hole_sat_vel value=1.d5
+$
+tau_energy value=1.d-13
+$
+lifetime_n value=1.e-7
+lifetime_p value=1.e-7
+$ adjusted 1/7/00
+radiative_recomb value=0.2d-16
+auger_n value=1.d-46
+auger_p value=1.d-46
+$
+$real_index value=2.7
+
+
+=== PAGE 1309 ===
+B.6Wurtziteactivemacro 1307
+$for x<0.3
+real_index variation=function
+function(x,temper)
+gan=2.5067;
+inn=3.4167;
+gan+(inn-gan)*x
+end_function
+absorption value=0.
+$ rough estimate for thin layers:
+thermal_kappa value=10.
+$
+end_macro ingan
+B.6 Wurtzite active macro
+This section lists a typical wurtzite active layer: InGaN well grown on an InGaN
+ff
+barrier. The parameters for wurtzite semiconductors are substantially di erent
+fromthoseofzincblendestructureduetothecomplexcouplingofthethreevalence
+bands. Many terms are needed to define the valence band Hamiltonian and
+ff
+variousstraine ects.
+Since the whole structure is often grown on sapphire, it is also unclear exactly
+what the base lattice size should be. Thus the user is required to investigate this
+issuebasedoninformationofthegrowthonsapphire. Inmanycases,athickGaN
+ff
+bu erlayerisalsousedandthebaselatticewillbethatofGaN.
+$ ***********************************************
+$ Version 2005
+$ active layer macro for
+$ quantum well system of In(xw)Ga(1-xw)N/In(xb)Ga(1-xb)N
+$ xw=In composition in well, xb=In composition in barrier,
+$ temper=well temperature
+$
+$ [free-style]
+$ revised by J. Piprek 9/9/2001
+$ revised By zqli 05/2005 for band gap and bowing
+$ InN band gap of 0.71 is from T Matsuoka et al.
+$ Appl. Phys. Lett., 12, 1246(2002)
+$ Strained quantum well grown on strained quantum barrier.
+$ The substrate is assumed to be lattice matched to GaN
+$ Typical use:
+$ get_active_layer name=InGaN/InGaN mater=#m &&
+
+
+=== PAGE 1310 ===
+1308 MATERIALPARAMETERS
+$ var1=#xw var2=#yw var_symbol1=xw var_symbol2=yw
+$ parameter_range xw=[0 1]
+$ parameter_range xb=[0 1]
+$ parameter_range temper=[77 600]
+$ **********************************************
+$
+begin_active_layer InGaN/InGaN
+layer_type type=wurtzite_well valley_gamma=1 &&
+valley_hh=1 valley_lh=1 valley_ch=1
+$
+$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+$ bowing=3. & band-structure parameters
+$ according to JAP Vol 89 No 11 pp 5815-5875
+$ modified by George Xiao on Sept. 14, 2006
+$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+$
+$ Lattice constant of InN is 3.548
+$ Lattice constant of GaN is 3.189
+$
+$ We need to compute the strain based on lattice constant
+$ of the substrate
+$
+lattice_constant value=3.189
+lattice_c_constant value=5.185
+$
+lattice_well variation=function
+function(xw,xb)
+3.189*(1-xw)+3.545*xw
+end_function
+$
+lattice_bar variation=function
+function(xw,xb)
+3.189*(1-xb)+3.545*xb
+end_function
+lattice_c_well variation=function
+function(xw,xb)
+gan=5.185;
+inn=5.718;
+gan*(1-xw)+inn*xw
+end_function
+lattice_c_bar variation=function
+
+
+=== PAGE 1311 ===
+B.6Wurtziteactivemacro 1309
+function(xw,xb)
+gan=5.185;
+inn=5.718;
+gan*(1-xb)+inn*xb
+end_function
+$
+$ --- energy parameters
+$
+$eg0_well variation=function
+$function(xw,temper)
+$eg0GaN=3.35564150943396;
+$bowing=3.8;
+$eg300=(1.0-xw)*eg0GaN+1.89*xw-bowing*xw*(1-xw);
+$eg300-6.e-4*(temper-300.)
+$end_function
+$
+eg0_well variation=function
+function(xw,xb,temper)
+eg0GaN=3.507-9.09d-4*temper**2/(830+temper);
+eg0InN=0.735-2.45d-4*temper**2/(624+temper);
+bowing=3;
+$bowing=1.4;
+(1.0-xw)*eg0GaN+eg0InN*xw-bowing*xw*(1-xw)
+end_function
+$
+$eg0_bar variation=function
+$function(xb,temper)
+$eg0GaN=3.35564150943396;
+$bowing=3.8;
+$eg300=(1.0-xb)*eg0GaN+1.89*xb-bowing*xb*(1-xb);
+$eg300-6.e-4*(temper-300.)
+$end_function
+$
+eg0_bar variation=function
+function(xw,xb,temper)
+eg0GaN=3.507-9.09d-4*temper**2/(830+temper);
+eg0InN=0.735-2.45d-4*temper**2/(624+temper);
+bowing=3;
+$bowing=1.4;
+(1.0-xb)*eg0GaN+eg0InN*xb-bowing*xb*(1-xb)
+end_function
+$
+
+
+=== PAGE 1312 ===
+1310 MATERIALPARAMETERS
+band_offset value=0.67
+$
+delta_so_well variation=function
+function(xw,xb)
+gan=0.014;
+inn=0.001;
+gan+(inn-gan)*xw
+end_function
+$
+delta_so_bar variation=function
+function(xw,xb)
+gan=0.014;
+inn=0.001;
+gan+(inn-gan)*xb
+end_function
+$
+delta1_well variation=function
+function(xw,xb)
+gan=0.019;
+inn=0.041;
+gan+(inn-gan)*xw
+end_function
+$
+delta1_bar variation=function
+function(xw,xb)
+gan=0.019;
+inn=0.041;
+gan+(inn-gan)*xb
+end_function
+$
+delta2_well variation=function
+function(xw,xb)
+gan=0.0047;
+inn=0.00033;
+gan+(inn-gan)*xw
+end_function
+$
+delta2_bar variation=function
+function(xw,xb)
+gan=0.0047;
+inn=0.00033;
+gan+(inn-gan)*xb
+end_function
+
+
+=== PAGE 1313 ===
+B.6Wurtziteactivemacro 1311
+$
+delta3_well variation=function
+function(xw,xb)
+gan=0.0047;
+inn=0.00033;
+gan+(inn-gan)*xw
+end_function
+$
+delta3_bar variation=function
+function(xw,xb)
+gan=0.0047;
+inn=0.00033;
+gan+(inn-gan)*xb
+end_function
+$
+$ ----conduction band masses
+$
+mass_gamma_well variation=function
+function(xw,xb)
+gan=0.20;
+inn=0.12;
+gan+(inn-gan)*xw
+end_function
+$
+mass_gamma_bar variation=function
+function(xw,xb)
+gan=0.20;
+inn=0.12;
+gan+(inn-gan)*xb
+end_function
+$
+tmass_gamma_well variation=function
+function(xw,xb)
+gan=0.20;
+inn=0.12;
+gan+(inn-gan)*xw
+end_function
+$
+tmass_gamma_bar variation=function
+function(xw,xb)
+gan=0.20;
+inn=0.12;
+gan+(inn-gan)*xb
+
+
+=== PAGE 1314 ===
+1312 MATERIALPARAMETERS
+end_function
+$
+a1_well variation=function
+function(xw,xb)
+inn=-8.21;
+gan=-6.56;
+gan+(inn-gan)*xw
+end_function
+$
+a2_well variation=function
+function(xw,xb)
+inn=-0.68;
+gan=-0.91;
+gan+(inn-gan)*xw
+end_function
+$
+a3_well variation=function
+function(xw,xb)
+inn=7.57;
+gan=5.65;
+gan+(inn-gan)*xw
+end_function
+$
+a4_well variation=function
+function(xw,xb)
+inn=-5.23;
+gan=-2.83;
+gan+(inn-gan)*xw
+end_function
+$
+a5_well variation=function
+function(xw,xb)
+inn=-5.11;
+gan=-3.13;
+gan+(inn-gan)*xw
+end_function
+$
+a6_well variation=function
+function(xw,xb)
+inn=-5.96;
+gan=-4.86;
+gan+(inn-gan)*xw
+end_function
+
+
+=== PAGE 1315 ===
+B.6Wurtziteactivemacro 1313
+$
+a1_bar variation=function
+function(xw,xb)
+inn=-8.21;
+gan=-6.56;
+gan+(inn-gan)*xb
+end_function
+$
+a2_bar variation=function
+function(xw,xb)
+inn=-0.68;
+gan=-0.91;
+gan+(inn-gan)*xb
+end_function
+$
+a3_bar variation=function
+function(xw,xb)
+inn=7.57;
+gan=5.65;
+gan+(inn-gan)*xb
+end_function
+$
+a4_bar variation=function
+function(xw,xb)
+inn=-5.23;
+gan=-2.83;
+gan+(inn-gan)*xb
+end_function
+$
+a5_bar variation=function
+function(xw,xb)
+inn=-5.11;
+gan=-3.13;
+gan+(inn-gan)*xb
+end_function
+$
+a6_bar variation=function
+function(xw,xb)
+inn=-5.96;
+gan=-4.86;
+gan+(inn-gan)*xb
+end_function
+$
+
+
+=== PAGE 1316 ===
+1314 MATERIALPARAMETERS
+c33_well variation=function
+function(xw,xb)
+gan=398;
+inn=224;
+gan+(inn-gan)*xw
+end_function
+$
+c33_bar variation=function
+function(xw,xb)
+gan=398;
+inn=224;
+gan+(inn-gan)*xb
+end_function
+$
+c13_well variation=function
+function(xw,xb)
+gan=106;
+inn=92;
+gan+(inn-gan)*xw
+end_function
+$
+c13_bar variation=function
+function(xw,xb)
+gan=106;
+inn=92;
+gan+(inn-gan)*xb
+end_function
+c11_well variation=function
+function(xw,xb)
+gan=390;
+inn=271;
+gan+(inn-gan)*xw
+end_function
+c11_bar variation=function
+function(xw,xb)
+gan=390;
+inn=271;
+gan+(inn-gan)*xb
+end_function
+c12_well variation=function
+
+
+=== PAGE 1317 ===
+B.6Wurtziteactivemacro 1315
+function(xw,xb)
+gan=145;
+inn=124;
+gan+(inn-gan)*xw
+end_function
+c12_bar variation=function
+function(xw,xb)
+gan=145;
+inn=124;
+gan+(inn-gan)*xb
+end_function
+c44_well variation=function
+function(xw,xb)
+gan=105;
+inn=46;
+gan+(inn-gan)*xw
+end_function
+c44_bar variation=function
+function(xw,xb)
+gan=105;
+inn=46;
+gan+(inn-gan)*xb
+end_function
+$
+$a_well value=-8.16
+$ac_well value=-4.08
+$a_bar value=-8.16
+$ac_bar value=-4.08
+$d1_well value=-0.89
+$d1_bar value=-0.89
+$d2_well value=4.27
+$d2_bar value=4.27
+$d3_well value=5.18
+$d3_bar value=5.18
+$d4_well value=-2.59
+$d4_bar value=-2.59
+$a_well value=-3.5
+$ac_well value=-4.9
+$a_bar value=-3.5
+
+
+=== PAGE 1318 ===
+1316 MATERIALPARAMETERS
+$ac_bar value=-4.9
+$
+a_well variation=function
+function(xw,xb)
+gan=-8.16;
+inn=-3.5;
+gan+(inn-gan)*xw
+end_function
+$
+ac_well variation=function
+function(xw,xb)
+gan=-4.08;
+inn=-1.75;
+gan+(inn-gan)*xw
+end_function
+az_well variation=function
+function(xw,xb)
+gan=-8.16;
+inn=-3.5;
+gan+(inn-gan)*xw
+end_function
+$
+acz_well variation=function
+function(xw,xb)
+gan=-4.08;
+inn=-1.75;
+gan+(inn-gan)*xw
+end_function
+$
+a_bar variation=function
+function(xw,xb)
+gan=-8.16;
+inn=-3.5;
+gan+(inn-gan)*xb
+end_function
+$
+ac_bar variation=function
+function(xw,xb)
+gan=-4.08;
+
+
+=== PAGE 1319 ===
+B.6Wurtziteactivemacro 1317
+inn=-3.5;
+gan+(inn-gan)*xb
+end_function
+az_bar variation=function
+function(xw,xb)
+gan=-8.16;
+inn=-3.5;
+gan+(inn-gan)*xb
+end_function
+$
+acz_bar variation=function
+function(xw,xb)
+gan=-4.08;
+inn=-3.5;
+gan+(inn-gan)*xb
+end_function
+$
+$d1_well value=-3.7
+$d1_bar value=-3.7
+$d2_well value=4.5
+$d2_bar value=4.5
+$d3_well value=8.2
+$d3_bar value=8.2
+$d4_well value=-4.1
+$d4_bar value=-4.1
+$
+d1_well variation=function
+function(xw,xb)
+gan=-3.0;
+inn=-3.0;
+gan+(inn-gan)*xw
+end_function
+$
+d1_bar variation=function
+function(xw,xb)
+gan=-3.0;
+inn=-3.0;
+gan+(inn-gan)*xb
+end_function
+$
+d2_well variation=function
+
+
+=== PAGE 1320 ===
+1318 MATERIALPARAMETERS
+function(xw,xb)
+gan=3.6;
+inn=3.6;
+gan+(inn-gan)*xw
+end_function
+$
+d2_bar variation=function
+function(xw,xb)
+gan=3.6;
+inn=3.6;
+gan+(inn-gan)*xb
+end_function
+$
+d3_well variation=function
+function(xw,xb)
+gan=8.82;
+inn=8.82;
+gan+(inn-gan)*xw
+end_function
+$
+d3_bar variation=function
+function(xw,xb)
+gan=8.82;
+inn=8.82;
+gan+(inn-gan)*xb
+end_function
+$
+d4_well variation=function
+function(xw,xb)
+gan=-4.41;
+inn=-4.41;
+gan+(inn-gan)*xw
+end_function
+$
+d4_bar variation=function
+function(xw,xb)
+gan=-4.41;
+inn=-4.41;
+gan+(inn-gan)*xb
+end_function
+d5_well variation=function
+function(xw,xb)
+
+
+=== PAGE 1321 ===
+B.6Wurtziteactivemacro 1319
+gan=-4.00;
+inn=-2.33;
+gan+(inn-gan)*xw
+end_function
+d5_bar variation=function
+function(xw,xb)
+gan=-4.00;
+inn=-2.33;
+gan+(inn-gan)*xb
+end_function
+d6_well variation=function
+function(xw,xb)
+d5_gan=-4.00;
+d5_inn=-2.33;
+d5=d5_gan+(d5_inn-d5_gan)*xw;
+d3=8.82;
+(d3+4*d5)/sqrt(2)
+end_function
+d6_bar variation=function
+function(xw,xb)
+d5_gan=-4.00;
+d5_inn=-2.33;
+d5=d5_gan+(d5_inn-d5_gan)*xb;
+d3=8.82;
+(d3+4*d5)/sqrt(2)
+end_function
+$
+end_active_layer InGaN/InGaN
+
+
+=== PAGE 1322 ===
+1320 MATERIALPARAMETERS
+

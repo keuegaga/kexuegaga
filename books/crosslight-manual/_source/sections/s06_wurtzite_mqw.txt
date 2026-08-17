@@ -1,0 +1,688 @@
+=== PAGE 256 ===
+254 WAVEGUIDEOPTICALMODES
+2000
+0
+-2000
+-4000
+-6000
+-8000
+-10000
+-12000
+-14000
+0.6 0.65 0.7 0.75 0.8 0.85
+)mc/1(
+niag
+lairetaM
+Pumping
+Lasing
+Wavelength (um)
+Figure 12.8: Optical gain spectrum and indication of pumping and lasing wave-
+lengths.
+to the input light defined in light_power. Setting the value to 1 in a scan fully
+turnsontheinputlightbutlargervaluescanbeused;forexample,onemaywish
+tomultiplyaninputlightspectrumforamulti-sunsolarcellsimulation.
+
+
+=== PAGE 257 ===
+hapter
+C 13
+WURTZITE STRAINED MQW
+13.1 Introduction
+Recently,wurtzitestrainedquantumwellshavebeenstudiedintensivelybecause
+of applications in GaN blue green lasers and LEDs. However, the previous band
+structuremodelsareonlyapplicableforzincblendecompounds. Inthissection,we
+will describe the MQW band structure and optical transition models for wurtzite
+crystals. WefollowtheworkofS.L.Chuang[64]closelyhere.
+ff
+Wemustpointoutacoupleofmajordi erencesbetweenzincblendeandwurtzite
+crystals. Thefirstissueisthebaselattice: forzincblendematerialsystem,thebasic
+lattice constant is usually well-known (e.g. GaAs or InP) and the strain is well
+defined in each layer once we know the substrate lattice. In the wurtzite system,
+ff
+thedeviceisissometimesgrownonathickbu erlayerratherthandirectlyonthe
+ff
+substrate. Through dislocations and defects, the bu er layer may relax and it is
+ff
+notclearwhatthebaselatticeconstantofthelayersgrownabovethisbu erlayer
+shouldbe.
+Although the default lattice base constant in our software is that of GaN, it may
+not be true for all devices. For example, if a thick bulk layer of AlGaN or AlN is
+grown on a sapphire substrate before the MQW is placed on top, the base lattice
+constant should be that of bulk AlGaN or AlN instead of GaN; this approach is
+often used for devices operating in the ultraviolet range. For this reason, our
+macros for wurtzite materials provide a statement to describe the base lattice so
+thattheuserscanadjustitaccordingtotheirspecificgrowthconditions.
+Another important issue is material parameters. As we will see below, there are
+many times more band structure and strain parameters for wurtzite than for the
+zincblende material system. Since wurtzite semiconductor band structures and
+optical properties are less understood and many band-structure parameters are
+not available, our expectation of the accuracy of the simulation should be lower
+
+
+=== PAGE 258 ===
+256 WURTZITESTRAINEDMQW
+thanthatforzincblendematerialsystem.
+On a final note, other wurtzite compounds such as ZnO have become a popular
+fieldofstudyinrecentyears. Mostofthediscussionsfromthischapterwillapply
+but care must be taken to use the correct material parameters and base lattices
+ff
+sincestraintermswilldi er.
+13.2 Bulk Band Structure
+Consider a strained wurtzite crystal pseudomorphically grown along the c-axis
+(z axis) on another thick wurtzite layer. The base lattice constant is a and the
+0
+original lattice constant of the layer under consideration is a. The strain tensor in
+thewellregionhasthefollowingelements:
+−
+a a
+ε = ε = 0
+xx yy
+a
+C
+ε = − 13ε
+2
+zz xx
+C
+33
+ε = ε = ε
+(13.1)
+xy yz zx
+ff
+Theconductionbandscanbecharacterizedbyaparabolic-bandmodelwithdi er-
+entelectrone ff ectivemassesmt andmz perpendicularandparalleltothec-growth
+e e
+direction,respectively. Thehydrostaticenergyshiftintheconductionbandcanbe
+writtenas:
+= ε + ε +ε
+P a a (13.2)
+ce cz zz ct xx yy
+The band structure for the valence band is more complicated. Using the k.p
+method Chuang and Chang [65] have derived a 6 by 6 Hamiltonian which has
+beenblock-diagonalizedintothefollowingupperandlowerHamiltonians:
+" #
+HU (k) 0
+Hv (k) = 3×3 (13.3)
+6×6 0 HL (k)
+3×3
+where:
+2 3
+6 6 6 F K t − iH t 7 7 7
+HU = 6 6 6K G ∆− iH 7 7 7 (13.4)
+4 t t5
+∆+ λ
+iH iH
+2 t t 3
+6 6 6 F K t iH t 7 7 7
+HL = 6 6 6 K G ∆+ iH 7 7 7
+4 t t5
+− ∆− λ
+iH iH
+t t
+Whenthereisstrain,theenergybandsofshiftinacomplicatedmanner. Weneed
+to use a common reference energy level when writing down the Hamiltonian.
+
+
+=== PAGE 259 ===
+13.2BulkBandStructure 257
+However, we wish to stress that this reference is only for the purposes of solving
+theHamiltonianandobtainthebandgap,energydispersioncurves,etc...: inafull
+devicesimulation,bandalignmentfollowstherulessetoutinSec.10.1.
+Following the above convention for the wurtzite structure, if E0 is the unstrained
+c
+conductionbandedge,thereferencevalencebandlevelisasfollows:
+E0 = E0 − (E +∆ +∆ ) (13.5)
+v c g 1 2
+Whenthereisstrain,theconductionbandisshiftedbyanamountP andthenew
+ce
+referencelevelis:
+E0 = E − (E +∆ +∆ + P ) (13.6)
+v c g 1 2 ce
+Usingtheabovereferenceenergy,thematrixelementsaredefinedasfollows:
+= ∆ +∆ +λ+θ
+F
+1 2
+= ∆ −∆ +λ+θ
+G
+1 2
+λ = λ +λ
+k ε
+ℏ2
+λ = (A k2 + A k2)
+k 2m 1 z 2 t
+0
+λ = ε + ε +ε
+ε D 1 zz D 2 ( xx yy )
+θ = θ +θ
+k ε
+ℏ2
+θ = (A k2 + A k2)
+k 2m 3 z 4 t
+0
+θ = ε + ε +ε
+ε D 3 zz D 4 ( xx yy )
+ℏ2
+K = A k2
+t 2m 5 t
+0
+ℏ2
+=
+H A k k
+t 6 t z
+2m
+√ 0
+∆ = ∆
+2 (13.7)
+3
+| > | >
+Please note that the base vectors 1 to 6 of the above can be expressed by
+= | > | > | >
+spherical harmonics Y (l 1) [64]. For the upper Hamiltonian, 1 , 2 , 3
+lm
+corresponds to heavy hole (HH), light hole (LH) and crystal field split hole (CH),
+=
+respectively. At the zone center (k 0), the HH subbands are decoupled from the
+LH and CH subbands while there is always a coupling between the LH and CH
+bands.
+In our simulation software, the above Hamiltonian is solved to generate the bulk
+bandstructurefromwhichthedensityofstatesareevaluatedforbulkmacros. To
+ffi
+achievemaximume ciency,thebulkvalencebandstructureisfittedtoaparabolic
+band for each of HH, LH and CH bands under any strain condition. Such fitted
+parabolic bands are used for modeling the non-active bulk regions. For MQW
+activeregion,amorerigorousapproachisusedwhichweshalldescribebelow.
+
+
+=== PAGE 260 ===
+258 WURTZITESTRAINEDMQW
+ff
+13.2.1 MQW Model - E ective Mass Approximation
+In general, the dispersion of bulk valence bands is non-parabolic and anisotropic
+with strong mixing or anti-crossing behavior in the direction perpendicular (or
+ff
+transverse)to the c-axis. Weneed an e ectivemass model for the computation of
+densityofstatesandforasimplifiedMQWmodel.
+ffi ff
+Ane cientapproximationistotakethee ectivemassesfittedfromthebulkband
+structure. This approach takes into account the anti-crossing behavior but the
+qualityofthefitcanbepoornearsomerangeforthetransversedirection(seeFig.
+13.1andFig. 13.2).
+ff
+Based on Ref. [65], we have also implemented the following analytical e ective
+massmodelforthevalenceband:
+•
+1) Within a range of small k (a situation when the valence band is lightly
+ff
+populatedbyholes),thefollowinge ectivemasseshold:
+m0 / mz = − (A + A )
+hh " 1 3 ! #
+E0 −λ
+m0 / mz = − A + 2 e A
+lh 1 E0 − E0 3
+" 2 3! #
+E0 −λ
+m0 / mz = − A + 3 e A (13.8)
+ch 1 E0 − E0 3
+3 2
+m0 / mt = − (A + A )
+hh " 2 4 ! #
+E0 −λ
+m0 / mt = − A + 2 e A
+lh 2 E0 − E0 4
+" 2 3! #
+E0 −λ
+m0 / mt = − A + 3 e A (13.9)
+ch 2 E0 − E0 4
+3 2
+where E0(i = 1 , 2 , 3) are the valence band edges at k = 0. The parabolic bands
+i
+ofthismodelareshowninFigs. 13.3and13.4.
+•
+2) For a large range of k (a situation when the valence band is heavily
+ff
+populatedbyholes),thefollowinge ectivemassesformulasarevalid:
+m0 / mz = − (A + A )
+hh 1 3
+m0 / mz = − (A + A )
+lh 1 3
+m0 / mz = − A (13.10)
+ch 1
+
+
+=== PAGE 261 ===
+13.3Wurtzitedipolemoments 259
+0.1
+0
+-0.1
+-0.2
+-0.3
+-0.4
+-0.5
+-0.6
+0 0.02 0.04 0.06 0.08 0.1 0.12 0.14 0.16 0.18 0.2
+)Ve(
+ygrenE
+Valence Band in kx-ky
+kt (1/A)
+ff
+Figure13.1: Transversevalencebands(points)fittedtoe ectivemassmodel.
+m0 / mt = − (A + A − A )
+hh 2 4 5
+m0 / mt = − (A + A + A )
+lh 2 4 5
+m0 / mt = − A (13.11)
+ch 2
+TheparabolicbandsofthismodelareshowninFigs. 13.5and13.6.
+•
+3)Acompromiseoftheabovetwomodelsistoaveragethem. Theparabolic
+bandswithaveragemassesareshowninFigs. 13.7and13.8.
+The default setting in Crosslight software is 3) above. The user may adjust the
+ff
+setting of the e ective mass model through the statement modify_wurtzite. The
+choiceofmodelisbasedonhowheavilythevalencebandsarepopulatedbyholes
+(i.e. holecarrierdensity).
+13.3 Wurtzite dipole moments
+ff
+Since the crystal symmetry of wurtzite is di erent from that of zincblende, the
+ff
+dipole moment in e ective mass approximation for zincblende can not be used
+here and we need to use more accurate models (e.g. k.p theory) to compute the
+dipole moment for optical transitions. However, study of results in k-dependent
+dipolemomentfromk.ptheoryforalargenumberofstructuresleadsustopropose
+thefollowingsimplifieddipolemomentenhancementfactors:
+
+
+=== PAGE 262 ===
+260 WURTZITESTRAINEDMQW
+0.1
+0
+-0.1
+-0.2
+-0.3
+-0.4
+-0.5
+-0.6
+0 0.02 0.04 0.06 0.08 0.1 0.12 0.14 0.16 0.18 0.2
+)Ve(
+ygrenE
+Valence Band in kz
+kz (1/A)
+ff
+Figure13.2: Valencebandsalongc-axis(points)fittedtoe ectivemassmodel.
+0.1
+0
+-0.1
+-0.2
+-0.3
+-0.4
+-0.5
+-0.6
+0 0.02 0.04 0.06 0.08 0.1 0.12 0.14 0.16 0.18 0.2
+)Ve(
+ygrenE
+Valence Band in kx-ky
+kt (1/A)
+ff
+Figure 13.3: Transverse valence bands (points) as compared with analytical e ec-
+tivemassmodelofsmallk-range.
+
+
+=== PAGE 263 ===
+13.3Wurtzitedipolemoments 261
+0.1
+0
+-0.1
+-0.2
+-0.3
+-0.4
+-0.5
+-0.6
+0 0.02 0.04 0.06 0.08 0.1 0.12 0.14 0.16 0.18 0.2
+)Ve(
+ygrenE
+Valence Band in kz
+kz (1/A)
+ff
+Figure 13.4: c-axis valence bands (points) as compared with analytical e ective
+massmodelofsmallk-range.
+0.2
+0
+-0.2
+-0.4
+-0.6
+-0.8
+-1
+-1.2
+0 0.02 0.04 0.06 0.08 0.1 0.12 0.14 0.16 0.18 0.2
+)Ve(
+ygrenE
+Valence Band in kx-ky
+kt (1/A)
+ff
+Figure 13.5: Transverse valence bands (points) as compared with analytical e ec-
+tivemassmodeloflargek-range.
+
+
+=== PAGE 264 ===
+262 WURTZITESTRAINEDMQW
+0.1
+0
+-0.1
+-0.2
+-0.3
+-0.4
+-0.5
+-0.6
+0 0.02 0.04 0.06 0.08 0.1 0.12 0.14 0.16 0.18 0.2
+)Ve(
+ygrenE
+Valence Band in kz
+kz (1/A)
+ff
+Figure 13.6: c-axis valence bands (points) as compared with analytical e ective
+massmodeloflargek-range.
+0.1
+0
+-0.1
+-0.2
+-0.3
+-0.4
+-0.5
+-0.6
+-0.7
+0 0.02 0.04 0.06 0.08 0.1 0.12 0.14 0.16 0.18 0.2
+)Ve(
+ygrenE
+Valence Band in kx-ky
+kt (1/A)
+ff
+Figure 13.7: Transverse valence bands (points) as compared with analytical e ec-
+tivemassmodelofaveragedmasses.
+
+
+=== PAGE 265 ===
+13.3Wurtzitedipolemoments 263
+0.1
+0
+-0.1
+-0.2
+-0.3
+-0.4
+-0.5
+-0.6
+0 0.02 0.04 0.06 0.08 0.1 0.12 0.14 0.16 0.18 0.2
+)Ve(
+ygrenE
+Valence Band in kz
+kz (1/A)
+ff
+Figure 13.8: c-axis valence bands (points) as compared with analytical e ective
+massmodelofaveragedmasses.
+= /
+A 3 2
+hh
+3cos2( θ )
+= e
+A
+lh
+2
+=
+A 0 (13.12)
+ch
+forTEand
+=
+A 0
+hh
+A = 3 − 3cos2( θ )
+lh e
+=
+A 3 (13.13)
+ch
+forTM.
+The cos2( θ ) term above is defined in the same way as in zincblende. Please note
+e
+thatweformulatetheabovefactorsinsuchawaythatthefollowingconservation
+ruleisobeyed:
+2 × ATE + ATM = 3 , (h = hh , lh , orch) (13.14)
+h h
+Thedipolemomentisexpressedas:
+=
+M A O M
+hh hh ij b
+=
+M A O M
+lh lh ij b
+=
+M A O M (13.15)
+ch ch ij b
+
+
+=== PAGE 266 ===
+264 WURTZITESTRAINEDMQW
+where O is wave function overlap integral and M is bulk dipole moment given
+ij b
+by[64]asfollows:
+m
+MTM = 0 E
+b 6 pz !
+E = 1 − 1 (E g
++∆
+1
++∆
+2 )(E g
++
+2
+∆
+2 )
+−
+2
+∆2
+3 (13.16)
+pz mz E + 2 ∆
+e g 2
+m
+MTE = 0 E
+b 6 px !
+E = 1 − 1 E g [(E g
++∆
+1
++∆
+2 )(E g
++
+2
+∆
+2 )
+−
+2
+∆2
+3 ] (13.17)
+px mt (E +∆ +∆ )(E +∆ ) −∆2
+e g 1 2 g 2 3
+13.4 MQW Model – Valence Mixing
+ff
+As in zincblende, o -diagonal elements in the Hamiltonian imply mixing of the
+valence band states. Within the envelope function approximation, we write the
+wavefunctionasfollows:
+(cid:16) (cid:17)
+eikt ·rt
+ΨU(z;k ) = √ g (1) (z;k ) | 1 > + g (2) (z;k ) | 2 > + g (3) (z;k ) | 3 > (13.18)
+m t m t m t m t
+A
+(cid:16) (cid:17)
+eikt ·rt
+ΨL(z;k ) = √ g ( 4)(z;k ) | 4 > + g (5) (z;k ) | 5 > + g (6) (z;k ) | 6 > (13.19)
+m t m t m t m t
+A
+ff
+Thevalencesubbandsaredeterminedbythefollowingcoupleddi erentialequa-
+tions: ! !
+X
+3 ∂
+HU k = − i +δ E0(z) g (j) (z;k ) = EU(k )g (i) (z;k ) (13.20)
+ij z ∂ z ij v m t m t m t
+j=1
+ThevalencebanddiscontinuityisrepresentedbydiscontinuityinE0(z)(therefer-
+v
+ence energy). Similar equations can be written down for the lower Hamiltonian.
+It can be shown that MQW with reflection symmetry E0(z) = E0( − z), the upper
+v v
+and lower Hamiltonians have the same band structures. In the software, we use
+ff ff
+finite di erence method to solve the coupled di erential equations. This gives us
+thevalencemixingsubbands.
+The dipole moments, taking into account the upper and lower Hamiltonian de-
+generacy,aregivenasfollows:
+h i
+3
+MTE = M < ϕ | g (1) >2 + < ϕ | g (2) >2 (13.21)
+nm b 4 n m n m
+3
+MTM = M < ϕ | g (3) >2 (13.22)
+nm b 2 n m
+
+
+=== PAGE 267 ===
+13.5Polarizationandinterfacecharges 265
+13.5 Polarization and interface charges
+One of the most troublesome properties of the wurtzite material system is that
+its most common compounds have spontaneous and strain-induced polarization
+terms. Thismanifestsitselfasafixedinterfacechargesatheterojunctioninterfaces.
+In quantum wells, these charges create a local field which separates carriers (i.e.
+ff ff
+Quantum-ConfinedStarkE ect). Thisa ectsthewavefunctionsandtheresulting
+gaincalculations.
+ff
+Tomodelthise ectproperly,theusermustusetheself_consistentstatement: this
+/ ff
+will force the solver to iterate between the Poisson drift-di usion equations and
+the Schro¯dinger solver so a self-consistent solution can be found. Without this,
+theSchro¯dingersolverwillassumeaflatbandprofile.
+ff
+Since the local field can be di erent from well to well in a MQW region, it is rec-
+ommendedthatthecalculationsforeachwellbedoneindependently. Todothis,a
+ff
+di erent material number must be assigned to each well: the independent_mqw
+statement in the layer file can automate this. If the same material number is used
+formultiplewells,theSchro¯dingerandgaincalculationswillonlybedoneonce.
+Interface charges can be defined manually with the interface statement. For the
+InGaN and AlGaN material system, this process has been automated in the layer
+filewiththeset_polarizationstatement.
+13.6 Non-Polar and Semi-Polar materials
+ff
+The polarization e ects discussed in the previous section occur along the most
+naturalgrowthorientationofwurtzitecrystals: c-plane. However,itispossibleto
+ff
+growthematerialinotherorientationswherethesee ectscanbereducedoreven
+eliminated[67].
+In this case, a full 6x6 k.p method must be used to find the correct masses for this
+orientation. Thisisdonewiththemodify_wurtziteandmodify_qwstatements.
+ff
+Thegainandspontaneousemissionintegralsmustalsobedonedi erentlyinthis
+situationandanexplicitaveragingoftheresultsoverthedirectionofthein-plane
+wave vector must be used. This can be time consuming so it is recommended to
+run the gain calculations separately and use tabulated values in the main device
+simulation.
+Crystal plane orientations are given using the Bravais-Miller indices (hkil) where
+= − −
+i h k: the redundant index is useful in highlighting equivalent symmetric
+→ ′
+directions. Theplanenormalvectorisspecifiedusingtherotation(x x )angles
+ϕ θ
+and . Totakeintoaccounttheanisotropicrefractiveindexinmodecalculations,
+′′ ′′
+the direction of TE mode (x ) or the waveguide propagation direction (y ) must
+
+
+=== PAGE 268 ===
+266 WURTZITESTRAINEDMQW
+ψ
+alsobespecifiedwiththein-planeangle . TheseanglesareillustratedinFig.13.9.
+z (c-axis)
+z (c-axis)
+x
+y
+Figure13.9: Rotationanglesfornon-polarandsemi-polarwurtziteplaneorienta-
+tions.
+Some common plane orientations are shown in Table 13.1. Note that because of
+ϕ
+rotationalsymmetry,multiple valuescanbeusedforthesameplaneorientation.
+However,thein-planewaveguidedirectionmayneedtobeadjusted.
+ϕ θ
+Orientation Bravais-Miller Classification
+Indices
+c-plane ( (cid:0)0001) (cid:1) polar 0 0
+m-plane (cid:0)11¯00(cid:1) non-polar 0 90
+a-plane 112¯0 non-polar 30 90 (cid:16) (cid:17)
+(cid:0) (cid:1)
+r-plane 11¯02 semi-polar 0 atan c
+(cid:16) (cid:17)
+(cid:0) (cid:1) 2a
+? 101¯1 semi-polar 0 atan c
+(cid:16) (cid:17)
+(cid:0) (cid:1) a
+? 112¯2 semi-polar 30 atan c
+2a
+Table13.1: Commonplaneorientationsinwurtzitecrystals.
+13.7 External stress
+Inapseudomorphiclatticesystemunderexternalstress,thelatticeforceisassumed
+to be much stronger than external stress, or else the external stress would have
+destroyedtheoriginallattice. Soweassumethatthetypicalexternalstressapplied
+toawurtzitelatticesystemonlyproducesasmallperturbationoftheoriginal“as-
+grown”lattice.
+
+
+=== PAGE 269 ===
+13.8Nomenclature 267
+Werecallthatintheabsenceofexternalstress,the“as-grown”strainisdetermined
+bythemismatchbetweenthenaturallatticeconstantofthematerialbeinggrown
+/ ff
+andthemassivesubstrate bu ermaterialthatconstrainsthelayer. Underexternal
+/ ff
+stress,weassumethatthisstrainisstilldeterminedbythemassivesubstrate bu er
+ff
+materia; the only di erence is that this reference material has its lattice constant
+altered by the external stress. Using the compliance tensor and Hooke’s law, the
+appliedstresscanbeconvertedtoastrainterm.
+Specifically, lattice constant in c-axis and its normal directions are displaced by
+ϵ +ϵ
+factor1 + xx yy and1 +ϵ forthecaseofnormalgrowthalongthec-axis.
+2 zz
+ff
+The above model a ects commands of set_stress, external_stress_band_model,
+and set_polarization. Those same ideas can also be found to be encoded into
+variousmaterialmacros,inthepolarizationformulas.
+13.8 Nomenclature
+Welistsomecriticalsymboldefinitionsherebecausethesearespecifictowurtzite
+bandstructure.
+,
+a c LatticeconstantsofHexagonalstructure.
+E Bandgap.
+g
+E Bandgap.
+g
+∆ ,∆ ,∆
+Energyparameters.
+1 2 3
+∆
+Spin-orbitcouplingenergy.
+so
+mz, mt Conductionbande ff ectivemassesalongc-axis(z)
+e e
+andtransverse(x-y)direction,respective.
+, = ,..., ff
+A (i 1 6) Valencebande ectivemassparameters.
+i
+, ,
+a a a Hydrostaticdeformationpotentialsof
+h c v
+total,conduction,andvalenceparts,respectively.
+, = ,...,
+D (i 1 4) Valencebandsheardeformationpotentials.
+i
+, ff
+C C Elasticsti nessconstants.
+13 33
+
+
+=== PAGE 270 ===
+268 WURTZITESTRAINEDMQW
+

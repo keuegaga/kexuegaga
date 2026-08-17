@@ -1,0 +1,2378 @@
+=== PAGE 272 ===
+
+
+
+=== PAGE 273 ===
+hapter
+C 14
+APSYS SPECIFIC MODELS
+14.1 Time-Dependent Traveling Wave Equations
+As of the 2012 version of APSYS this model is considered obsolete: please use
+PICS3Dtomodelopticalamplifiers(SOA),modulators(EAM)andsuperlumines-
+cent diodes (SLED). The new model is superior in a number of ways, including a
+ff
+full 3D model that couples longitudinal (wave propagation) and lateral e ects in
+thesamesparsesolver.
+14.2 Theories of Light Emitting Diodes
+14.2.1 Introduction
+ff
+A light emitting diode (LED) is di erent from a laser diode (LD) and deserves
+specialtreatmentforthefollowingreasons:
+•
+1) LED operates well below lasing threshold while theories of lasers almost
+alwaysassumeslasingcondition
+•
+2)AbsenceofsimulatedrecombinationinLED
+•
+3) Continuous emission spectrum must be considered for LED while longi-
+tudinalmodesoflaseronlyrequiresalimitednumberoflasingwavelengths
+•
+4) The randomness of spontaneous recombination in LED in contrast to the
+ff
+coherenceoflasermodeswhicha ectsthenearandfar-fieldmodels.
+In this section, we attempt to establish the basic theories for LED emission in one
+direction: perpendicular to the semiconductor surface). This allows us to use a
+
+
+=== PAGE 274 ===
+272 APSYSSPECIFICMODELS
+simple1Dmodeltoformulateourtheory;oncethebasicformulasareestablished,
+wewillextendittoemissioninotherdirections.
+Many of the theories here were initially formulated by Henry for laser diodes
+and semiconductor optical amplifiers. We find that the same theories are also
+applicableforLEDs. InterestedreadersareencouragedtoconsultRef.[82].
+The model described here is implemented in the led_control statement. A sim-
+plifiedversionofthemodelisavailablethroughtheled_simplestatement: thisis
+usefulwhenusedinconjunctionwiththeraytracingmodelofSection14.5.
+14.2.2 Fabry-Perot Cavity and LED
+A LED may be regarded as a special case of a Fabry-Perot laser. Without loss of
+generality, we consider the following device configuration: the z-direction has a
+/
+waveguiding structure which supports confined lateral traverse modes. We later
+relax this condition to include the case with no optical confinement. Please note
+that in LED, we must treat as many modes as possible since they all contribute to
+theemission powerbecause of thenon-coherentnatureofspontaneous emission.
+InthecaseofaLD,onlyalimitednumberofhighlycoherentandhighlypowered
+modes are considered. For simplicity, we assume throughout this section that
+the LED does not have any optical coatings so that light emits directly from the
+semiconductortotheair.
+ff
+Thetheoreticalbasesregardingthewavefunction,theWronskianandthe“Di u-
+ffi
+sion”coe cientanditsrelationtosemiconductorspontaneousrecombinationare
+coveredinAppendixD.Weshallonlyusetheresultshere.
+/
+We will consider a waveguide with well confined lateral transverse modes (xy-
+modemodel). Later,wewillrelaxthisconstrainandconsideracaseonlyconfined
+transverse modes in y direction exist (we call it y-mode model). Finally, we
+consideracasewheretherearenoconfinedmodes(wecallituniformmodel).
+For a Fabry-Perot cavity from 0 to L, the two basic wave functions Z and Z are
+1 2
+asfollows:
+= + −
+Z (z) r exp(jkz) exp( jkz) (14.1)
+1 1
+= + −
+Z (z) exp(jkz) r exp(2jkL jkz)] (14.2)
+2 2
+
+
+=== PAGE 275 ===
+14.2TheoriesofLightEmittingDiodes 273
+WeconstructthefollowingWronskian:
+= ′ − ′
+W Z (z)Z (z) Z (z)Z (z)
+1 2 2 1
+= + −
+[r exp(jkz) exp( jkz)]
+1
+× − −
+[jkexp(jkz) jkr exp(2jkL jkz)]
+2
+− + −
+[exp(jkz) r exp(2jkL jkz)]
+2
+× − −
+[jkr exp(jkz) jkexp( jkz)]
+1
+(14.3)
+= − −
+r exp(jkz)jkr exp(2jkL jkz)
+1 2
++ −
+exp( jkz)]jkr exp(jkz)
+1
++ −
+r exp(jkz)jkexp( jkz)
+1
+− −
+r exp(2jkL jkz)jkr exp(jkz)
+2 1
+= −
+2jk[1 r r exp(2jkL)]
+1 2
+ConsiderthesolutionofthefieldintermsoftheGreen’sfunction:
+, = θ − + θ −
+g(z z )W Z (z)Z (z ) (z z) Z (z)Z (z ) (z z ) (14.4)
+s n 1 2 s s 2 1 s s
+Z
+= θ − + θ −
+E(z)W dz f(z )[Z (z)Z (z ) (z z) Z (z)Z (z ) (z z )]
+n s s 1 2 s s 2 1 s s
+Z Z
+(14.5)
+L z
+= +
+Z (z) Z (z )dz f(z ) Z (z) Z (z )dz f(z )
+1 2 s s s 2 1 s s s
+z 0
+where f(z )isthenoisetermduetospontaneousemissionthedetailsofwhichcan
+s
+befoundinAppendixD.
+Considerthesquaredensembleaverage
+Z
+L
+< |
+E(z)W
+|2 > = <
+[Z (z) Z (z )dz f(z )
+n 1 2 s s s
+Z z
+z
++
+Z (z) Z (z )dz f(z )]
+2 1 s s s
+Z0
+L
+∗ ∗ ∗
+[Z (z) Z (z )dz f (z )
+1 2 t t t
+Z z
+z
++ ∗ ∗ ∗ >
+Z (z) Z (z )dz f (z )] (14.6)
+2 1 t t t
+0
+We note that the cross terms of the above four terms are zero since noise sources
+
+
+=== PAGE 276 ===
+274 APSYSSPECIFICMODELS
+areuncorrelated:
+Z
+L
+< |
+E(z)W
+|2 > = |
+Z (z)
+|2 |
+Z (z )
+|2dz
+f (z )
+n 1 2 s s 0 s
+Zz
+z
++ |
+Z (z)
+|2 |
+Z (z )
+|2dz
+f (z )
+2 1 s s 0 s
+Z0
+L
+= |
+Z (z)
+|2 |
+Z (z )
+|2dz
+2D (z )
+1 2 s s FF s
+Zz
+z
++ |
+Z (z)
+|2 |
+Z (z )
+|2dz
+2D (z ) (14.7)
+2 1 s s FF s
+0
+Asusual,weignoretheinterferencetermswhenweconsiderenergyflowsothat
+| Z (z) |2 ≈ r2exp( − 2k ′′ z) + exp(2k ′′ z) (14.8)
+1 1
+| Z (z) |2 ≈ exp( − 2k ′′ z) + r2exp( − 2k ′′ (2L − z)] (14.9)
+2 2
+Wenotethat | W |2 variesbetween4k2(1 − r r )2 and4k2(1 + r r )2 rapidly. Toagood
+n 1 2 1 2
+approximation,wetake | W |2 = 4k2 tosimplifymatters.
+n
+/
+Thelinearphotondensity(inunitsof1 m)isgivenby
+X
+S(z)
+ℏω∆ω =
+2
+ε
+nn
+< |
+E(z)
+|2 >
+(14.10)
+0 g
+n
+ff
+wherethesummationnisoverdi erentlateralmodes.
+The power emission spectrum may be calculated from left and right facets as
+follows:
+X
+1 − r2
+P ( ω )Delta ω = 1 v 2 ε nn < | E(0) |2 > (14.11)
+L 1 + r2 g 0 g
+1 n
+wherev andn arethegroupvelocityandgroupindex,respectively.
+g g
+Attheleftfacet:
+Z
+L
+< |
+E(0)
+|2 >= |
+Z (0)
+|2/|
+W
+|2 |
+Z (z )
+|2dz
+2D (z ) (14.12)
+1 n 2 s s FF s
+0
+Z
+1 − r2 (1 + r2) L
+P ( ω ) = 1v 2 ε nn 1 | Z (z ) |2dz 2D (z ) (14.13)
+L 1 + r2 g 0 g 4k2 2 s s FF s
+1 0
+ff ffi
+AswederivedinAppendixDthatthedi usioncoe cient
+πℏ
+= ℏω < | ω | > .
+2D nr ( )n (14.14)
+FF ε v n2 sp
+0 g
+
+
+=== PAGE 277 ===
+14.2TheoriesofLightEmittingDiodes 275
+| >
+where r is the spontaneous emission rate at a photon frequency. n is used to
+sp
+denotethewavefunctionintegralforthenthlateralmode.
+Z
+X
+1 − r2 (1 + r2) πℏ L
+P ( ω ) = 1v 2 ε nn 1 | Z (z ) |2dz ℏω < n | r ( ω ) | n > .
+L 1 + r2 g 0 g 4k2 ε v n2 2 s s sp
+n 1 0 g 0
+(14.15)
+ω
+Ourkeyresultforspontaneousemissionpowerforan intervalisasfollows:
+Z
+X
+2n π 1 L
+P ( ω ) ∆ω = (1 − r2) g | Z (z ) |2dz ( ℏω ) < n | r (E) | n > ∆ E . (14.16)
+L 1 n 4k2 2 s s sp
+n 0
+The above formula is applicable for a waveguide with a limited number of lat-
+/ ff
+eral transverse modes (the xy-mode model). It can be adapted for di erent
+circumstancesasfollows.
+Weconsideradevicecrosssectionwithactiveregionlargeenoughtoaccommodate
+ff
+many di erent lateral modes in both x and y direction (the plane wave model or
+uniform model). Let us now count the number of allowable lateral modes at
+ω
+frequency .
+Ifweassumealargerectangulardeviceactivecrosssection:
+( ω/ c)2 = k2 + k2 + k2 (14.17)
+z x y
+±
+At a fixed emission frequency, if we consider all emissions in z direction, the
+allowablelateralstatesareconfinedwithinacircleof
+k2 + k2 < ( ω n / c)2 (14.18)
+x y
+Thus, X
+=
+A
+π k2/
+(4
+π2) = Ak2/
+(4
+π
+) (14.19)
+n
+whereAistheactiveregioncrosssection. Weassumeallthemodesoverlapswith
+< | >=
+auniformactiveregionperfectly(uniformmodel)sothat nn 1.
+Sofar,allofourmodelsbasedontheGreen’sfunctionareone-dimensional. Thus
+thewavenumberkshouldbeunderstoodask iftheactualpropagationdirection
+z
+is not in z-direction. We make a further approximation to replace k by a certain
+z
+< >
+average k andremovethesummationaltogether:
+z
+Z
+n k2 L
+P ( ω ) ∆ω = (1 − r2) g A | Z (z ) |2dz ( ℏω )r (E) ∆ E . (14.20)
+L 1 2n4 < k >2 2 s s sp
+z 0
+Theinternalemissionpowerfromspontaneousemissionis
+Z
+L
+ω ∆ω = ℏω ∆ .
+P ( ) A dz ( r (E)) E (14.21)
+spon s sp
+0
+
+
+=== PAGE 278 ===
+276 APSYSSPECIFICMODELS
+ζ = / ffi
+The ratio of P P gives us the LED external e ciency at a frequency in
+ext L spon
+theleftdirectionforsuchahighlymultimodedevice.
+ffi
+If we assume that r is reasonably uniform in z-direction, the external e ciency
+sp
+inonedirectioncanbewrittenas:
+Z
+n k2 L
+ζ = (1 − r2) g | Z (z ) |2dz / L (14.22)
+ext 1 2n4 < k >2 2 s s
+z 0
+We choose
+k2/ <
+k
+>2=
+4
+/
+3 so that in the limit of zero facet reflectivity and
+z
+ffi /
+transparent material, the external e ciency for one facet is 1 6, as it should be if
+thedeviceisinacubicshape.
+Thus: Z
+n L
+P ( ω ) ∆ω = (1 − r2) g A | Z (z ) |2dz ( ℏω )r (E) ∆ E . (14.23)
+L 1 6n 2 s s sp
+0
+ffi
+andtheexternale ciencyforacaseofuniformspontaneousemissionmediumis:
+Z
+n L
+ζ = (1 − r2) g | Z (z ) |2dz / L (14.24)
+ext 1 6n 2 s s
+0
+Theintegralisevaluatedasfollows:
+Z Z
+L L
+| Z (z) |2dz / L = dz / L[exp( − 2k ′′ z) + r2exp( − 2k ′′ (2L − z)]
+2 2
+0 0
+1
+= − − ′′
+[1 exp( 2k L)]
+2k′′L
+1
+− r2exp( − 4k ′′ L)[1 − exp(2k ′′ L)] (14.25)
+2k′′L 2
+ffi
+To gain some insight into how the external e ciency of a LED depends on the
+/ ffi
+gain loss of the material, we plot the single facet external e ciency of an LED
+with large active region cross section supporting many lateral modes (uniform
+model). Parameters are chosen as follows: r12 = r2 = 0 . 3, n = n = 3 . 4. The result
+2 g
+ffi
+is shown in Fig. 14.1. As expected, the e ciency goes up as gain is increased.
+ffi /
+At transparency, the external e ciency amounts to 1 6 for a single facet which
+accountsfor100percentoflightemissioninonedirection.
+Similar expression can be written for traveling waves in other directions. For
+example:
+Z
+X
+2n π 1 L
+P ( ω ) ∆ω = (1 − r2) / (1 + r2) g Z (L) | Z (z ) |2dz ( ℏω ) < n | r (E) | n > ∆ E .
+R 1 2 n 4k2 2 1 s s sp
+n 0
+(14.26)
+
+
+=== PAGE 279 ===
+14.2TheoriesofLightEmittingDiodes 277
+0.4
+0.35
+0.3
+0.25
+0.2
+0.15
+0.1
+0.05
+-1 -0.5 0 0.5 1
+ycneiciffE
+lanretxE
+Relative Gain gL
+ffi
+Figure 14.1: External e ciency versus relative gain (gL) of an LED with large
+activeregioncrosssectionsupportingmanylateralmodes.
+Theintegralisevaluatedasfollows:
+Z Z
+L L
+| Z (z) |2dz / L = dz / L[r2exp( − 2k ′′ z) + exp(2k ′′ z)]
+1 1
+0 0
+1
+= r2[1 − exp( − 2k ′′ L)]
+2k′′L 1
+1
+− − ′′
+[1 exp(2k L)] (14.27)
+2k′′L
+Z
+X
+2n π 1 L
+P ( ω ) ∆ω = (1 − r2) g exp( − 2k ′′ L) | Z (z ) |2dz ( ℏω ) < n | r (E) | n > ∆ E .
+R 2 n 4k2 1 s s sp
+n 0
+(14.28)
+Z
+L
+1
+exp( − 2k ′′ L) | Z (z) |2dz / L = r2exp( − 2k ′′ L)[1 − exp( − 2k ′′ L)]
+1 2k′′L 1
+0
+1
++ − − ′′
+[1 exp( 2k L)]
+2k′′L
+1
+= − − ′′
+[1 exp( 2k L)]
+2k′′L
+1
+− r2exp( − 4k ′′ L)[1 − exp(2k ′′ L)] (14.29)
+2k′′L 1
+
+
+=== PAGE 280 ===
+278 APSYSSPECIFICMODELS
+Y
+Emission
+Air θ
+2 direction
+θ
+Semiconductor
+X
+Air
+Figure14.2: SchematicsshowingtheangleofrefractionforanLED.
+whichiscompletelyconsistentwithourresultfortheleftfacet. Thuswewillonly
+consideremissioninonedirectionwithoutlossofgenerality.
+14.2.3 Internal reflection and LED emission power
+The result in Eq. 14.23 is obtained under rather ideal condition and assumes that
+±
+all emission in z can escape from the LED. The result is useful for qualitative
+/ ffi
+analysisregardingthedependenceofgain loss. However,thee ciencyfromthis
+±
+result is overestimated because in reality, only a small fraction of the light in z
+can escape from the LED simply because of the internal total reflection angle is
+muchsmallerthan90degrees. Foramoreaccuratetheory,wewillre-evaluateEq.
+14.16takingintoaccounttheinternalreflectionangle.
+ff
+Ifthee ectiverefractiveindexofthematerialisn ,themaximuminternalreflec-
+e1
+θ
+tionangle (seealsoFig. 14.2)is:
+max
+θ = /
+sin 1 n (14.30)
+max e1
+For the uniform model, we should only consider the wave vectors within this
+angle:
+Z
+X k/ne1
+= Adk2/
+(4
+π
+) (14.31)
+r
+n 0
+where
+k2 = k2 + k2 (14.32)
+r x y
+
+
+=== PAGE 281 ===
+14.2TheoriesofLightEmittingDiodes 279
+Please note that the wave number in Eq. 14.16 is to be understood as k . We need
+z
+toevaluatethenumericalfactorasfollows:
+=
+f
+cone Z
+1
+k/ne1
+= dk2/ (k2 − k2)
+8 r z
+0 !
+1
+n2
+= ln e1 (14.33)
+8 n2 − 1
+e1
+Thepoweremissionfromfacet1(left)is
+!Z
+An n2 L
+P ( ω ) ∆ω = (1 − r2) g ln e1 | Z (z ) |2dz ( ℏω )r (E) ∆ E . (14.34)
+L 1 8n n2 − 1 2 s s sp
+e1 0
+Please note that the above emission power is much smaller than the ideal case in
+Eq. 14.23becausethenewnumericalfactorismuchsmaller:
+!
+1
+n2
+ln e1 < 1 / 6 (14.35)
+8 n2 − 1
+e1
+It is clear that for an LED with simple configuration, the main power limitation
+is set by the internal reflection angle. Most of the emission power is lost due to
+internalfacetreflectionandabsorption. Onlyasmallfraction(around10percent)
+escapesthroughasmallconeverticaltotheLEDsurface.
+ThereductionfactorinEq. (14.33)hasaproblemofconsistencywiththefactorof
+/
+1 6becausetheformerdoesnotreducetothelatteriftheindexofrefractiontends
+to unity. Therefore, we should use the same approximation of < k2 > / k2 = 3 / 4
+z
+andobtain:
+=
+f
+cone Z
+1
+k/ne1
+= dk2
+8 < k2 > r
+z 0
+1
+=
+(14.36)
+6n2
+e1
+The above formula of cone reduction factor is preferred because it reduces to the
+idealcaseofnointernalreflectioniftheindextendstounity. Formostapplications
+in LED emission to the top surface, the size of the active region facing the top is
+largeenough to use theuniform model and thusEq. 14.36isour model of choice.
+The simulation program has a switch to allow the user to include or exclude the
+ff
+e ectoftotalinternalreflection.
+
+
+=== PAGE 282 ===
+280 APSYSSPECIFICMODELS
+Bydefault,theideacaseofnointernalreflectionisusedsothatthepoweremission
+iscalculatedbysettingindextounityinEq.14.36. Thisrepresentsanoverestimate
+of emission in one direction. On the other hand, use of total reflection to assume
+that all lights being totally reflected are lost is an under-estimate because mod-
+ern LED’s often have special geometric design to enable the lights being totally
+reflectedtochangedirectionsandtoescapethedevice.
+In some cases, such as emitting from the sides of a thin device with single mode
+confining waveguide, it is useful to consider a case where only one direction
+(say y-direction) has confined modes (y-mode model) while the x-direction is
+unconfined with a large device dimension L . We can simplify mode summation
+x
+inthex-directionasfollows.
+Recallourbasicresult:
+Z
+XX
+2n π 1 L
+P ( ω ) ∆ω = (1 − r2) g | Z (z ) |2dz ( ℏω ) < n | r (E) | n > ∆ E . (14.37)
+L 1 n 4k2 2 s s sp
+nx ny 0
+Thenumberofavailablemodesinthex-directionissimply:
+Z
+X k/ne1
+= / π
+L dk (2 ) (14.38)
+x r
+nx 0
+Thus,weneedtoevaluatetheintegral:
+Z
+1
+k/ne1
+g = dk / (k2 − k2) (14.39)
+l 4 r r
+0(cid:18) (cid:19)
++
+1 n 1
+= e1
+ln
+−
+8 n 1
+e1
+Wethenobtainourresultfory-modemodel:
+Z
+X
+n L g L
+P ( ω ) ∆ω = (1 − r2) g x l | Z (z ) |2dz ( ℏω ) < n | r (E) | n > ∆ E . (14.40)
+L 1 n k 2 s s sp
+ny 0
+14.2.4 Far field distribution
+We use a rather simple model to evaluate the far field distribution. We consider
+ff
+threee ects:
+• ff
+1.) The optical path is di erent (longer) when the emission angle is not
+vertical. Thelongertheopticalpath,themorepowerabsorptionoccurs.
+
+
+=== PAGE 283 ===
+14.3ResonantCavityLightEmittingDiodeModel 281
+• 2.) Thepowerreflectionr2 isafunctionoftheemissionangle.
+1
+•
+3.) Light direction change due to refraction causes a solid angle within the
+semiconductor to be magnified upon refraction. More details are discussed
+asfollows.
+It is reasonable to assume that the spontaneous emission is random and has uni-
+form intensity in all directions within the semiconductor. Consider emission
+∆θ∆ϕ θ
+within a solid angle . The angle is determined by the following equation
+(seealsoFig. 14.2):
+θ∆θ = θ ∆θ
+n cos cos (14.41)
+e1 2 2
+Thusthesolidangleisamplifiedandthelightintensityisreducedbyafactor
+(cid:18) (cid:19)(cid:18) (cid:19)
+θ θ
+cos sin
+2
+(14.42)
+θ θ
+n cos sin
+e1 2
+∆ϕ
+wherethe2ndfactorisduetoangularintegrationin .
+14.3 Resonant Cavity Light Emitting Diode Model
+ThemodelsinSection14.2werebasedontheGreen’sfunctionapproachandmuch
+ff
+e ort was put into deriving a total power extraction formula that sums over all
+possible modes and over all wavelengths. In this section, we briefly outline the
+theory we use for the resonant cavity light emitting diode (RCLED). Instead of
+ff
+ignoring the interference or resonance e ects of the optical waves, we explicitly
+considerthem. Thismodelisturnedonwiththercled_modelstatement.
+The task is to start from a continuous dipole source as a function of wavelength
+ff
+and find the emission power spectrum at di erent angles. If we ignore the micro
+ff
+cavityinterferencee ects,theresultsshouldreducetothoseinSection14.2. Since
+thebasictheorieshavebeendetailedinAppendixD,wewillonlyhighlightafew
+keypoints.
+RCLED power emission strongly depends on the overlap of the optical field with
+the dipole source. Existence of the dipole source does not necessarily mean ra-
+diative recombination will occur. For example, the simple term Bn2 only means
+that if carriers exist in the active layer of a device, a dipole source is available
+there. It does not guarantee the generation of electron-hole pairs. For that to
+happen, the optical field should exist so that the dipole moment (displacement
+times the field) can be formed to complete the energy conversion from current
+to photon. Therefore, in RCLED model, the simple term Bn2 (and other form of
+QWrecombinationsource)mustbescaledbyaninterferenceenhancementfactor
+
+
+=== PAGE 284 ===
+282 APSYSSPECIFICMODELS
+(or the g-factor as referred in the simulator print out). In locations of construc-
+tiveinterference,theradiativerecombinationisenhanced. Theoppositeholdsfor
+locationsofdestructiveinterference.
+It is interesting to note that the Green’s function theory itself is fully consistent
+with the above view of power emission dependence on location of the dipole
+source. The Green’s function theory states that a point dipole source can cause
+a field profile (definition of Green’s function). However, one can show that the
+intensityofthefield(andthustheemissionpower)stronglydependsonwhether
+the point source is placed at location of constructive or destructive interference.
+When using APSYS to simulate RCLED, such dipole source and power relation
+shouldbekeptinmind.
+To check whether the active region will be subject to constructive or destructive
+interference, the simulator will print out a .stw file during the equilibrium calcu-
+lations. This a text file containing the index profile and standing wave pattern:
+theycaneasilybeplottedwithGnuplotorothertools.
+ff
+Another important point to note is that photon recycling e ect is automatically
+taken into account. In the RCLED model, the active layers are responsive to
+light generated by the dipole source within the same device as well as to external
+ff
+incident light. Due to the photon recycling e ect, the total spontaneous emission
+rate can greatly exceed the electrical pumping rate. The reason is that photons
+emittedgetreflectedbacktothecavityandcauseselfopticalpumping. Therefore,
+thecorrectwaytocomputetheIQEistosubtractthephotonabsorptionratefrom
+thetotalspontaneousemissionratebeforedividingtheinjectioncurrent. Thishas
+beendonewhenweplottheIQEfortheRCLEDmodel.
+14.4 2D Photonic Crystal Power Extraction Model
+Our purpose here is to derive the total emission power from a photonic crystal
+LED. For simplicity, we assume the following general purpose configurations: a
+2Dphotoniccrystal(PhC)consistingofholesoflowindex(suchasair)areontop
+ofanLEDwhichweconsiderasawaveguidewithacrosssectiononthexy-plane.
+Thebasicideaistoregarda2Dphotoniccrystal(PhC)asa2ndorderDFBgrating
+for which the first order radiative loss has been well understood and formulated
+ff
+[83]. There are major di erences between a 2D PhC and a DFB grating which we
+willidentifyandhandleaccordingly.
+Withoutlossofgenerality,weassumethe2DPhCorientationisarrangedsuchthat
+the shortest period appears in the z-direction. Later on, we shall sum up power
+emission in other directions. In other words, we only consider power coupling
+duetotheshortestperiodsinsuchastructure.
+
+
+=== PAGE 285 ===
+14.42DPhotonicCrystalPowerExtractionModel 283
+Asareferencemodel,weusetheGreen’sfunctionmethodtocomputetheoptical
+powerfromsuchastructure. Wefirstcutupthestructureintoverticaldivisionsso
+thatemissionpowercanbecalculatedasafunctionofsuchdivisions,orafunction
+of position x. Within each division, the problem is simplified into a 1D Green’s
+functioniny.
+Z
+= ,
+P (y) G(y y )r (y )dy (14.43)
+G 1 sp 1 1
+where G() is a Green’s function which is constructed from the products of the
+opticalwavefunctions(togetthepowerfromwaveamplitude). Formoredetails
+onGreen’sfunctionapproach,pleaseseeAppendixD.
+It is clear from the form of the Green’s function that the amount of power carried
+byanopticalmodeisproportionaltotheoverlapbetweenthemodeintensityand
+thespontaneousdipolesourceprofile. Adipolesourcewillnotemitpowerunless
+the optical mode already existed there (recall dipole moment is product of field
+and charge displacement). Therefore, we obtain the power distribution fraction
+foreachmode(normalized):
+= Γ / Γ
+P (j) (j) sum [ (j)] (14.44)
+r qw j qw
+Inthefollowingdiscussion,we‘givetheformulasforthepowercoupling,orpower
+ffi
+emissioncoe cientforeachconfinedwaveguidemode. Detailedderivationsmay
+befoundinthesectiononsecondordergratingforPICS3DandalsoinRef.[83].
+InthemajorPhCperiodicdirection,weexpandtherefractiveindexinthefollowing
+form:
+= + + + +
+n(z) a a cos(k z) b sin(k z) a cos(2k z) b sin(2k z) (14.45)
+0 1 b 1 b 2 b 2 b
+= π/
+wherek 2 L andL istheperiodofthemajorlatticeconstantofthePhC.
+b b b
+Thefractionofsurfacepoweremissionisgivenby
+π2∆εζ2Q
+= f
+F (14.46)
+surf n2 λ
+mode 0
+ff
+wheren isthemodale ectiveindexwithinthesemiconductorwaveguide.
+mode
+Othertermsaredefinedasfollows:
+q
+a2 + b2
+1 1
+ζ =
+(14.47)
+2
+R
+|
+w(y)exp[
+−
+jk (y
+−
+y )]dy
+|2
+Q = PhC R y c (14.48)
+f
+w(y)2dy
+
+
+=== PAGE 286 ===
+284 APSYSSPECIFICMODELS
+R
+where means integration over the PhC air hole layer. y is the center point of
+c
+PhC
+theairholelayer.
+=
+k k n (14.49)
+y 0 y
+= + −
+n n f n (1 f ) (14.50)
+y insul insul mode insul
+where n is the index of the insulator (air hole) and f is the area fraction of
+insul insul
+theairhole.
+∆ε = 4( ∆ n2 +∆ n2)n2 (14.51)
+r i mode
+∆ ∆ ff
+n and n aretherealandimaginaryindexdi erencesbetweenthesemiconduc-
+r i
+torandtheinsulatingairhole.
+ff
+Finally, the di erence between a 2nd order DFB grating and a 2D PhC is that the
+latter has than one major scattering direction. Also, the air hole has a limited
+width. Forthesetwofactorsweintroduceanopticalconfinementfactor:
+Γ = /
+ϕ M dir W insul W cell (14.52)
+whereM isthenumberofmajorscatteringdirections. Forsquarelatticeittakes
+dir
+2, and for triangle lattice a value of 3 is used. W is the width of the insulating
+insul
+air hole (diameter) and W is the cell size which we take as the wavelength of
+cell
+interestsinthesemiconductormedium.
+The final emission power for a particular lateral mode j of the LED waveguide is
+obtainedfromthepoweremissionfromtheGreen’sfunctionmethodinEquation
+(14.43)timesthemodalpowerfractioninEquation(14.44)timesthesurfacepower
+coupling fraction in Equation (14.46) and times the angular optical confinement
+factorinEquation(14.52)asfollows:
+= × × ×Γ
+P PhC,j P G P r (j) F surf ϕ (14.53)
+14.5 Ray Tracing Simulation
+14.5.1 Introduction
+Ray tracing (RT) is a modeling technique based on treating light waves as an
+ff
+ensembleofgeometricalraysreflectedandrefractedo materialboundaries. This
+technique is most suitable for optical systems where geometrical nature of the
+optics is more important than the wave nature. A good example is light emitting
+diode where the light source is spontaneous emission with randomized phase
+ff
+information while the coherent e ect is not significant since the dimension of the
+cavity is much larger than the wavelength. In this section, we shall describe the
+theoreticalbackgroundsoftheRTtechniqueintheAPSYSsoftware.
+
+
+=== PAGE 287 ===
+14.5RayTracingSimulation 285
+A unique feature of our ray tracing technique is the geometrical treatment com-
+bined with a wave optics approach, taking into account refraction, reflection, ab-
+ff /
+sorptionandinterferencee ects. Ourmodelisabletosimulatein2 3dimensions
+theangulardistributionofthetransmittedpowerofanLED.
+14.5.2 Basic ideas
+The basic assumption in RT is that a ray of light travels in a straight line within
+a uniform medium. For simplicity, consider a simple cubic crystal. Let us put in
+the center a point source of light which emits rays of light in the form of many
+straightlines. Thefollowingcanhappentoaray:
+•
+Itreturnsbackintocrystalcompletelyduetototalinternalreflectionandno
+fractionoflightpowergoesoutside.
+•
+Itsplitsintoreflectedandtransmittedrays.
+•
+Ittransmitstotheoutsidecompletely.
+/
+Dependingonwhichoftheseoutcomesoccurs,theremaybeareflectedrayand or
+arefractedraywhichneedstobedealtwith(Fig.14.3). TheRTmethodisbasedon
+following the reflected ray until it decays down to a certain numerical precision
+or escapes from the device completely. Every time a secondary refracted ray is
+generated,itisputinsideaqueueforlaterprocessingandtheprogramcontinues
+until the queue is empty or a maximum number of secondary rays has been
+generated.
+Thegeneration(ornot)ofasecondaryrayisbasedontheincidentangleoftheray,
+therefractiveindexonbothsidesoftheinterfaceaswellastheparticularnatureof
+thematerialinterface. Also,duetothewavenatureoflightthereisadependence
+onpolarizationoftheelectricandmagneticfieldvectorswithrespecttotheplane
+of incidence. If the electric field vector is normal to the plane of incidence, the
+ray is said to have transverse electric (TE) polarization. On the other hand, if the
+magnetic field vector is normal to the plane of incidence, the ray is said to have
+transversemagnetic(TM)polarization.
+For example, if our crystal has a refractive index of 3.5 (typical for GaAs), the
+ffi
+reflection coe cient (amplitude ratio) of the TE- and TM- polarized light as a
+function of the angle of incidence can be plotted as Figure 14.4. As you can see if
+light impinges a surface at an angle greater then around 16.5 degrees in our case,
+itistotallyreflectedback. Suchanangleiscalledcriticalortotalinternalreflection
+angleandoftenlimitstheamountoflightthatcanbeextractedfromLEDs.
+For a light source from spontaneous emission (as is the case in an LED), the
+lightwavedoesnothaveadefinitepolarization: arayemittedfromsuchasource
+
+
+=== PAGE 288 ===
+286 APSYSSPECIFICMODELS
+incident ray 1
+refracted
+transmitted ray 3
+refracted transmitted ray 5
+Figure14.3: Raytracinginsimplecubiccrystal
+ffi
+Figure 14.4: The reflection coe cient (amplitude ratio) TE- and TM- polarized
+lightasafunctionofangleofincidence
+
+
+=== PAGE 289 ===
+14.5RayTracingSimulation 287
+shouldberegardedashavingrandompolarization. Tosimulatesuchasource,two
+approaches can the used: the first is to treat a ray as having random polarization,
+the second is to treat it as having a 50% TE-portion and a 50% TM-portion. The
+latterapproachwasimplementedbecausebothofthemproducethesameresults.
+14.5.3 Ray tracing geometry
+Recall that we started with the idea of a single cubic crystal. Real optoelectronic
+devices are far more complex and usually consist of many layers and columns.
+Theraytracingcodehandlesthisbydefiningoftheconceptofa“box”: thesingle
+crystalisthesimplestcubicboxwecanmake.
+APSYS will build boxes for the RT program based on the polygons defined in the
+.layer and .geo files. If this is a 3D simulation, then these polygons will already
+have depth information to form 3D boxes. If not, then the 2D polygons can be
+µ
+extruded to a fictitious depth of 1 m to form 3D objects: some care will have to
+betakentorespecttheoriginal2Dnatureoftheproblemeventhoughweoperate
+inside a 3D volume. Within each box, material properties are averaged to form a
+uniformpropagationmedium.
+ffi
+Itisdi culttoevenimaginehowasinglerayoflightundergoesmultiplereflection
+and refraction in a multi-box structure. The situation is more complicated if
+multiple rays from multiple source points (see Figure 14.5) must be considered.
+The RT model tracks down all those rays within the multi-box structure until
+theyareeitherabsorbedbythematerial(downtonumericalprecision)oremitted
+outsideofthedevice.
+14.5.4 Coherent and incoherent light
+As explained in the last section, the ray tracing approach is based on geometric
+ff
+optics and usually ignores coherence and interference e ects. However in some
+situations,thisapproximationisnotvalid: weneedtoidentifythesesituationsin
+ordertocorrectthemodelandknowwhenitissafetouseit.
+Weshallstartwithsomediscussionaboutthecoherenceoflight. BasedonFourier
+transformtheoriesintheanalysisrelatedtotheWiener-Khinchintheorem[84],we
+canexpressthecoherencelengthofthewaveasfollows:
+c
+λ2
+= = −
+L (14.54)
+∆ ∆λ
+f
+∆ ∆λ
+where f (and thus ) is the spectral line-width of the quasi-monochromatic
+radiation. Thecoherencelengthmaybeusedtojudgethesuitabilityofgeometric
+orwaveapproachesofthesimulation.
+
+
+=== PAGE 290 ===
+288 APSYSSPECIFICMODELS
+/
+Figure 14.5: The rays undergo multiple reflections refractions within a device
+untilsomeofthemwillareabsorbedandothersemittedoutside.
+µ
+Take the example of a GaAs LED emitting at 0.85 m. A typical line-width of
+µ
+the spontaneous emission of the LED is 0.05 m. The coherence length using the
+µ
+above formula works out to be about 14 m, which is smaller than the dimension
+ofatypicalLED.Wethusconcludethatgeometricalopticsapproachtreatingrays
+asindependentandnon-interferingwavesisvalid.
+For smaller device features, we need to take into account the polarization of the
+/ ff
+input field (TE TM) and the phase e ects due to propagation in thin layers. In
+ordertocombinethiswiththegeometricapproach,suchfeaturesareimplemented
+asspecial boundaryconditions to boxes. The resultantamplitudesof transmitted
+waves are converted back into units of power [85] and used for new geometric
+rays.
+For uniform thin film layers, we use a transfer matrix approach for monochro-
+ff
+matic plane waves (Ref. [84]) to get an e ective reflection and transmission co-
+ffi ≈λ
+e cient: this is used to define optical coatings (which are often ) as well as
+4
+semi-transparentcontacts.
+Fortexturedinterfaceswithlargefeatures,wecanadjustthegeometryoftheboxes
+to have the correct shape and work within the geometric optics approximation.
+However, when the texture is much smaller, we need to rely on other approaches
+ff
+such as FDTD or on experimental scattering results. The e ective reflection and
+ffi
+transmission coe cient of the interface can then be imported to the ray tracing
+simulations.
+
+
+=== PAGE 291 ===
+14.5RayTracingSimulation 289
+N = n - ik
+1 1 1
+N = n - ik
+2 2 2
+>
+Figure14.6: Propagationofalightrayfromadensetoararermedium(n1 n2)
+14.5.5 Optical absorption
+Theopticalpowercarriedbyaraytravelinginasemiconductordecaysduetothe
+absorptionbythematerial. Inathickbox,itsintensitycanbewrittenasafunction
+ofdistanceZasfollows:
+= − π /λ
+I I exp( 4 kZ ) (14.55)
+0
+ffi
+where I is the wave intensity of the light source, k is the extinction coe cient
+0
+λ
+(imaginary part of the complex refractive index) and is the wavelength of the
+lightinfreespace.
+14.5.6 Reflection and refraction
+Letusconsidersimpledielectricboundary(Figure14.6):
+ffi
+ThefollowingisFresnelamplitudereflectionandtransmissioncoe cientatoblique
+incidenceforTE-polarizedwave[85]:
+α− β
+N cos N cos
+= 1 2
+r (14.56)
+e α+ β
+N cos N cos
+1 2
+α
+2N cos
+= 1
+t (14.57)
+e α+ β
+N cos N cos
+1 2
+forTM-polarizedwave:
+
+
+=== PAGE 292 ===
+290 APSYSSPECIFICMODELS
+β− α
+N cos N cos
+= 1 2
+r (14.58)
+m β+ α
+N cos N cos
+1 2
+β
+2N cos
+= 1
+t (14.59)
+m β+ α
+N cos N cos
+1 2
+ffi
+The resultant amplitude transmission and reflection coe cient t and r are con-
+vertedintotransmittanceandreflectanceusingtheexpressions:
+= = ∗
+R R rr (14.60)
+e m
+∗ β
+tt Re(N )cos
+= 2
+T (14.61)
+e ∗ α
+N cos
+1
+∗ α
+tt Re(N )cos
+= 2
+T (14.62)
+m ∗ β
+N cos
+1
+∗
+where denotescomplexconjugate,Re-realpartofcomplexnumbers. Theabove
+powertransmittanceandreflectancehereareusedinbothapproachesmentioned
+above.
+14.5.7 Emission models
+A key point to modeling the emission in a LED is that the spontaneous emission
+is assumed to be isotropic: this means that every emission point must use many
+ff ff
+rays at various di erent angles in order to approximate this e ect. Every ray is
+assumed set up to carry a portion of the emission power from the emission point
+andtheraysaredividedintoequalsolidangleregions.
+However, the emission is also spread out all over the active region. The most
+accurate model would be for every point in the active region to emit light in all
+directions. However, having too many emission points with too many emission
+rayswouldposeagreatcomputationalburdenfortheRTprogram.
+Asacompromise,theusercaneitherlimitthenumberorraysperemissionpoint
+oruseanemissionmodelthatconcentratestheemissionpowerintofewerpoints.
+Thesemodelsaredetailedinthereferencesectionfordo_raytrace_3d.
+14.5.8 Application to detectors
+In previous subsections, we have assumed that the RT method is used to model
+a LED. However, the model works just the same for solar cells and detectors:
+
+
+=== PAGE 293 ===
+14.5RayTracingSimulation 291
+ff
+the only di erence is that original source ray is outside the device rather than
+inside. This means that in addition to power being lost and transmitted through
+thedevice,someitisalsoreflectedfromthetopsurface.
+14.5.9 Limitations of the ray tracing method
+/
+As mentioned before, using the geometric ray optics is only adequate where the
+wave or quantum nature of light can be neglected. Smaller features require some
+simplifyingassumptionsorinputfromothermodelingmethods.
+IntheRTmethod,wealsoassumethattheopticalpropertiesaremostlycontrolled
+by a single wavelength: the default is to use the peak wavelength of the sponta-
+neous emission spectrum in a LED. Multiple-wavelength simulation can be done
+byloopingoverallwavelengthsofthespectrumbutisverytime-consuming.
+A second problem occurs when the absorption is too small. Since we follow the
+reflected ray until it decays to a certain level, this can generate a huge number
+ffi ffi
+of secondary rays: unless the reflection coe cient cuts down on the power su -
+ciently, the reflected ray can keep bouncing around in its box almost indefinitely.
+Tosolvethis,wedotwothings:
+• ffi
+Asmallminimumabsorptioncoe cientisintroducedtoforceraystodecay
+morequicklyintransparentboxes.
+•
+Weputalimitonthenumberofsecondaryraysthatcanbegenerated.
+Any power that is lost either to the minimum absorption or by giving up on a
+ray before it decays is assumed to be “numerically” lost. This kind of artificial
+loss can also occur due to numerical precision at the interfaces. To correct for this
+numerical loss, we re-scale all transmitted and absorbed power in the device so
+that they sum up to 100% of the original source power. If the numerical loss is
+small,thenwecanconsidertheotherlosstermstoberepresentativeofthephysical
+mechanisms in the device. Please keep this in mind since the re-scaling may be
+inappropriateifthenumericallosstermislarge.
+Becauseofthisre-scalingprocess,theRTmethodcannotbeusedindeviceswhere
+there is optical gain: it would violate a key assumption that the transmitted and
+absorbed power sums up to 100% of the original source term. Attempting to do
+sowouldresultinvariousodditiessuchasanegative%oflightabsorptioninthe
+semiconductor.
+The RT code also includes the ability to model encapsulation in a plastic dome
+(i.e. a cylinder with a hemispherical cap). This is often done to maximize the
+amount of light that can be extracted by using a material with a refractive index
+
+
+=== PAGE 294 ===
+292 APSYSSPECIFICMODELS
+ffi
+thatminimizesthereflectioncoe cientattheair-domeandsemiconductor-dome
+interfaces. Thegeometrycanalsobeusefultodirectthelightemissioninacertain
+direction.
+ff
+However, this model also su ers from a simple limitation: rays that exit the LED
+andenterthedomeareassumedtostaywithinthedomeandneverentertheLED
+region again. Since the dome is usually much bigger than the LED, this is simply
+anapproximationtosavetime: itcanbetime-consumingtoseeifarayintercepts
+anyoftheLEDfacetseverytimethereisareflectedraywithinthedome.
+14.5.10 Conclusions
+ffi
+The ray tracing method is the best way to estimate the extraction e ciency of a
+LED and its emission pattern, especially for complicated structures that do not
+behavelikeawaveguide(asinprevioussections). Itisbestusedto:
+•
+DesigntheLEDstructureswithacertainangulardistributionoftheemitting
+power
+• ffi
+Optimize structures to get the most e cient output of the emitting power
+forLEDs
+•
+Getthemostsensitivephotodetectors
+•
+Obtainaccurateresultsforstructureswithcomplicatedgeometry
+•
+Discoverimportantphysicalpropertiesoftheoptoelectronicdevices
+•
+Investigatenewoptoelectronicdevices
+/
+14.6 Strained Si or Si SiGe Quantum Well Model
+14.6.1 Introduction
+/
+MOSFETdesignsbasedonstrainedSiorSi SiGequantumwellintheconduction
+channel have been demonstrated to provide enhanced mobility and thus extend
+the performance of existing MOS technology[86]. The silicon channel may be
+strained using a relaxed SiGe material or through stress induced by thin films
+deposited on the MOS device. The mobility of the strained MOS has been found
+to depend on the orientation of the strain tensor[87][88]. It is thus necessary
+to establish a detailed anisotropic band structure model and associate it to the
+ff
+mobilityenhancemente ect.
+
+
+=== PAGE 295 ===
+14.6StrainedSiorSi/SiGeQuantumWellModel 293
+This section is dedicated to the discussion of how the Crosslight simulator takes
+intoaccountthestraindependenceinthebandstructureandmobilityofaquantum
+MOSdevice.
+14.6.2 Band structure and strain orientation
+Let us consider the symmetry of silicon crystal when under stress. A common
+ff
+configuration of strained silicon is to use lattice constant di erence between SiGe
+< >
+and Si to apply biaxial tensile stress in the plane of 001 (x-y plane in real
+space). Thiswillcausethelowerandupperconductionbandvalleystosplitfrom
+∆
+the other four valleys. We shall label these two valleys as and other four as
+2
+∆
+withthesubscriptdenotingthedegeneracy. Suchasituationisrepresentedby
+4
+Fig.14.7.
+It is also common to apply uniaxial stress in the plane of MOS interface grown in
+(001) direction. Then, the two valleys along the direction of the strain will have
+ff ∆
+di erent energy than the others and we shall label these two valleys as . The
+2
+otherfourvalleyslyingonaplaneperpendiculartothedirectionofuniaxialstress
+∆
+arelabeled (seeFig. 14.8).
+4
+Inthelinearapproximation,abiaxialstraininducesanuniaxialstrainofopposite
+signandviceversa[89][90]. Foruniaxialinthe(001)direction,therelationshipis:
+= − = .
+e D e ;D 0771 (14.63)
+b 001 u 001
+Therefore, if data are available for biaxial strain, it can be converted to those for
+uniaxialstrain.
+If the silicon crystal is not gown in (001) direction or if the uniaxial strain is not
+appliedtodirectionsofhighsymmetry,thesixvalleysmaysplitintomorethantwo
+ff
+energies. The Crosslight simulator allows a maximum of three di erent valleys
+fortheconductionband.
+Thestrainedbandstructureparametersandmobilitiesarelesswellknownforthe
+valence band. In general, the valence band under strain is highly non-parabolic
+and this prevents a simple definition of curvature mass[89]. Based on a recent
+theory, the valence band is also anisotropic[91]. It was found that the higher
+ff
+valence band in (001) direction is light hole while the e ective mass appeared to
+be larger in other directions. There was confusion in the literature whether the
+highervalencebandundertensilebiaxialstrainshouldbelighthole(LH)orheavy
+hole(HH).ForexampleRichard[91]andFischettiandLaux[89]labeledtheupper
+valencebandasLHwhileotherpapersdiditotherwise(seeforexample,[92]and
+[93]).
+Atthistime,weprefertotreatthestraindependenceofthevalencebandmassas
+a fitting parameter so that the hole mobility behavior can be understand within
+
+
+=== PAGE 296 ===
+294 APSYSSPECIFICMODELS
+(001)
+(010)
+In-plane
+(100)
+Figure 14.7: Schematics of conduction band valleys of silicon under biaxial in-
+planestress.
+(001)
+In-plane
+(010)
+(100)
+Figure 14.8: Schematics of conduction band valleys of silicon under uniaxial in-
+planestress.
+
+
+=== PAGE 297 ===
+14.6StrainedSiorSi/SiGeQuantumWellModel 295
+∆
+2
+∆
+4
+Figure 14.9: Lower bandgap parameterized over a full range of composition for
+/
+Si(1-x)Ge(x) relaxed-Si(1-y)Ge(y).
+theframeworkofourmobilitymodelasdetailedinlatersubsections.
+14.6.3 Band structure parameterization
+As compared with its strained counterparts in zincblende and wurtzite crystals,
+ffi
+the band structure of strained silicon is more di cult to model within the k.p
+theory[91]. Therefore, we rely on band theories described in the literature and
+parameterizethebandstructureasafunctionofstrainorcompositionoveralarge
+range.
+A special type of material macro, called the general complex strain macro, or
+general_cx_strainmacrohasbeencreatedtoprovideatooltodescribethestrained
+ff
+silicon bands within the e ective mass theory. The strained silicon macro allows
+the specification of up to three conduction band and valence band valleys with
+ff
+anisotropice ectivemasses.
+For strained silicon grown on unstrained SiGe, we mostly depend on the work
+ff
+of Rieger and Vogl [94] for band edges and electron e ective masses. Ref. [94]
+had already parameterize its results using second order polynomial which can
+easily be incorporated into our macros. The lower and higher bandgaps based
+on parameterization by Rieger and Vogl[94] are plotted in Figs. 14.10 and 14.10
+/
+over a full range of composition of SiGe relaxed-SiGe. Thus the current model
+/
+for Si relaxed-SiGe is just a special case and can easily be extended to research on
+/
+strained SiGe relaxed-SiGe. For silicon under uniaxial strain, we mostly rely on
+
+
+=== PAGE 298 ===
+296 APSYSSPECIFICMODELS
+∆
+4
+∆
+2
+Figure 14.10: Lower bandgap parameterized over a full range of composition for
+/
+Si(1-x)Ge(x) relaxed-Si(1-y)Ge(y).
+theoreticalcalculationofFischettiandLaux[89].
+14.6.4 Mobility enhancement
+Interest in mobility enhancement by strain has been the driving force behind
+researchinstrainedsilicon. However,themobilitymodelisalsothemostcomplex
+ff
+especially when quantum confinement e ect is taken into account. It has been
+found that for electron mobility in a quantum well (as formed by the potential of
+theinversionlayerinMOS),themobilitycanbeseparatedintotwoparts,onedue
+tointra-valleyacousticphononscatteringandtheotherduetointer-valleyoptical
+phonon scattering[95]. Both parts are complicated functions of subband levels
+and energy split of the valleys. The complexity of a rigorous theoretical model
+ffi
+makesitdi cultforexperimentaldataanalysisandforCADpurposes.
+To reduce the complexity but still maintain the physical intuition needed for un-
+derstanding mobility enhancement, we propose the following phenomenological
+model. We start with bulk silicon mobility due to acoustic intra-valley acoustic
+phononscattering:
+√
+23/2 πℏ4ρω2
+µ = s
+(14.64)
+ac 3m∗5/2D2 (k T)3/2
+ac B
+
+
+=== PAGE 299 ===
+14.6StrainedSiorSi/SiGeQuantumWellModel 297
+andthatduetointer-valleyopticalphononscattering:
+√
+4 2
+π
+e
+ℏ2ρ
+sqrt
+ℏω
+µ = 0
+F(x ) (14.65)
+op
+3m
+∗3/2m∗D2 0
+d op
+whereD andD areacousticandopticalphonondeformationpotentials,respec-
+ac op
+ρ ω ω
+tively. is crystal density and and are phonon frequencies. F() represents a
+s 0
+∗
+numerical integral. m is the density of state mass and m is the conduction mass.
+d
+For background materials related to the above formulas, please refer to Refs. [96]
+to[97].
+The scattering time constant can be expressed as two terms due to acoustic and
+opticalphonons:
+/τ = /τ + /τ
+1 1 1 (14.66)
+ac op
+andthemobilitycanbewrittenusingtheDrudemodel[98]:
+µ = τ/ ∗
+q m (14.67)
+ff
+It is important to notice that the acoustic term and optical term have di erent
+dependenceonconductionmass. Itiscommonlybelievedthatmobilityenhance-
+ment comes from change of conduction mass and suppression of inter-valley
+optical phonon scattering due to split of valley energies. From energy conser-
+vation point of view, carrier transition from one valley to the other via optical
+ffi ff
+phonon scattering will be more di cult as energy di erence between valleys are
+increased. Therefore,weproposethefollowingvalleydependentmobilitymodel:
+1
+/µ =
+A m
+∗2.5 +
+B m
+∗
+exp(
+−γ
+E ) (14.68)
+k ac k op k spt
+where k is the valley index (denoting one of the six valleys or the HH or LH
+γ
+valleys). A , B and are valley independent fitting parameters assume to be
+ac op
+independent of the strain. E is the valley split between the first and second
+spt
+valleys.
+Theaboveformulastatesthatmobilityenhancementduetostraincomesfromtwo
+ff
+terms: anacoustictermdependingonconductione ectivemassonlyandanother
+ff
+termdependingone ectivemassandvalleysplitting. Weshallrefertotheabove
+phenomenologicalmodelasCrosslight’s3-parametermobilitymodel.
+The3-parametermodelinEq. (14.68)canbeconvenientlywrittenas:
+1
+/µ =
+A [m
+∗2.5 +
+r m
+∗
+exp(
+−γ
+E )] (14.69)
+k ac k ba k spt
+= /
+where r B A is a ratio representing the relative importance of acoustic and
+ba op ac
+opticaltermsinthesiliconsystem.
+
+
+=== PAGE 300 ===
+298 APSYSSPECIFICMODELS
+Using our quantum-MOS model, we solve for the distribution of carriers in each
+valley k as n (or p for holes) and the total mobility can be expressed as the
+k k
+following: P
+µ
+n
+µ = Pk k k
+(14.70)
+n
+k k
+To set up the 3-parameter model in a simulation, we need to calibrate the fitting
+parametersusingthefollowingprocedure:
+• γ
+1)Startwithaguessofr and (bothoftheorder1).
+ba
+•
+2) Set up an unstrained quantum well subband structure preview (quick
+simulationrequiringnomesh)simulationassumingatypicalquantumwell
+carrierconcentration(say1 × 1018cm −3).
+•
+3) Compute the valley occupancy and use formula Eq. (14.69) to determine
+A
+ac
+•
+4)Comparewithexperimentalstraindependenceofmobility.
+•
+5)Repeat1)to4)untilgoodagreementwithexperiment.
+ff
+For hole mobility, until a reliable anisotropic e ective mass parameterization is
+achieved, we need to calibrate the mass-strain dependence in addition to the
+aboveprocedure.
+Suchaprocedurehasbeendemonstratedanddocumentedintheexamplechapter
+related to strained silicon. The calculated mobility enhancement as a function
+ff
+strain shows good agreement with experiment without much fitting e ort (see
+Figs. 14.11and14.12). ExperimentaldataherearebasedonRefs. [99]and[86].
+Once a reasonable set of parameters are established for strained silicon, the 3-
+ff
+parametermodelcaneasilybeextendedtoincludetemperaturedependencee ect
+ff
+since acoustic and optical phonon terms have di erent temperature behaviors.
+Also, as more sophisticated mobility models are available, the simple model can
+be extended to include subband dependence, say between the first two subbands
+whicharemorepopulatedthanhighersubbands.
+14.7 Conduction and Recombination in OLED
+Adetaileddescriptionofconductioncarriersinorganicsemiconductorrequiresthe
+ffi
+knowledgeofmolecularorbitalswhichcanbedi cultduetothecomplexityofthe
+atomic configurations of large organic molecules. However, it is possible to use a
+simplifiedenergypicturetoconsideronlythehighestoccupiedmolecularorbitals
+
+
+=== PAGE 301 ===
+14.7ConductionandRecombinationinOLED 299
+1.9
+1.8
+1.7
+1.6
+1.5
+1.4
+1.3
+1.2
+1.1
+1
+0 0.05 0.1 0.15 0.2 0.25 0.3 0.35 0.4
+rotcaF
+tnemecnahnE
+ytiliboM
+Experiment
+3-Parameter Model
+Substrate Ge Fraction
+Figure 14.11: Comparison with experiment for Crosslight’s 3-parameter mobility
+modelaveragedovervalleydensitiesinatypicaln-MOSFETquantumwell.
+2.2
+2
+1.8
+1.6
+1.4
+1.2
+1
+0.8
+0 0.05 0.1 0.15 0.2 0.25 0.3 0.35 0.4 0.45
+rotcaF
+tnemecnahnE
+ytiliboM
+eloH
+Experiment
+3-parameter Model
+Substrate Ge Fraction
+Figure 14.12: Comparison with experiment for Crosslight’s 3-parameter mobility
+modelaveragedovervalleydensitiesinatypicalp-MOSFETquantumwell.
+
+
+=== PAGE 302 ===
+300 APSYSSPECIFICMODELS
+(HOMO) describing the electron carriers and the lowest unoccupied molecular
+orbitals(LUMO)describingtheholecarriers.
+Similarly, we can introduce the concept of density of states for the HOMO and
+LUMO so that quasi-Fermi levels and Fermi statistics can be used. Having in-
+ff
+troduced quasi-Fermi levels, the drift-di usion equation can be established in a
+similarwayasforconventionalsemiconductors.
+ff
+The mechanism of carrier conduction is di erent than in conventional semicon-
+ff
+ductorinthatconductionisbasedonahoppingmodel. Inspiteofthisdi erence,
+ff
+we can still approximate the transport using the drift-di usion equation if we
+choose a low value for the mobility. In many cases, the carriers may have to go
+overahighpotentialbarrierandquantumtunnelingmustbeused.
+Sincethetransportisactivatedbyelectricalfieldinahopping-likemodel,weuse
+aPoole-Frenkel-likefielddependentmobilitybasedonRef.[100]:
+q
+µ = µ /
+exp( F F ) (14.71)
+0 pf
+whereF isanactivationfield.
+pf
+The main mechanism of recombination is that electron and holes are attracted to
+each other via Coulombic forces while the carrier mobility determines the rate at
+each the recombination occurs. The model is based on the model of Langevin
+Recombinationofcarriers(Ref.[101]).
+Carriersarestatisticallyindependentsothee-hrecombinationisarandomprocess
+and kinetically bimolecular. The model considers total current attracted by a
+chargeintoacertainvolumebyCoulombicforces. Thebimolecularrecombination
+ffi
+coe cientdependsonthemobilityasfollows:
+q
+= µ +µ
+B ( ) (14.72)
+ε n p
+Formoredetails,werefertoRef.[100].
+14.8 Organic Semiconductor Emission Spectrum
+Model
+14.8.1 Introduction
+Organic semiconductor emits light via Frenkel exciton recombination and the
+ff
+mechanism for absorbing and emitting light is di erent than conventional semi-
+/
+conductortheoriesbasedonfree-carrier many-bodyinterbandtransition. Optical
+
+
+=== PAGE 303 ===
+14.8OrganicSemiconductorEmissionSpectrum
+Model 301
+spectrum theory for organic material is generally rather complicated due to the
+complexity in molecular structure and the advance physical models involved.
+However from the view point of engineering design, one does not have to un-
+derstand all the details related to Frenkel exciton to be able to alter and optimize
+the spectrum. Simplified exciton models with few adjustable parameters corre-
+lating to molecular-crystal structure will enable design engineers to achieve such
+objectives.
+We find that the simplified exciton model based on the Holstein model (see Refs.
+[102–107]) is suitable for such purposes. The Holstein model assumes a one-
+dimensional molecular chain with electronic and vibronic interactions between a
+limited number of nearest neighbors. The advantage of this model is that one
+may easily alter the optical spectrum by tuning the few physical parameters. For
+example if we find increasing the interaction parameter between neighbors alters
+the optical spectrum in a desirable manner, we may be motivated to alter the real
+organicmaterialtoincreasethenumberofneighboringmolecules.
+14.8.2 The Model
+Following Refs. [102–107], we have established optical spectrum model based on
+exciton-phonon interaction within an organic crystal. A Holstein Hamiltonian is
+establishedtoincludeintra-molecularandinter-molecularelectronicandvibronic
+interactions. A phonon cloud of several unit cells is used to represent exciton-
+phonon interaction. All excited states of the molecular crystal are solved and
+opticaltransitiondipolemomentscomputedbetweenallstates. Pleaserefertothe
+abovereferencesfordetails.
+AlthoughmechanismsinvolvedintheHamiltonianarecomplex,inputparameters
+/
+are few and fitting to experimental spectrum is easy. Typical input adjustable
+parameters: excitonbandgap,molecularvibronicquanta,intra-molecularexciton-
+phonon interaction constant, and inter-molecular hopping parameter. Doped
+organic semiconductor may easily be modeled as combination of emission from
+thehostandthedopantseparately.
+14.8.3 Tuning the spectrum
+ffi
+The implementation of the spectrum model is numerically e cient: several min-
+utes per spectrum. We have integrated the spectrum model into APSYS-OLED
+option so that optical extraction may be calculated based on the spectrum. Bias
+andcurrentinjectiondependentspectrummaybesimulatedtofinetunethecolor
+oftheOLED.
+Weuseasimpleexampletoprovidesomeinsightandaguidelineonhowtoalter
+
+
+=== PAGE 304 ===
+302 APSYSSPECIFICMODELS
+100000
+90000
+80000
+70000
+60000
+50000
+40000
+30000
+20000
+10000
+0
+0.3 0.35 0.4 0.45 0.5 0.55 0.6 0.65 0.7
+)mc/1(
+noitprosbA
+File: t1.gain
+Wavelength (um)
+Figure14.13: AbsorptionspectrumofAlq3,obtainedbyfittingexcitonparameters
+withELspectrum.
+the shape of the spectrum. Consider the absorption and EL spectra of Alq3 in
+Figures14.13and14.14whichwereobtainedbyfittingtheELspectrumtoexperi-
+ments. Thesmoothandbroadenedshapecorrespondsistheresultsofbroadening
+of tens of spectrum lines as a solution of the Hamiltonian equation. Since the EL
+spectrumisrelatedtotheabsorptionspectrum,welimitourdiscussionheretothe
+absorption spectrum which is more simple and it directly correlates to the basic
+solutionsoftheHamiltonian.
+To view the actual spectrum lines before broadening, we reduce the Gaussian
+broadeningwidth(usingparameterox_gaussian_sd1)andobtainthespectrumin
+Figure 14.15. We see several major lines due to the intra-molecular vibrational
+excitations. These lines correspond to the major absorption spectrum lines when
+theunitcellisisolated. Weseemanylowerintensitylines(therearetensofthose)
+arising from electron-electron and electron-phonon interactions within the same
+unitcellandbetweenthecells.
+One way to alter the spectrum is the change the electron-phonon interaction con-
+stant(parameterox_xp_coupling). Ifweincreasetheelectron-phononinteraction,
+the spectrum tends to peak in longer wave lengths (see Figure 14.16). The inter-
+pretation of such a change in shape is that the vibrational energy is much smaller
+than the electronic energy and a stronger coupling with phonons pulls down the
+overall energy of the excitations. To achieve such type of tuning, we may be
+motivatedtoaltertheFranck-Condonenergyoftheorganicmaterial.
+Anotherwaytoalterthespectrumistochangetheinter-moleculeinteraction. This
+
+
+=== PAGE 305 ===
+14.8OrganicSemiconductorEmissionSpectrum
+Model 303
+4.5
+4
+3.5
+3
+2.5
+2
+1.5
+1
+0.5
+0
+0.3 0.35 0.4 0.45 0.5 0.55 0.6 0.65 0.7
+)Ve/s/3^mc/1(
+62^01
+etaR.pS
+File: t1.gain
+Wavelength (um)
+Figure14.14: ELspectrumofAlq3,obtainedbyfittingexcitonparameterswithex-
+ff ff
+perimentalELspectrum. Di erentcurvescorrespondtodi erentcarrierinjection
+levels,rangingfrom5.E23to5.E241 / m3.
+100000
+90000
+80000
+70000
+60000
+50000
+40000
+30000
+20000
+10000
+0
+0.3 0.35 0.4 0.45 0.5 0.55 0.6 0.65 0.7
+)mc/1(
+noitprosbA
+File: t2_lines.gain
+Wavelength (um)
+Figure14.15: AbsorptionspectrumwithreducedGaussianbroadening.
+
+
+=== PAGE 306 ===
+304 APSYSSPECIFICMODELS
+50000
+45000
+40000
+35000
+30000
+25000
+20000
+15000
+10000
+5000
+0
+0.3 0.35 0.4 0.45 0.5 0.55 0.6 0.65 0.7
+)mc/1(
+noitprosbA
+File: t3_g.gain
+Wavelength (um)
+Figure 14.16: Absorption spectrum with increased electron-phonon interaction,
+showingshiftofabsorptionpeaktolongerwavelengths.
+90000
+80000
+70000
+60000
+50000
+40000
+30000
+20000
+10000
+0
+0.3 0.35 0.4 0.45 0.5 0.55 0.6 0.65 0.7
+)mc/1(
+noitprosbA
+File: t4_j.gain
+Wavelength (um)
+Figure 14.17: Absorption spectrum with increased inter-molecule interaction,
+showingshiftofabsorptionpeaktoshorterwavelengths.
+
+
+=== PAGE 307 ===
+14.9DiffusionofExcitonsinOrganicSemiconductor 305
+canbedonebyeitherchangingelectronichoppingenergy(parameterox_hopping_energy)
+orbyvaryingthenumberofinteractingnearestneighbors(parameterox_phonon_cloud).
+We increase the hopping energy to find that the spectrum tends to peak at higher
+energies(Figure14.17).
+This can be understood as follows: in the limit of zero inter-molecule interaction,
+the systems prefers to stay at its lowest vibrational state. Higher inter-molecule
+interaction simply causes a mixture of all the vibrational states and thus tend to
+equalize the density of states. For such type of tuning, we may be motivated to
+altertherealorganicmaterialtoincreasethenumberofneighboringmolecules.
+ff
+14.9 Di usion of Excitons in Organic Semiconductor
+Electron-hole pairs in organic semiconductor form singlet (25%) and triplet exci-
+ff
+tons (75%). Both exciton types may di use over a certain distance before being
+convertedintophotonsorbeingquenchedvianon-radiativemeans.
+ff
+Wesolvethefollowingexcitondi usionequation:
+dS
+=
+R
++
+D
+∇2S −
+S
+/τ −
+S
+/τ
+(14.73)
+rad s em q
+dt
+whereSisthesingletortripletexcitondensity,R istheradiativerecombination
+rad
+ff /τ
+term from the carrier drift-di usion equation. S is photon emission term
+em
+/τ τ
+relatedtoexcitonlifetimeandS istheexcitonquenchingterm. itselfmaybe
+q q
+/
+afunctionofS(bi-excitonquenching)and orthefreecarrierdensities.
+ff
+The significance of this exciton di usion model is that OLED do not emit directly
+/τ
+from R term but through the S term above. This means deviation in both
+rad x
+magnitude and profile from the bi-molecular recombination term of R in the
+rad
+ff
+drift-di usionequation.
+, , /τ
+Using the RCLED model, the S(x y z) term acts as a continuous dipole source
+x
+withintheGreen’sfunctiontheory. Thedipolesourcemaybeenhancedbyoptical
+ff
+interferencee ectstooptimizethepoweremissioncharacteristicsoftheOLED.
+14.9.1 Optical Generation of Excitons
+Since light emission in organic semiconductors comes from the excitons rather
+than the free carriers it stands to reason that optical pumping should not directly
+produce free carriers either. Instead, the optical generation rate should be added
+to Eq. (14.73). This can be specified with the ox_pump_only parameter in the
+light_powerstatement.
+
+
+=== PAGE 308 ===
+306 APSYSSPECIFICMODELS
+14.10 Nomenclature
+Symbol Definition
+ffi ff
+A Coe cientforband-gapnarrowinge ects.
+x
+a ,a LatticeconstantsofGaAs(a )andInGaAs(a).
+0 0
+ffi
+B Radiativerecombinationcoe cient.
+B ,B ,B Complexwaveamplitudesoftheopticalwavepropagatingfrom
+1 2 z
+righttoleftinalaser.
+B Constantusedinmathematicalfittings.
+k
+b Sheardeformationpotential.
+ffi
+C ,C Augerrecombinationcoe cients,forelectrons(n)andholes(p).
+n p
+ffi
+c ,c Electron(n),hole(p)capturecoe cientsofthejthdeeptrap.
+nj pj
+c Velocityoflightinvacuum.
+,
+c c Elasticconstants.
+11 12
+D ,D Densityofstatesoftheconductionandvalenceband.
+c v
+E ,E Shallowdonor(D)andacceptor(A)levels.
+D A
+E0,E0,E0 Energyminimumsoftheithandthejthlevels,andthedi ff erence
+i j ij
+between them, . The i refers to the valence band sub-band levels
+andjreferstotheconductionbandsub-bandlevels.
+, ff
+E E Photon energy and energy di erence between the i th and j th
+ij
+levels.
+E ,E Quasi-Fermienergiesofelectrons(n)andholes(p).
+fn fp
+E Bandgap.
+g
+E Unstrainedbandgap.
+g0
+∆ ff
+E ShiftinionizationenergyofadopantduetoPoole-Frenkele ect.
+PF
+δ
+E Hydrostaticstrainenergy.
+hy
+δ
+E Energyassociatedwithshearstrain.
+sh
+F Electricfieldintensity.
+F Lorentzianshapefunction.
+l
+F ,F Threshold electric field used in the electron (n) and hole (p) mo-
+0n 0p
+bilitymodels.
+F 1/2 Fermiintegraloforderone-half.
+f , f Occupancyofthedonor(D)andacceptor(A)levels.
+D A
+f Occupancyofthejthdeeptraplevel.
+tj
+f, f Fermifunctionsfortheithandthe jthlevel.
+i j
+′ ′
+f , f IntegratedFermifunctionsfortheithandthejthlevels.
+i j
+g Interbandlocalgain.
+g , g Local gain due to transition between the i th and the j th levels,
+ij
+andthelocalgainofthematerial.
+g , g Degeneraciesoftheshallowdonor(d)andacceptor(a).
+d a
+H Hamiltonianmatrixelementbetweentheithandthe jthstates.
+ij
+
+
+=== PAGE 309 ===
+14.10Nomenclature 307
+h(x) stepfunctionofvariablex.
+ℏ
+h, Plank’sconstants.
+I ,I Theintegralsneededtoevaluatethequantumwellgainandspon-
+1 2
+taneousemissionrate.
+J , J Electron(n)andhole(p)currentfluxdensities.
+n p
+J , J Electron(n)andhole(p)currentfluxdensitiesonthesurface.
+sn sp
+J , J Electron (n) and hole (p) current flux densities across the hetero-
+hn hp
+junction.
+J Currentfluxsource.
+source
+k Boltzmannconstant.
+L Lasercavitylength.
+L() Linesshapefunctionforgainbroadening.
+m Electronmass
+0
+ff
+m,m ,m Relative e ective masses of the i th and the j th level and the
+i j ij
+ff
+reduced e ective mass between the i th and the j th level. Their
+/ = / + /
+relation is defined by 1 m 1 m 1 m . Indices i and j refer
+ij i j
+heretoquantumwellsub-bands.
+ff
+m ,m Bulke ectivemassesforelectrons(n)andholes(p).
+n p
+m ,m Thesameasm andm ,respectively.
+e h n p
+ff
+m ,m Bulke ectivemassesforelectrons(n)andholes(p)onthebarrier
+bn bp
+sideoftheheterojunction.
+ff
+m Relative e ective mass of the L-band used in the quantum level
+zl
+calculation.
+ff
+m ,m ,m E ectiveholemassesinthex,yandzdirection.
+vx vy vz
+M ,M ,M ,M Momentum matrix elements for bulk material, between the i th
+0 ij lh hh
+and the j th states, involving light- and heavy-hole transitions,
+respectively.
+N Total number of grid points in the simulation space. Also used
+forthetotalnumberoflongitudinallayers.
+N Numberofgridpointsassociatedwithaboundaryofinterest.
+b
+N ,N Dopingdensityofshallowdonors(D)andshallowacceptors(A).
+D A
+N Densityofthejthdeeptrap.
+tj
+n Electronconcentrationordensity.
+n Electron concentration or density on the barrier side of the het-
+b
+erojunction.
+n Electron concentration or density on the barrier side of the het-
+b0
+erojunctionwhen its quasi-Fermi level coincides with that on the
+otherside.
+n Electronconcentrationordensityonthesurface.
+s
+n Realpartofrefractiveindex.
+n Intrinsiccarrierdensity.
+i
+n The surface concentration of a quantum well, equal to the bulk
+2D
+densitytimesthelayerthickness.
+
+
+=== PAGE 310 ===
+308 APSYSSPECIFICMODELS
+N ,N Reference doping density in electron (n) and hole (p) mobility
+rn rp
+equations.
+P Probabilityofatransitionfromtheithtothe jthlevel.
+ij
+p Holeconcentrationordensity.
+p Hole concentration or density on the barrier side of the hetero-
+b
+junction.
+p Hole concentration or density on the barrier side of the hetero-
+b0
+junction when its quasi-Fermi level coincides with that on the
+otherside.
+p Holeconcentrationordensityonthesurface.
+s
+j
+Q Energydensityofthe jthemittedlongitudinalmode.
+em
+j
+Q Energydensityofthe jthlongitudinalmodewithinthelasercav-
+cav
+ity.
+q Electroniccharge.
+tj tj
+R ,R Electron (n) and hole (p) recombination rates per unit volume
+n p
+throughthejthdeeptrap.
+R ,Rb ,R qw Spontaneous recombination rate per unit volume, also called the
+sp sp sp
+radiative recombination rate, and the same quantity in bulk (b)
+andinthequantumwell(qw).
+qw
+r Frequency dependent spontaneous recombination rate for the
+sp
+quantumwell.
+R Resistanceassociatedwithaboundarycondition.
+s
+R Stimulatedrecombinationrateperunitvolume.
+st
+R Augerrecombinationrateperunitvolume.
+au
+eff ff
+r ,r Singlefacetreflectivityande ectivereflectivityofalaser.
+m m
+T Absolutetemperature.
+T Thescatteringkernelforcarrier-carrierscattering.
+scat
+t Thicknessofthequantumwell.
+V Electricalpotential.
+V Electricalpotentialonthesurface.
+s
+V Appliedelectricalpotential.
+applied
+v Volume.
+v ,v Averagethermalvelocityofelectrons(n)andholes(p). Theaver-
+n p
+ageistakenoverallthreedimensions.
+therm therm
+v ,v Averagethermalvelocityofelectrons(n)andholes(p). Theaver-
+n p
+ageistakenonlyoverthedimensionalofinterest.
+therm therm
+v ,v Averagethermalvelocityofelectrons(n)andholes(p)locatedon
+bn bp
+the barrier side of the heterojunction. The average is taken only
+overthedimensionalofinterest.
+v ,v Saturationvelocityforelectrons(n)andholes(p).
+sn sp
+W Carrierenergy.
+W Electronenergy.
+n
+
+
+=== PAGE 311 ===
+14.10Nomenclature 309
+W Holeenergy.
+n
+We,Wh E ff ectivewidthofthewavefunctionsforelectronandholeinthe
+j i
+jthandithsubbands,respectively.
+,
+x y Spatialcoordinatesusedinthemodel. Thex-axisisparalleltothe
+quantum well. x is also used elsewhere as the Al composition in
+AlGaAsortheIncompositioninInGaAs.
+αα ffi
+Locallosscoe cientduetolossotherthaninterbandrecombina-
+qw
+tion,andlocallossinthequantumwell.
+α α
+Internallossdefinedastheweighedaverageofthelocalloss .
+int
+α α
+, Constants used in doping dependent mobility functions for elec-
+n p
+trons(n)andholes(p).
+α α ffi
+, Coe cients of the free carrier absorption for electrons (n) and
+fn fp
+holes(p)inthequantumwell.
+α ffi
+Absorptioncoe cientforregionsoutsidethequantumwell.
+0
+β β β
+, , Complex eigenvalues of the wave equation and its real (1) and
+1 2
+ff
+imaginary(2)parts. Theyarealsoconsiderede ectiveindices.
+α ffi
+Opticallosscoe cientduetoemissionoflightinthelasingmode.
+em
+α ffi
+Optical loss coe cient due to emission of light in the jth longitu-
+emj
+dinalmode.
+β
+Constantusedintheholemobilityequation.
+p
+∆
+Spin-orbitsplittingofthevalencebandenergy.
+∆a
+TransitionenergyshifttermintheAsadabroadeningmodel.
+ij
+δ
+Constant. Value is 1 for deep donors and 0 for deep accep-
+tors when used to represent electrical charge. Also used as a
+δ
+-function.
+ϵ
+Dielectricconstantofvacuum.
+0
+ϵ
+RelativeDCorlowfrequencydielectricconstant.
+dc
+ϵ ϵ ϵ
+, , Complexopticaldielectricconstantanditsreal(1)andimaginary
+1 2
+ϵ
+(2)parts. isalsoused,underacompletelycontext,fornon-linear
+ffi
+gaincoe cient.
+ϵg ϵα
+, Imaginary parts of the dielectric constant corresponding to gain
+2 2
+due to interband transition and loss due to other mechanisms,
+respectively.
+ε
+Strain.
+Γ
+Energy level broadening parameter, or the half width of the
+Lorentzianbroadeningfunction.
+Γ
+The maximum energy level broadening parameter, or the half
+0
+widthoftheLorentzianbroadeningfunction.
+Γ
+The energy level broadening parameter, or the half width of the
+a
+Lorentzianbroadeningfunction,asusedintheAsada’sbroaden-
+ingmodel.
+γ ,γ ,γ
+Luttingernumbers.
+1 2 3
+γ
+Constantrelatingtheopticalwaveamplitudetoelectricfield.
+
+
+=== PAGE 312 ===
+310 APSYSSPECIFICMODELS
+γ γ
+, Adjustable constants for the electron (n) and hole (p) thermionic
+n p
+ff
+emissionmodel,usedtoaccountfortunnelingandothere ects.
+γ γ
+, Adjustable constants for the electron (n) and hole (p) thermionic
+hn hp
+emissionmodelforheterojunctions,usedtoaccountfortunneling
+ff
+andothere ects.
+χ ffi
+A nity.
+χ ffi
+A nityofareferencematerial.
+λ
+Opticalwavelength.
+λ
+Opticalwavelengthofthejthlongitudinalmode.
+j
+µ µ
+, Mobilityofelectrons(n)andholes(p).
+n p
+µ µ
+, Lowfieldelectron(n)andhole(p)mobilities.
+0n 0p
+µ µ
+, Minimumelectron(n)andhole(p)mobilities.
+1n 1p
+µ µ
+, Maximumelectron(n)andhole(p)mobilities.
+2n 2p
+ν
+FunctionusedintheFermi-Directstatistics.
+ρ ρ ρ
+, , Density of states for the i th and the j th levels, and the reduced
+i j ij
+densityofstatesfortransitionbetweenthejthandtheithlevels.
+ϕ ϕ
+, Quasi-Fermipotentialforelectrons(n)andholes(p).
+n p
+ϕ
+Schottkybarrierheight.
+b
+ρ0, ρ0, ρ0
+Constants for the two-dimensional density of states for the i th
+i j ij
+and the j th levels, and reduced density of states for transition
+betweentheithandthe jthlevels. Forexample
+ρ0 =
+m
+/πℏ2t.
+i i
+σ σ
+, Electron (n) and hole (p) capture cross sections of the j th deep
+nj pj
+trap.
+τ
+Intra-bandscatteringlifetime.
+τ τ
+, Electron(n)andhole(p)lifetimeduetothe jthtrap.
+nj pj
+τ τ
+, Hole-hole scattering life time for the Asada gain broadening
+h v
+τ = τ
+model. 2 .
+h v
+ω
+Angularfrequencyoftheopticalwave.
+ω ω
+a , β SORparametersusedforthewaveequation.
+ξ
+FunctionusedintheFermi-Diracstatistics.
+ζ ζ ζ ff ζ
+, , Variablerelated to the e ective masses. is also used for half the
+n p
+ff
+shearstrainenergyforadi erentcontext.
+<>
+Averagewith
+|
+W
+|2
+asweight.
+
+
+=== PAGE 313 ===
+hapter
+C 15
+LASTIP SPECIFIC MODELS
+15.1 Stimulated Emission and Rate Equation
+Thestimulatedemissionrate,R isdefinedastherateofphotonemissionperunit
+st
+volume as a result of material gain experienced by the traveling light wave. By
+energy conservation, the emitted photon must cause an increase in the power (P)
+ofthetravelingwavebythesameamount:
+Z
+= ℏω
+dP dz( ) R dxdy (15.1)
+st
+Sincemodalgain g relatestothepowerincreasebythefollowingrelation:
+m
+1 dP
+=
+g (15.2)
+m
+P dz
+weobtainthefollowingexpression:
+Z
+= ℏω
+g P ( ) R dxdy (15.3)
+m st
+(cid:16) (cid:17)
+Using group velocity (v
+= ∂k
+−1
+) as the traveling speed of the optical power, we
+g ∂ω
+obtain:
+= ℏω
+P v S (15.4)
+g
+wherReSisthelinearphotondensity(i.e. numberofphotonsinthe2Dplane)such
+that S(z)dzisthetotalnumberofphotonsinthelasercavity.
+Weintroducethenormalized2DopticalwavefunctionW sothat:
+Z
+|
+W
+|2
+dxdy
+=
+1 (15.5)
+
+
+=== PAGE 314 ===
+312 LASTIPSPECIFICMODELS
+and Z
+g
+=
+g(x
+,
+y)
+|
+W
+|2
+dxdy (15.6)
+m
+Note that the wave function W has been normalized such that the above integral
+Γ
+yieldstheconfinementfactor ifthelocalgainisuniformintheactiveregion.
+FromEqs(15.3)to(15.6),weobtain:
+Z Z
+R dxdy
+=
+v g(x
+,
+y)S
+|
+W
+|2
+dxdy (15.7)
+st g
+whichimpliesourresult:
+R
+=
+v g(x
+,
+y)S
+|
+W
+|2
+(15.8)
+st g
+,
+or,usingthelocalphotondensitys(x y):
+= , ,
+R v g(x y)s(x y) (15.9)
+st g
+In most textbooks, the common formulation is that of Equation (15.8). However,
+Equation(15.9)isalsousefultomodelmultimodebehavior: inthatcase,thelocal
+photondensityiscalculatedbysummingupthecontributionfromeachmode.
+TherateequationforthelinearphotondensitySinthelasercavitymaybeviewed
+asastatementofconservationofenergy:
+− −
+stimulatedemission internalloss emittedpower
++ =
+spontaneousemission powerincrease (15.10)
+The “power increase” in the above equation is the rate of linear photon density
+∂ /∂
+( S t). Equation(15.10)canbedetailedas
+Z
+= =
+stimulatedemission R dxdy v g S (15.11)
+st g m
+Internallossisdefinedasthemodallossexperiencedbythemodeofthetraveling
+α
+wave. This loss term is usually denoted by and it can often be determined
+i
+experimentally. Similartomodalgain,theinternallosscanbewrittenas:
+Z
+α ≈ |
+W
+|2 α
+dxdy (15.12)
+int
+ff ffi α
+Definingane ectivelosscoe cient duetoemittedpowerlossfromthedevice,
+em
+theemittedpowerinEquation(15.10)canbewritteninthesameformasEquation
+(15.11):
+= α
+emittedpower v S (15.13)
+g em
+
+
+=== PAGE 315 ===
+15.1StimulatedEmissionandRateEquation 313
+In the special case of a Fabry-Perot cavity, the emitted power loss equals the facet
+mirrorlossandweobtainthefollowingfamiliarformula:
+(cid:18) (cid:19)
+1 1
+= .
+emittedpower v S ln (15.14)
+g
+2L r r
+m1 m2
+wherer andr arethepowerreflectivitiesofthetwofacets.
+m1 m2
+The power due to spontaneous emission is simply the integration of the sponta-
+neousemissionrateoverthecavity:
+Z
+= ,
+spontaneousemission c R dxdy (15.15)
+m sp
+wherec isthefractionofspontaneousemissioncoupledintothelasingmode.
+m
+Summationoftheabovetermsyieldsthefamiliarrateequation:
+Z
+−α −α + = ∂ /∂
+v (g )S c R dxdy S t (15.16)
+g m int em m sp
+The derivation given above makes it clear that LASTIP is only concerned with
+the total number of photons in the cavity so that it can compute the stimulated
+recombination rate used in the basic equations. The rate equation averages out
+most details of longitudinal distribution of the optical fields. Therefore the rate
+equationisexpectedtobeaccurateifthez-dimensionisuniform.
+In cases where strong variation of physical variable along the z-direction, such
+as DFB and DBR lasers, the rate equation will be inaccurate for a complete de-
+scription of the laser cavity. However, the 2D rate equation may still be used as
+ff
+a phenomenological model if proper values of e ective mirror reflectivity can be
+chosen. For example, if the mirror reflectivity of the DBR mirror is known, the
+rateequationinthissection,thustheLASTIPsoftware,canstillbeused.
+
+
+=== PAGE 316 ===
+314 LASTIPSPECIFICMODELS
+

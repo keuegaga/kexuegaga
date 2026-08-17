@@ -1,0 +1,2801 @@
+=== PAGE 136 ===
+134 ACANALYSISANDHIGHFREQUENCYPARAMETERS
+Equation 7.28 and is non-zero only at boundary nodes where the AC voltage is
+applied.
+When a device is illuminated by a modulated optical signal, similar modula-
+tion vector can be set up. The contribution of the optical signal comes from the
+generation- recombination term which is distributed throughout the whole area
+sensitive to the light signal. Therefore, the vector B is non-zero in all mesh points
+wherethereislightillumination.
+To activate the AC photo-response model, the approach is similar to that of AC
+voltage but instead of using ac_voltage, we use ac_light. The output results are
+shown as AC current on a certain electrode, much in the same way as for an AC
+voltagebias.
+7.5 Laser Diode Modulation Response
+Laser diode modulation response is a special case of AC analysis with additional
+variable of photon density. Similar to the AC photo-response described in the
+previous section, the same photon-carrier interaction is through the same gener-
+/ = , ,
+ation stimulated recombination term: R v g S(x y z) where v is the group
+st g m g
+velocity of light, g is the modal optical gain and S is the bulk photon density. In
+m
+thecaseofphoto-sensitivedevices,theopticalgainbecomesnegativeandcarriers
+aregeneratedinsteadofannihilated. Anadditionalphotonrateequationmustbe
+ff
+solvedtogetherwithallotherequationsofthedrift-di usionsystem.
+Toactivatethemodulationmodel,ACsmallvoltageexcitation(throughac_voltage)
+is used. The corresponding AC current is computed and used in the plotting the
+laserdiodemodulationresponse.
+
+
+=== PAGE 137 ===
+hapter
+C 8
+QUANTUM WELLS AND
+INTERBAND TRANSITIONS
+This chapter presents the quantum well models and related interband optical
+ff
+transitions in Crosslight simulation software. Di erent levels of approximations
+for quantum well models are described along with the corresponding optical
+/
+gain absorptioncalculations. Thetheoryofmany-bodygainenhancementimple-
+mentedinthesoftwareisalsoexplainedneartheendofthechapter.
+8.1 Quantum Well Models
+8.1.1 Introduction
+QuantumwellmodelsareamongthemostsophisticatedmodelsusedinCrosslight
+ff
+Softwareandtherearedi erentlevelsofapproximationavailable. Theyaresum-
+marizedinFig.8.1anddetailedbelow:
+•
+1. The simple (also the default) quantum model assumes a a single, sym-
+metric,flat-bandandstep-wisepotentialprofile. QuantumwellsinaMQW
+region are assumed to be isolated from each other and the wave functions
+donotoverlap.
+•
+2. ThecomplexMQWremovestherestrictionofsymmetryandallowsusto
+treatasymmetricwells(2a)orcouplingbetweenwells(2b).
+•
+3. The self-consistent MQW model removes the restriction of flat-band and
+couples the potential with charge density in a self-consistent manner. This
+can be used in isolated quantum wells (3a) or in a coupled complex MQW
+(3b).
+
+
+=== PAGE 138 ===
+136 QUANTUMWELLSANDINTERBANDTRANSITIONS
+Default: symmetric and isolated QW
+(1)
+Complex-QW: Complex-MQW:
+(2a)
+(2b)
+Self-consistent Self-consistent
+QW: MQW:
+(3b)
+(3a)
+ff
+Figure 8.1: Di erent levels of approximation for quantum wells models in
+Crosslight
+/
+Notethatanextralayerofcomplexity accuracycanbeintroducedbyconsidering
+valencemixingmodelswhensolvingtheHamiltonian.
+8.1.2 Simple quantum wells
+Whenaconfiningpotentialwellgetsnarrow,itisnecessarytotreatitasaquantum
+well. We consider the case of a simple quantum well without external applied
+Γ
+field. Allthequantumlevelsforthesub-bandsof ,L,lightholesandheavyholes
+(and crystal field holes for wurtzite) are computed from well known formulas in
+quantummechanicsforasquarequantumwell[15].
+Astheexternalfieldisapplied,weallowthequasi-Fermileveltovaryasafunction
+ofdistance. Thedensityofstatesandquantumlevelsareassumedtobethesame
+asiftherewerenoappliedfield.
+The quantum well levels are calculated at every bias point during an actual sim-
+ulation because the bandgap of the active region is a function of carrier density.
+As the bias increases, the higher carrier density in the quantum well reduces the
+bandgap and changes the quantum well depth. Therefore the quantum levels
+mustberecomputedateverybiaspoint.
+Note that by default, the heavy and light holes are assumed to be parabolic and
+decoupled. A simplification has been made so that, by default, all the in-plane
+ff
+e ective masses of heavy hole or light hole subbands are assumed to be same. If
+ff
+the user wishes to alter the e ective mass of a particular subband, the software
+
+
+=== PAGE 139 ===
+8.1QuantumWellModels 137
+/
+allowshim hertodosowiththemodify_qwstatement.
+8.1.3 Anisotropic parabolic approximation
+Inclusion of biaxial strain in a quantum-well has become a common practice for
+ff
+many heterojunction devices. Strain o ers an additional degree of freedom and
+ff
+can produce some desirable e ects such as lower threshold current for a laser
+diode.
+Strain is known to cause the valence band of a III-V semiconductor to split into
+separate light hole (LH) and heavy hole (HH) bands (or CH for wurtzite struc-
+ff
+ture) which are strongly non-parabolic. A rigorous treatment of strain e ects on
+the band structure is rather complicated [16] and the gain function involves an
+integrationoverk-space.
+Wemayapproximatethenon-parabolicbandstructurebyananisotropicparabolic
+one. Onecanshowthatwithproperchoicesofparameters,agoodapproximation
+to the non-parabolic band structure can be obtained. This approximation greatly
+simplifiesthecalculationofgain,spontaneousemissionandcarrierconcentration
+ff
+andallowstheincorporationofstraine ectsintotheprogram.
+For zincblende structures, a simplified analytical band structure of a strained
+ffi
+quantum well has been developed [16] using an e cient decoupling method to
+× ×
+transformtheoriginal4 4valencebandHamiltonianintotwoblocksof2 2upper
+and lower Hamiltonians. As a result of the decoupling, an analytical expression
+can be derived [16]. To be consistent with our convention the y-axis (equivalent
+tothez-axisin[16])isdefinedtobeperpendiculartothequantum-wellplaneand
+thez-axistobealongthedirectionoflightpropagation.
+Weusethefollowingexpressionforthebulkvalencebandenergy[16]:
+2 !
+ℏ2γ 6 6 ℏ2γ 2
+− E = 1 (k2 + k2) ± 6 6 4 2 (k2 − 2k2) +ζ
+2m x y 2m x y
+0 0
+! ! 3
+ℏ2γ 2 ℏ2γ 2 7 7
+1/2
++ 3 2 k2 + 12 3 k2k2 7 7 5 (8.1)
+2m x 2m x y
+0 0
+−
+a a(x)
+ε = 0
+(8.2)
+a
+(cid:18) 0 (cid:19)
+c
+δ = + 12 ε
+E b 1 2 (8.3)
+sh
+c
+11
+1
+ζ = δ
+E (8.4)
+sh
+2
+
+
+=== PAGE 140 ===
+138 QUANTUMWELLSANDINTERBANDTRANSITIONS
+−
+wherethevalencebandisgiveninthek k plane. Theinformationonstrainis
+x y
+ζ ζ
+containedin ;compressivestrainisrepresentedbyanegative .
+ff
+The valence band mixing e ect for bulk material has been taken into account
+since the coupling between heavy and light holes has been included in the above
+equations.
+Note that the in-plane direction for Equation (8.1) is the [100] crystal direction,
+ff
+and is di erent from the [110] direction. For many applications, it is desirable to
+averagetheenergydispersioninboththe[100]and[110]directions. Onecanshow
+γ
+thattheaveragecanbeapproximatedbyreplacing inthesecondtermunderthe
+2
+γ +γ /
+squarerootofEquation(8.1)by( ) 2: thisiscalledtheaxialapproximation.
+2 3
+Thesimulatorprovidesanoptiontoturnonthisapproximation.
+Toconvertthenon-parabolicbulkbandstructureintoasuitableform,thesoftware
+fitsthevalencebandtothefollowinganisotropicparabolicbandexpression,over
+arangelargeenoughtocoveralltheopticaltransitionsink-space:
+ℏ2 ℏ2
+E = − k2 − k2 . (8.5)
+2m m x 2m m y
+vx 0 vy 0
+Thequalityofthefitisfoundtobereasonableforpracticalcases. Suchanapprox-
+imation is appropriate not only because of the reasonable quality of the fit, but
+ff . .
+alsobecausetheapproximationhasnotlostthebasice ectsofstrain,ie,itcauses
+thesymmetryinthebandstructuretobebroken.
+Thesplittingoftheheavyandlightholebandsisdescribedas[16]:
+δ = − / ε,
+E 2a(1 c c ) (8.6)
+hy 12 11
+Ehh = Eu +δ E −δ E , (8.7)
+g g hy sh
+Elh = Eu +δ E
+g g (cid:20) hy q (cid:21)
+1
++ δ E +∆− ∆2 + 9 δ E2 − 2 δ E ∆ . (8.8)
+2 sh sh sh
+Oncethebandstructureissimplifiedtoananisotropicparabolicform,theprogram
+uses a one-band model to solve for the subbands of the quantum well from the
+ff
+e ectivemassesperpendiculartothequantumwellplane. Bydefault,themixing
+ff
+between di erent subbands is ignored and all the subbands of heavy holes (or
+ff
+light holes) are assumed to have the same e ective in-plane mass. The resulting
+subbandsfromsuchatheoryagreequalitativelywithk.ptheorieswithmultiband
+ff Γ
+full mixing e ects, especially for subbands near the band edges and near the
+center. Since the most important subbands are those near the band edges, the
+subband model here is expected to be reasonable. This approach of a one-band
+model with parabolic subbands has been used extensively for many years and is
+includedinmanyfrequentlycitedpapers(seeforexample,[17]-[18]).
+
+
+=== PAGE 141 ===
+8.1QuantumWellModels 139
+Oncetheparabolicsubbandsarefound,onecanapplyconventionalapproachesto
+treatthecarrierconcentrationandtheopticaltransitionprobabilities. Specifically,
+ff
+the e ective mass perpendicular to the plane (m ) determines the quantum sub-
+vy
+ff
+band levels (or quantum confinement e ects) and the optical transition energies.
+The (2D) density of states and joint density of states of each subband depends on
+ff
+thee ectivemassintheplane(m ).
+vx
+ff ff
+Forthoseuserswhowishtoadjustin-planee ectivemassesfordi erentsubbands,
+so that the theory here agrees with other k.p models, the program provides an
+option to do so. That is, the user can shift a subband level or change a subband
+in-planemasstomatchanyothertheory.
+8.1.4 Carrier density in anisotropic parabolic approximation
+ff
+We use the e ective masses parallel to the plane of the quantum well for the
+evaluationofcarrierconcentrations.
+X h i
+n = ρx0kTln 1 + e(E fn −Ej)/kT + unconfinedelectrons ,
+j
+j
+(8.9)
+X h i
+p = ρx0kTln 1 + e(Ei −E fp)/kT + unconfinedholes ,
+i
+i
+(8.10)
+wherethesubscriptidenotesallconfinedstatesfortheheavyandlightholes,and
+Γ
+j designates those for the and L bands. The unconfined carriers are calculated
+ff
+using Fermi statistics as described in Section 5.1.2. Note that the e ective mass
+ff
+perpendicular to the plane, (m ), a ects the quantum levels and therefore the
+vy
+distributionofcarriersinthequantumwell.
+8.1.5 Valence mixing
+Earlytheoriesofbulkandquantumwellsemiconductorlasersassumedparabolic
+subbands for both the conduction and valence bands. Many early classic papers
+ff
+on quantum well semiconductor lasers used the concept of e ective mass, which
+is equivalent to the parabolic band approximation. A partial list of publications
+includesRefs.[17,18].
+Thereasonfortheuseofparabolicband,regardlessofitsinaccuracy,isverysimple:
+thecomputationoftheenergysubbandsisnottheendofthestoryandonehasto
+use the subbands to calculate other more interesting physical quantities, such as
+theopticalgain. Calculationoftheopticalgainforanon-parabolicsubbandisnot
+ff
+easyandoneismuchbettero stayingwithaparabolicbandapproximation.
+
+
+=== PAGE 142 ===
+140 QUANTUMWELLSANDINTERBANDTRANSITIONS
+More recent theories of quantum well subbands are mostly based on k.p theory
+ff × ×
+withvalencebandmixinge ects. Theseusuallyinvolvesolvinga4 4[16],6 6[19]
+×
+or8 8[20,21]HamiltonianoftheLuttinger-Kohntypeandimposinganenvelope
+functionapproximationinsolvingthequantumwellsubbandstructures(e.g. [22]).
+Thevalencesubbandstructuresobtainedfromthisapproacharecomplicatedand
+ff
+heavily mixed in many cases. For some cases, the e ective masses of some of the
+Γ
+hole subbands are negative at the point in k-space, making it impossible to use
+analyticalapproaches.
+ffi
+Generation of the subbands using a valence mixing model is not di cult and has
+beendonepreviouslybymanyauthors[16,19–21,23]. Incontrast,thecomputation
+of quasi-Fermi level and optical transition probabilities is not easy because the
+subbandsarenon-parabolicandthewavefunctionscanbeheavilymixed.
+The detailed formulation of k.p theory for quantum well subband structure cal-
+culations has been described in many publications. We have closely followed the
+formulas of S.L Chuang [16]. Details will not be repeated here; rather, an outline
+ofphysicalmodelsispresentedtogiveanoverviewofthetheory.
+In the k.p theory for a bulk crystal, the basic problem is the following: given the
+Γ
+energy level and wave function at a symmetry point of the k-space (e.g. the
+point),howdoesonecalculatethebandstructurenearsuchasymmetrypoint?
+× ×
+Based on the symmetry properties of the crystal, a 4 4 or 6 6 Luttinger-Kohn
+Γ
+Hamiltonianforthe valencebandcanbeconstructed,dependingonhowmany
+valencebandsareinvolved. AsasolutionofthebulkLuttinger-KohnHamiltonian,
+the energy dispersion is expressed in terms of Luttinger numbers and quadratic
+equations in k [24] [25]. Note that the energy is accurate to the k2 term and no
+further. Thewavefunctionatageneralk-pointisexpressedasalinearcombination
+ofthewavefunctionatthesymmetrypoint.
+Ifthesolidcrystalisunderperturbation,onemayassumethattheperturbedwave
+functioncanstillbeexpressedasalinearcombinationofthewavefunctionsatthe
+symmetrypoint. Withintheenvelopefunctionapproximation,thewavefunction
+oftheperturbedcrystal(duetothepotentialofaquantumwellorofanimpurity)
+canbewrittenas(seeEq. (IV.12)in[24]):
+X
+Ψ = ϕ ,
+F(r) (r) (8.11)
+j
+j=1
+ϕ Γ
+where is the periodic part of the Bloch function obtained at the point in
+the absence of any perturbation. In the work of Luttinger and Kohn [24], the
+perturbing impurity potential was assumed to be “gentle” and involving only
+tens of meV. Today the application of the envelope function approximation has
+beenverymuchbroadened.
+For a quantum well, the envelope function F(r) in the linear combination is de-
+termined by two boundary conditions: the continuity of the wave function and
+
+
+=== PAGE 143 ===
+8.1QuantumWellModels 141
+the continuity of the current density. As a result of the solution of the envelope
+function, the subband energy dispersion and the wave function can be obtained.
+ff
+Due to the non-vanishing o -diagonal terms in the Luttinger-Kohn Hamiltonian,
+the wave function is a mixture of heavy hole and light hole functions (hence the
+namevalencemixing).
+In general, the valence subband structure obtained from such a model has the
+followingfeatures:
+• Γ
+1. Theenergyandwavefunctionatthe pointarethesameasthosederived
+from the decoupled methods discussed in previous sections. This makes
+it possible to label each subband as heavy hole and light hole based on the
+ff
+basefunctionthere. Forthisreason,manyconceptsdevelopedinthee ective
+mass approximation can still be used. For example, the selection rule and
+Γ
+matrixelementforopticaltransitionsatornearthe pointcanstillbeused.
+• ff
+2. The key di erence of this model is the anti-crossing behavior of the
+. .
+subbands in the valence mixing model, ie, the subband of the light hole
+can not cross that of the heavy hole. This causes some major discrepancies
+forstructureswherelightholesandheavyholesareclose. Thesoftwarehas
+ff
+capturedthismajorfeatureofanti-crossingbyadjustingthein-planee ective
+massesofthesubbandssothatthesubbandsdonotcrosseachother.
+• ff Γ
+3. Some of the subbands have negative e ective masses at the point. In
+ff
+the e ective mass theory for optical gain calculation, negative masses are
+not allowed. Therefore, at first glance, there is nothing one can do about
+ff
+this in the e ective mass theory. If one takes another look at the subband
+ff
+structure over a larger k-range, the e ective mass eventually returns to a
+positive value. If a large enough k fitting range is considered, one can still
+approximate the funny-looking subband by a parabolic band with positive
+ff
+e ective mass. The approximation is not so bad considering the density of
+states is to be broadened by a scattering lifetime, and the exact location of
+theenergylevelismeaninglessinapracticalcalculationanyway.
+In summary, Crosslight simulator has two levels of models regarding strains and
+ff
+valencemixinge ects. Bydefault,thesimulatorfitsthenon-parabolicbulkvalence
+banddispersionwithtwoparaboliccurvesineachdirectiontoobtainanisotropic
+ff ffi
+e ective masses. E cient computation of carrier density and interband optical
+=
+transition may be achieved this way. By setting valence_mixing yes in the ac-
+tive_reg or set_active_reg statements, a full computation of subbands using k.p
+theory is performed. Carrier densities and interband optical transitions are ob-
+tained using numerical integral over the non-parabolic subbands, resulting in
+longercomputationtime.
+
+
+=== PAGE 144 ===
+142 QUANTUMWELLSANDINTERBANDTRANSITIONS
+8.1.6 Complex MQW active regions
+Inprevioussubsections,ithasbeenimpliedthatquantumwellsinanMQWsystem
+do not couple with each other. This is a reasonable approximation if the wells
+are far apart and the wave function decays significantly in the barriers. There
+ff
+are circumstances in which we need to consider the e ect of coupling between
+quantumwells.
+Initially,itappearedthatextensionofanon-coupledmodeltoacoupledoneshould
+be straightforward: just use the potential for two wells instead of one. However
+in an actually simulation, we must solve problem of localizing the carriers in a
+complexcoupledMQWstructure.
+Considerthesimplecaseoftwowells. Asthetwowellsarebroughtclosertogether,
+thedegeneratesubbandsstarttosplit. Fromtheviewpointofwavemechanics,the
+ff
+wavefunctionofeachenergylevelbelongtobothwells. However,drift-di usion
+theory(classicaltheory)requiresthatwemustknowwherethecarriersarelocated.
+Therefore, we face the task of deciding which well will be assigned the carriers
+from each coupled confined state. Similarly, for optical interband transition, the
+process takes place in the whole coupled complex structure. Again, we must
+decideinwhichwellagiventransitiontakesplace. Thesituationislikequantum
+tunneling where we have a contradiction: the wave nature in a quantum theory
+ff
+versus the particle nature in drift-di usion theory. We must create a reasonable
+methodtobridgethegap.
+Forcarrierdensitycalculation,welocalizethecoupledconfinedstatesasfollows.
+Supposetheprobabilityoffindinganelectronofaconfinedstateinwell1isp and
+1
++ <
+thatofwell2isp . Ingeneral,p p 1andtheremainingprobabilityisspentin
+2 1 2
+thebarriers. Weconsiderthattheelectronislocalizedinwell1withaprobability
+/ +
+ofp (p p ). Similarconsiderationisgivenforholes.
+1 1 2
+For optical transition from the valence band to the conduction band, we regard
+/ +
+the optical process take place in well 1 with a chance of p q (p q p q ), where
+1 1 1 1 2 2
+q andq areprobabilitiesoffindingtheholeinwell1and2,respectively.
+1 2
+Note that as we relax the approximations of the simple QW model, it may
+also be desirable to have quantum well designs with non-symmetric barriers.
+The same system is used as with the coupled well situations: complex MQW
+macros. Thesespecialmacrosmustbeusedtodefineacomplexstructureanduse
+=
+“type strained_complex” in the layer_type statement. By convention, complex
+macroshavenamesstartwith“cx-”inthematerialdatabase.
+Regions where the complex active region is defined must be labeled by the state-
+ments begin_complex and end_complex. This will be done automatically by
+layer.exeifacomplexmacroisused. Usersshouldrememberthatsincethewhole
+MQW structure needs to be solved at once, barrier layers must also invoke the
+
+
+=== PAGE 145 ===
+8.2Self-consistentcarrierdensitymodel 143
+complexMQWmacros.
+SomerestrictionsarepresentinthecomplexMQWmacros. Thefirstisthatanodd
+numberoflayersmustbeused: thisisnormallynotaproblemsincemostdesigns
+/ / /
+use a barrier well .... barrier layout. If need be, split one of the outer barriers into
+twotogetanoddnumberoflayers.
+Related to this assumption, the software will only calculate the gain in even-
+numberedlayerssincetheyarepresumedtobewells. Forcomplicatedstructures
+such as wells with graded compositions or Type II band alignment (where the
+ff
+electrons and holes are localized in di erent layers), this can cause a problem.
+Usetheinner_bar_gainstatementtoforcegaincalculationsinallthelayersofthe
+complex MQW. Also note that outer barriers are always excluded from the gain
+calculations as they only serve as a boundary layers where the wave can decay
+beforereachingzero: seeFig.8.4below.
+As alternative to the above, complex quantum well regions can also be declared
+using the “library” method of Sec. 3.5. This automatically declares all tagged
+layersasbeingpartofthesamequantum-coupledregionanddoesnotrelyonthe
+/ /
+barrier well barrier approximation for the inner barriers. Outer barriers are still
+excludedfromthegaincalculationsthough.
+8.2 Self-consistent carrier density model
+8.2.1 Localized confined states
+As we discussed previously, the default approach in our simulator is to solve the
+quantumconfinedstatesinflat-bandcondition(assumingnoelectricfield). When
+there is a local variation of potential, we assume it is small enough that flat-band
+solution is still valid but only introduces a local correction to the confined energy
+level(seeFig.8.2).
+For simplicity of numerical computation, we also assume that carrier density is
+only confined within the well and is computed according to the local Fermi level
+and local confined energy level. The following formula for confined 2D carrier
+electrondensityisused:
+X h i
+1
+n (x
+,
+y)
+= ρ0kTln
+1
++
+exp[(E (x
+,
+y)
+−
+E (x
+,
+y))
+/
+kT]
+,
+insidewell
+2D d j fn j
+w
+j
+= ,
+0 outsidewell (8.12)
+where d is the well thickness. The subscript j denotes all confined states.Please
+w
+note that both the Fermi level and confined level are assumed to be spatially
+dependent.
+ρ0
+isthe2Ddensityofstates.
+j
+
+
+=== PAGE 146 ===
+144 QUANTUMWELLSANDINTERBANDTRANSITIONS
+Conduction
+Band
+Fermi
+Level
+Electron
+Density
+Figure8.2: Defaultmodelofquantumwellcarrierdensitycalculation.
+,
+The variation of the confined level E (x y) follows that of potential, much in the
+j
+same way the conduction band edge follows the potential change (see Fig. 8.2).
+Pleasenotethatthespatialvariationinthismodelisuniformexceptforvariations
+introduced by variation in Fermi level and confined level. We shall refer to this
+modelas“uniformprofile”densitymodel.
+ffi
+The above model is simple to implement and e cient to compute. It gives the
+right MQW behavior if the realistic band structure is close to flat-band condition
+and we do not care about the details of the carrier density within the scale of
+the quantum well. Such is the case of most MQW lasers under lasing condition
+whenthebandstructureisclosetoflat-bandunderforwardbiasandhighinjection
+condition.
+However, we may run into trouble if the details of carrier density indeed matter
+whenthewellisheavilytiltedtoone-sideoranotherduetostrongelectricalfield
+suchaspiezoelectricfield. Wewillconsiderthiscaseinthenextsubsection.
+Theabovediscussionislimitedtoelectrondensitybutdiscussionforholedensity
+iscompletelysimilar.
+8.2.2 Self-consistent carrier density distribution
+When the potential well is under strong electric field such as in the case of piezo-
+electric field, the well will be tilted to one side. The confined wave function will
+alsobetiltedtooneside(seeFig. 8.3). Furthermore,theopticaltransitionbetween
+ff
+conductionandvalencebandwillhaveadi erentdipolemomentthanunderflat-
+
+
+=== PAGE 147 ===
+8.2Self-consistentcarrierdensitymodel 145
+Conduction
+Band
+Fermi
+Level
+Electron
+Density
+Figure 8.3: Schematics of the self-consistent carrier density model for a single
+quantumwell.
+band condition. The tilting of the well will have strong consequences to current
+ff
+overflowwhichmaya ectthedeviceperformance.
+Asanoptioninoursoftware,theself-consistentelectrondensityisgivenas
+X h i
+n (x
+,
+y)
+=
+g
+j
+(y)
+ρ0kTln
+1
++
+exp[(E (x
+,
+y)
+−
+E )
+/
+kT] (8.13)
+2D n j fn j
+j
+j
+where g (y) is the electron wave function assuming the well is parallel to x-axis.
+n
+TheconfinedlevelE isnolongerafunctionofposition. Computationoftheabove
+j
+densitydistributionrequiresmoreworkbecausethedensityatonepointdepends
+j
+onaglobalfunction g (y). Wealsohavetoupdatethewavefunctionandconfined
+n
+ff
+energylevelsatdi erentbiases.
+Similarexpressionscanbeobtainedfortheholesubbands.
+Toachievecompleteself-consistency,thefollowingproceduresareused:
+•
+1) At equilibrium, solve the potential using flat-band approximation. The
+defaultuniformprofilemodelisusedforthedensity. Thisgivesustheinitial
+potentialdistribution.
+•
+2) At equilibrium, solve the potential again with potential obtained in 1)
+above. The self-consistent density model is used. A new density profile is
+obtainedinthisstep.
+
+
+=== PAGE 148 ===
+146 QUANTUMWELLSANDINTERBANDTRANSITIONS
+left_mesh right_mesh
+f
+d e
+c b
+a
+wave_range
+Truncated QW
+wave function
+Figure8.4: Schematicdiagramexplainingtheself-consistentwaveboundarycon-
+ditions
+•
+3) Iterate 2) above until numerical self-consistency is achieved for density
+profileandpotentialdistribution.
+•
+4)Onceweachieveself-consistencyinequilibriumafteranumberofnumer-
+icaliterations,weincreasethebiasandrepeat2)and3)above.
+8.2.3 Wave function boundary conditions
+WhensolvingtheSchrödingerequationunderself-consistentconditions,themost
+importantparametersaretheboundaryconditionsontheleftandrightsideofthe
+QWorMQWregion. WewillusetheexampleofasinglequantumwellinFig.8.4
+toexplainindetail.
+Analytical solutions to the Schrödinger equation state that the wave functions
+decays to zero at infinity. In a numerical solution, we must use a finite value
+instead: one may assume an infinite potential wall a certain distance away from
+the QW region. In order not to perturb the position of the energy levels or the
+shape of the wave function, a large enough value must be used. However, larger
+values can cause numerical accuracy issues so by default, a distance equal to
+three times the well width is used. This may be overridden by the left_mesh and
+right_meshparametersofmodify_qw.
+Inaddition,weplacesomerestrictionstotheshapeoftheconfiningpotential. The
+potentialprofileusedinthesolutionmustnotextendtoofarsincestableconfined
+quantumstatesmaynotexistwhenonesideofthepotentialisloweredtoomuch
+
+
+=== PAGE 149 ===
+8.2Self-consistentcarrierdensitymodel 147
+by the applied field. Therefore, we choose a reasonable distance (wave_range in
+the self_consistent statement) to truncate the potential profile (at points b and
+d) on Fig. 8.4 and artificially extend the potential (to points c and e of the figure
+instead of the original a and f). Note that the value of wave_range may be cut
+shortifamaterialinterfaceisdetected.
+The wave function outside the region specified by wave_range is ignored and
+ff
+truncated to zero. This does not a ect the shape of the wave function or the
+position of the energy levels like the position of left_mesh and right_mesh. It
+only forces the wave to be normalized to the [b,d] range. This may cause a bit of
+ffi
+inaccuracy in the carrier distribution if the wave has not decayed su ciently but
+ff
+thismodelpreventsperturbationsneartheartificialboundarywallfroma ecting
+theresultsofthesimulation. Wealsonotethatanystateswithenergiesabovethe
+confiningpotentialatbothendsofthisrangeareconsideredunconfinedstates.
+After this adjustment of the potential profile, reasonable confined states can be
+obtained in most cases. If more confined states are required than those provided
+bythisfix,theparametersmore_cond_energyandmore_val_energyofthemod-
+ify_qwstatementmaybeusedtoincreasethesearchrangeforconfinedlevels.
+8.2.4 MQW regions
+By default, the software will treat multiple wells with same composition as the
+same active region in order to save on computation time. When a self-consistent
+calculationisused,thisapproximationisnolongervalidsinceevenidenticalwells
+ff
+canbesubjectedtodi erentlocalpotentials.
+ff
+In order to force the software to treat individual wells as di erent active regions,
+ff
+use the independent_mqw statement in the .layer file. This will assign di erent
+materialnumberstoeveryquantumwell. Usersshouldexpectaslowersimulation
+withthissettingsincemorecomputationalworkisrequired.
+8.2.5 Cases of valence mixing and complex MQW
+Inthecaseofvalencemixingmodel,thevalencesubbandsarenolongerparabolic
+and we must abandon the formulas given in the previous subsections. The con-
+fined hole density can be written as an integral over the non-parabolic subbands
+E (k):
+j Z
+X
+1
+E k(0)
+p = g j (y) [1 − f (E (k) , E )]dk2 (8.14)
+p 2 π v j fp
+−∞
+j
+where f istheFermifunctionforthevalenceband.
+v
+
+
+=== PAGE 150 ===
+148 QUANTUMWELLSANDINTERBANDTRANSITIONS
+For complex MQW with coupled wells, the same expression can be used except
+thatweneedtouseaproperdensitypartitionschemetomakesurethatthecorrect
+portionofcarrierdensityfromaquantumlevelbeallocatedtoeachwell.
+AnadditionalcomplicationarisesforthickcomplexMQWregionsunderastrong
+local potential. The entire MQW region will be tilted but, as mentioned above,
+the confined energy levels are no longer a function of position in a self-consistent
+simulation. This means that sometimes, the solver will find energy levels only at
+the outer edges of the complex MQW region: the wave functions for these levels
+mayhaveverypooroverlap.
+8.2.6 Quantum wells in quantum-MOS and HEMT
+WhenthegateofanMOSstructureisunderbias,theinterfaceofsiliconandSiO2
+formsatriangular-wellforelectronsorholes,dependingonthepolarityofthebias.
+ff
+A similar situation arises in high mobility electron field e ect transistors (HEMT)
+wheretheinternalelectricfieldcausestheheterojunctiontoformatriangularwell
+toconfinethe2Delectrongassystem.
+Atriangularwellformedinsuchawaymayberegardedasaspecialcaseofaquan-
+tum well discussed above. To derive such a structure from a simple symmetric
+flat-bandquantumwellwetakethefollowingsteps:
+•
+1. Theleftbarrierisloweredtothepointofzerobarrierheight
+•
+2. External and internal electric field is allowed to tilt the potential in such
+a way that a triangular well is formed between the bottom of the well and
+rightbarrier.
+Thus, a realistic quantum well model for quantum-MOS and HEMT may be
+achieved if we apply the complex-MQW and self-consistent models to a non-
+symmetric quantum well. Since our models are well established for quantum
+wells with two barriers, we prefer to treat triangular wells as if they have a left-
+barrierofzeroheight.
+In the case of quantum-MOS, some special treatment is required since the con-
+ff
+ductionbandshouldbetreatedwithanisotropicelectronmasseswhichmaya ect
+the conduction band quantum states, depending on the crystal orientation with
+respecttotheSiO2.
+
+
+=== PAGE 151 ===
+8.3InterbandOpticalTransition 149
+8.3 Interband Optical Transition
+8.3.1 Introduction
+Manydirect-bandgapdeviceshandledbyCrosslightsimulationsoftwareinteract
+with light in one way or another. For indirect bandgap devices such as silicon
+MOS,thissectionmaybeskipped.
+For active devices such as laser diodes and LED’s, the interband optical gain and
+spontaneous emission spectrum are important. For photo-sensitive devices such
+asphoto-detectors,theinterbandabsorption(oppositeofgain)isimportant.
+In this section, we start with the basic theory of optical gain based on a parabolic
+band structure. The parabolic band model is the default model and is also our
+starting point for more complex optical gain models. The parabolic band restric-
+ff
+tionmayberemovedifanumericalintegralisusedtoreplacethee ectivemasses.
+Notethattheformulasforquantumwellsweconsiderherearerathergeneraland
+arealsoapplicabletobulkmaterial. Inthecaseofbulkmaterial,onlyonesubband
+needtobeconsideredwiththree-dimensionalreduceddensityofstates.
+8.3.2 Interband transition model
+ffi
+Similar to the derivation of the absorption coe cients for a solid, the local gain
+due to a transition from a conduction band labeled j to a valence band labeled i
+canbewrittenas[26],
+Z (cid:18) (cid:19)
+ϵ
+g (E0) = P 1 ρ dE
+ij ij Z (cid:18) ij (cid:19) nc ij ij (cid:18) (cid:19)
+π ϵ
+2
+= |
+H
+|2
+(f
+−
+f)
+δ
+(E
+−ℏω
+)
+1 ρ
+dE
+ℏ ij j i ij ij ij
+nc
+(cid:18) (cid:19) (cid:18) (cid:19)
+π ϵ
+2
+= |
+H
+|2
+(f
+′ −
+f
+′
+)
+1 ρ
+(8.15)
+ℏ ij j i nc ij
+ρ = ρ0h( ℏω− E0) , (8.16)
+ij ij ij !
+(cid:18) (cid:19)
+q 2 2 ℏω
+|
+H
+|2= M2.
+(8.17)
+ij m 4 ϵ ϵ ω2 ij
+0 1 0
+wherenistherealpartoftherefractiveindex. f and f aretheFermifunctionsfor
+i j
+′ ′
+theithandthe jthlevels,respectively,and f and f aregivenby
+i j
+(cid:26) (cid:20) (cid:21)(cid:27)
+m −1
+f ′ = 1 + exp (E0 − ij (E − E0) − E ) / kT , (8.18)
+i i m ij fp
+( " i #)
+m
+−1
+f ′ = 1 + exp (E0 + ij (E − E0) − E ) / kT . (8.19)
+j j m ij fn
+j
+
+
+=== PAGE 152 ===
+150 QUANTUMWELLSANDINTERBANDTRANSITIONS
+Notethatthe aboveformulasfor thegain arerathergeneral andareapplicableto
+quantum wells as well as to bulk material. In the case of bulk material, only one
+pair of energy bands need be considered. Three-dimensional reduced density of
+statesandbulkmomentummatrixelementsaretobeused. Inthecaseofquantum
+wells, many subbands in both the valence band and the conduction band need to
+beconsidered. 2Ddensityofstatesandquantumwellmomentummatrixelements
+are to be used. Therefore one can consider the expression for the bulk material as
+a special case of that for quantum wells. The following discussion assumes the
+formulasforquantumwells.
+Thegainfunctionisthesumofg overallthesubbandsfortheallowedtransitions.
+ij
+The software uses the following expression for the density of electrons and holes
+inthequantumwell:
+X h i
+n = ρ0kTln 1 + e(E fn −Ej)/kT + unconfinedelectrons
+j
+j
+(8.20)
+X h i
+p = ρ0kTln 1 + e(Ei −E fp)/kT + unconfinedholes
+i
+i
+(8.21)
+wherethesubscriptidenotesallconfinedstatesfortheheavyandlightholes,and
+Γ
+j designates those for the and L bands. The number of unconfined carriers are
+calculatedusingFermistatisticsasdescribedinSection5.1.2.
+Atthecurrentstageofmodeldevelopmentthesoftwareassumesthattheelectron
+states outside the quantum wells can be treated as unbound states so that three
+dimensionalFermistatisticscanbeappliedtotheseregionsforthecarrierdensity.
+This assumption is reasonable in most applications, and greatly simplifies the
+simulationsincethepotentialprofileisgenerallyastrongfunctionofbiasvoltages.
+Γ
+All the quantum levels for the sub-bands of , L, light holes and heavy holes are
+computedfromwellknownformulasinquantummechanicsforasquarequantum
+well [15]. The quantum well levels are calculated at every bias point during an
+actualsimulationbecausethebandgapoftheactiveregionisafunctionofcarrier
+density. As the bias increases, the higher carrier density in the quantum well
+reducesthebandgapandchangesthequantumwelldepth. Thereforethequantum
+levelsmustbere-computedateverybiaspointinaself-consistentsimulation.
+Note that by default, the heavy and light holes are assumed to be decoupled and
+can be treated separately. Simplification has been made so that, by default, all
+ff
+the in-plane e ective masses of heavy hole or light hole subbands are assumed
+ff
+to be same. If the user wishes to alter the e ective mass of a particular subband,
+/
+the simulator allows him her to do so with the “modify_qw" statement. Further
+ff
+discussiononthee ectofvalencebandmixingisgiveninSections8.1.3and8.1.5.
+
+
+=== PAGE 153 ===
+8.3InterbandOpticalTransition 151
+ThesimulatorusesTE(transverseelectromagnetic)modeasthedefault. Theuser
+should set the polarization mode to TM (transverse magnetic) mode if a large
+tensile strain is present in the material. We use the following anisotropic dipole
+momentfortheheavyandlightholetransitionsinaquantumwell[27]:
+3 + 3cos2( θ )
+= e ,
+A (TE) (8.22)
+hh
+4
+5 − 3cos2( θ )
+= e ,
+A (TE) (8.23)
+lh
+4
+3 − 3cos2( θ )
+= e ,
+A (TM) (8.24)
+hh
+2
+1 + 3cos2( θ )
+= e ,
+A (TM) (8.25)
+lh
+2
+= ,
+M A O M (8.26)
+hh hh ij 0
+= ,
+M A O M (8.27)
+lh lh ij 0
+whereA andA arethequantumwelldipolemomentenhancementfactors. M
+hh lh 0
+isthedipolemomentofthebulkmaterialgivenbythefollowingexpression:
++∆
+1m E (E )
+= 0 g0 g0 .
+M (8.28)
+0 + ∆/
+6m E 2 3
+e g0
+θ
+cos( )isdefinedas
+e
+cos(
+θ
+)
+=
+E
+/
+[E
++
+m
+/
+m (E
+−
+E )] forE
+> E0,
+(8.29)
+e ej ej r e ij ij
+cos(
+θ
+)
+=
+1 forE
+≤ E0.
+(8.30)
+e ij
+where E is the electron confined subband energy of level j and m is the reduced
+ej r
+mass.
+Afewinterestingpointsaboutdipoleenhancementarediscussedhere. Theabove
+equations show that the heavy hole transition is favored under TE polarization
+whilethelightholeisfavoredforTMpolarization. Withaparticularpolarization
+(TE or TM) the bulk moment is split between the heavy and light holes and they
+average out to the bulk moment. It is interesting to note that the light hole under
+TM has a larger dipole moment than the heavy hole under TE. Therefore, from
+the point of view of the larger dipole moment, the light hole transition is very
+attractive. A major drawback for light hole transition is that, due to light mass,
+thequantummechanicwavefunctiontendstospreadoutmorethanfortheheavy
+hole. Asaresult,theoverlapintegral(O above)isreduced.
+ij
+
+
+=== PAGE 154 ===
+152 QUANTUMWELLSANDINTERBANDTRANSITIONS
+8.3.3 Lorentzian model of gain broadening
+Broadening of intra-band scattering significantly reduces the local gain function
+and must be considered. To describe the broadening of the quantum levels, the
+software uses a line shape function L() in a convolution integral with the optical
+gain. Thefinalexpressionforthegainfunctioninthequantumwellthenbecomes
+Z
+X h i
+g = g (E ) τ/ℏ L (E − E0) / ( ℏ/τ ) dE . (8.31)
+qw ij x x ij x
+i=j
+ThesimplestlineshapefunctionistheLorentzianshapefunction:
+Γ
+1
+L(E − E0) = 0 , (8.32)
+x ij π (E − E0)2 +Γ2
+x ij 0
+Γ
+where istheconstanthalfwidthoftheshapefunction.
+0
+ffi
+TheexpressioninEquation(8.31)cannotbeintegratedanalyticallyandane cient
+numerical approach for the evaluation of the integral is necessary to perform the
+2-Dsimulation. TheprogramhasapproximatedtheFermifunctions f and f with
+i j
+linear combinations of four exponential terms, which gives an error of less than
+0.04%. TheLorentzianshapefunctionisapproximatedwithalinearcombination
++
+ofthreeexponentialtermstogiveanerroroflessthan1.2%forarangeof-8to 8
+forastandardLorentzianfunction.
+Equation(8.31)isusedtoevaluatethestimulatedemissionanddielectricconstants
+inthebasicequationsatallthepointsofthe2Dmesh.
+Thecorrespondinglocallosscanbewrittenas
+α = −α −α −α ,
+n p (8.33)
+qw fn fp act
+α
+wherethefirsttwotermsareduetofreecarrierabsorptioninthequantumwell.
+act
+is an adjustable background loss term to account for losses in the active quantum
+wellformechanismsotherthaninterbandtransitionsandfreecarrierabsorption.
+When a laser is biased near threshold, the current is mainly determined by the
+/
+spontaneousemissionrateand orAugerrecombination. Thereforetheevaluation
+of the spontaneous emission rate is important. The following expression for the
+spontaneousemissionrateisused[28]:
+X(cid:18) (cid:19)
+π
+2
+r
+qw
+(E)
+= |
+H
+|2
+f
+′
+(1
+−
+f
+′
+)D(E)
+ρ ,
+(8.34)
+sp ℏ ij j i ij
+i=j
+whereD(E)istheopticalmodedensityinthematerialwhichhasarefractiveindex
+ofn,givenby[28],
+n 3 E2
+= .
+D(E) (8.35)
+π2ℏ3c3
+
+
+=== PAGE 155 ===
+8.3InterbandOpticalTransition 153
+The software has used the same broadening line shape functions for the sponta-
+neous emission spectrum in Equation (8.34) as for the gain function. This allows
+/
+the user to compare his her experimental data with the broadened spontaneous
+spectrum. The broadened spontaneous emission spectrum is, however, not used
+in the main simulation. The reason is that since carrier recombination involves
+emission at all frequencies, it is only necessary to integrate the un-broadened
+spectruminEquation(8.34)overallpossiblefrequencies:
+Z
+∞
+qw = qw .
+R r (E)dE (8.36)
+sp sp
+0
+Note that Equations (8.31) and (8.36) are given in terms of the quasi-Fermi levels
+which can be treated directly as variables for the Newton’s method used by the
+software.
+τ
+Thechoiceof isimportantsinceitreducesthepeakgainanddirectlydetermines
+the threshold current. Also note that the lasing frequency is determined by the
+maximum of the modal gain g at the present injection level rather than the local
+m
+gaing,sinceitisthemodalgainthatappearsintherateequation. Theformerisan
+averagegainovertheopticalfield. Forsimplicitythesoftwareusesthewavelength
+atthepeakmodegainasthesinglewavelengthappearinginthewaveequation.
+ff
+Thee ectivebandgapforopticalgaincalculationsisreducedbecauseofexchange
+(cid:16) (cid:17)
+ff ∆ = n+p 1/3
+e ects [17]. Such a bandgap shrinkage is given by: E A . Since this
+g x 2
+term increases with carrier concentration, it causes a “red shift” tendency in the
+optical gain spectrum as the carrier concentration is increased. The peak optical
+ff . .
+gain also has a “blue shift” tendency due to the band filling e ect (ie, the Fermi
+ff
+levelseparationbecomeslargerasmoresubbandsarefilled). Theblueshifte ect
+ff
+is usually stronger than the red shift e ect due to bandgap shrinkage, and one
+oftenobservesablueshiftinexperiment[29][30].
+In the case of anisotropic parabolic approximation for strained quantum wells,
+theopticalgainformulascansimplybeextendedbyusingthein-planequantities
+(labeled "x") as follows. The local gain due to a transition from the jth in the
+conductionbandtoith inthevalencebandis
+(cid:18) (cid:19) (cid:18) (cid:19)
+π ϵ
+2
+g (E0) = | H |2 (f ′ − f ′ ) 1 ρx, (8.37)
+ij ij ℏ ij j i nc ij
+ρx = ρx0h( ℏω− E0) , (8.38)
+ij ij ij !
+(cid:18) (cid:19)
+q 2 2 ℏω
+|
+H
+|2 = M2,
+(8.39)
+ij m 4 ϵ ϵ ω2 ij
+0 1 0
+where f and f are the Fermi functions for the ith and the jth levels, respectively.
+i j
+Thegainfunctionisthesumofthe g overallallowedtransitions.
+ij
+
+
+=== PAGE 156 ===
+154 QUANTUMWELLSANDINTERBANDTRANSITIONS
+Similar to the treatment of the gain function, the spontaneous emission rate can
+bewrittenas X(cid:18) (cid:19)
+π
+2
+r
+qw
+(E)
+= |
+H
+|2
+f
+′
+(1
+−
+f
+′
+)D(E)
+ρ ,
+(8.40)
+sp ℏ ij j i ij
+i,j
+whereD(E)istheopticalmodedensity.
+Theprogramassumesthatthedipolemomentofastrainedquantumwellsystem
+is the same as that for its unstrained counterpart. This assumption should be
+Γ
+accurate near the point. As in the case of the unstrained quantum well, the
+overlap integral in the dipole moment is assumed to be k-independent in this
+model.
+8.3.4 Landsberg model of gain broadening
+ThesimplestmodelforgainbroadeningistousethefollowingLorentzianfunction
+inaconvolutionintegral:
+Z
+g(E) = g0(E )F(E − E)dE , (8.41)
+1 l 1 1
+where g0 is the gain function without broadening. The Lorentzian function is
+givenbytheexpression:
+Γ
+1
+− = 0 ,
+F(E E) (8.42)
+l 1 πΓ2 + (E − E)2
+0 1
+Γ
+where isthehalf-widthofthebroadenedenergylevelandisassumedconstant.
+0
+Γ
+The assumption of constant means that the gain spectrum is broadened to the
+0
+same degree across the whole spectrum. The advantage of this model is that it
+is relatively simple to implement and results in a most stable solution in the 2D
+simulations.
+According to Landsberg’s model, the broadening across the spectrum should not
+beuniform.
+The basic mechanism for Landsberg’s model is carrier-carrier scattering. The
+original formulas were derived for bulk material [31] [32] and were extended
+. .
+successfully by Zielinski etal [29] [30] for quantum well laser modeling. This
+modelisphenomenologicalandisthemostsimpleformofnon-Lorentzianshape
+function. The success of such a model in comparison with experiment is very
+encouraging[29][30].
+Γ
+According to Landsberg’s model [31] [32] [33], the half-width is a complicated
+function of the transition energy which has its maximum value at the bottom of
+theband(orbandedge)anddecreasestozeroastheenergyapproachesthequasi-
+Fermilevel. Thereforethehalf-widthisafunctionofboththetransitionenergyand
+
+
+=== PAGE 157 ===
+8.3InterbandOpticalTransition 155
+thecarrierdensity. Thesoftwarehasusedthefollowingapproximationaccording
+toMartinandStormer[33]:
+Γ
+1 (E )
+− = 1 ,
+F(E E) (8.43)
+l 1 πΓ (E )2 + (E − E)2
+1 1
+where
+2 ! ! 3
+Γ = Γ 6 6 6 6 − . E 1 + . E 1 2 − . E 1 37 7 7 7
+(E ) 41 2229 1458 0229 5
+1 0 − − −
+E E E E E E
+fn fp fn fp fn fp
+− ≥ ≤ ≤ −
+forE E 0&0 E E E (8.44)
+fn fp 1 fn fp
+Γ
+For bulk material a value of 1.2 meV was found. For quantum wells the
+0
+broadening is much larger (up to 30 meV). The implementation of this model is
+important for accurate modeling of the gain spectrum, especially for quantum
+Γ
+wells. Themaximumbroadening intheLandsbergmodelistreatedasafitting
+0
+parameterforthecaseofquantumwells.
+. .
+NotethatEquation8.44isvalidonlywhenthepeakgainispositive,ie,onlywhen
+ff
+the di erence between the quasi-Fermi levels is greater than the bandgap of the
+quantum well subbands. The transition energy must also be between the band
+ff
+gap and this di erence. To extend the spectrum to other conditions, the formulas
+. .
+proposedbyZielinskietal [29]areused:
+g(E)
+=
+I
+(g0,
+E) forE
+<
+E
+−
+E
+,
+(8.45)
+conv fn fp
+g(E) = I (g0, E) + g0(E) forE ≥ E − E , (8.46)
+conv fn fp
+with
+Z
+X E fn −E fp 1 Γ (E )dE
+I
+(g0,
+E)
+= 1 1
+conv πΓ (E )2 + (E − E)2
+i,j Eij 1 1
+− ≥ ,
+forE E E (8.47)
+fn fp ij
+and
+I
+(g0,
+E)
+=
+0
+conv
+− < .
+forE E E (8.48)
+fn fp ij
+Thetwo-piecefunctioniscontinuousacrossthespectrumbecausebecause g0(E) =
+= −
+0whenE E E .
+fn fp
+
+
+=== PAGE 158 ===
+156 QUANTUMWELLSANDINTERBANDTRANSITIONS
+Inthecurrentversionofthesoftware,nobroadeningisimposedonthegainofthe
+ffi
+bulk material for two reasons. First, the level broadening coe cient is relatively
+small (1.2meV), and second, the un-broadened gain spectrum does not have a
+sharp edge near the bandgap as in the quantum well case. Therefore the error
+causedbynotusingbroadeninginbulkmaterialgainisrelativelysmall.
+8.3.5 Landsberg broadening and experimental data
+This Section gives an example of how the user can calibrate the gain model with
+experimental data. For a description of the program’s commands and syntax,
+please refer to the Reference Manual. The gain function here uses the Landsberg
+broadeningformula,discussedinSection8.3.4,whichisbasedonwellestablished
+physical models for emission spectra from recombination of electron-hole pairs.
+It uses an energy and carrier density dependent half width in the Lorentzian
+broadening function. The broadening results in a more symmetric quantum well
+Γ
+gain spectrum than the Lorentzian broadening function with constant . The
+Landsberg model is usually in close agreement with experiment and is strongly
+recommended when an experimental gain spectrum is used for the purpose of
+calibration.
+The experimental gain data are taken from Ref. [30]. Since the details of the
+multiple quantum well system were not given in the reference (except for the
+composition and well width), the optical confinement factor was fitted according
+totheinformationaccompanyingthepublisheddata.
+/
+Here, two sets of experimental data for quantum well and bulk InGaAs InP are
+used to compare with the results from the gain module of the software. Detailed
+input files can be found in the standard examples that come with installation of
+the software. The input files are named “lands.gain”, which models the multiple
+quantumwelldevice,and“lands2.gain”,whichmodelsthebulkdevice.
+ImplementationoftheLandsbergbroadeningmodelisverysimple. Theparameter
+=
+broadening landsberg is set in the statement active_reg in “*.sol”. First we
+/ µ
+consider an InGaAs InP quantum well structure of well thickness 0.0105 m. A
+carrier scattering lifetime of 0.2
+×
+10
+−13
+seconds is used, and a background loss of
+45 cm
+−1
+is assumed for this structure. The result of the program’s gain spectrum
+togetherwiththeexperimentaldatafromRef.[30]isgiveninFigure8.5.
+/
+Inanotherexample,thebulkInGaAs Inpstructureisconsidered. Thebackground
+lossisagainassumedtobe45cm
+−1.
+Theopticalgainspectrumforthebulkmaterial
+alongwithexperimentaldatafromRef.[30]isgiveninFigure8.6.
+To plot experimental data on the same plot as the simulated gain curve, the
+parameterinclude_dataisusedinthefile“lands.gain”. Thequantumwellmodel
+of the software agrees with the published data very well using the same carrier
+
+
+=== PAGE 159 ===
+8.3InterbandOpticalTransition 157
+350
+300
+250
+200
+150
+100
+50
+0
+1.35 1.4 1.45 1.5 1.55 1.6 1.65 1.7 1.75
+)mc/1(
+niag
+file:lands.gain
+wavelength (um)
+/
+Figure 8.5: Gain spectrum of InGaAs InP quantum well structure as compared
+with experimental data. Landsberg type gain broadening is used in the gain
+model.
+400
+350
+300
+250
+200
+150
+100
+50
+0
+-50
+1.5 1.55 1.6 1.65 1.7 1.75
+)mc/1(
+niag
+file:lands2.gain
+wavelength (um)
+/
+Figure 8.6: Gain spectrum for bulk InGaAs InP as compared with experimental
+data.
+
+
+=== PAGE 160 ===
+158 QUANTUMWELLSANDINTERBANDTRANSITIONS
+density as that suggested in Ref. [30]. The carrier density for the bulk material is
+ff
+slightly di erent from the value suggested in Ref. [30] in order to obtain a good
+ff
+fit of the data. This slight di erence may be due to the lack of broadening for
+bulk material gain in the program. Note that the current version of the software
+ff
+assumes the broadening e ect is negligible for bulk material (which is a good
+approximation compared with quantum well gain). In both cases the quality of
+thefitandthevaluesoftheparametersarereasonableaccordingtotheinformation
+giveninRef.[30].
+8.3.6 Gain integral with valence mixing
+In the case of valence mixing, the valence bands are not parabolic and we must
+ff
+useadi erentformulafortheopticalgainspectrum. Basedontheoriesdeveloped
+inRef. [34],thegainspectrumcanbeexpressedinnumericalintegrationoverk .
+t
+Z
+g X ∞ ( π/Γ )f (k )M (f − f)dk2
+= 0 dip t b j i t
+g(E) (8.49)
+2
+π
+tE 1
++
+(E (k )
+−
+E (k )
+− E)2/Γ2
+i,j 0 cj t kpi t
+Γ = ℏ/τ
+where t is the quantum well thickness; is broadening due to intraband
+scat
+τ
+scattering relaxation time ; E is the jth conduction subband; E is the ith
+scat cj kpi
+valencesubbandfromthek.pcalculation;thesumisoverallpossiblevalenceand
+conductionsubbands; g isaconstantdefinedas
+0
+π q2ℏ
+=
+g (8.50)
+0 ε cm2n
+0 0
+where q is free electron charge; n is the real part of the refractive index; all other
+symbolshavetheirusualmeanings.
+M isthebulkdipolemomentumgivenby:
+b
++∆
+1m q E (E )
+= 0 g0 g0 so
+M (8.51)
+b + / ∆
+6 m E (2 3)
+c g0 so
+ff
+where E is the unstrained bandgap; m is the e ective mass of the conduction
+g0 c
+∆
+band; isspin-orbitcouplingenergy.
+so
+Thedipolefactorduetonon-parabolicsubbandsaregivenbythefollowingoverlap
+integralforthecaseofsymmetricwell:
+f
+=
+(3
+/
+2)[
+<
+c
+|
+g (k
+,
+z)
+>2 +
+(1
+/
+3)
+<
+c
+|
+g (k
+,
+z)
+>2]
+(TE)
+dip 1 t 2 t
+f
+=
+2
+<
+c
+|
+g (k
+,
+z)
+>2
+(TM) (8.52)
+dip 2 t
+| > | > | >
+where c is the conduction band wave function; g and g are the valence
+1 2
+bandenvelopfunction.
+
+
+=== PAGE 161 ===
+8.4RefractiveIndexModel 159
+f and f aretheFermifunctionsexpressedasfollows:
+j i
+" !#
+1
+ℏ2k2
+f −1 = 1 + exp E + t − E
+j kT cj0 2m m fn
+" # 0 c
+E (k )
+f
+−1 =
+1
++
+exp
+kpi t
+(8.53)
+i kT
+whereE isthebottomofjthconductionsubband.
+cj0
+8.3.7 Non-linear gain model
+. .
+Conventional optical gain is a concept based on linear response theory, ie, only
+first order perturbation is used to treat a system under an external optical field.
+ff
+For semiconductor lasers, it is often necessary to include the higher order e ects
+ff
+(or non-linear e ects). The optical gain tends to decrease as a function of photon
+ff ff
+density when non-linear e ects are included. Such an e ect is also called gain
+suppression.
+ff ff
+The non-linear gain e ect is responsible for the spectral hole burning e ect in
+semiconductorlasers[35].
+ff
+Thenon-lineargaine ectiscommonlyexpressedas[35].
+= −ϵ .
+g g (1 S) (8.54)
+0
+ϵ ffi
+where is the non-linear gain suppression coe cient which is not to be confused
+withthedielectricconstant,andSisthephotondensity. Sincethecorrectionterm
+is typically of the order of a few percent, one can use the following alternative
+form:
+g
+= 0
+g (8.55)
++ϵ
+1 S
+Such a formula has the numerical advantage that the correction term can never
+make the optical gain negative. Equation (8.55) has the same format as the gain
+saturationforasimple,two-levelsystem[36].
+Inthecaseofmulti-lateralmodes, thephotondensitySisreplacedbythesumof
+thedensitiesofallthemodes.
+8.4 Refractive Index Model
+8.4.1 Index change due to interband transitions
+In many applications, especially DFB lasers in fiber optic communications, the
+change of refractive index as a function of injection carriers is an important pa-
+ff
+rameter. It a ects the laser linewidth, FM noise and modulation characteristics.
+
+
+=== PAGE 162 ===
+160 QUANTUMWELLSANDINTERBANDTRANSITIONS
+Therefore it is desirable for laser designers to evaluate the index change for a
+particular device structure. The program implements such a change in refractive
+index due to interband optical transitions based on the standard Kramers-Kronig
+formulas.
+AmodifiedversionoftheKramers-Kronigformularelatingtherealandimaginary
+partsoftherefractiveindexofanarbitrarymaterialcanbewrittenas[37]:
+Z
+c ℏ ∞ ∆ g(E ′ ) −∆ g(E)
+∆ = − ′
+n(E) dE (8.56)
+π e (E′ − E)(E′ + E)
+0
+ffi
+The integral above is di cult to evaluate numerically because of the singularity
+= ′
+at E E . To obtain an accurate integral, we separate it into the following three
+parts:
+Z
+c ℏ ∞ ∆ g(E ′ ) −∆ g(E)
+∆ = − ′
+n(E) dE
+π e (E′ − E)(E′ + E)
+Z0
+c ℏ E−ε ∆ g(E ′ ) −∆ g(E)
+= − ′
+dE
+π e (E′ − E)(E′ + E)
+Z0
+c ℏ ∞ ∆ g(E ′ ) −∆ g(E)
+− ′
+dE
+π e (E′ − E)(E′ + E)
+ZE+ε
+c ℏ E+ε ∆ g(E ′ ) −∆ g(E)
+− ′
+dE (8.57)
+π e (E′ − E)(E′ + E)
+E−ε
+ε
+where isasmallnumber. Thethirdtermmaybewrittenas
+Z
+c ℏ dg E+ε 1
+− ′
+dE (8.58)
+π edE E′ + E
+E−ε
+andthiscanbeevaluatedanalytically.
+To ensure the correct implementation of the standard model, we have compared
+. .
+our calculations with experimental data obtained by C.H. Henry etal [37] for a
+bulk GaAs material system. The calculation is done at transparency conditions.
+Note that in Henry’s paper, the transparent density was estimated to be about
+0 . 8 × 1024m −3 while our calculation gives a value of 1 . 5 × 1024m −3. Since our value
+of transparent density agrees with values from a more recent theory by Vahala
+. .
+etal[38], we have decided to use this theoretical value here. Our result (also
+\ \
+included in the LASTIP examples under other index_change henry.gain) agrees
+wellwiththatfromHenry’spaper(seeFigure8.7).
+Once the index change is calculated, it is trivial to compute the alpha factor (or
+the linewidth enhancement factor), which is very important for DFB lasers and
+related devices used in telecommunications. Again we have calculated the index
+changeforbulkGaAs(seeFigure8.8)andfindthattheresultsaresimilartothose
+. .
+fromtheoreticalcalculationsbyVahalaetal [38].
+
+
+=== PAGE 163 ===
+8.4RefractiveIndexModel 161
+0.02
+0.015
+0.01
+0.005
+0
+-0.005
+-0.01
+-0.015
+-0.02
+-0.025
+-0.03
+-0.035
+1.2 1.3 1.4 1.5 1.6 1.7 1.8
+egnahC
+xednI
+laeR
+File:henry.gain
+Energy (eV)
+Figure 8.7: Index change with respect to equilibrium. The index change is evalu-
+atedattransparentconditionsforbulkGaAsmaterial. Thepointsareexperimental
+. .
+datafromtheworkofC.H.Henryetal
+16
+14
+12
+10
+8
+6
+4
+2
+0
+1.42 1.425 1.43 1.435 1.44 1.445 1.45 1.455 1.46 1.465
+rotcaf
+ahpla
+File:alpha.gain
+Energy (eV)
+Figure8.8: Thelinewidthenhancementfactor(alphafactor)asafunctionofwave-
+lengthattwodi ff erentcarrierdensities(1 . 8 × 1024m −3 and2 . 5 × 1024m −3).
+
+
+=== PAGE 164 ===
+162 QUANTUMWELLSANDINTERBANDTRANSITIONS
+It is clear from Figures 8.7 and 8.8 that the index change is very sensitive to the
+ff
+wavelength being used. Therefore any e ort to improve the alpha factor or the
+index change should take into account the spectral dependence. A small shift in
+theoperatingwavelengthmaymeanalargeimprovementordegradation.
+8.4.2 Other models of index change
+Crosslightsoftwarealsoimplementsthefollowingformsofindexchange:
+• α
+1) Use a linewidth enhancement factor to compute the index change
+lw
+basedonlocalgainchangeasfollows.
+α
+∆ = − lw −
+n(E) (g g ) (8.59)
+0
+2k
+0
+• 2)Free-carrier / plasmapart 1:
+q2n
+∆ = −
+n(E) (8.60)
+2m
+ω2ε
+n
+e 0
+•
+3)Linearmodel:
+∆ = (a) + (a) − − + (a) + (a) − −
+n(E) [a b (T 300)](n n ) [a b (T 300)](p p ) (8.61)
+n n 0 p p 0
+8.5 Optical Gain with Many Body Coulomb Interac-
+tion
+Coulomb interaction between electrons and holes confined in an active region
+of laser diodes can significantly enhance it’s optical gain value and influence the
+emissionspectrum. Inparticular,ithasbeenreportedthat,Coulombenhancement
+is stronger in short wavelength blue-green ZnCdSe and InGaN quantum well
+lasers compare to the long wavelength III-V lasers, due to the lower value of
+dielectricconstantinwide-bandgapmaterials[39]. Wediscoverthatanothermajor
+ff
+reason for wurtzite material system to have higher many-body (MB) e ect is
+that the due to imbalance of density of states between the conduction and the
+ff
+valence bands, the occupancy is much di erent in the two bands, which causes
+theenhancementfactortoincrease.
+1Starting with version 2010, n is used instead of ε in the denominator to fix a longstanding
+errorinthemodel
+
+
+=== PAGE 165 ===
+8.5OpticalGainwithManyBodyCoulombInteraction 163
+The role of Coulomb interaction between electrons and holes confined into an
+active region of laser diode can be explained within a simple physical picture;
+while Coulomb force attracts electrons and holes at a closer distance, e-h radia-
+tiverecombinationrateincreases,whichmanifestsinenhancementinintensityof
+spontaneous emission as well as in gain magnitude. In addition Coulomb inter-
+actionmodifiesspontaneousemissionandgainspectraoflaserdiodesbyshifting
+thegainpeaktowardslowerenergies.
+One of the inherent characteristics of electron-hole plasma is screening of the
+,ω
+Coulomb potential. The modified, screened Coulomb potential V (q ), as de-
+s
+scribedinthemomentumandfrequencydomain,relatestoanunscreenedCoulomb
+potential,V ,as:
+q
+V
+,ω = q ,
+V (q ) (8.62)
+s ε ,ω
+(q )
+ε ,ω
+where (q ) is the longitudinal dielectric function. If one neglects the dy-
+namic aspect of screening contained in a frequency dependence of the dielec-
+ε ,ω
+tric function, (q ), one can obtain the following dielectric function using the
+plasmon-poleapproximation[40–42]:
+1
+/ε
+(q)
+=
+1
+−ω2/ω2,
+(8.63)
+pl q
+ω ω ff
+where istheplasmafrequency,while isane ectiveplasmonmodefrequency.
+pl q
+Inparticular,incaseofelectronsandholesconfinedinaquantumwell,oneshould
+useatwo-dimensional(2D)Coulombinteraction,givenby:
+V
+= e2/
+2
+ε
+q
+,
+(8.64)
+q 0
+and2Dplasmafrequency:
+e2N q
+ω2 = 2D
+(8.65)
+pl 2 ε ε m
+b 0 r
+= × ε
+where N n w is the 2D carrier density in a quantum well width of w ,
+2D qw qw b
+/ =
+is the static background dielectric constant in the area of quantum well; 1 m
+r
+/ + / ff
+1 m 1 m ,isthereducede ectivemassofconductionbandelectronsandvalence
+e h
+ff
+bandholesindirectionsparalleltothequantumwellplane. Thee ectiveplasmon
+ω
+frequency isgivenin2Dcaseby:
+q
+!
+C ℏ q2 2
+ω2 = ω2(1 +
+q
+/κ2) + pl ,
+(8.66)
+q pl 4 2mr
+where C is a unitless constant typically in a range 1-4, while
+κ2
+is the square of
+pl
+inverse screening length for electrons and holes confined in the quantum well,
+whichcanbederivedas[43]:
+X
+κ2 = e2/
+(
+πℏ2ε ε
+) [m f (E )
+/
+d
++
+m f (E )
+/
+d ]
+,
+(8.67)
+b 0 cj e cj cj vi h vi vi
+i,j
+
+
+=== PAGE 166 ===
+164 QUANTUMWELLSANDINTERBANDTRANSITIONS
+P
+Here, summation is over all sub-bands characterized by energies, parallel
+i,j
+masses, and a wave-function average width, E , m , d , and E , m , d for jth
+cj ej cj vi vi vi
+conductionbandandithvalenceband.
+p
+= πℏ/ ,
+d 2m E (8.68)
+nk n nk
+=
+whereindexn corvforconductionandvalencebands,respective.
+ff
+Consider, first, the e ect of carrier Coulomb interaction on the spectrum of e-h
+ff
+inter-band recombination, often ascribed as bandgap-renormalization e ect. It’s
+ff
+physicalmeaningis"band-gapnarrowing"e ect,whichcanpartiallybeexplained
+bythescreeningofconductionbandelectron-electronCoulombrepulsionbyposi-
+tivelychargedvalencebandholesavailablenearelectronsatcloseproximity. This
+Coulomb Hole (CH) contribution to the band-gap reduction is approximately
+givenin2Dby:
+(cid:20) q (cid:21)
+∆
+E
+= −
+2E a
+κ×
+ln 1
++
+32
+π
+N
+/
+C
+κ3a
+(8.69)
+CH 0 0 2D pl 0
+wherea istheBohrradiusofquantumwellelectron-holeexciton,givenby:
+0
+a = 4 πℏ2ε ε / e2m (8.70)
+0 b 0 rj
+ff
+andE iscorrespondinge ectiveRydbergenergy:
+0
+E = ℏ2/ (2m a2) . (8.71)
+0 rj 0
+Additional contribution to Coulomb hole band-gap renormalization is a self-
+energycorrectiontoe-hplasmaduetoexchangeinteraction,whichalsoresultsin
+reductionofband-gapenergyas:
+Z
+2E a
+∞
+1
++
+C
+κ
+a
+k2/
+32
+π
+N
+∆ = − 0 0 pl 0 2D +
+E dkk [f (E ) f (E )] (8.72)
+gSX κ
+1
++
+q
+/κ+
+C a
+k3/
+32
+π
+N
+e cjk h vjk
+0 pl 0 2D
+Therefore the net band-gap narrowing due to Coulomb-hole and exchange inter-
+actionis:
+∆ = ∆ +∆
+E E E (8.73)
+g gCH gSX
+andtherenormalizedband-gap:
+= +∆
+E E E (8.74)
+gren g g
+ff
+This e ective band-gap energy reduction can be observed in a red shift of all
+recombination energy values E v(k) specified at a given parallel momentum k of
+c
+jth-conductionandith-valencequantumwellsubbands,as:
+= +∆ + +
+E (k) E E E E (8.75)
+cv g g cjk vik
+
+
+=== PAGE 167 ===
+8.5OpticalGainwithManyBodyCoulombInteraction 165
+where E and E are energies of electrons and holes from jth-subband of con-
+cjk vik
+ductionandith-subbandofvalencebandquantumwellintheactiveregion.
+The spectral wave function, g(E ) consists of a sum of g (E ) contributions from
+cv ji cv
+transitionsbetweenjth-subbandelectronsandith-subbandholes,givenby[43]:
+X X
+g 0 (E cv ) = g ji (E cv ) = π e2ℏ/ ( ε 0 c3m2 0 n av ) (1 / E cv ) | M ji (E cv ) |2ρ r,ji
+j,i j,i
+× + − ,
+[f (E ) f (E ) 1] (8.76)
+e cjk h vjk
+where
+|
+M ji (E cv )
+|2
+is the transition matrix element at transition energy E cv ,
+ρ
+r,ji is
+the reduced density of states between jth-conduction subband, and ith-valence
+subband; n is the background refractive index. In practice laser diode spectra
+av
+are broadened, primarily due to the strong carrier-carrier scattering and other
+intraband scattering mechanisms, o as well as lattice disorder. Consequently,
+gain becomes a convolution of an un-broaden gain function of Eq. (8.76) with a
+broadeningfunctionL(x),as:
+Z
+∞
+ℏω = ℏω−
+g ( ) g (E )L( E )dE (8.77)
+B 0 cv cv cv
+Eg0
+whereE isanenergyoftheloweste-hrecombinationtransitionbetweenground
+g0
+levelsofquantumwellinconductionandvalencebandofactiveregion. Typically,
+aLorentzianbroadeningfunctionshapeisassumedinL(x),givenby:
+L( ℏω− E ) = (1 /π ) Γ ( ℏω, E ) / [ Γ2 ( ℏω, E ) + ( ℏω− E )2] , (8.78)
+cv cv cv cv cv cv
+Γ
+and parameterized by Lorentzian width, , which is related to scattering time
+cv
+Γ = ℏ/τ Γ ℏ/ τ
+by (note that some sources define as equal 2 ). For simplicity,
+cv cv cv cv
+Γ
+we choose to be a constant parameter in our calculations (i.e., we neglect its
+cv
+ℏω
+dependenceupon andE energies).
+cv
+Finally, if Coulomb interaction is included in gain spectral function derivation,
+ℏω
+g( )ofequation(8.77)becomes:
+8 9
+Z " #
+> >
+> < ∞ g (E ) (E −ℏω ) > =
+g( ℏω ) = Real> > 0 cv 1 − i cv L( ℏω− E )dE > > (8.79)
+: − ,ℏω Γ cv cv;
+1 q (E )
+Eg0 1 cv cv
+where
+−
+ia E E
+,ℏω = 0 0 cv
+q(E v )
+c πκ| |
+M (E )
+Z ji cv
+∞ | | + −
+′ ′ M ji (E cv′ × f e (E cjk′) f h (E vik′) 1 ×Θ , ′
+dk k (k k ) (8.80)
+Γ + −ℏω
+0 E cv′ ( cv i(E cv )
+
+
+=== PAGE 168 ===
+166 QUANTUMWELLSANDINTERBANDTRANSITIONS
+and Z
+2π
+1
++
+C
+κ
+a
+q2/
+32
+π
+N
+Θ , ′ = θ pl 0 2D ,
+(k k ) d (8.81)
+1
++
+q
+/κ+
+C
+κ
+a
+qk3/
+32
+π
+N
+0 pl 0 2D
+and
+q2 = k2 + k ′2 − 2kk ′ cos θ, (8.82)
+θ
+and istheanglebetweenin-planevectorskandk’.
+TheEq. (8.79)givesthefinalintegralformulaforCoulombenhancedgainspectral
+function, numerically calculated in Crosslight simulation software. User has an
+ff
+option to include, band-gap renormalization e ect as defined in Eq. (8.73) and
+independently Coulomb contribution as formulated in Eq.(8.79), along with a
+ε Γ
+customdefinitionof ,C , ,and n valuesasinputparameters.
+b pl cv av
+8.6 Local Gain and Optical Confinement
+Inprevioussections,weassumeaflatbandsituationwithisolatedquantumwells
+and we assume the carrier spreads uniformly throughout the well, except with
+slighttilting by theapplied field. Similarly the localoptical gain is assumedto be
+uniformwithslightmodificationbytheFermilevelsdeviatingfromequilibrium.
+Thelocalopticalgainiswrittenintermsofthejointdensityofstate
+m
+ρ = r
+(8.83)
+r π ℏ
+t
+timesaFermifunctiontermwhichiscausingthesmallchangeintheuniformgain.
+Herem isthereducedmassandtisthewellthickness.
+r
+Without loss of generality, we consider only the z-dimension here. We define the
+modalgainasanintegralofthelocalgainasfollows:
+R
+g(z)w(z)2dz
+= QWR
+g (8.84)
+m
+w(z)2dz
+Using a slow varying assumption, one can pull the g(z) out of the integrand and
+defineanopticalconfinementfactor:
+R
+w(z)2dz
+Γ = QRW
+(8.85)
+w(z)2dz
+PleasenotethatCrosslightsimulatorusesonlytheintegralforminEq. (8.84). The
+Γ
+factorisNOTbeingused. Itisprintedonlyforcomparisonwithothertheories.
+
+
+=== PAGE 169 ===
+8.6LocalGainandOpticalConfinement 167
+In a self-consistent simulation of optical transition within an arbitrary MQW re-
+gion, wells and barriers are not well defined and we can no longer decide a well
+thickness. For example, if one wishes to grade the composition near the well, it
+is no longer possible to draw a line between well and barrier and the use of QW
+thickness loses its meaning. The optical gain written in a flat band model would
+havetobere-derivedusingtheoverlapofwavefunctions.
+According to the Fermi’s golden rule (see for example, [44]), we decide that the
+modal optical gain is proportional to an integral involving the envelop functions,
+f (z)and f (z),andtheopticalwave(treatedasscalarhere)w(z):
+c v
+Z
+n o
+2
+g ∝ M2 f (z)w(z)f (z)dz (8.86)
+m b c v
+Theaboveequationisthemostaccuratedefinitionofmodalgainintegralasfaras
+spatial overlap variation is concerned since it is derived from the first principle.
+Please note that atomic part of the wave function has been included in the bulk
+dipolemomentM2. However,itisacommonpracticetouseaseparatetheoptical
+b
+field intensity w2(z) which can be measured in near field and far field. Also, it is
+convenienttobeabletoisolatealocalgainfromtheaboveintegralsothatwecan
+"see"howitvarieswithdistance. Weproceedasfollows:
+We assume that total electron or hole wave function (envelop times the atomic
+part) is somehow localized and will be uncorrelated over a distance greater than
+the atomic size. For convenience of discussion, we replace the integral by a sum
+overameshgridwithgridspacinglargerthanthecorrelationlength:
+n X o
+2
+g ∝ M2(z) f (z)w(z)f (z) ∆ z (8.87)
+m b i c i i v i i
+i
+We apply the square and let the cross terms cancel each other due to the random
+/
+phase of the total electron hole wave function. Then, we are able to write (with
+propernormalization):
+X
+g ∝ M (z)2f (z)2w(z)2f (z)2∆ z (8.88)
+m b i c i i v i i
+i
+At this point, the modal gain comes out as a well defined quantity given the
+ff
+envelop function and the optical wave function. However, in a drift-di usion
+finite element analysis, it is desirable to introduce a local gain since we wish
+to see a distribution of the local gain over a complex MQW so that stimulated
+recombination and spontaneous radiative recombination can have a continuous
+distribution (instead of appearing as a block box model). Comparison of Eqs.
+(8.84)and(8.88)leadstothefollowinglocalgainvariation.
+g(z) ∝ f (z)2f (z)2 (8.89)
+c v
+
+
+=== PAGE 170 ===
+168 QUANTUMWELLSANDINTERBANDTRANSITIONS
+This is a simple statement that the local optical gain is proportional to overlap
+/
+of electron hole carrier densities. Therefore, it makes sense to define a position
+dependentjointdensityofstate(JDOS)asbeingproportionaltosuchanoverlap:
+< >
+m H(z)
+ρ = r
+(z) (8.90)
+r ℏπ
+< >
+where m isthereducedmassaveragedoverthewavefunctionoverlaps:
+r
+Z
+< >=
+m m (z)H(z)dz (8.91)
+r r
+andtheweightingfunctionisdefinedas
+Z
+H(z) = f2(z)f2(z) / f2(z)f2(z)dz (8.92)
+c v c v
+Compared with the conventional QW optical gain using 2D JDOS, the key dif-
+/ =
+ference is now we replace 1 t (t well thickness) by the weighting function H(z).
+/
+Pleasenotethattheweightingfunctionhasaunitof1 lengthandmayberegarded
+ff
+as a position dependent e ective well thickness. At the center of the well, we
+have a tightly confined wave function and thus a thinner well thickness. Given
+ρ
+therevised (z)above,wecandefineapositiondependentlocalgainforallofthe
+r
+ff
+gainformulasbasedone ectivemasstheory.
+For gain formula with valence mixing such as that in Eq. (8.49), the modification
+/ =
+is similar: we once again replace 1 t (t well thickness) by H(z). We do not need
+ff
+touseanyaveragede ectivemassheresincethegainintegralforvalencemixing
+ff
+already includes the e ect of spatial averaging by using a solution of the energy
+bandobtainedoverthewholepotentialprofile.
+Finally, we outline the actual implementation of optical gain model in a self-
+consistent solution as follows. To make the modal optical gain to be as close to
+the rigorous definition in Eq. 8.86, we first solve the envelop wave functions for
+electrons and holes over the whole coupled MQW region. Then we compute the
+total modal gain dipole moment by evaluating the wave function overlap before
+applying the square as in Eq. 8.86. Finally, we use the weighting function H(z) to
+define a position dependent JDOS in the local gain expression before performing
+themodalgainintegralusingw(z)2. Tobemorespecific,theself-consistentmodal
+gainiswrittenas R
+g(z)w(z)2dz
+= R
+g (8.93)
+m
+w(z)2dz
+Thelocalgainisdefinedas
+g(z) = g H(z)A M2O2 (8.94)
+0 ij b ij
+
+
+=== PAGE 171 ===
+8.7ExcitonElectro-absorptioninQuantumWells 169
+ffi
+where g is a gain coe cient depending on modal index and wavelength, M is
+0 b
+the bulk dipole moment, O is the overlap integral between hole wave function
+ij
+of level i and electron wave function of level j, and A is the corresponding QW
+ij
+dipole moment enhancement factor. Compared with the original formula from
+the Fermi-Golden rule, the only approximation we make is to use w(z)2 directly
+in the modal gain integral instead of using w(z) before applying the square. We
+ff
+expect the di erence to be minor for slowly varying fields. Please note that using
+ff
+H(z) of a di erent form has no consequence for the modal gain as long as it is
+normalized to unity. The advantage of this separation of w(z)2 makes it easy to
+reduce to the classical definition of modal gain and optical confinement factor in
+thelimitofbulkactivelayers.
+The same weighting function H(z) has been used in the definition of local spon-
+ff
+taneous recombination which directly a ect the radiative source profile within a
+complexMQWsysteminaself-consistentsolution.
+8.7 Exciton Electro-absorption in Quantum Wells
+8.7.1 Introduction
+Itiswellknown,fromsemiconductorphysics,thataninter-bandlightabsorption
+is not a simple derivative of a free electron-hole (e-h) pair generation. Both e-h
+ff
+energy, as well as their motion are a ected by mutual Coulomb attraction, and
+ff
+someofthosee ectswerealreadyconsideredinacontextofmany-bodyCoulomb
+correctiontoQWopticalgain(Section8.5ofthismanual). Inextremecase,strongly
+correlated, hydrogen atom-like, bound electron-hole state, called exciton, can be
+formed in semiconductors. It is characterized by a ground state binding energy,
+ff
+ore ectiveRydberg:
+m e4
+∗ = r ,
+R (8.95)
+y 2(4 πϵ ℏ )2
+s
+andaspacialaverageseparationdistance,orBohrradius:
+4 πϵ ( ℏ )2
+∗ = s ,
+a (8.96)
+0 m e2
+r
+= / + ϵ
+where m m m (m m ) is the electron-hole reduced mass, is a substrate
+r e h e h s
+ϵ = κϵ κ
+static dielectric permittivity, ( , with dielectric constant). Excitons can
+s 0
+be experimentally observed in a near band-gap absorption edge spectral region,
+ff
+and their spectrum can be e ectively varied in a controlled fashion (modulated)
+by application of an external electrostatic field. This can be directly utilized in
+electro-absorption modulators for fiber-optics application. In particular, an ef-
+ff ff
+fective modulator can be based on Quantum-Confined Stark E ect (QCSE)e ect
+
+
+=== PAGE 172 ===
+170 QUANTUMWELLSANDINTERBANDTRANSITIONS
+observed in thin QW and MQW heterostructures. Due to dimensional confine-
+ff
+ment realized in these structures, such an e ect is quite pronounced, implying
+strongoverlapofe-hwavefunctionandenhancementoftheoscillatorstrengthof
+interband transitions, along with the rise in exciton binding energy. For example
+/
+incaseofGaAs AlGaAsQWstructuresexcitonicabsorbtionbecomesanimportant
+distinct component of a near band-edge absorption spectra at room temperature,
+whileGaAsbulkexcitonsaretypicallyobservedonlyatlowtemperatures.
+At higher densities (strong excitation limit) attractive Coulomb force between
+electron-hole pairs becomes screened by free carriers, and excitons ultimately
+decompose into free electron-hole plasma and absorption saturates. Therefore,
+propermodelofscreeninginquasi2Delectron-holeplasmas,confinedintosemi-
+conductor QW, and MQW region, becomes important in electro-absorption mod-
+ulatormodelingespeciallyathighexcitationlimit.
+8.7.2 Screened Coulomb Potential in Quantum Wells
+Many-bodyphysicsandtheirtheoreticaltreatmentofCoulombinteractioninquasi
+2DQWelectronsandholesystemsisquitecomplex,andisusuallytreatedwithin
+reasonable approximations. A well known 3D screened Coulomb interaction
+κ
+potential, given by Yukawa potential with screening constant parameter, is as
+follow:
+q2 exp( −κ r)
+V3d(r) = (8.97)
+s 4 πϵ r
+s
+often becomes inadequate when applied to calculation of exciton binding energy
+in 2D electron-hole heterostructure systems. In particular, 3D-Coulomb potential
+ff
+overestimateslongrangescreeninge ect,whilea2D-ScreenedCoulombpotential
+" Z #
+q2 1 ∞ dqJ (qr)
+V2d(r) = −κ 0 , (8.98)
+s 4 πϵ r (q +κ )
+s 0
+underestimates it. Here, zero-order Bessel function, J (qr), is used. It turns out
+0
+that for thin electron and hole layers as implemented in semiconductor inversion
+layers, accumulation layers or MQW heterostructures, we need an intermediate
+potential V (r) between V2d(r) and V3d(r), which we shall refer to as a quasi-2D
+s s s
+screenedCoulombpotential. Theelectronandholespatialdensitydistributionacross
+such layers (in z-direction) is defined by density probability function, given by
+envelope wave function square, as
+|ϕ
+(z
+|2,
+and
+|ϕ
+(z
+|2.
+First we shall use a single
+e h
+poleapproximationatlowfrequencylimittoderiveascreenedCoulombpotential
+inmomentumspace,whichcanbeexpressedas:
+V2d
+= q
+V (q) F(q) (8.99)
+s ε
+(q)
+
+
+=== PAGE 173 ===
+8.7ExcitonElectro-absorptioninQuantumWells 171
+whereV2d isanunscreened2DCoulombpotential
+q
+e2
+V2d = , (8.100)
+q 2 ε ε q
+b 0
+F(q) is a form-factor, which represents the deviation of the Coulomb potential
+from a perfect 2D case (of zero thickness layer limit). The form factor is usually
+expressedinsomeformsofoverlapintegralofthequantumwellwavefunctions.
+Themathematicaldetailsofitsevaluationareoutofthescopeofthisdocument.
+Thedielectricfunction:
+ω2
+1
+= − pl,
+1 (8.101)
+ϵ (q) ω2
+q
+andplasmafrequency
+X X
+ω2 = e2 ×
+qF(q)[
+n c,i + n v,j
+]
+.
+(8.102)
+pl 2 ε b ε 0 m c,i m v,j
+i j
+ff
+Again, similarly to Eq. (8.66) of Section 8.5, the e ective plasmon frequency is
+givenby:
+! !
+1 C ℏ q2 2
+ω2 = ω2
+1
++ + pl ,
+(8.103)
+q pl κ F(q) 4 2m
+r
+Subsequently,FromV (q)ofEq. (8.99)wecanfindquasi-2DCoulombpotentialin
+s
+arealspace,usingFourier-BesseltransformofV (q),whichgives:
+s
+Z
+∞
+=
+V (r) qV (q)J (qr)dq (8.104)
+s s 0
+0
+The quasi-2D Coulomb potential, V (r) of Eq. (8.104), can be then employed to
+s
+obtainbindingenergyofexcitoninQWandMQW,andseemsthemostappropriate
+in use for this applications. Nevertheless we left to the user an option, to use in
+hissimulationexcitonmodelsusing3Dand2DCoulombpotentialsasdefinedin
+Eqs. (8.97),forcomparativestudies.
+8.7.3 Exciton Binding Energy in Quantum Well
+In our treatment, the confining potential along z-direction, along with wave-
+functions and corresponding energy values QW sub-bands are based on self-
+consistent solution of a Schrödinger and Poisson Equations. The solution is later
+applied to calculate binding energy of exciton via the form-factor, and finally
+absorption spectrum of excitons in MQW or QW can be calculated. At this time
+
+
+=== PAGE 174 ===
+172 QUANTUMWELLSANDINTERBANDTRANSITIONS
+welimitedourderivationtotheground,1s,excitonicstates,butthiscanbeeasily
+extended into excited exciton state as well as to excitons at higher QW levels, in
+thefuture.
+ConsiderawavefunctionforagroundstateexcitoninaQWas:
+Φ , , = ϕ ϕ ϕ ,
+(z z r) (z ) (z ) (r) (8.105)
+e h e h exc
+ϕ
+where (r)isachosentrialwavefunctionfora1sexcitoninQWtobe:
+exc
+2 1
+ϕ
+(r)
+=
+(
+)1/2
+exp(
+−
+r
+/λ
+)
+.
+(8.106)
+exc π λ exc
+exc
+λ ϕ ϕ
+Here represents an in-plane exciton Bohr radius, while (z ), (z ) are ground
+exc e h
+state electron and heavy or light hole envelope wave functions. Coulomb attrac-
+ff
+tion of e-h pairs is assumed to be week, compare to the e ect of QW confinement
+in z-direction. As a result, electron and hole wave functions are assumed to be
+ff
+una ected by long range Coulomb interaction, which only modifies their energy
+values(true in the limit of 2D exciton Bohr radius, larger than the size o the z-
+confinement).
+WechoosetouseRitzvariationalmethodforbindingenergyestimate. Themethod
+λ
+reliesonminimizationoftheexcitonenergyuponthetrialfunctionparameter, :
+exc
+λ = + + − ,
+E exc ( exc ) E g E e0 E ho E b,exc (8.107)
+whichisequivalenttofindingamaximuminexcitonbindingenergy,E :
+bexc
+< Φ| Hˆ|Φ >
+λ = ,
+E b,exc ( exc ) < Φ|Φ > (8.108)
+where
+ℏ2
+Hˆ = − ( ▽2 +▽2) + V (z) + V (r) , (8.109)
+2m r z QW s
+r
+andafterpartialintegration:
+ℏ2
+λ = + < ϕ | |ϕ >
+E b,exc ( exc )
+2m
+λ2 exc (r)V s (r) exc (r) (8.110)
+r exc
+λ ϕ
+with respect to the 2D Bohr radius parameter of a trial function (r) given
+exc exc
+byEq.(8.106).
+8.7.4 Quantum Well Exciton Absorption
+ffi
+A general absorption coe cient formula can be applied to the exciton transition
+aswell,asgivenby:
+X
+α
+(
+ℏω
+)
+=
+A
+|φ
+(0)
+|2δ
+(E
++
+E
+−ℏω
+)n
+,
+(8.111)
+0 n n g
+n
+
+
+=== PAGE 175 ===
+8.7ExcitonElectro-absorptioninQuantumWells 173
+where
+π e2|
+eˆ
+·
+p
+|2
+= cv
+A (8.112)
+0 n c ϵ ω m2
+r 0 0
+p isaninterbandtransitionmatrixelementinQW,n isarefractiveindex,c-speed
+cv r
+ϕ
+of light, (r) is a normalized wave function of exciton. Here, summation over n
+n
+extendstobothboundandcontinuumstateexcitons. ForQWboundexcitonstates
+wehavetheoscillatorstrengthgivenby:
+1
+ϕ = ,
+(0) (8.113)
+n π a2(n − 1)3
+0 2
+and
+R
+= y
+E (8.114)
+n (n − 1)2
+2
+ffi
+Initially, it is su cient to include only ground state heavy and light hole excitons
+= ffi
+(n 1),althoughingeneralcasetheboundexcitonabsorptioncoe cientbecomes:
+X∞
+2 1
+α ℏω = ×δ ϵ+ ,
+( ) A [ ] (8.115)
+B 0 R a2π (n − 1)3 (n − 1)2
+n=1 y 0 2 2
+ϵ = − /
+where (E E ) R .
+g y
+Thecontinuum-stateexcitoncontributiontoabsorptionis:
+Z
+∞
+S (E)
+α ℏω = 2D δ + −ℏω ,
+( ) A dE (E E ) (8.116)
+C 0 2 π R a2 G
+0 y 0
+where
+2
+ϵ =
+S ( ) (8.117)
+2D + − π/ϵ
+1 exp( 2 )
+isknownasSommerfeldenhancementfactor.
+α ℏω +α ℏω
+Thetotalabsorptionisequal ( ) ( ):
+B C
+X∞
+A 1 1
+α ℏω = 0 × { δ ϵ+ + ϵ }
+( ) [4 ( )] S ( ) (8.118)
+exc 2 π R a2 (n − 1)3 (n − 1)2 2D
+y 0 n=1 2 2
+ff
+Finally,weincludethefiniteline-widthe ectbyintroducingtheLorentzianbroad-
+eningfunctiontoobtain
+2 3
+A 6 6 6 6 X∞ 1 γ Z ∞ d ϵ′ γ S ( ϵ′ ) 7 7 7 7
+α exc ( ℏω ) = 2 π R 0 y a2 0 6 6 6 4 4 × n=1 π (n − 1 2 )3 (cid:16) ϵ+ (n − 1)−2 (cid:17) 2 +γ2 + 0 π ( ϵ′ − 2 ϵ D )2 +γ2 7 7 7 5
+2
+(8.119)
+
+
+=== PAGE 176 ===
+174 QUANTUMWELLSANDINTERBANDTRANSITIONS
+ff
+8.8 Franz - Keldysh E ect
+ff
+The Franz-Keldysh E ect (FKE) is a widely known phenomenon observed in
+the inter-band absorption spectrum of bulk semiconductors. It is also known as
+photo-assisted Zener tunneling. It only occurs in the presence of an external DC
+ff
+electrostatic field F and is related to the bulk DC-Stark E ect. It is similar to the
+ff
+Quantum-ConfinedStarkE ect(QCSE)observedinsemiconductorQuantumWells
+(QW).
+FKEandQCSEbothhavetheirusesinmodernelectroabsorptionmodulators.
+8.8.1 Solution of the Schrödinger Equation
+Considerthecaseofasinglenon-interactingparticlecharge,qinauniformexternal
+= , ,
+dc-electrostatic field acting along z-direction, F [0 0 F]. It can be described by
+theSchrödingerEquation:
+!
+−ℏ2
+∇2 +
+qF
+·
+r
+Φ
+(r)
+=
+E
+Φ
+(r)
+,
+(8.120)
+2m
+r
+= ∗ / + ff
+where m m m (m m ). is the reduced e ective mass. One can search the
+r e h e h
+solutionofEq.(8.120)intheformof:
+eikx +iky
+Φ (r) = √ Φ (z) , (8.121)
+Ez
+A
+Φ
+wherethez-dependentpartofthewavefunction (z)obeys:
+!
+−ℏ2 d2
++ Φ = Φ ,
+qFz (z) E (z) (8.122)
+2m dz2 z
+r
+withatotalenergyrelativetothebottomofthebandgivenby:
+−ℏ2
+E = (k2 + k2) + E . (8.123)
+2m x y z
+r
+The solution to the Eq. (8.122) can be expressed in terms of Airy Functions Ai(Z),
+satisfyingthepropernormalizationandboundaryconditionofexponentialdecay
+→ +∞
+inthelimitz ,wherevariable:
+r !
+2m qF E
+= 3 r × − z
+Z z (8.124)
+ℏ2
+qF
+=
+ElectronandholestatesinanexternalelectrostaticfieldF zˆFcanbecharacterized
+bythethewavefunctionforagivensetofquantumnumbers(kx,ky,Ez)satisfying
+Eq. (8.121).
+
+
+=== PAGE 177 ===
+8.9InterbandOpticalTransitionModelforQuantumDots 175
+8.8.2 Absorption Spectrum
+Theinter-bandabsorptioncalculationcanbeobtainedfromasumoverallelectron-
+holestates: X
+α
+(
+ℏω
+)
+=
+A
+|φ
+(0)
+|2δ
+(E
++
+E
+−ℏω
+)
+,
+(8.125)
+0 n n g
+n
+where
+π q2|
+eˆ
+·
+p
+|2
+= cv
+A (8.126)
+0 n c ϵ ω m2
+r 0 0
+Substituting the sum over all quantum number states by the integration over E
+z
+continuousspectruminEq. (8.121),onecanobtain:
+Z " #
+X ∞ ℏ2
+α ( ℏω ) = A × 2 dE |φ (0) |2δ (k2 + k2) + E + E −ℏω , (8.127)
+0 z 2m x y z g
+kx ,ky 0 r
+FortypicalIII-Vcompoundsemiconductorzincblendestructurewecansubstitute
+into Eq. (8.127) E = ℏ2 [k2 + k2] and use quasi-continuous integration over dE
+t 2mr x y t
+insteadofsum X Z Z
+2 d2k m
+= t = r
+2 dE (8.128)
+A (2 π )2 πℏ2 t
+kx ,ky
+ffi
+Onecanobtainabsorptioncoe cientfromEq. (8.127)asfollows:
+Z
+p ∞ p
+A m A m
+α ( ℏω ) = 0 r ℏθ d η Ai2 = 0 r ℏθ [ −η Ai2( η ) + Ai ′2( η )] , (8.129)
+2
+ππℏ2 F
+2
+ππℏ2 F
+η
+q
+whereAi ′ ( η )isthederivativeofAi( η )over η , ℏθ = 3 ℏ2q2F2 ,and η = Eg −ℏω
+F 2mr ℏθ F
+Fig. 8.9 illustrates the net result of applying an electrostatic field on inter-band
+absorption spectra. The apparent oscillations above the band-gap energy and
+enhanced exponential decay in below-bandgap energy region are signature of
+ff
+the Franz-Keldysh e ect. Fig. 8.10 compares the absorption spectrum with and
+ff
+withouttheexternalfieldasaresultoftheFranz-Keldyshe ect.
+8.9 Interband Optical Transition Model for Quantum
+Dots
+This section formulates the optical gain and spontaneous emission spectra for a
+quantumdotdevice. Weconsideranensembleofquantumdots(QDOT)withina
+
+
+=== PAGE 178 ===
+176 QUANTUMWELLSANDINTERBANDTRANSITIONS
+conduction band
+Photon
+absorption
+valence band
+ff
+Figure 8.9: Concept of Franz-Keldysh e ect of photo-assisted absorption in
+bulk semiconductors in external electrostatic field. The electron and hole wave-
+functionsbecomeAiryfunctions,whichinexternalelectrostaticfield“tunnel"into
+theband-gapregionallowingforoverlapofelectronandholewave-functionsand
+absorptionofphotonswithenergiesbelowtheband-gapenergy.
+,
+Figure8.10: TheassociatedabsorptionspectrumforfinitefieldF 0(solidcurve).
+Thedashedlineisthefreeelectronandholeabsorptionspectrumwithoutapplied
+electrostaticfield.
+
+
+=== PAGE 179 ===
+8.9InterbandOpticalTransitionModelforQuantumDots 177
+multiplequantumwellsystem. Foraself-assembledquantumdotsdevice[45],the
+dotsarecloselystackedupontopofeachotherandtheremaybestrongquantum
+mechanicalcouplingbetweenthethem. Inthefollowingformulation,weassume
+that the optical spectrum theory for quantum well has been well established [34]
+andweshallfocusonquantumdots.
+The formulas here are similar to those in [46]. In a quantum complex containing
+bothwellsanddots,thetotal2Darea;carrierconcentrationscanbeexpressedas
+= +
+n n n (8.130)
+2d qw qd
+TheQDOTelectronconcentrationcanbewrittenas
+X
+=
+n qd 2N qd (s)f c (E i,s ) (8.131)
+i,s
+ff
+where the sum i is over all energy levels and s is over quantum dots of di erence
+sizes. Please note the factor of two taking into account spin degeneracy. N (s) is
+qd
+thearealdensityofquantumdotswithsizes. TheFermifunctionisgivenby
+1
+=
+f c (E i,s ) + − / (8.132)
+1 exp[(E i,s E fn ) kT]
+In general, an analytical expression for energy level E i,s is not available and one
+hastosolvea3Dnumericaleigenvalueproblemtofindtheconfinedenergiesand
+ψ
+associatedwavefunctions fora3Ddotembeddedwithinawell[46]. Crosslight
+is
+softwareincludesnumericalsolutionsofquantumstatesforageneral3Dquantum
+dotstructure.
+/
+Having solved the quantum states of the 3D dot well complex, we proceed to
+formulatetheopticalgainspectrumasfollows:
+XX π q2ℏ M2N
+g (E) = b dq | < ψ |ψ > |2g G (E − E )(f − f ) (8.133)
+qd E ε c m2n t is js cp s ijs c v
+s i,j 0 0 0 r cmplx
+where g is a multiple dot coupling factor which is used avoid double counting.
+cp
+It is inversely proportional to the number of coupling dots. For example, if we
+have two dots coupling to each other, the number of states will be doubled and
+weneedtodividebytwotoavoiddoublecounting. M isthebulkmatrixelement
+b
+/
+and t is the thickness of the well dot complex. The sum is over all possible
+cmplx
+confinedelectronandholestatesandoveralldotsizes. Thelastfactoristhepop-
+ulation inversion factor determined by quasi-Fermi levels of electrons and holes.
+Othersymbolshavetheirusualmeanings. ThefunctionG isaGaussianbroaden-
+s
+ing function representing intraband and inhomogeneous broadening defined as
+
+
+=== PAGE 180 ===
+178 QUANTUMWELLSANDINTERBANDTRANSITIONS
+follows:
+∆ = ℏ/τ
+" #
+1 (E − E )2
+G (E) = √ exp − ijs (8.134)
+s ∆ 2 π 2 ∆2
+/
+The material gain of the active well dot complex contains contribution from the
+quantumwell,i.e.,fromstatesabovethequantumdot. Dependingonthedetailed
+structure and film quality, the states of the quantum wells may not be perfectly
+extended through the while well. One may regard some of the states from the
+quantumwellsorthewettinglayersasbeingtruncatedbythequantumdots. Thus
+it is convenient to introduce a factor to control or describe the contribution from
+thewellsasfollows
+= +
+g r g g (8.135)
+2d qw qw qd
+where g and g are optical gain contribution from quantum wells and dots,
+qw qd
+respectively. r is a factor between zero and unity related to the areal ratio of the
+qw
+wellareaoverthat of thedots. The above opticalgain formulas areimportant for
+applicationinvolvinglaserdiodes(LD)andverticalcavitysurfaceemittinglasers
+(VCSEL).
+Having found the formula for the optical gain, we can express the spontaneous
+emission rate using the relation between optical gain and spontaneous emission
+[2]. Thespontaneousemissionisgivenasfollows:
+q2n EM2
+r sp (E) = r b | < ψ |ψ > |2g G (E − E )N (s) / t f (1 − f ) (8.136)
+qd πε m2ℏ2c3 is js cp s ijs qd cmplx c v
+0 0 0
+The total spontaneous emission rate should also include contribution from the
+quantumwellsinanalogywiththeopticalgain:
+sp = sp + sp
+r (E) r r (E) r (E) (8.137)
+2d qw qw qd
+Integrationoftheaboveoverallphotonenergiesresultsinthetotalcarrierradiative
+recombination rate as a dominant recombination mechanism for many devices
+basedonforwardbiasedp-njunctions:
+Z
+= sp
+R r (E)dE (8.138)
+sp 2d
+The spontaneous emission model is important for applications involving light
+emitting diode (LED), LD and VCSEL. For LED, the EL spectrum comes from the
+spontaneousemissionrateinEq. 8.137directlywhileradiativerecombinationrate
+ffi
+inEq. 8.138determinestheinternalquantume ciency(IQE).ForLDandVCSEL,
+
+
+=== PAGE 181 ===
+8.9InterbandOpticalTransitionModelforQuantumDots 179
+the radiative recombination rate is often the dominant leakage mechanism upon
+whichthethresholdbehaviordepends.
+ff
+Thesoftwarealsoo ersamodelforaquantumwelltoincludeaquantumdot-like
+densityofstates(DOS).ThismaybeusedtoaccountforhighbrightnessLEDfrom
+InGaN-based MQW where a pure quantum well model can not explain the high
+brightnesswhichisthoughttocomefromlocalized,dot-likestatesassociatedwith
+indiumsegregation.
+The QDOT model in the software usually requires a separate calculation of 3D
+quantum states with given shapes such as disk or sphere. The QDOT-like model
+skipssuchdetailsandmakesiteasiertomanage: themodelusesaDOSreduction
+factortorepresent3DquantumconfinementswhichresultinlowerDOSthanpure
+quantumwell.
+TheDOSreductionfactorisdefinedastheratiooftotalnumberofquantumstates
+inadotoverthatinthewell. Suchafactormanybeestimatedifshapesofthedots
+are known. For a simple case, one may use states in a quantum box against those
+inaquantumwell.
+To make analogy with reduced DOS in quantum well against those in the bulk,
+the actual reduction ratio can be estimated if the potential profile of the well is
+known. Polarizationchargeandself-consistentcalculationmaybeenabledinsuch
+QDOT-likestates.
+
+
+=== PAGE 182 ===
+180 QUANTUMWELLSANDINTERBANDTRANSITIONS
+

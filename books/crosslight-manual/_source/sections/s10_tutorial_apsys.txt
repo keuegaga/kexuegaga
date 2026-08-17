@@ -1,0 +1,1145 @@
+=== PAGE 378 ===
+
+
+
+=== PAGE 379 ===
+hapter
+C 20
+APSYS EXAMPLES
+20.1 Introduction
+This chapter will describe a few selected examples of APSYS simulations. These
+examples have been selected to teach the basic operation of the software, ex-
+plain key concepts essential to device simulation, showcase some popular appli-
+/
+cations devices and preemptively answer common user questions. The relevant
+input files can be found in a compressed archive distributed along with the soft-
+ware;thenameofthesectioninthischaptercorrespondstoafolderinthisarchive.
+®
+NotethatthedefaultinstallationdirectoryofthesoftwareinaMicrosoftWindows
+environment is the Program Files directory: this directory is protected by the
+operatingsystemandshouldnot beusedtounpacktheexamplearchive.
+Instead, we recommend that the archive be unpacked to a folder where the user
+accounthasfullreadandwriteprivileges. Previousversionsofthesoftwareused
+\
+a directory under c: crosslig; such a name has the advantage of not including a
+spaceinthepathname,whichfacilitatestheuseofbatchfilesincludedtoautomate
+runningoftheexamples.
+Theexamplesfromthischapterareonlyasmallsubsetoftheincludedtutorialfiles.
+There are a number of other examples that are supported through accompanying
+ff
+README files and comments in the simulation files. Crosslight support sta
+will also be happy to explain these examples in more detail if you need further
+assistance.
+It is relevant to note that all examples are subject to change as the software is
+updated. Betweeneachrelease,thereareoftenbugfixes,materialmacrochanges,
+ff
+new models and other improvements which can a ect the results. In most cases,
+these should result in negligible changes in the results which do not alter the
+tutorial value of these examples. If any major inconsistencies are found, please
+
+
+=== PAGE 380 ===
+378 APSYSEXAMPLES
+ff
+report them to Crosslight support sta . Most examples listed here were last
+updated as part of the 2009 manual release. Whenever possible, we will note
+exampleswhichhavebeenupdatedsince.
+Throughoutthischapter,wewillconcentrateonthespecificsimulationstatements
+and physical models that are needed for a particular device. Particular attention
+ff
+willalsobegiventomodelparametersthatmaya ecttheconvergenceorreliability
+ofthesimulation.
+It is also assumed that the reader is familiar with the basic structure of the input
+filessosomeofthebasicsetupstepswillbeomittedforthesakeofbrevity. Ifyou
+have not already done so, we strongly urge you to read through Chapter 3. Of
+particular interest will be the sections dealing with the use of the command-line
+setup tools as well as their integration into SimuCenter. If you are working using
+GUItoolssuchasLayerBuilder,additionalonlinehelpisavailable.
+In some cases, the setup tools will only provide the basic framework of an input
+file and some direct editing may be required to complete the setup. If this is the
+case, new users are encouraged to use the built-in Wizard option in SimuCenter:
+this will present all the available statements and parameters. New statements
+maybecreatedbyright-clickingonanemptylineandselectingtheWizardoption
+whileexistingstatementscanbemodifiedbyusingthesameprocedureontheline
+containingthatstatement.
+NotethatusersofotherCrosslighttoolsbesidesAPSYSmayalsobenefitfromthis
+chapter;conversely,APSYSusersmayalsobenefitfromtheothertutorialchapters
+inthismanual. Mostofthetime,thesyntaxusedinthesechaptersissharedacross
+all Crosslight tools: only commands that define unique models specific to a tool
+willbeinapplicable.
+
+
+=== PAGE 381 ===
+20.2A_tutorial 379
+(cid:0)
+(cid:0) (cid:0)
+N+
+(cid:0) (cid:0) i (cid:0)
+(cid:0)
+P+
+i
+(cid:0) (cid:0)
+(cid:0) (cid:0)
+(cid:0)y(cid:0)y(cid:0)y
+N+
+(cid:0)
+(cid:0) (cid:0)
+Figure20.1: Schematicofcameldiode
+(cid:0)
+20.2 A_tutorial
+This is example is a camel diode, which is related to the planar doped barrier
+diode. It is a n-p-n majority carrier diode which finds applications in high-speed
+switches, mixers, fast photodiodes, BARRITT devices and thermionic emission
+transistors. Thisparticulardeviceisadaptedfrom[120].
+Layer Structure
+Themajorfeatureofthisdeviceisathinhighly-dopedp-layerinsidetheintrinsic
+regionasshowninFig.20.1. Thecorrespondinglayerfileisshownbelow:
+begin_layer
+$
+column column_num=1 w=1. mesh_num=2 r=1.
+$
+bottom_contact column_num=1 from=0 to=1. contact_num=1
+$
+layer_mater mater_lib=Si column_num=1
+layer d=1. n=15 r=-1.1 n_doping1=1.5e24
+layer_mater mater_lib=Si column_num=1
+layer d=0.2480 n=30 r=-1.1 n_doping1=1e2
+
+
+=== PAGE 382 ===
+380 APSYSEXAMPLES
+layer_mater mater_lib=Si column_num=1
+layer d=0.0039 n=15 r=1. p_doping1=1.5e24 gaussian_tail=0.0001
+layer_mater mater_lib=Si column_num=1
+layer d=0.0480 n=30 r=-1.1 n_doping1=1.e2
+layer_mater mater_lib=Si column_num=1
+layer d=1. n=15 r=-1.1 n_doping1=4.e24
+$
+top_contact column_num=1 from=0 to=1. contact_num=2
+$
+end_layer
+ff
+One major di erence from the device in the reference above is the lower doping
++
+concentration of the p layer. Since this is a current-blocking structure, we have
+chosen to lower the barrier height to make convergence easier. As explained in
+Sec.4.10.1,therearemanypossiblesolutionsofthecurrentcontinuityequationsin
+structures where the current is being blocked. In these conditions, the simulation
+ff
+is not stable since it may oscillate between di erent solutions that lie within the
+specifiednumericalprecision.
+One possible solution to this instability is to use relaxed convergence criterion
+suchasalargertolerancevalue(var_tolparameter)inthenewton_parstatement.
+As long as we find that the equation residue is low and that the currents on the
+ff
+electrodes sum up to zero (i.e. Kircho ’s law), we can consider the solution as
+valid. To maintain convergence with stricter tolerance values, more advanced
+techniquessuchasthoseofChap.4mayberequired.
+Simulation Setup
+Torunthesimulation,usethefollowing.solfile:
+$file:camel.sol
+$***********
+begin
+load_mesh mesh_inf=camel.msh
+include file=camel.doping
+include file=camel.mater
+output sol_outf=camel.out
+more_output ac_data=yes
+
+
+=== PAGE 383 ===
+20.2A_tutorial 381
+newton_par damping_step=5. var_tol=1.e-9 res_tol=1.e-9 &&
+max_iter=100 opt_iter=15 stop_iter=50 print_flag=3
+$ equilibrium solution is counted as scanline=1
+equilibrium
+newton_par damping_step=1 &&
+max_iter=30 opt_iter=15 stop_iter=15 print_flag=3
+$ The first scan statement is counted as scanline=2
+scan var=voltage_1 value_to=1.6
+$ The first scan statement is counted as scanline=3
+scan var=voltage_1 value_to=-0.5 max_step=0.05 print_step=0.2
+end
+ffi
+Sincebothcontactsaren-doped,itisdi culttodeterminewhetheraparticularbias
+will put the device in a forward or reverse state. To capture both characteristics,
+we apply bias in one direction and then reverse it with the next scan statement.
+The shape of the I-V curve as well as the internal potential will help us identify
+thereversebiasregion.
+Note that we will also be interested in doing some AC post-processing analysis
+for this device so we use the more_output statement to generate the necessary
+auxiliary data files (.ac extension). Also note the numbering of the scan lines in
+the comments: this will be used to group together some of the data sets for later
+analysis.
+Post-Processing
+Afterthesimulation,theresultsarepost-processedinthe.pltfileasshownbelow:
+$file:camel.plt
+$ **************
+begin_pstprc
+plot_data plot_device=pdf
+$ ---- plot structure data at first data set (equilibrium)
+get_data main_input=camel.sol sol_inf=camel.out &&
+xy_data=(1 1)
+
+
+=== PAGE 384 ===
+382 APSYSEXAMPLES
+plot_1d variable=band from=(0.5 0.0) to=(0.5, 2.3)
+plot_1d variable=donor_conc from=(0.5 0.0) to=(0.5, 2.3)
+plot_1d variable=acceptor_conc from=(0.5 0.0) to=(0.5, 2.3)
+$ ---- plot structure data at last data set (max. voltage bias)
+get_data main_input=camel.sol sol_inf=camel.out &&
+xy_data=(2 2)
+plot_1d variable=band from=(0.5 0.0) to=(0.5, 2.3)
+plot_1d variable=potential from=(0.5 0.0) to=(0.5, 2.3)
+plot_1d variable=field_mag from=(0.5 0.0) to=(0.5, 2.3)
+plot_1d variable=elec_curr_y from=(0.5 0.0) to=(0.5, 2.3)
+plot_1d variable=hole_curr_y from=(0.5 0.0) to=(0.5, 2.3)
+plot_1d variable=elec_conc from=(0.5 0.0) to=(0.5, 2.3)
+plot_1d variable=hole_conc from=(0.5 0.0) to=(0.5, 2.3)
+$ Plot bias dep. quantities using scanline specification.
+$ Please make sure scan_data range is large enough to cover
+$ the intended scanline.
+get_data main_input=camel.sol sol_inf=camel.out &&
+scan_data=(3 13)
+plot_scan scan_var=voltage_1 variable=current_1 scanline=3
+$ ====> AC analysis as a post-processing step
+$ AC analysis at max. voltage
+get_data main_input=camel.sol sol_inf=camel.out &&
+xy_data=(2 2)
+$ AC analysis vs. freq.
+ac_voltage log_freq1=6. log_freq2=10. contact_num=1
+plot_ac_curr variable=capacitance_1
+plot_ac_curr variable=conductance_1
+$ Physical distribution of AC current @ 1 MHz
+ac_voltage current_distr=yes log_freq1=6. log_freq2=6.
+plot_1d_ac_curr variable=elec_curr_y imag_part=no from=(0.5 0.) to=(0.5 2.3)
+plot_1d_ac_curr variable=hole_curr_y imag_part=no from=(0.5 0.) to=(0.5 2.3)
+$ We plot capacitance-voltage and conductance-voltage here at 1 MHz
+$ To generate reasonable AC vs. bias plots, please save sufficient
+
+
+=== PAGE 385 ===
+20.2A_tutorial 383
+$ number of data sets. AC analysis plots cannot include equilibrium data
+get_data main_input=camel.sol sol_inf=camel.out &&
+scan_data=(3 13)
+ac_voltage log_freq1=6. log_freq2=6. contact_num=1 &&
+freq_point=2 versus_bias=yes scanline=3
+set_xydata_for_scan scan_var=voltage_1
+plot_ac_curr variable=capacitance_1
+plot_ac_curr variable=conductance_1
+$ For purpose of demonstrating the plotting,
+$ let us plot y parameters assuming input=output=eletrode No. 1
+ac_parameters versus_bias=yes log_freq1=6. log_freq2=6. &&
+input_contact=1 output_contact=1 freq_point=2 scanline=3
+plot_ac_parameters parameter_type=y smith_chart=no
+end_pstprc
+The I-V curve of the device is shown in Fig. 20.2. Note that we use scan line #3 to
+capture the part of the IV curve that has both negative and positive bias (i.e. the
+thirdscanstatement). FromtheshapeoftheI-Vcurve,weseethatthepositivebias
+on electrode #1 yields reverse bias of the diode. This is confirmed by the internal
++
+potentialprofileshowninFig.20.3: thepotentialofthep regionisbelowthatof
++
+bothn regionssothetwojunctionsarereverse-biased.
+Atthemaximumbiaspoint,wealsofindthereisastronglocalfield(Fig20.4): this
+indicates that even though we have neglected it for the sake of simplicity, impact
+ionizationmaybesignificantinthisregion.
+Asmentionedbefore,wealsowanttodosmall-signalACanalysisonthisdevice.
+Thisisdoneviatheac_voltagestatementtoapply1VofACvoltageonaparticular
+electrode: all other electrodes are connected to the AC ground even though they
+ff
+mayhaveadi erentDCbias.
+ff
+Depending on the quantity we are interested in, there are di erent kinds of AC
+analysis:
+•
+ACquantityvs. frequencyataparticularbiaspoint
+•
+ACquantityvs. biasataparticularfrequency
+•
+PhysicaldistributionofACcurrentataparticularbiasandfrequency
+
+
+=== PAGE 386 ===
+384 APSYSEXAMPLES
+2
+1.8
+1.6
+1.4
+1.2
+1
+0.8
+0.6
+0.4
+0.2
+0
+−0.2
+−1 −0.5 0 0.5 1 1.5 2
+)m/A(>1<tnerruC
+tcatnoC
+File:camel.plt
+Contact Voltage<1>(V)
+Figure20.2: I-Vcurveoflow-barriercameldiode
+1.6
+1.4
+1.2
+1
+0.8
+0.6
+0.4
+0.2
+0
+−0.2
+−0.4
+−0.6
+0 0.5 1 1.5 2 2.5
+)tlov(
+laitnetoP
+File:camel.plt
+Distance (micron)
+Figure20.3: Internalpotentialprofileofcameldiodeunderreversebias
+
+
+=== PAGE 387 ===
+20.2A_tutorial 385
+140000
+120000
+100000
+80000
+60000
+40000
+20000
+0
+0 0.5 1 1.5 2 2.5
+)mc/V(
+.gaM
+dleiF
+celE
+File:camel.plt
+Distance (micron)
+Figure20.4: Localfieldmagnitudeofcameldiodeunderreversebias
+All of the above analyses are done in the above .plt file. For example, the ca-
+ff
+pacitance vs. bias plot is shown in Fig. 20.5. Since these di erent kinds of AC
+analysisaremutuallyexclusive,theac_voltagestatementisissuedmultipletimes
+togeneratenewACdatabeforeeachplot.
+
+
+=== PAGE 388 ===
+386 APSYSEXAMPLES
+0.46
+0.45
+0.44
+0.43
+0.42
+0.41
+0.4
+0.39
+0.38
+0.37
+0.36
+0.35
+−0.6 −0.4 −0.2 0 0.2 0.4 0.6 0.8 1 1.2 1.4
+)m/Fn(
+ecnaticapaC
+CA
+File:camel.plt
+Contact Voltage<1>(V)
+Figure20.5: Capacitanceofcameldiodevs. bias
+
+
+=== PAGE 389 ===
+20.3LED_GaN_MQW\2d\InGaN 387
+Figure20.6: LEDstructureasshowninLayerBuilder
+\ \
+20.3 LED_GaN_MQW 2d InGaN
+Thisexample1 isalightemittingdiode(LED)basedonmultipleIn x Ga 1−x Nquan-
+tumwells. Modelingofnitridedevicesisanactiveareaofresearchandsorequires
+special care for accurate modeling: as a result, this example will be more compli-
+catedthanusual.
+Since these devices are grown on an insulating sapphire substrate, both contacts
+are on the top of the device (Fig. 20.6). The transparent indium tin oxide (ITO)
+contacts are represented here as ideal ohmic contacts for the purposes of the
+electricalsimulation. However,thesecontactsarenotcompletelytransparentand
+have optical properties that need to be considered: this will be done as part a ray
+tracingsimulationinthepost-processingstage.
+Layer Structure
+Thelayerfileusedtodefinethisdeviceisshownbelow:
+$ ----
+begin_layer
+$
+$ this has been moved to ganled.sol
+1LastupdatedJuly2011
+
+
+=== PAGE 390 ===
+388 APSYSEXAMPLES
+$set_polarization ref_column=1 screening=0.5
+independent_mqw
+column column_num=1 w=200 mesh_num=10 r=0.85
+column column_num=2 w=100 mesh_num=8 r=1.15
+top_contact column_num=1 from=0.0 to=50 contact_num=2
+top_contact column_num=2 from=30 to=100 contact_num=1
+$
+layer_mater mater_lib=Sapphire column_num=1
+layer_mater mater_lib=Sapphire column_num=2
+layer d=100. n=8 r=0.7
+layer_mater mater_lib=AlGaN var1=0 column_num=1 var_symbol1=x
+layer_mater mater_lib=AlGaN var1=0 column_num=2 var_symbol1=x
+layer d=2.5 n=8 r=0.8 n_doping1=5e24 n_doping2=5e24
+layer_mater mater_lib=AlGaN var1=0 column_num=1 var_symbol1=x
+layer_mater mater_lib=void column_num=2
+layer d=0.5 n=5 r=0.8 n_doping1=5e24
+$ MQW region
+include file=ganled.bar
+include file=ganled.qw
+include file=ganled.bar
+include file=ganled.qw
+include file=ganled.bar
+include file=ganled.qw
+include file=ganled.bar
+include file=ganled.qw
+include file=ganled.bar
+include file=ganled.qw
+include file=ganled.bar
+$ for superlattice, we use effective medium theory and anisotropic
+$ mobility and thermal conductivity, 24 SL
+layer_mater mater_lib=AlGaN var1=0.07 column_num=1 var_symbol1=x
+layer_mater mater_lib=void column_num=2
+layer d=0.18 n=6 r=1.0 p_doping1=3e23
+$p+
+layer_mater mater_lib=AlGaN var1=0 column_num=1 var_symbol1=x
+layer_mater mater_lib=void column_num=2
+
+
+=== PAGE 391 ===
+20.3LED_GaN_MQW\2d\InGaN 389
+layer d=0.015 n=4 r=1.0 p_doping1=1.2e24
+$
+end_layer
+Notetheuseoftheincludestatementusedtodefinethebarrierandwellregions:
+this is a common technique to more easily define periodic structures. The main
+advantageisthatanychangeinwellorbarriercompositiononlyneedstobedone
+once instead of for each well. When using direct input of the layer file, it also
+makes the repeated structure of the MQW more obvious. The barrier and well
+inputfilesareshownbelow:
+$
+layer_mater mater_lib=InGaN var1=0.0 column_num=1 var_symbol1=x &&
+n_doping=3.e23
+layer_mater mater_lib=void column_num=2 n_doping=3.e23
+layer d=0.015 n=12 r=-1.4
+$
+layer_mater mater_lib=InGaN var1=0.11 column_num=1 model=quantum_well &&
+var_symbol1=x
+layer_mater mater_lib=void column_num=2
+layer d=0.0022 n=8 r=-1.3
+UsersworkingwithLayerBuildercanalsoeasilybuildaMQWregionbycopying
+&pastinglayersintheGUI.
+Wenotethatwehaveusedthealganmacroformanylayersbutthatthecomposi-
+=
+tion is set to x 0. In truth, those layers aresimply GaN and we could have used
+/
+theganmacro. However,usingtheternary quaternarymacroisoftenagoodidea
+in this situation: since the same interpolation formulas are used everywhere, it
+ff
+ensuresthatthereisnoconflictinthematerialparametersfromdi erentmacros.
+Aside from the MQW region, there is one other layer of particular importance:
+= .
+the AlGaN layer with x 007 near the top of the device. This layer is special
+in that we use it to represent a superlattice region: the composition is averaged
+ff
+andrepresentsane ectivemedium. Superlatticesareoftenusedtoblockleakage
+ff
+currentandhavedi erentpropertiesthanamaterialhavingthesamecomposition
+ff
+asthee ectivemedium: thiswillbehandledinthe.solfilelateron.
+There are a few other points of importance in this layer file which are related to
+theinterfacechargesbetweenlayers(commoninc-planenitridematerials). These
+
+
+=== PAGE 392 ===
+390 APSYSEXAMPLES
+settings are not available in the LayerBuilder GUI and must be added manually
+afterwards.
+The first point is the set_polarization statement: this instructs the layer.exe pro-
+gramtoautomaticallycalculatetheinterfacechargebetweenlayersandaddthem
+to the .mater file. However, this model is considered deprecated as of the 2011
+version of APSYS and has been commented out. A more accurate model based
+on material macros will be discussed below. The older model is still available
+and many other wurtzite examples have not been ported to the new syntax yet.
+Westronglyrecommendtheuseofthenewmodelinanynewsimulationproject.
+However, care should be taken not to use the new and old models at once as this
+willdouble-counttheinterfacecharges.
+Because this simulation will have interface charges, the bands will be tilted by
+the local field these charges generate. In order to move beyond the flat-band
+approximation in the QW mdoel, a self-consistent simulation will need to be
+used. Since the field value will not necessarily be uniform, we also use the
+ff
+independent_mqwstatement. Thisforcesthesoftwaretoassigndi erentmaterial
+numbers to each QW and explicitly solve the Schrödinger equation for each one;
+by the default, the software would normally try to save time by re-using the QW
+solutionofwellswithidenticalcompositions. Seesubsection8.2.4fordetails.
+Simulation Setup
+Torunthesimulation,weusethefollowing.solfile:
+$file:ganled.sol
+$ *******
+begin
+load_mesh mesh_inf=ganled.msh
+output sol_outf=ganled.out
+more_output qw_states=yes
+$ *******
+include file=ganled.doping
+include file=ganled.mater
+polarization_charge_model screening=0.3 vector=(0 1 0) input_piezo_param=no
+set_active_reg tau_scat=0.4e-13
+modify_qw tail_energy=0.03
+$self-consistent is necessary for polarization
+self_consistent wave_range=0.005
+
+
+=== PAGE 393 ===
+20.3LED_GaN_MQW\2d\InGaN 391
+$ Quantum transport model helps deal with thin,deep wells
+q_transport
+$ .mater shows superlattice is mater=9
+mobility_xy dir=y factor_elec=0.2 mater=9
+thermal_kappa_xy dir=y factor=0.1 mater=9
+$ n-layer mobility may be enhanced due to SL design
+max_electron_mob value=1 mater=2
+min_electron_mob value=1 mater=2
+$ Isothermal temperature at equilibrium
+temperature temp=300
+$ Turn on self-heating model
+heat_flow damping_step=1
+$ thermal_cond at contact here will determine self-heating
+contact num=2 type=ohmic thermal_type=3 &&
+thermal_cond=200. extern_temp=300
+$ ----- initialize optical constatns------
+set_wavelength wavelength=0.40 backg_loss=2000
+$ Set LED model to "simple": we will calculate actual
+$ extraction efficiency with raytracing later
+led_simple wavelength=0.40 spectrum_num=50 photon_recycle=no
+$ Export raytracing data: convert 2D electrical simulation into
+$ 3D raytracing boxes
+export_raytrace ray3d_convert=yes
+$
+$ start solving
+$
+newton_par damping_step=5. max_iter=100 print_flag=3
+equilibrium
+newton_par damping_step=1. print_flag=3
+scan var=voltage_1 value_to=-10 init_step=0.1 max_step=0.5 &&
+auto_finish=current_1 auto_until=1.0 auto_condition=above
+scan var=current_1 value_to=600. print_step=150 &&
+init_step=1 min_step=1e-3 max_step=30
+
+
+=== PAGE 394 ===
+392 APSYSEXAMPLES
+end
+As mentioned earlier, the 2011 version of APSYS introduces a new model for the
+interface charges present in most wurtzite-based devices. This model is in two
+parts: updated material macros which define the polarization_charge formulas
+and the polarization_charge_model which activates it. When active, this model
+computes the fixed interface charge in a particular region by examining the po-
+larization vector on each side of the interface. Graded regions (not used here)
+automaticallyproducea3Ddistributionoffixedchargeswiththisnewmodel.
+The first statement is included in the new material macros and defines the spon-
+taneous and strain-induced polarization. By default, all our macros assume the
+ff
+existence of a GaN bu er which determines the strain in the device; the macro
+ff
+should be adjusted if another type of bu er layer (such as AlN) is used. A
+sample declaration can be seen below and uses a well-established formula from
+theory[121]:
+polarization_charge variation=function
+function(temper)
+substrate_latt=3.189;
+alattice_GaN=3.189;
+P_sp= -0.034;
+a_latt=alattice_GaN;
+strain=(substrate_latt - a_latt)/a_latt;
+P_pz2 = -0.918*strain +9.541*strain**2;
+P_pz_all = P_pz2;
+P_sp + P_pz_all
+end_function
+Thesecondstatementmodifiesthispolarizationvectorandaddsascreeningcoef-
+ficient to account for deviations from theory due to compensation by defects and
+ff
+other e ects. It also defines the direction of the polarization vector: here (010)
++
+indicatesthatthec-planegrowthaxisisinthe ydirection,likemostconventional
+devices. Thismaybealteredwhenstudyingnon-polarorsemi-polardevices.
+To turn on the self-consistent QW calculations, we use the self_consistent. This
+ff
+model allows the local field generated by the interface charges to a ect the QW
+/
+states and gain spontaneous emission calculations. When this model is turned
+on, .qws output files are created which contain details of the Schrödinger solver
+calculations. Aswewillseelater,wecanusethistoplottheQWwavefunctions.
+The gain calculation are also modified by the set_active_reg and modify_qw
+statements. The first is used to modify the broadening width and the second
+introducesatailintothebandgapregiontocreateinhomogeneousbroadening.
+
+
+=== PAGE 395 ===
+20.3LED_GaN_MQW\2d\InGaN 393
+ff
+In many MQW nitride devices, we have found that the standard drift-di usion
+model greatly overestimates the turn-on voltage. It is also believed that carrier
+leakage is an important e ff ect which contributes to e ffi ciency droop 2. Both of
+ff
+these e ects may be explained by the fact that these devices have very deep and
+ff
+thin wells where the classical drift-di usion model fails and non-local transport
+mechanismsplayanimportantrole. Wehaveimplementedthisintheq_transport
+statement: please consult the reference section for details. This subject is highly
+experimentalandcarefulcalibrationofparametersmayberequired.
+ff
+As indicated above, we have a superlattice layers has di erent properties than
+ff
+the e ective medium. We introduce anisotropic behavior with the mobility_xy
+and thermal_kappa_xy statements. These will scale the mobility and thermal
+ff
+conductivityofthee ectivemediuminthedirectionofthesuperlatticeperiodicity.
+Notethatforelectricalmodelingofsuperlattices,thereisalsoaminibandtunneling
+modelavailable(seereferencesectionfortunneling). Thismodelisnotusedhere
+ff
+forsimplicityandbecauseitdoesnotincludeanyofthethermale ectsassociated
+withasuperlattice.
+Forthermalmodeling,weactivateself-heatingwiththeheat_flowstatement. The
+thermal boundary conditions are important here and determine how much the
+active region temperature increases. The contact statement must be re-issued in
+.sol to override a default thermal boundary setting. In truth, thermal modeling is
+notstrictlyrequiredforLEDdevicessuchasthis;thecurrentdensityisnotashigh
+ffi ff
+as in laser devices the thermal increase is not su cient to strongly a ect material
+ff
+parameters. We include this e ect here purely for its tutorial value. For a more
+detaileddiscussiononthermalmodeling,consultSec.21.3.
+ForallLEDmodeling,akeyconcernishowmuchlightisactuallyoutputfromthe
+ffi
+device(i.e. theextractione ciency). Thisrequiresanopticalmodelwhichmeans
+thattheopticalconstantsforthevariousmaterialsmustbeinitializedinthecode.
+Forhistoricalreasons,thisusedtobedonewiththeinit_wavestatementwhichis
+alsousedtodefinewaveguides.
+This is still the method which should be used when using the LED model of
+Sec. 14.2 and the led_control statement. However, we have decided to use the
+simplermodelofled_simpleinthissimulationsotheopticalconstantsareinitial-
+izedwithset_wavelengthinstead.
+In the led_simple model, the solver makes no attempt to calculate the extraction
+ffi
+e ciencyandavaluemustbeprovided. TheLEDopticaloutputwillbeassumed
+ffi
+to be the total spontaneous emission source power multiplied by this coe cient.
+ffi
+However,westillwanttocalculatetheextractione ciencyratherthanrelyonan
+estimatedvalue.
+2Thisisstillthesubjectofactiveresearch. OtherexplanationsbasedonAugerrecombination
+mechanismshavealsobeensuggested
+
+
+=== PAGE 396 ===
+394 APSYSEXAMPLES
+700
+600
+500
+400
+300
+200
+100
+0
+-100
+0 0.5 1 1.5 2 2.5 3 3.5
+)m/A(>1<tnerruC
+tcatnoC
+File:ganled.plt
+Contact Voltage<1>(V)
+Figure20.7: I-VcurveofInGaNLED
+To do this, we will use the ray tracing approach of Sec. 14.5. This is a post-
+processingstepbutitrequiresthatsomenecessarydatabeoutputduringthemain
+solution. Thisisdonewiththeexport_raytracestatement. Thereisaconversionto
+bedoneheresincetheelectricalsimulationisin2Dwhereastheraytracingmodel
+operateson3Dobjects.
+Therestofthe.solfileshouldbesimpletounderstandbutwementioninpassing
+theauto_finishparameterinthevoltagescan. Thisensuresthatwetransitionfrom
+voltagetocurrentcontroloncethereisatleastalittlebitofcurrentflowing. More
+detailsonthereasonswhythisisnecessarycanbefoundinChapter4.
+Post-Processing
+In this simulation, there is a lot of post-processing to be done so we split things
+into separate, more manageable files. Note that we use the same root name for
+all the post-processing files: the extensions also all start with .plt as a matter of
+convention.
+/
+Thefirstfileisganled.pltandisusedtoplottheresultsfromtheelectrical thermal
+simulationasshownbelow:
+TheI-VandcurveisshowninFig.20.7whilethelightoutputisshowninFig.20.8.
+Note that this “broad-area power” is the output of the LED model chosen in .sol.
+ffi
+Inthesimplifiedmodelwehavechosen,theextractione ciencyisassumedtobe
+ff
+10%. Wewillseebelowthattheraytracingmodelpredictsaverydi erentvalue.
+
+
+=== PAGE 397 ===
+20.3LED_GaN_MQW\2d\InGaN 395
+500
+450
+400
+350
+300
+250
+200
+150
+100
+50
+0
+-100 0 100 200 300 400 500 600 700
+)m/ttaW(rewoP
+latoT
+DEL
+aerA-daorB
+File:ganled.plt
+Contact Current<1>(A/m)
+Figure20.8: Broad-areapowervs. currentforInGaNLED
+1
+0.8
+0.6
+0.4
+0.2
+0
+-100 0 100 200 300 400 500 600 700
+ycneiciffE
+lanretnI
+DEL
+File:ganled.plt
+Contact Current<1>(A/m)
+Figure20.9: IQEcurveofInGaNLED
+
+
+=== PAGE 398 ===
+396 APSYSEXAMPLES
+4
+3.5
+3
+2.5
+2
+1.5
+1
+0.5
+0
+-0.5
+0 0.02 0.04 0.06 0.08 0.1 0.12 0.14
+)Ve(
+ygrenE
+File:ganled.plt
+Distance (micron)
+Figure20.10: BanddiagramandwavefunctionsofInGaNLED
+ffi
+The internal quantum e ciency is also an important quantity in LED modeling
+ff ffi
+and many e orts have been made to study the origin of the reduced e ciency at
+high current density (i.e. “IQE droop”). In Fig. 20.9, we see the calculated IQE
+ff
+curvewhichshowsthise ect.
+As mentioned earlier, self-consistent simulations allow us to plot the wave func-
+tionsofthequantumwells. ThisisshowninFig.20.10. Intheoriginal.pltfile,we
+usetheqw_wave_htparametertoscalethewavefunctionsvertically(foraesthetic
+reasons).
+As of the 2011 version of APSYS the ray tracing model has been moved to a
+separateprogramcalledOptowizardwherewealsosplitthingsintoseparatefiles.
+Theraytrace.solhasstatementsthatconfigureandlaunchtheexternalraytracing
+program. Thiscanbeatime-consumingstepsoweseparateitfromtheraytrace.plt
+filewhichplotstheresultsofthelastraytracingsimulation:
+begin_optowizard
+setup_raytrace filebase=ganled
+rt3d_contact_reflector transp_contact=yes &&
+contact1_compindex=(2. 0.5) contact1_thick=0.05 &&
+contact2_compindex=(2. 0.5) contact2_thick=0.05
+$ No dome
+do_raytrace_3d precision=0.01 datafile_range=(2,6) initial_rays=8000
+
+
+=== PAGE 399 ===
+20.3LED_GaN_MQW\2d\InGaN 397
+$ With dome external package
+$do_raytrace_3d precision=0.01 datafile_range=(2,6) initial_rays=8000 &&
+$ external_package=dome working_direction=+y &&
+$ dome_cyl_height=110 dome_base_thickness=10 &&
+$ dome_cyl_radius=500 dome_sph_radius=500 &&
+$ package_refr_index=(1.7,1.0e-6)
+end_optowizard
+begin_optowizard
+plot_data plot_device=pdf
+get_raytrace_data filebase=ganled xy_data=(6 6) scan_data=(2 6)
+$ Plot previously generated RT results
+3drayplot_bias variable = total_source
+3drayplot_bias variable = transmitted
+3drayplot_bias variable = transmitted relative=yes
+3drayplot_phi theta=90.0 smooth=yes
+end_optowizard
+We note the use of the rt3d_contact_reflector statement in the setup of the ray
+tracing simulation: this sets up the optical properties of the contacts. In this case,
+µ
+wehavesemi-transparentITOcontactswithathicknessof0.05 mandacomplex
++ .
+refractiveindexof2 05i.
+UsersofpreviousversionsofAPSYSmayrememberthatthecontactopticalprop-
+erties were defined in the export_raytrace statement. Moving this to the post-
+processing avoids having to re-run the electrical simulation to study how the
+ff
+opticalpropertiesofthecontactsa ectthelightextraction.
+We also note that there are two set of ray tracing commands; one of them is
+commentedoutsowedonotdotworaytracingsimulationsinsequence. Thefirst
+operatesontheLEDitselfwhiletheotherencapsulatetheLEDinahemispherical
+dome with a mirrored flat bottom. We see in Fig. 20.11 and Fig. 20.12 how the
+ff ffi
+domea ectstheextractione ciencyandemissionpatternoftheLED.
+The ray tracing model shows in Fig. 20.11 that our earlier estimate of 10% in
+led_simple was inaccurate: even without encapsulation, we expect extraction
+ffi
+e ciencyabove25%. Withencapsulation,thiscanrisetoabove35%.
+The output log of the ray tracing program also provides clues to help in further
+optimizationofthedesign. Forexample,thepowerlossduetovariousreasonsis
+
+
+=== PAGE 400 ===
+398 APSYSEXAMPLES
+accounted for separately and printed. In this case, we see there is a lot of power
+lossinthecontacts:
+..(ETC...)...
+Total source power (W/m)
+472.380007985757
+TRANSMITTED POWER in absolute and relative to emitted (%) units
+126.663735282548 26.8139491810093
+SEMICONDUCTOR ABSORBED POWER in absolute and relative to emitted (%) units
+88.3668556033336 18.7067306214191
+CONTACTS ABSORBED POWER in absolute and relative to emitted (%) units
+257.349417099875 54.4793201975716
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+
+=== PAGE 401 ===
+20.3LED_GaN_MQW\2d\InGaN 399
+27.05
+27
+26.95
+26.9
+26.85
+26.8
+0 100 200 300 400 500 600 700
+)tnecrep(
+dettimsnart
+Current (A/m)
+(a)
+38.85
+38.8
+38.75
+38.7
+38.65
+38.6
+38.55
+38.5
+0 100 200 300 400 500 600 700
+)tnecrep(
+dettimsnart
+Current (A/m)
+(b)
+ffi
+Figure20.11: (a)Extractione ciencyofInGaNLED.(b)Withdomeencapsulation.
+
+
+=== PAGE 402 ===
+400 APSYSEXAMPLES
+theta= 90.0000000000000
+3000
+2000
+1000
+0
+1000
+2000
+3000
+3000 2000 1000 0 1000 2000 3000
+Power (Watt/m-radian) vs. phi
+(a)
+theta= 90.0000000000000
+3000
+2000
+1000
+0
+1000
+2000
+3000
+3000 2000 1000 0 1000 2000 3000
+Power (Watt/m-radian) vs. phi
+(b)
+Figure 20.12: (a) Angular emission pattern of InGaN LED. (b) With dome encap-
+sulation.
+
+
+=== PAGE 403 ===
+20.4solar_cell\Si_simple 401
+Figure20.13: SolarcellstructureasshowninLayerBuilderGUI
+\
+20.4 solar_cell Si_simple
+This example is a simple bulk crystalline silicon solar cell with contact lines on
+ff
+the top side. Since a practical device must consider the e ects of shading by the
+contacts,wemakethisa2Ddevice(seeFig20.13). Notethatbecauseofsymmetry,
+wecouldconceivablycutthisdeviceinhalftosaveonmesh.
+Layer Structure
+µ
+The device is built p-side up with a 100 m lightly doped intrinsic region: this
+is where we want most of the absorption to take place so the drift current can
+µ µ
+dominate the transport. The width of the device is 6 m with a 5 m space
+betweenthecontacts:
+$file:solar.layer
+begin_layer
+column column_num=1 w=0.5 mesh_num=4 r=1.
+column column_num=2 w=5 mesh_num=12 r=-1.2
+column column_num=3 w=0.5 mesh_num=4 r=1.
+bottom_contact column_num=1 from=0 to=0.5 &&
+contact_num=1 contact_type=ohmic
+bottom_contact column_num=2 from=0 to=5 &&
+contact_num=1 contact_type=ohmic
+
+
+=== PAGE 404 ===
+402 APSYSEXAMPLES
+bottom_contact column_num=3 from=0 to=0.5 &&
+contact_num=1 contact_type=ohmic
+$
+layer_mater macro_name=si column_num=1
+layer_mater macro_name=si column_num=2
+layer_mater macro_name=si column_num=3
+layer d= 0.5 n= 6 r= 0.8000E+00 n_doping1=0.2000E+26 &&
+n_doping2= 0.2000E+26 n_doping3= 0.2000E+26
+$
+layer_mater macro_name=si column_num=1
+layer_mater macro_name=si column_num=2
+layer_mater macro_name=si column_num=3
+layer d=100. n= 100 r= 0.8000E+00 n_doping1= 0.2000E+22 &&
+n_doping2= 0.2000E+22 n_doping3= 0.2000E+22
+$
+layer_mater macro_name=si column_num=1
+layer_mater macro_name=si column_num=2
+layer_mater macro_name=si column_num=3
+layer d=0.5 n= 6 r= 0.1200E+01 p_doping1= 0.5000E+26 &&
+p_doping2= 0.5000E+26 p_doping3= 0.5000E+26
+$
+top_contact column_num=1 from=0 to=0.5 &&
+contact_num=2 contact_type=ohmic
+top_contact column_num=3 from=0 to=0.5 &&
+contact_num=2 contact_type=ohmic
+end_layer
+We note in the above layer file that most of the mesh points are allocated near
+the top of the device: this is necessary in a solar cell. Since the light decays
+exponentially, most of the recombinations occur near the surface so this region
+must be well-sampled. If it is not, then the linear interpolation can overestimate
+the optical generation rate and, in some cases, produce results with over 100%
+ffi
+e ciency.
+Simulation Setup
+Torunthesimulation,weusethefollowing.solfile:
+$file:solar.sol
+$***********
+begin
+load_mesh mesh_inf=solar.msh
+
+
+=== PAGE 405 ===
+20.4solar_cell\Si_simple 403
+include file=solar.mater
+include file=solar.doping
+output sol_outf=solar.out
+more_output light_reflection=yes
+$ Attach a 50 ohm resistor on the top contact.
+$ Assume cell depth of 10 cm = 1e5 um
+$external_cir resistance=50 z_dim=1e5 contact=2
+minispice circuit_file=res.cir z_dim=1e5 &&
+contact2_to_spice_node=0 spice_node_scan=1
+newton_par damping_step=5. var_tol=1.e-9 res_tol=1.e-9 &&
+max_iter=100 opt_iter=15 stop_iter=50 print_flag=3
+$
+$ Solve for equilibrium condition.
+$
+equilibrium
+newton_par damping_step=1. var_tol=1.e-4 res_tol=1.e-5 &&
+max_iter=30 opt_iter=15 stop_iter=15 print_flag=3 &&
+change_variable=yes
+$
+$ Turn up the light
+$
+scan var=light value_to=1. print_step=1. &&
+init_step=0.01 min_step=1.e-5 max_step=0.1
+$
+$ Apply a forward bias to offset the photo current
+$
+scan var=voltage_1 value_to=-0.7 &&
+init_step=0.01 min_step=1.e-5 max_step=0.02
+$
+$ photo-sensitive device:
+$
+light_power spectrum_file=solar.am15 light_dir=top profile=(0.5 5.5 0.1 0.1) &&
+angle=0.0
+optic_coating spectrum_file=solar.sio2 thickness=0.05
+index_spectrum spectrum_file=solar.silicon mater=1
+end
+
+
+=== PAGE 406 ===
+404 APSYSEXAMPLES
+Themostimportantfeatureofthis.solfileisthewayinwhichtheincidentlightis
+defined. Thisisdonewiththelight_powerstatementasdiscussedinSection12.7.
+Here, we choose to use the AM15 solar spectrum as the optical pumping source:
+itisprovidedinthesolar.am15fileinthesimulationdirectory.
+The light input is confined to the center of the device to simulate the shadowing
+ff
+e ectofthecontacts. However,shouldtheuseractuallywanttomodeltheoptical
+decay in semi-transparent contacts, actual metal layers need to be used: contact
+regions in a layer file are merely equipotential boundary regions with no optical
+propertiesoftheirown.
+In addition to the light input, the boundary conditions are important. In this
+example,weusea50nmlayerofSiO onthetopsurfaceasasimpleantireflection
+2
+layer. The bottom surface is left unspecified which means that it is assumed to
+be transparent: a boundary condition can be applied with the back_reflection
+statement.
+Anotherpointtoconsiderinsolarcellsimulationsisthatwemustdealwithavery
+broad range of wavelengths. Therefore, a single value of the complex refractive
+,
+index(n k)isinappropriateandweusetheindex_spectrumstatementtoprovide
+,
+experimentaln k valuesthesoftwarecanuse.
+Acommonconcernonsolarcellperformanceishowthedevicewillbehavewhen
+external circuit elements are taken into account. We show on to model this by
+providinganexternalresistancewiththeexternal_cirstatement.
+Now that we have explained the basic setup of the simulation, let us move on
+to the actual simulation. As explained in Section 12.7, the initial equilibrium
+calculations describe a state of thermal equilibrium with no external bias. Since
+optical pumping is a form of bias, it needs be turned on via a scan statement:
+when the “light” variable reaches 1.0, then the full value of the light defined in
+light_power is applied to the device. Larger values can be used to model the
+ff
+e ectsofconcentratorsandmulti-sunillumination.
+After the first scan statement is over, the current has reached its maximum value.
+In order to get the open-circuit voltage (V ), we must apply a forward bias large
+oc
+enoughtocancelthephotocurrent.
+Post-Processing
+After the simulation, we can plot the results with the following .plt file. Note
+that we use .plt here in order to use some post-processing parameter extraction
+commandsthatarenotyetavailableinCrosslightView.
+$file:solar.plt
+$ **************
+
+
+=== PAGE 407 ===
+20.4solar_cell\Si_simple 405
+begin_pstprc
+plot_data plot_device=pdf
+$ before light is on
+get_data main_input=solar.sol sol_inf=solar.out &&
+xy_data=(1 1)
+plot_multilayer_optics variable=absorption
+plot_multilayer_optics variable=reflection
+plot_1d variable=band from=(0.5 0.0) to=(0.5, 101.0)
+plot_1d variable=incident_power from=(0.5 0.0) to=(0.5, 101.0)
+plot_2d variable=incident_power
+plot_3d variable=incident_power
+$ after light is on
+get_data main_input=solar.sol sol_inf=solar.out &&
+xy_data=(2 2)
+plot_1d variable=band from=(0.5 0.0) to=(0.5, 101.0)
+plot_2d variable=total_curr
+plot_2d variable=incident_power
+plot_3d variable=incident_power
+$ I-V curve
+get_data main_input=solar.sol sol_inf=solar.out &&
+scan_data=(2 3)
+plot_scan scan_var=voltage_1 variable=current_2 &&
+scale_vertical=1 scale_horizontal=-1
+$ Scale from A/m to A/m^2 = 1/5e-6 = 2e5
+$ Use parameter extraction on this curve to get Isc, Voc and max. power
+para_extract file=Isc.txt fit_hori_from=0.02 &&
+fit_hori_to=0.2 type=fit_line
+plot_scan scan_var=voltage_1 variable=current_2 &&
+scale_vertical=2e5 scale_horizontal=-1 &&
+user_ylabel=A/m^2 yrange=[0 300]
+para_extract file=Voc.txt hori_intercept=0
+plot_scan scan_var=voltage_1 variable=current_2 &&
+scale_vertical=2e5 scale_horizontal=-1 &&
+user_ylabel=A/m^2 yrange=[0 300]
+
+
+=== PAGE 408 ===
+406 APSYSEXAMPLES
+para_extract file=power.txt xy_hori_from=0 xy_vert_from=0 &&
+type=xy_product_search
+plot_scan scan_var=voltage_1 variable=current_2 &&
+scale_vertical=2e5 scale_horizontal=-1 &&
+user_ylabel=A/m^2 yrange=[0 300]
+$ Use parameter extraction to get max. effiency
+$ Power result above is in W/m^2 so this time, we normalize
+$ by the total power intensity of the AM15 solar spectrum: 963.56 W/m^2
+para_extract file=eff.txt xy_hori_from=0 xy_vert_from=0 &&
+xy_product_scale=1.037818e-3 type=xy_product_search
+plot_scan scan_var=voltage_1 variable=current_2 &&
+scale_vertical=2e5 scale_horizontal=-1 &&
+user_ylabel=A/m^2 yrange=[0 300]
+end_pstprc
+Itisalsousefultousethe.plttoscaletheaxesintomoreconvenientplottingunits.
+Recall that the current continuity equations are formulated in terms of the local
+currentdensity(A / m2). However,ina2Dsimulation,thesolverreportsthelinear
+/
+current density in A m. This is done by integrating the local current density at
+various mesh points over the width of the contact region. Similarly, dividing this
+valuebythecontactwidthdefinesanaveragecurrentdensity.
+However,currentdensityisaspatially-dependentquantitysotheaveragedensity
+varies depending on where it is measured in the device: for example, the value
+defined above would be the average density at that particular contact. In a laser
+or LED, the user might care about the density in the active region and would use
+amesawidthorridgewidth.
+µ
+Forasolarcell,wechoosetodividebythesizeofilluminatedarea(5 m)inorder
+tobettercomparewithexperiments. Whenrunningtheirowncomparisons,users
+arestronglyencouragedtoverifyhowthecurrentdensityvaluehasbeendefined
+experimentally.
+UsingthisscalefactorallowsustoplottheI-VcurveofFig.20.14:
+Note this figure appears several times in the output of the post-processing step:
+thisisbecausethepara_extractstatementoperatesonthenextplotinthe.pltfile.
+ff
+Sincewewishtoextractseveraldi erentparameters,weneedtoplottheI-Vcurve
+severaltimes.
+From this extraction, we note that I = 260 . 68A / m2 and V = 0 . 68115V. The
+sc oc
+maximum power product of the I-V curve is P = 142 . 69W / m2. The maximum
+ffi
+e ciency (14.81%) can be computed from this value by dividing by the total
+power density of the input AM15 spectrum. The fill factor (80.36%) can also be
+
+
+=== PAGE 409 ===
+20.4solar_cell\Si_simple 407
+300
+250
+200
+150
+100
+50
+0
+0 0.1 0.2 0.3 0.4 0.5 0.6 0.7
+2^m/A
+File:solar.plt
+Contact Voltage<1>(V)
+Figure20.14: SolarcellI-Vcurvewithcurrentdensityunits
+computedbydividingthemaximumpowerbytheproductofI andV .
+sc oc
+
+
+=== PAGE 410 ===
+408 APSYSEXAMPLES
+

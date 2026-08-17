@@ -1,0 +1,950 @@
+=== PAGE 410 ===
+408 APSYSEXAMPLES
+
+
+=== PAGE 411 ===
+hapter
+C 21
+LASTIP EXAMPLES
+21.1 Introduction
+ThischapterwilldescribeafewselectedexamplesofLASTIP1 simulations. These
+examples have been selected to teach the basic operation of the software, ex-
+plain key concepts essential to device simulation, showcase some popular appli-
+/
+cations devices and preemptively answer common user questions. The relevant
+input files can be found in a compressed archive distributed along with the soft-
+ware;thenameofthesectioninthischaptercorrespondstoafolderinthisarchive.
+®
+NotethatthedefaultinstallationdirectoryofthesoftwareinaMicrosoftWindows
+environment is the Program Files directory: this directory is protected by the
+operatingsystemandshouldnot beusedtounpacktheexamplearchive.
+Instead, we recommend that the archive be unpacked to a folder where the user
+accounthasfullreadandwriteprivileges. Previousversionsofthesoftwareused
+\
+a directory under c: crosslig; such a name has the advantage of not including a
+spaceinthepathname,whichfacilitatestheuseofbatchfilesincludedtoautomate
+runningoftheexamples.
+Theexamplesfromthischapterareonlyasmallsubsetoftheincludedtutorialfiles.
+There are a number of other examples that are supported through accompanying
+ff
+README files and comments in the simulation files. Crosslight support sta
+will also be happy to explain these examples in more detail if you need further
+assistance.
+It is relevant to note that all examples are subject to change as the software is
+updated. Betweeneachrelease,thereareoftenbugfixes,materialmacrochanges,
+ff
+new models and other improvements which can a ect the results. In most cases,
+1Asofv.2016, thefunctionalityofLASTIPhasbeenmergedwithPICS3D.Allfilesprocessed
+usingLASTIPinthischaptershouldnowusePICS3Dinstead.
+
+
+=== PAGE 412 ===
+410 LASTIPEXAMPLES
+these should result in negligible changes in the results which do not alter the
+tutorial value of these examples. If any major inconsistencies are found, please
+ff
+report them to Crosslight support sta . Most examples listed here were last
+updated as part of the 2009 manual release. Whenever possible, we will note
+exampleswhichhavebeenupdatedsince.
+Throughoutthischapter,wewillconcentrateonthespecificsimulationstatements
+and physical models that are needed for a particular device. Particular attention
+ff
+willalsobegiventomodelparametersthatmaya ecttheconvergenceorreliability
+ofthesimulation.
+It is also assumed that the reader is familiar with the basic structure of the input
+filessosomeofthebasicsetupstepswillbeomittedforthesakeofbrevity. Ifyou
+have not already done so, we strongly urge you to read through Chapter 3. Of
+particular interest will be the sections dealing with the use of the command-line
+setup tools as well as their integration into SimuCenter. If you are working using
+GUItoolssuchasLayerBuilder,additionalonlinehelpisavailable.
+In some cases, the setup tools will only provide the basic framework of an input
+file and some direct editing may be required to complete the setup. If this is the
+case, new users are encouraged to use the built-in Wizard option in SimuCenter:
+this will present all the available statements and parameters. New statements
+maybecreatedbyright-clickingonanemptylineandselectingtheWizardoption
+whileexistingstatementscanbemodifiedbyusingthesameprocedureontheline
+containingthatstatement.
+NotethatusersofotherCrosslighttoolsbesidesLASTIPmayalsobenefitfromthis
+chapter;conversely,LASTIPusersmayalsobenefitfromtheothertutorialchapters
+inthismanual. Mostofthetime,thesyntaxusedinthesechaptersissharedacross
+all Crosslight tools: only commands that define unique models specific to a tool
+willbeinapplicable.
+
+
+=== PAGE 413 ===
+21.2A_tutorial\1D_laser 411
+\
+21.2 A_tutorial 1D_laser
+/
+This example is a simple GaAs AlGaAs laser with a single quantum well and
+a GRINSCH structure. It also shows how to define layers with composition
+gradings.
+Layer Structure
+Thelayersaredefinedasfollows:
+µ = =
+1.35 m Al 1−x Ga x As x 0.71 n 1e24
+µ = → = =
+0.1462 m Al 1−x Ga x As x 0.71 x 0.33 n 1e23
+µ
+0.0076 m GaAs undoped
+µ = → = =
+0.1462 m Al 1−x Ga x As x 0.33 x 0.71 p 1e23
+µ = =
+1.35 m Al 1−x Ga x As x 0.71 p 1e24
+We use a 1D model for simplicity so the width of the device is not relevant.
+However,somevaluemustbeprovidedforprogramtofunctionsowesimplyuse
+µ
+1 m. Experienced users of the software may notice that earlier versions of this
+example did not have doping in the graded layers. However we have found that
+byaddingthis,itsmoothsoutthecarrierinjectionandeliminatesakinkintheI-V
+curve. As a result, the threshold current is lowered and the resonance frequency
+isincreased.
+The actual layer file corresponding to this structure can be built using the Layer-
+Builderprogramorthecommand-linesetuplayerprogramasdiscussedinChapter
+3. InLayerBuilder,theresultlookslikeFig. 21.1.
+Withsomemodifications,thefinallayerfileisasfollows:
+$file:gaas10.layer
+begin_layer
+column column_num=1 w=1. mesh_num=2 r=1.
+bottom_contact column_num=1 from=0 to=1 contact_num=1 &&
+contact_type=ohmic
+$
+layer_mater column_num=1 mater_lib=AlGaAs &&
+var_symbol1=x var1=0.71
+layer d=1.35 n=20 r=0.9 n_doping1=1e24
+$
+layer_mater column_num=1 mater_lib=AlGaAs &&
+var_symbol1=x grade_var=1 &&
+
+
+=== PAGE 414 ===
+412 LASTIPEXAMPLES
+Figure21.1: Devicestructure
+grade_from=0.71 grade_to=0.33
+layer d=0.1462 n=10 r=0.9 n_doping1=1e23
+$
+layer_mater column_num=1 mater_lib=AlGaAs &&
+var_symbol1=x var1=0. model=quantum_well
+layer d=0.0076 n=5 r=1
+$
+layer_mater column_num=1 mater_lib=AlGaAs &&
+var_symbol1=x grade_var=1 &&
+grade_from=0.33 grade_to=0.71
+layer d=0.1462 n=10 r=+1.1 p_doping1=1e23
+$
+layer_mater column_num=1 mater_lib=AlGaAs &&
+var_symbol1=x var1=0.71
+layer d=1.35 n= 20 r=+1.1 p_doping1=1e24
+$
+top_contact column_num=1 from=0 to=1 contact_num=2 &&
+contact_type=ohmic
+end_layer
+For the mesh point allocation, we must correctly sample the optical mode shape
+andthebarrier potentialsinthe device. Bycontrollingthemeshpoint ratioswith
+the r parameter in layer, we can meet these two goals simultaneously. The layer
+statement also controls the linear grading of the doping that accompanies the
+compositiongradinginthisexample.
+
+
+=== PAGE 415 ===
+21.2A_tutorial\1D_laser 413
+Simulation Setup
+A basic .sol file to run the simulation can be generated with the command-line
+setup program as discussed in Chapter 3. With a few modifications, we get the
+following:
+$file:gaas10.sol
+$***********
+begin
+$use_macrofile macro1=my.mac
+load_mesh mesh_inf=gaas10.msh
+output sol_outf=gaas10.out
+$ **************************
+include file=gaas10.doping
+include file=gaas10.mater
+more_output ac_data=yes
+direct_eigen
+init_wave length=400 backg_loss=500. &&
+boundary_type=(2 2 1 1 ) init_wavel=0.83 mirror_ref=0.32 &&
+wavel_range=(0.80, 0.85)
+newton_par damping_step=5. max_iter=100 print_flag=3
+$ scan_num=0
+equilibrium
+$stop
+newton_par damping_step=1. print_flag=3
+$ scan_num=1
+scan var=voltage_1 value_to=-2 &&
+init_step=1e-3 max_step=0.1 &&
+auto_finish=current_1 auto_until=1e-3 auto_within=5e-4
+$ scan_num=2
+scan var=current_1 value_to=20. print_step=2. &&
+init_step=1.e-3 max_step=0.2
+$
+end
+
+
+=== PAGE 416 ===
+414 LASTIPEXAMPLES
+Figure21.2: Opticalmodeprofile
+For LASTIP simulations, one of the key statements in the .sol file is init_wave.
+ffi
+This statement defines the length of the laser, mirror coe cients and background
+scatteringlosses. Italsoinitializesthemodesolverbysettingtheboundarycondi-
+tions as well the wavelength range for the mode search. The mode solver itself is
+invoked with direct_eigen. Since we will want to do AC analysis on this device,
+wealsoaddthemore_outputstatementsothenecessarydataissavedduringthe
+simulation.
+Once these quantities have been defined, we can apply bias. As explained in
+Section 4.1, we cannot apply a current bias right away so after getting the equi-
+librium state, a small voltage bias is applied in order to get a small amount of
+currentflowing. Here,weshowhowtousetheauto_finishparameterofthescan
+statement to automate the procedure but it is not required. A value of 80-90% of
+thebuilt-inbiasastheendingpointofthevoltagescanwoulddojustaswell:
+.
+124eV
+. ∗ ≈ .
+08 12V
+. µ
+083 m
+Post-Processing
+To plot the simulation results, several options are available. One of them is
+CrosslightView,whichcanbeaccessedfromSimuCenterbyright-clickingany.std
+outputfile. TheresultsareshowninFig21.2.
+Some post-processing steps such as AC analysis still require the older .plt system
+
+
+=== PAGE 417 ===
+21.2A_tutorial\1D_laser 415
+which produces plots in PostScript (.ps) format. We use the following .plt file in
+thisexample:
+$file:gaas10.plt
+$ **************
+begin_pstprc
+plot_data plot_device=pdf
+$ plot structure data at equilibrium
+get_data main_input=gaas10.sol sol_inf=gaas10.out &&
+xy_data=(1 1)
+plot_1d variable=wave_intensity from=(0.5 0.0) to=(0.5, 3.0)
+plot_1d variable=band from=(0.5 1.3) to=(0.5, 1.7)
+$ plot structure data at max. data set (max. current injection)
+get_data main_input=gaas10.sol sol_inf=gaas10.out &&
+xy_data=(12 12)
+plot_1d variable=band from=(0.5 1.3) to=(0.5, 1.7)
+$ plot DC/CW bias dependent quantities.
+get_data main_input=gaas10.sol sol_inf=gaas10.out &&
+scan_data=(1 12)
+plot_scan scan_var=voltage_1 variable=current_1 scan_num=2
+$ para_extract extracts data from the next plotting statetment
+$ (L-I curve in this case). We fit the data above 1 mW to
+$ a straight line in order to find the threshold current.
+$ We also find the drive current at 8 mW output.
+para_extract type=fit_line fit_vert_from=1 &&
+hori_intercept=8.
+$ laser_current is a special LASTIP variable where current density (A/m)
+$ is converted to current (mA) by multiplying by the device length
+$ and scaling for symmetry (factor of 2).
+$ laser_power is the total output power from both facets and is also
+$ scaled for symmetry.
+plot_scan scan_var=laser_current_1 variable=laser_power scan_num=2
+$ Add marker to subsequent plots
+modify_plot show_data_points=yes
+
+
+=== PAGE 418 ===
+416 LASTIPEXAMPLES
+$ AC analysis (vs. freq.) at max. current
+get_data main_input=gaas10.sol sol_inf=gaas10.out &&
+xy_data=(12 12)
+ac_voltage log_freq1=6. log_freq2=10.3 &&
+contact_num=1 freq_point=40 log_scan=no modulate_gain=yes
+$ AM response
+plot_ac_laser
+plot_ac_modal_gain
+$ Capacitance derived from AC current on electrode #1
+plot_ac_curr variable=capacitance_1
+$ AC analysis vs. bias (must start above equilibrium) at 10 GHz
+get_data main_input=gaas10.sol sol_inf=gaas10.out &&
+scan_data=(2 12)
+ac_voltage log_freq1=10. log_freq2=10.3 &&
+contact_num=1 freq_point=2 versus_bias=yes scan_num=2
+$ AC data is regarded as xydata and this command would
+$ enable plotting AC data versus scan variable
+set_xydata_for_scan scan_var=laser_current_1 scan_num=2
+plot_ac_laser
+plot_ac_curr variable=capacitance_1
+end_pstprc
+Structural data is plotted with plot_1d at equilibrium and at maximum bias. We
+note that when plotting the wave intensity in the .plt system, the confinement
+factor of the mode is printed in the title. This information can also be found by
+examiningthe.sol.msgfile.
+TheI-VandL-Icurvesareobtainedwiththeplot_scanstatement. Notetheuseof
+scanlinenumberswhichmatchesthecommentsofthe.solfile: thisisnotrequired
+but it avoids the direct use of the scan_data numbers in get_data. The special
+variables laser_power and laser_current_i are unique to LASTIP and are used
+to convert the units of the 2D simulation to something more convenient to the
+user. However, we note that since this is a 1D simulation, the device has no real
+impact on the device simulation aside from scaling the current; instead, dividing
+/
+the current_i value (in A m) by the device width to give a current density value
+inA / m2 maybeamoreusefulrepresentationofpumpinginabroad-areadevice.
+
+
+=== PAGE 419 ===
+21.2A_tutorial\1D_laser 417
+2
+1.5
+1
+0.5
+0
+-0.5
+-1
+-1.5
+-2
+0 0.05 0.1 0.15 0.2 0.25 0.3 0.35 0.4
+)Ve(
+ygrenE
+File:gaas10.plt
+Distance (micron)
+Figure21.3: Banddiagramatequilibrium
+20
+18
+16
+14
+12
+10
+8
+6
+4
+2
+0
+0 2 4 6 8 10 12 14 16
+)Wm(
+rewoP
+resaL
+File:gaas10.plt
+Laser Current<1>(mA)
+Figure21.4: LIcurveoflaser
+
+
+=== PAGE 420 ===
+418 LASTIPEXAMPLES
+15
+10
+5
+0
+-5
+-10
+0 2 4 6 8 10 12 14 16 18 20
+])Am(tnerruC/)Wm(rewop[gol02
+File:gaas10.plt
+Freq (GHz)
+Figure21.5: AMresponseoflaseratmaximumbias
+ACanalysisisdonebyinvokingtheac_voltagestatement. Thisdefinesthecontact
+numberthatistobemodulatedaswellasthefrequencyrangeoftheanalysis. AC
+analysis can be done either as a function of the modulation frequency or as a
+function of bias. The two are mutually exclusive so ac_voltage must be re-issued
+if both sets of data are of interest. For further examples of AC analysis, consult
+Sec.20.2.
+
+
+=== PAGE 421 ===
+21.3A_tutorial\1D_therm 419
+\
+21.3 A_tutorial 1D_therm
+ff
+This example explains how to include self-heating and thermal e ects in a simu-
+lation. Proper thermal boundary conditions and the behavior of the substrate are
+keypointstoconsider.
+Tomodelthesubstrate,someusersprefertoabstractitasafixedthermalresistance
+boundary condition (see Chapter 11). Although this approach is certainly viable
+ff
+in this simplified example, it could neglect important physical e ects in other
+cases. Therefore, we will also use this example to show how to explicitly include
+substratelayers.
+Layer Structure
+We base this example on Sec. 21.2 so the substrate layer will be GaAs; it will
+be highly n-doped in order to form an ohmic contact. Adding this layer can be
+done easily in the LayerBuilder GUI or by editing the layer file and adding the
+appropriatelayerandlayer_materstatements. Theresultingfileisshownbelow:
+$file:gaas10.layer
+begin_layer
+column column_num=1 w=1. mesh_num=2 r=1.
+bottom_contact column_num=1 from=0 to=1 contact_num=1 &&
+contact_type=ohmic
+layer_mater column_num=1 macro_name=gaas solve_wave=no
+layer d=100 n=30 r=0.9 n_doping1=1e24
+layer_mater column_num=1 macro_name=algaas &&
+var_symbol1=x grade_var=1 &&
+grade_from=0.0 grade_to=0.71 solve_wave=no
+layer d=1.0 n=20 r=0.9 n_doping1=1e24
+$
+layer_mater column_num=1 macro_name=algaas &&
+var_symbol1=x var1=0.71
+layer d=1.35 n=20 r=0.9 n_doping1=1e24
+$
+layer_mater column_num=1 macro_name=algaas &&
+var_symbol1=x grade_var=1 &&
+grade_from=0.71 grade_to=0.33
+layer d=0.1462 n=10 r=0.9 n_doping1=1e23
+
+
+=== PAGE 422 ===
+420 LASTIPEXAMPLES
+$
+layer_mater column_num=1 macro_name=gaas &&
+active_macro=AlGaAs/AlGaAs &&
+avar_symbol1=xw avar1=0.0 &&
+avar_symbol2=xb avar2=0.33
+layer d=0.0076 n=5 r=1
+$
+layer_mater column_num=1 macro_name=algaas &&
+var_symbol1=x grade_var=1 &&
+grade_from=0.33 grade_to=0.71
+layer d=0.1462 n=10 r=+1.1 p_doping1=1e23
+$
+layer_mater column_num=1 macro_name=algaas &&
+var_symbol1=x var1=0.71
+layer d=1.35 n= 20 r=+1.1 p_doping1=1e24
+$
+top_contact column_num=1 from=0 to=1 contact_num=2 &&
+contact_type=ohmic
+end_layer
+However,becausethesubstratelayerisGaAs,itcreatesafewadditionalproblems
+that might not occur in other material systems (such as devices grown on InP).
+The first issue we have to deal with is that in this structure, the layer interfacing
+ff
+withthesubstrateisalsoheavilydopedandhasaverydi erentcompositionthan
+GaAs. Thisformsanabruptheterojunction(c.f. Sec.5.2.3)whichwillblockcurrent
+andcauseconvergenceproblems. Thereareafewwaysofresolvingthisissue:
+•
+Alter the doping profile of the original device and user a lighter doping in
+the bottom Al 0.71 Ga 0.29 As layer. Since the Fermi level is not pinned on both
+sides,itavoidsformingabarrier.
+•
+Addathinlayerwithgradedcomposition: thepinnedFermilevelcansafely
+follow the composition grading and a thin layer should not disrupt the
+simulationtoomuch.
+•
+Introduce quantum tunneling to the simulation so the current can flow past
+thisabruptjunction.
+Fortutorialpurposes,wehavechosenthesecondapproach.
+The second problem is the behavior of the mode solver in this new device. Since
+the refractive index of AlGaAs is lower than that of GaAs, adding the substrate
+meansthestructurenowsupportsadditionalmodesthatpeakinthisregion. These
+modes have very poor confinement in the active region and do not compete with
+
+
+=== PAGE 423 ===
+21.3A_tutorial\1D_therm 421
+ff
+the lasing mode but they have a higher e ective index. Since the mode solver
+sorts modes in order of decreasing index, we would have to use an extremely
+high number of optical modes to ensure that the lasing mode is included in the
+calculations. Thisisimpracticalsoweuseanotherapproach.
+SinceweknowfromSec.21.2thatthedesiredmodeiswell-confinedintheactive
+region and does not leak, we exclude the high-index substrate layers from the
+=
+mode solver altogether. This is done by using the parameter solve_wave no in
+the relevant layer_mater statement. When the .layer file is processed, this will
+modify the wave_boundary statement in the .mater file and restrict the mode
+ff
+calculationstoarangethatdoesnotincludetheo endinglayers.
+Simulation Setup
+The .sol file is virtually unchanged from Sec. 21.2. We will concentrate here only
+onthestatementsrelevantforathermalsimulation:
+$file:gaas10.sol
+$***********
+begin
+load_mesh mesh_inf=gaas10.msh
+output sol_outf=gaas10.out
+$ **************************
+include file=gaas10.doping
+include file=gaas10.mater
+more_output ac_data=yes
+direct_eigen
+init_wave length=400 backg_loss=500. &&
+boundary_type=(2 2 1 1 ) init_wavel=0.83 mirror_ref=0.32 &&
+wavel_range=(0.80, 0.85)
+$ Heat flow modeling
+temperature temp=300
+heat_flow fit_range=500
+contact num=1 thermal_type=3 thermal_cond=10
+contact num=2 thermal_type=2 heat_flow=0
+$ Free carrier losses
+passive_carr_loss ncarr_loss=5e-22 pcarr_loss=5e-22 mater=1
+passive_carr_loss ncarr_loss=5e-22 pcarr_loss=5e-22 mater=2
+passive_carr_loss ncarr_loss=5e-22 pcarr_loss=5e-22 mater=3
+passive_carr_loss ncarr_loss=5e-22 pcarr_loss=5e-22 mater=5
+
+
+=== PAGE 424 ===
+422 LASTIPEXAMPLES
+set_active_reg ncarr_loss=5e-22 pcarr_loss=5e-22
+newton_par damping_step=5. max_iter=100 print_flag=3
+$ scan_num=0
+equilibrium
+$stop
+$ scan_num=1
+scan var=voltage_1 value_to=-2 init_step=1e-3 max_step=0.1 &&
+auto_finish=current_1 auto_until=0.1 auto_condition=above
+newton_par damping_step=1.0 max_iter=100 opt_iter=50 stop_iter=10
+$ print_step can sometimes fail during thermal simulations
+$ so use multiple scan statements to print intermediate data
+$ scan_num=2
+scan var=current_1 value_to=10. &&
+init_step=1.e-2 min_step=1e-8 max_step=0.1
+$ scan_num=3
+scan var=current_1 value_to=20. &&
+init_step=1.e-2 min_step=1e-8 max_step=0.1
+$ scan_num=4
+scan var=current_1 value_to=30. &&
+init_step=1.e-2 min_step=1e-8 max_step=0.1
+$ scan_num=5
+scan var=current_1 value_to=40. &&
+init_step=1.e-2 min_step=1e-8 max_step=0.1
+$ scan_num=6
+scan var=current_1 value_to=50. &&
+init_step=1.e-2 min_step=1e-8 max_step=0.1
+end
+The first relevant item is the temperature statement: this is used to define the
+temperatureatwhichtheequilibriumcalculationsaredone. Inanisothermalsim-
+ulation, this is also the temperature for the rest of the simulation. This statement
+
+
+=== PAGE 425 ===
+21.3A_tutorial\1D_therm 423
+can safely be omitted in many cases: a value of 300K will be assumed. However,
+certaindesignscallforactivecoolingwhichmeansthatbeforethedeviceisturned
+ff
+on, it will have reached a di erent thermal equilibrium. If that is the case, this
+statementmustbeusedtodefinethenewequilibriumpointcorrectly.
+The heat_flow statement activates the self-heating model from Chapter 11. This
+model is decoupled from the main electrical solver so after each electrical step,
+the temperature distribution and material parameters are updated. As a result,
+ffi
+the user must ensure the electrical step is always su ciently small. Not only will
+this increase the self-consistency of the simulation but it helps with convergence:
+a sudden temperature change can invalidate the initial guess used for the next
+electricalstep.
+ff
+Thermalboundariesaresetbytwodi erentmethods. Forcontactregions,itispart
+ofthecontactstatement. Usually,thisstatementisgeneratedautomaticallywhen
+processing the .layer file but this sets the thermal boundaries to a default setting:
+a fixed temperature of 300 K. In all thermal simulations, the user is advised to
+re-issue the contact statements in order to provide the desired thermal boundary.
+For non-contact regions, the thermal boundary conditions may be defined with
+thethermal_interstatement.
+Forboththesesituations,thereareseveraltypesofboundaryconditionsavailable
+(see Chapter 11). For the bottom contact, we use the more realistic model (type
+3) with a fixed thermal conductivity. For the top contact, we wish to present a
+“worst-case” scenario in which no heat can escape through the top layer: this is
+donebyusinganinterfaceoftype2andexplicitlysettingtheheatflowtozero. We
+canexpectsignificantheatbuild-upintheactiveregionasaresultofthischoice.
+ff
+If a particular design has di erent thermal boundaries (e.g. substrate is cooled at
+77Kbuttoplayersareexposedtoairat300K),thenthereisaninconsistencyinthe
+equilibrium calculations. By definition, this calculation assumes the absence of
+eithercurrentorheatflowsoifthereisanexternallyappliedthermalgradient,the
+theequilibriumstatewill needto berevised. Thenstepparametercanbe usedto
+re-runtheequilibriumstatemultipletimessothatitstabilizestotakethisgradient
+into account. Note that doing this abuses the concept of equilibrium but we only
+needrequireanfunctioninginitialguesstothescanstatements.
+The next element of thermal laser modeling to discuss is not strictly a thermal
+termbutwehavefoundthatitisimportantinmodelingtheexpectedpowerroll-
+ff ff
+o in lasers at high temperature. This e ect is an optical loss term commonly
+referred to as “free carrier losses”: these are carrier-dependent and material-
+ffi ffi
+specific loss coe cients that are added to the background loss coe cient defined
+intheinit_wavestatement.
+For passive regions, the free carrier losses may be defined through the pas-
+sive_carr_loss statement in the .sol file. It is also possible to use elec_carr_loss
+
+
+=== PAGE 426 ===
+424 LASTIPEXAMPLES
+and hole_carr_loss in the macro file. For active regions, these losses are defined
+inthe.solfilewithset_active_reg.
+The user may also note that multiple scan statements are used in the bias cur-
+rent scan: this is used to generate intermediate data sets for post-processing and
+plotting purposes. Normally, we could use the print_step parameter in the scan
+statementtoaccomplishthis. However,sincethethermalandelectricalproblems
+are not full coupled in the Newton solver, it is not always possible to exactly
+match a requested current value. Since print_step is designed to always print at
+specific values, the conflict between the two can sometimes cause problems. By
+using multiple scan statements, we can generate intermediate data and although
+the solver may complain that the requested current value at the end of each scan
+cannotbematchedexactly,itwillbecloseenoughformostpurposes.
+Post-Processing
+Thepost-processingisdonewiththefollowing.pltfile:
+$file:gaas10.plt
+$ **************
+begin_pstprc
+plot_data plot_device=pdf
+$ plot structure data at equilibrium
+modify_plot show_data_points=no
+get_data main_input=gaas10.sol sol_inf=gaas10.out &&
+xy_data=(1 1)
+plot_1d variable=real_index from=(0.5 99.0) to=(0.5, 104.0)
+plot_1d variable=wave_intensity from=(0.5 99.0) to=(0.5, 104.0)
+plot_1d variable=band from=(0.5 99.0) to=(0.5, 104.0)
+$ plot structure data at max. data set (max. current injection)
+get_data main_input=gaas10.sol sol_inf=gaas10.out &&
+xy_data=(7 7)
+plot_1d variable=band from=(0.5 99.0) to=(0.5, 104.0)
+plot_1d variable=lattice_temp from=(0.5 0.0) to=(0.5, 104.0)
+
+
+=== PAGE 427 ===
+21.3A_tutorial\1D_therm 425
+40
+35
+30
+25
+20
+15
+10
+5
+0
+-5 0 5 10 15 20 25 30 35 40
+)Wm(
+rewoP
+resaL
+File:gaas10.plt
+Laser Current<1>(mA)
+ff
+Figure21.6: L-Icurveoflaserwiththermale ectsincluded
+$ plot DC/CW bias dependent quantities.
+get_data main_input=gaas10.sol sol_inf=gaas10.out &&
+scan_data=(1 7)
+plot_scan scan_var=voltage_1 variable=current_1
+plot_scan scan_var=laser_current_1 variable=laser_power
+plot_scan scan_var=laser_current_1 variable=temp_max
+end_pstprc
+The key points to observe are the roll-over in the L-I curve in Fig. 21.6 and the
+accompanyingincreaseinmaximumtemperatureinFig.21.7.
+Applicationnotesforthermallasersimulations
+It may be helpful to note that many of the default macros do not include the full
+temperature dependence of the refractive index. While the index change calcula-
+ff
+tions (see. Sec. 8.4) are a ected by the temperature, the equilibrium contribution
+totherefractiveindexiscontrolledsolelybythereal_indexstatementinthemacro
+file.
+ff
+Ifthise ectisdeemedimportantinaparticulardesign,theuserisadvisedtocheck
+the various macros used in the simulation. To include temperature dependence,
+thereal_indexstatementinthemacromustbeafunctionofthereservedkeyword
+
+
+=== PAGE 428 ===
+426 LASTIPEXAMPLES
+480
+460
+440
+420
+400
+380
+360
+340
+320
+300
+-5 0 5 10 15 20 25 30 35 40
+)K(
+erutarepmeT
+.xaM
+File:gaas10.plt
+Laser Current<1>(mA)
+Figure21.7: Maximumtemperatureincreasevs. bias
+“temper”. If not, the user may override the macro in the .sol file or use a custom
+macrofile.
+/
+Since high-power thermal laser applications cover a wide variety of wavelength
+ranges, it is also recommended to check if the macro index values are consistent
+with the lasing wavelength. In particular, the default macros for GaAs-based
+compounds are set up for the 830 nm range. However, this material is also used
+ff
+in 980 nm applications so the index may have to de redefined to cover a di erent
+wavelengthrange.
+For transient analysis in a thermal simulation, the user must be sure to turn on
+thm_transient in the heat_flow statement. The user must also specify values for
+thespecificheat(spec_heat)anddensity(mass_densityofthematerialssincemost
+ofthedefaultmacrosomitthesevalues.
+
+
+=== PAGE 429 ===
+21.4A_tutorial\basic_ridge 427
+\
+21.4 A_tutorial basic_ridge
+Thisexampleisabasicridgewaveguidelaser. Itintroduceshowtoworkwiththe
+modesolveranddealwithmultiplelateralmodes.2
+Layer Structure
+Thisexampleisasimplemodificationofthe1DlaserfromSec.21.2. Thistime,we
+wanttomodelaridgewaveguidelasersowewillneedasecondcolumn. Notethat
+by doing this, we are using the symmetry of the device to our advantage in order
+tosaveonmeshpointsandspeedupthesimulation. However,thismeansthatthe
+usershouldscalethecurrentandpoweroutputduringthepost-processingstage:
+unlike older versions of the software LASTIP no longer automatically scales its
+output by assuming symmetry exists. In current versions of the software, “what
+youseeiswhatyouget”asfarassymmetryisconcerned.
+The simplest way to get our second column is to take the layer file from the 1D
+/
+lasercaseandopenitinLayerBuilder;itisthenpossibletocopy pastethecolumn.
+Some modifications must then be made, either by using LayerBuilder or editing
+thelayerfile:
+•
+Definethewidthofthecolumns;unlikethe1Dcase,thisisimportant
+•
+Assign mesh points to the column statements in order to sample the lateral
+variationofthedevice
+•
+Splitthetoplayerintotwoandreplacethematerialinthesecondcolumnin
+ordertorepresenttheetchdepthfortheridge
+•
+Removethetopcontactfromthesecondcolumn
+µ
+In this example, we are using an etch depth of 1 m. We also decide to use
+µ
+an arbitrary ridge width of 1 m: since we are using symmetry, this means the
+µ
+first column will be 0.5 m. The second column needs to be wide enough to
+notartificiallyconfinetheopticalmode(becauseofboundaryconditions)without
+µ
+wastingtoomanymeshpoints: again,weuseavalueof1 m.
+The appearance of the final design in LayerBuilder is shown in Fig. 21.8. The
+correspondinglayerfileisshownbelow:
+$file:gaas20.layer
+begin_layer
+2Lastupdate: July2024
+
+
+=== PAGE 430 ===
+428 LASTIPEXAMPLES
+Figure21.8: Devicestructure
+column column_num=1 w=0.5 mesh_num=5 r=-1.1
+column column_num=2 w=1. mesh_num=5 r=1.1
+bottom_contact column_num=1 from=0 to=1 contact_num=1 contact_type=ohmic
+bottom_contact column_num=2 from=0 to=1 contact_num=1 contact_type=ohmic
+$
+layer_mater column_num=1 macro_name=algaas var_symbol1=x var1=0.71 &&
+n_doping=1e24
+layer_mater macro_name=algaas column_num=2 var_symbol1=x var1=0.71 &&
+n_doping=1e24
+layer d=1.35 n=20 r=-1.1
+$
+layer_mater column_num=1 macro_name=algaas var_symbol1=x grade_var=1 &&
+grade_from=0.71 grade_to=0.33 n_doping=1e23
+layer_mater macro_name=algaas column_num=2 var_symbol1=x grade_var=1 &&
+grade_from=0.71 grade_to=0.33 n_doping=1e23
+layer d=0.1462 n=10 r=-1.1
+$
+layer_mater column_num=1 macro_name=gaas active_macro=AlGaAs/AlGaAs &&
+avar_symbol1=xw avar1=0.0 avar_symbol2=xb avar2=0.33
+layer_mater macro_name=gaas column_num=2 active_macro=AlGaAs/AlGaAs &&
+avar_symbol1=xw avar1=0 avar_symbol2=xb avar2=0.33
+layer d=0.0076 n=5 r=1
+$
+layer_mater column_num=1 macro_name=algaas var_symbol1=x grade_var=1 &&
+
+
+=== PAGE 431 ===
+21.4A_tutorial\basic_ridge 429
+grade_from=0.33 grade_to=0.71 p_doping=1e23
+layer_mater macro_name=algaas column_num=2 var_symbol1=x grade_var=1 &&
+grade_from=0.33 grade_to=0.71 p_doping=1e23
+layer d=0.1462 n=10 r=-1.1
+$
+layer_mater column_num=1 macro_name=algaas var_symbol1=x var1=0.71 &&
+p_doping=1e24
+layer_mater macro_name=algaas column_num=2 var_symbol1=x var1=0.71 &&
+p_doping=1e24
+layer d=0.35 n=5 r=-1.1
+$
+layer_mater column_num=1 macro_name=algaas var_symbol1=x var1=0.71 &&
+p_doping=1e24
+layer_mater macro_name=air column_num=2
+layer d=1.0 n=15 r=-1.1
+$
+top_contact column_num=1 from=0 to=1 contact_num=2 contact_type=ohmic
+end_layer
+Note that we use the “air” macro in the etched-away region instead of “void”.
+ff
+Thedi erenceisthat“void”willdefinearegionwithoutmeshpoints: thismeans
+itwillnotbeusedinthemodesolverandtheboundaryconditionswillbeapplied
+at the ridge wall. On the other hand, “air” and “vacuum” macros will define an
+isolating region with the proper refractive index: this prevents the mode solver
+fromartificiallyconfiningtheopticalmodeundertheridge.
+Simulation Setup
+The .sol file needed to run this simulation is fairly similar to the one from from
+ff
+Section 21.2. However, please note the di erence in boundary conditions and the
+useofthemultimodestatement:
+$file:gaas20.sol
+$***********
+begin
+load_mesh mesh_inf=gaas20.msh
+output sol_outf=gaas20.out
+$ **************************
+include file=gaas20.doping
+include file=gaas20.mater
+more_output ac_data=yes
+
+
+=== PAGE 432 ===
+430 LASTIPEXAMPLES
+direct_eigen
+init_wave length=400 backg_loss=500. &&
+boundary_type=(2 1 1 1 ) init_wavel=0.83 mirror_ref=0.32 &&
+wavel_range=(0.80, 0.85)
+multimode mode_num=6 boundary_type1=(2 1 1 1) boundary_type2=(1 1 1 1)
+newton_par damping_step=5. max_iter=100 print_flag=3
+$ scan_num=0
+equilibrium
+$stop
+newton_par damping_step=1. print_flag=3
+$ scan_num=1
+scan var=voltage_1 value_to=-2 &&
+init_step=1e-3 max_step=0.1 &&
+auto_finish=current_1 auto_until=1e-3 auto_within=5e-4
+$ scan_num=2
+scan var=current_1 value_to=20. print_step=2. &&
+init_step=1.e-3 max_step=0.2
+$
+end
+The two types of boundary conditions are needed to obtain both odd and even
+modesinthissymmetricstructure. Sinceweusetwoboundaryconditions,halfof
+themodeswillhavethesymmetryofboundary_type1andtheotherhalfwillhave
+thatofboundary_type2. Withineachset,modesaresortedinorderofdecreasing
+modal index. In this example, the highest order even mode is number 1 and the
+highestorderoddmodeisnumber4;theyarerespectivelyshowninFig.21.9and
+Fig.21.10.
+Pleasekeepinmindthatdependingonthestructure,itisnotnecessarilythemode
+with the largest confinement factor that lases: the only thing that matters is the
+modal gain. For example, the .sol.msg output file for this structure reports the
+followinginformationatmaximumbias:
+----Optical data (in 1/m) for segment# 1
+Mode Modal_gain Conf._factor Int._loss
+1 0.2848E+04 0.2952E-01 0.5000E+03
+2 0.2843E+04 0.2957E-01 0.5000E+03
+
+
+=== PAGE 433 ===
+21.4A_tutorial\basic_ridge 431
+Figure21.9: ModeNumber1
+Figure21.10: ModeNumber4
+
+
+=== PAGE 434 ===
+432 LASTIPEXAMPLES
+3 0.2843E+04 0.2959E-01 0.5000E+03
+4 0.2840E+04 0.2963E-01 0.5000E+03
+5 0.2845E+04 0.2959E-01 0.5000E+03
+6 0.2840E+04 0.2959E-01 0.5000E+03
+Eventhoughmodenumber1hasthelowestconfinementfactor,ithasthehighest
+modal gain since it does not peak in the un-pumped region that extends beyond
+the ridge. In other structures, the opposite can happen and a higher-order mode
+maylaseinsteadofthefundamentalmode.
+In addition to this, the lasing mode is not always the fundamental mode with the
+ff
+higheste ectiveindex. Inparticular,structuresinmaterialssuchasGaAsorGaN
+ff
+have substrates with a high e ective index that can support a guided mode if the
+ffi
+layer is su ciently thick. Since such modes do not overlap properly with the
+active region, they should be regarded as spurious solutions of the eigensolver.
+It is recommended to exclude the bulk of such regions from the optical solver,
+leavingonlyathinslicethatcanprovideappropriateboundaryconditionsforthe
+restofthewaveguide.
+Post-Processing
+The output file above shows that the modal gain values are quite close, which
+would indicate significant mode competition. This is shown by plotting the total
+laser power from all modes as well as that of the individual lateral modes in the
+following.pltfile:
+$file:gaas20.plt
+$ **************
+begin_pstprc
+plot_data plot_device=pdf
+$ plot structure data at equilibrium
+modify_plot show_data_points=no
+get_data main_input=gaas20.sol sol_inf=gaas20.out &&
+xy_data=(1 1)
+plot_2d variable=wave_intensity mode_index=1
+plot_2d variable=wave_intensity mode_index=2
+plot_2d variable=wave_intensity mode_index=3
+plot_2d variable=wave_intensity mode_index=4
+plot_2d variable=wave_intensity mode_index=5
+
+
+=== PAGE 435 ===
+21.4A_tutorial\basic_ridge 433
+plot_2d variable=wave_intensity mode_index=6
+plot_1d variable=band from=(0.5 1.3) to=(0.5, 1.7)
+$ plot structure data at max. data set (max. current injection)
+get_data main_input=gaas20.sol sol_inf=gaas20.out &&
+xy_data=(12 12)
+plot_1d variable=band from=(0.5 1.3) to=(0.5, 1.7)
+plot_2d variable = total_curr
+$ plot scan results
+get_data main_input=gaas20.sol sol_inf=gaas20.out &&
+scan_data=(1 12)
+plot_scan scan_var=voltage_1 variable=current_1 scan_num=2
+$ Compare the total power vs. power in individual modes
+plot_scan scan_var=laser_current_1 variable=all_mode_power scan_num=2
+plot_scan scan_var=laser_current_1 variable=laser_power scan_num=2 mode_index=1
+plot_scan scan_var=laser_current_1 variable=laser_power scan_num=2 mode_index=2
+plot_scan scan_var=laser_current_1 variable=laser_power scan_num=2 mode_index=3
+plot_scan scan_var=laser_current_1 variable=laser_power scan_num=2 mode_index=4
+plot_scan scan_var=laser_current_1 variable=laser_power scan_num=2 mode_index=5
+plot_scan scan_var=laser_current_1 variable=laser_power scan_num=2 mode_index=6
+end_pstprc
+As shown in Figures 21.11 and 21.12, roughly 55% of the optical power is carried
+in mode number 1 so it is indeed the main lasing mode. However, that is still far
+fromtheoptimalvalueof100%expectedforasingle-modelaserwhichshowsthat
+higher-ordermodesaresignificantinthisstructure.
+Wealsonotethatthehigher-ordermodeshavesignificantintensityneartheright
+side of the device: this may indicate that these modes are artificially confined
+/
+by the boundary and are actually leaky radiative modes. To account for this, the
+user may need to introduce PML boundary conditions as described in Sec. 12.6.
+However,thisisbeyondthescopeofthisexample: userswhowishtoknowmore
+areencouragedtoconsultsomeoftheotherexamplesincludedinLASTIP.
+
+
+=== PAGE 436 ===
+434 LASTIPEXAMPLES
+9
+8
+7
+6
+5
+4
+3
+2
+1
+0
+0 1 2 3 4 5 6 7 8
+)Wm(
+rewoP
+resaL
+edoM
+llA
+File:gaas20.plt
+Laser Current<1>(mA)
+Figure21.11: Totalpowerfromallmodes
+5
+4.5
+4
+3.5
+3
+2.5
+2
+1.5
+1
+0.5
+0
+0 1 2 3 4 5 6 7 8
+)Wm(
+rewoP
+resaL
+File:gaas20.plt
+Laser Current<1>(mA)
+Figure21.12: Poweroutputfrommodenumber1
+

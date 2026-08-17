@@ -1,0 +1,2254 @@
+=== PAGE 92 ===
+
+
+
+=== PAGE 93 ===
+hapter
+C 5
+DRIFT-DIFFUSION MODEL
+ThischapterprovidesadescriptionofthebasictheoriesusedinallofCrosslight’s
+simulation software packages. The variety of physical phenomena in a semicon-
+ff ff
+ductorrequiremanydi erentphysicalmodels. However,thedrift-di usion(DD)
+modelisthemostbasicsincemanyofthewellknowncharacteristicsofasemicon-
+ductor device such as the capability to amplify electrical signal may be explained
+usingtheDDtheory.
+This chapter will also explain the boundary conditions and basic properties such
+asmobilityandpureresistorbehavior.
+5.1 Basic equations
+The basic equations[1] used to describe the semiconductor device behavior are
+Poisson’sequation:
+!
+X
+ϵ ϵ
+−∇· 0 dc∇ = − + + − − + δ − ,
+V n p N (1 f ) N f N ( f ) (5.1)
+D D A A tj j tj
+q
+j
+andthecurrentcontinuityequationsforelectronsandholes:
+X
+∂ n ∂ f
+∇· − tj − − − + = + D,
+J R R R R G (t) N (5.2)
+n n sp st au opt ∂ t D ∂ t
+j
+X
+∂ ∂
+p f
+∇· + tj + + + − = − + A.
+J R R R R G (t) N (5.3)
+p p sp st au opt ∂ t A ∂ t
+j
+. .
+Theseequationsgovernthe electricalbehavior(e g,I-Vcharacteristics) ofasemi-
+conductordevice.
+
+
+=== PAGE 94 ===
+92 DRIFT-DIFFUSIONMODEL
+Optionally,twomoreequationsareusedtodescribedthecarrierenergy(w)orthe
+carrier temperature distribution. This is not to be confused with the lattice tem-
+perature;theformerisadescriptionofhowthecarrierdistributiondeviatesfrom
+Fermi-Dirac distribution. Such a model is also referred to as the hydrodynamic
+model.
+ff
+OurtheoryhereisbasedontheformulationderivedbyAzo [2][3]. Forsimplicity,
+we only present the equations for hot electrons. The corresponding equations for
+hotholesarecompletelyanalogous:
+− ∂
+n(w w ) (nw)
+∇· + −∇ · + 0 + =
+S R w E J 0 (5.4)
+n c n τ ∂
+t
+w
+5 10
+= − − µ ∇ .
+S J w nw w (5.5)
+n n
+3 9
+= /
+wherewisthetotalenergyofanelectronandw 3kT 2istheelectronenergyat
+0
+τ
+equilibrium. Sistheelectronenergyfluxintensityand istheenergyrelaxation
+w
+time.
+Definitions of symbols are listed in the nomenclature at the end of this chapter.
+More details about the derivation and discretization of the hydrodynamic model
+isgivenintheAppendix.
+Theprimaryfunctionofoursimulatoristosolvetheseequationsself-consistently
+,
+fortheelectrostaticpotential,V,theelectronandholeconcentrations(n p)andthe
+,
+electronandholeenergies(W W ).
+n p
+Fromtheoriesofsemiconductordevicephysics[1]thecarrierfluxdensities J and
+n
+J inEquations(5.2)and(5.3)canbewrittenasfunctionsofthecarrierconcentration
+p
+andthequasi-Fermilevels:
+= µ ∇
+J n E (5.6)
+n n fn
+= µ ∇
+J p E (5.7)
+p p fp
+µ µ
+where and are mobilities of electrons and holes. For convenience, we use
+n p
+ff
+carrier flux density and current density interchangeably even though they di er
+byafactorofelectroncharge.
+For the hydrodynamic model, the expression for the electron (or hole) current is
+modified: (cid:26) (cid:27)
+2
+= µ − ∇ ψ+χ+γ + ∇ − ∇
+J n [ ] (nw) nw ln(m ) (5.8)
+n n n n
+3
+More details about the current flow expression in the hydrodynamic model is
+givenintheAppendix.
+
+
+=== PAGE 95 ===
+5.1Basicequations 93
+5.1.1 SRH and Auger recombination
+Thesoftwaretreatscarrierrecombinationduetodeepleveltraps[Shockley-Read-
+Hall(SRH)recombination]using:
+tj = − −
+R c nN (1 f ) c n N f (5.9)
+n nj tj tj nj 1j tj tj
+tj = − −
+R c pN f c p N (1 f ) (5.10)
+p pj tj tj pj 1j tj tj
+where n is the electron concentration when the electron quasi-Fermi level co-
+1j
+incides with the energy level E of the jth trap. A similar definition applies to
+tj
+p .
+1j
+Undertransientconditions,thefollowingtrapdynamicequationisvalid[4]:
+∂
+f
+tj = tj − tj
+N R R (5.11)
+tj ∂ t n p
+ffi
+The capture coe cients c and c for electrons and holes relate to the lifetime of
+nj pj
+thecarrierduethe jthrecombinationcenterbythefollowingrelation:
+1
+=
+c N (5.12)
+τ nj tj
+nj
+1
+=
+c N (5.13)
+τ pj tj
+pj
+OnecanshowthatEquations(5.9)to(5.13)areequivalenttothestandardexpres-
+sionoftheSRHmodel[1]understeadystateconditions.
+ffi
+Thecapturecoe cientscanbefurtherexpressedas:
+= σ
+c v (5.14)
+nj rnj n
+8kT
+=
+v (5.15)
+n π
+m
+n
+= σ
+c v (5.16)
+pj spj p
+8kT
+=
+v (5.17)
+p π
+m
+p
+Atrap(orrecombinationcenter)iscompletelyspecifiedbyitsdensityN ,capture
+tj
+σ σ
+crosssections and ,andenergylevelE .
+nj pj tj
+TheAugerrecombinationrateisgivenby
+R = (C n + C p)(np − n2) , (5.18)
+au n p i
+ffi
+wheretheAugercoe cientsC andC dependsonthetypeofmaterialsimulated.
+n p
+
+
+=== PAGE 96 ===
+94 DRIFT-DIFFUSIONMODEL
+5.1.2 Carrier statistics
+The electron and hole concentrations in semiconductors are defined by Fermi-
+Diracdistributionsandaparabolicdensityofstateswhich,whenintegrated,yield
+[1]:
+!
+−
+E E
+= fn c
+n N c F 1/2 (5.19)
+kT
+!
+−
+E E
+= v fp
+p N v F 1/2 (5.20)
+kT
+whereF 1/2 istheFermiintegraloforderone-half.
+For the convenience of numerical evaluation, the approximation proposed by
+BednarczykandBednarczykisused[5]:
+F 1/2 (x)
+≈
+(e
+−x +ξ
+(x))
+−1
+(5.21)
+√
+3
+ξ = π ν −3
+(x) [ (x)] 8 (5.22)
+4n o
+ν (x) = x4 + 50 + 33 . 6x 1 − 0 . 68exp[ − 0 . 17(x + 1)2] (5.23)
+Thisexpressionisaccuratetowithin0.4%oferrorinallranges.
+In the limit of low carrier concentration Equations (5.19) and (5.20) reduce to the
+familiarBoltzmannstatistics:
+!
+−
+E E
+= fn c
+n N exp (5.24)
+c
+kT
+!
+−
+E E
+= v fp
+p N exp (5.25)
+v
+kT
+TheprogramusesthemoregeneralFermi-DiracstatisticsofEquations(5.19),(5.20)
+and(5.21)bydefault.
+5.1.3 Incomplete ionization of impurities
+The simulation program can accurately account for the incomplete ionization of
+shallow impurities in semiconductors. The occupancies f and f are used to
+D A
+describe the degree of ionization. It is assumed that the shallow impurities are
+in equilibrium with the local carriers and therefore the occupancy of the shallow
+impuritiescanbedescribedby:
+1
+=
+f (5.26)
+D
+1
++
+g
+−1exp[(E −
+E )
+/
+kT]
+d D fn
+1
+=
+f (5.27)
+A
+1
++
+g
+−1exp[(E −
+E )
+/
+kT]
+a A fp
+
+
+=== PAGE 97 ===
+5.1Basicequations 95
+where the subscripts D and A are used to denote shallow donors and acceptors,
+= =
+respectively. Thedegeneracylevelsareautomaticallysetto g 2and g 4.
+d a
+From the discussions of Section 5.1.1, the occupancy of a deep level trap can be
+determined through the trap dynamic equation, Equation (5.11). In general the
+. .
+deep trap is not in equilibrium with the carriers (ie, the trap does not share the
+samequasi-Fermilevelasthecarriers).
+From Equations (5.9), (5.10) and (5.11), one obtains the following expression for
+thetrapoccupancyundersteadystateconditions:
++
+c n c p
+= nj pj 1j
+f (5.28)
+tj + + +
+c (n n ) c (p p )
+nj 1j pj 1j
+In the case of surface states or surface recombination centers, the software allows
+forthedistributionofdensetrapsnearthesurfaceregion. Thisprovidesamecha-
+nismforthesurfacechargestatesaswellasforsurfacerecombination. Fermilevel
+ff
+pinninge ectsonasemiconductorsurfacecanbemodeledusingthisapproach.
+In a transient simulation the trap occupancy is a function of time, depending on
+the trap capture rates as well as on the local carrier concentrations. The program
+usesEquation(5.11)todeterminethetrapstatesateachtransienttimestep.
+By default the simulation software assumes incomplete ionization of dopants
+with energy level defined by the level parameter in the doping statement. The
+dopantsofaspecificmaterialmaybeforcedtobefullyionizedwiththecommand
+full_ionization.
+For a more accurate model of incomplete ionization in heavily-doped semicon-
+ductors,theMotttransitionmodelcanalsobeused.
+5.1.4 Poole-Frenkel model of incomplete ionization
+ff ff
+The Poole-Frenkel e ect (also Frenkel-Poole e ect or field induced emission) was
+originally used to describe field dependent thermionic emission from traps in
+the bulk of an insulator [1]. This mechanism is, however, equally applicable to
+incompleteionizationofimpuritiesinsemiconductors.
+Under an electric field F, the electrostatic potential near an impurity center is
+ff
+modifiedandthee ectiveworkfunctionortheionizationenergyisreducedby:
+r
+qF
+∆ =
+E (5.29)
+PF πϵ ϵ
+0
+The Poole-Frenkel model is implemented by shifting the ionization energy by
+∆
+E . The field dependence of this shift introduces some complication into the
+PF
+
+
+=== PAGE 98 ===
+96 DRIFT-DIFFUSIONMODEL
+discretized Poisson’s equation. The reason is that at each node, additional work
+mustbedonetosearchforthemaximumfieldcomponentsurroundingthenode.
+AnothercomplicationassociatedwiththePoole-Frenkelmodeloccursattheohmic
+contacts, because the simulator solver is set up such that the built-in potential at
+an ohmic contact is always fixed, or in other words, the dopant energy level or
+the Imref at the contact is fixed relative to the band edges. Such an assumption
+contradicts with the Poole-Frenkel model which changes the ionization energy
+andtheImrefsastheappliedfieldisvaried.
+ffi
+To overcome this di culty, the ionization energy at the contact is allowed to be
+shifted to a constant value before the simulation. Without such a shift in the
+ionization energy at the contact, the ohmic contact may behave like a Schottky
+contactbecauseofalargefixedbuilt-inpotential.
+ThePoole-Frenkelmodelisimportantwhentheionizationenergyislargeandthe
+. .
+temperature is low (e g, 100 meV at 100K). Without such a model, the semicon-
+ductormayhaveanunrealistichighresistance.
+ff
+By default, this model is turned o and can be enabled using the parameter
+pf_modelofthedopingstatement.
+ff
+5.1.5 Heavy doping e ects
+The Mott transition occurs at high doping concentrations, when the distance be-
+/
+tween impurities dopants becomes comparable to the Bohr radius. It has been
+ff ∗
+shown[6]thatthee ectiveBohrradiusa andcriticalimpurityconcentrationN
+B crit
+aredeterminedby:
+ϵ
+∗ = r .
+a 053Å (5.30)
+B m∗/ m
+0(cid:18) (cid:19)
+π 1
+N1/3 = 1 3
+(5.31)
+crit 4a ∗ 3
+B
+ϵ ∗ ff
+where istherelativedielectricconstantandm isthecarriere ectivemass. The
+r
+ionization energy of the impurity as a function of the concentration can then be
+obtainedby:
+E
+=
+E [1
+−
+(N
+/
+N
+)1/3]
+(5.32)
+D D0 D crit
+Asimilarexpressionexistsforacceptors. Thismodelisactivatedbydefaultforall
+shallowdopantsinCrosslightsoftware.
+The applicability of this model to deeper dopants such as GaN:Mg is not as well
+understoodsoamaximumionizationenergyof100meVisusedtoswitchtheMott
+
+
+=== PAGE 99 ===
+5.1Basicequations 97
+/ ff
+transitionon o . Thisbehaviorcanbecontrolledonaper-materialbasisusingthe
+dopant_ionization_modelcommand.
+The ionization energy can also be manually controlled by the user to match mea-
+sured values. There are multiple ways of doing so but the most convenient
+methodsare:
+•
+The adjust_doping statement in the layer file. This overrides the level
+parameterofthedopingstatementgeneratedbylayer.exe.
+•
+The shal_acpt_level and shal_dnr_level commands can be implemented as
+parameter overrides in the input files or as part of a material macro. These
+commands are flexible and can even be used to create custom formulas for
+theactivationenergydependenceonthedopantconcentration.
+5.1.6 Carrier mobility
+µ µ
+Thecarriermobilities and accountforthescatteringmechanisminelectrical
+n p
+transport.
+ff
+Oneofthemaine ectsonthemobilityisthelocalelectricalfield[1]. Thesoftware
+providesseveralanalyticalformulasoffielddependentmobility:
+• µ µ
+1. The simplest mobility model uses constant mobilities and for
+0n 0p
+electrons and holes, respectively, throughout each material region in the
+device. This model shouldnot be confused with constantvelocity: constant
+mobilitymeanslinearvelocity.
+•
+2. Another simplified field dependent mobility model is the two-piece mo-
+bilitymodel:
+8
+>
+> <µ
+forF
+<
+F
+,
+µ = > > 0n 0n (5.33)
+n : / ≥ .
+v F forF F
+sn 0n
+= µ
+v F (5.34)
+sn 0n 0n
+for the electron mobility. F is a threshold field beyond which the electron
+0n
+velocitysaturatestoaconstant.
+Similarexpressionscanbedefinedforholes:
+8
+>
+> <µ
+forF
+<
+F
+,
+µ = > > 0p 0p (5.35)
+p : / ≥ .
+v F forF F
+sp 0p
+= µ
+v F (5.36)
+sp 0p 0p
+
+
+=== PAGE 100 ===
+98 DRIFT-DIFFUSIONMODEL
+We note that this model may be used to approximate a constant velocity
+modelbysettingaverylowofF sothatthevelocityissaturatedthroughout
+0
+theusefulsimulationrange.
+•
+3. The Canali or beta model[7] is commonly used in the literature and has
+thefollowingformforelectronsandholes,respectively:
+µ
+µ = (cid:0) 0n (cid:1) (5.37)
+n 1 + ( µ 0n F / v sn )β n 1/β n
+µ
+µ = (cid:16) 0p (cid:17) (5.38)
+p
++ µ / β
+1/β
+p
+1 ( F v ) p
+0p sp
+•
+4. The transferred electron model[7] or n.gaas model is used in many III-
+ff
+V compound semiconductors which exhibit negative di erential resistance
+due to the transition of carriers into band valleys with lower mobility [1].
+Thesoftwarehasimplementedthefollowingfielddependentmodelforthis
+case:
+µ + (v / F )(F / F )3
+µ = 0n sn 0n 0n
+(5.39)
+n 1 + (F / F )4
+0n
+•
+5.Poole-Frenkel is the name given by Crosslight to the hopping mobility
+model commonly used for organic semiconductors; this movement is very
+ff
+similar to the Poole-Frenkel e ect (Frenkel-Poole emission) in insulators[1]
+with an exponential field-dependent term determining the probability of a
+highlylocalizedcarriermovingfromonesitetoanother.
+Themobilityfromthismodelmaybeexpressedusingthefollowingformula:
+µ = µ exp[(F / F )px] (5.40)
+0 cr
+•
+6. Amodifiedtransferred-electronmobilitymodeldesignedforGaNdevices[7].
+Seebeta_mtefordetails.
+•
+7. User-defined mobility model. More details can be found in the reference
+sectionunderuser_defined_mobility.
+ff
+Besidesthefielddependenceofthemobility,anotherimportante ectistheimpu-
+rity dependence of the low field mobility [1]. The program by uses the following
+formulasbydefault:
+µ −µ
+( )
+µ 0n = µ 1n + (cid:18) 2n P 1n (cid:19) α (5.41)
+1 + ND +NA + j Ntj n
+Nrn
+µ −µ
+( )
+µ 0p = µ 1p + (cid:18) 2p P 1p (cid:19) α (5.42)
+1 + ND +NA + j Ntj p
+Nrp
+
+
+=== PAGE 101 ===
+5.2BoundaryConditions 99
+wherethevariousparametersarefittingparametersfromexperimentaldatawhich
+mayalsobetemperature-dependent. Additionalimpuritymodelsmaybeinvoked
+throughlow_field_mobility_model.
+Inmanyapplications,themobilityisanisotropicandalsodependsonthevertical
+field. A number of vertical field dependent model (such as the Lombardi model)
+areimplementedwithinthestatementofmobility_xy.
+5.2 Boundary Conditions
+The boundary conditions for the electrical part [Equations (5.1) to (5.3)] include
+ohmic contacts, Schottky contacts, Neumann (reflective) boundaries, lumped ele-
+mentsandcurrentcontrolledcontacts. Forthehotcarrierequations,theboundary
+conditionhereisthecontactcarriertemperature.
+5.2.1 Ohmic contact
+OhmiccontactsareimplementedassimpleDirichletboundaryconditions,where
+the surface potential and electron and hole quasi-Fermi levels (V , Es ,Es ) are
+s fn fp
+fixed. The minority and majority carrier quasi-Fermi potentials are equal and set
+totheappliedbiasoftheelectrode:
+ϕs = ϕs = − Es = − Es = V . (5.43)
+n p fn fp applied
+The potential V at the boundary is fixed at a value consistent with zero space
+s
+charge: X
+− + + − − + δ − = .
+n p N (1 f ) N f N ( f ) 0 (5.44)
+D D A A tj j tj
+j
+WiththesolutionofV andEquation(5.43)onecanuseEquations(5.19)and(5.20)
+s
+tocalculaten andp .
+s s
+ItshouldbepointedoutthatthepurposeofcreatinganOhmiccontactinasimula-
+tionistohaveaboundaryconditionwhichdoesnotdisturbtheareaofsimulation
+but provides a path for current flow. This is in contrast to the Schottky contact
+which can be either injecting or depleting carriers, depending on the polarity of
+thebias.
+Inmostdevicesimulations,theidealOhmiccontactwithachargeneutralassump-
+ffi
+tion is su cient as a good carrier injector if the contact area is highly doped or
+if the carrier injection requirement is not too high. If the vicinity of the contact
+has low doping or if a high level of carrier injection is required, the ideal Ohmic
+
+
+=== PAGE 102 ===
+100 DRIFT-DIFFUSIONMODEL
+contact described above ceases to be a valid model for a realistic Ohmic metal
+contact. In such a case, the simulator refuses to inject carriers into the device, no
+matterhowlargethebiascurrentis.
+To avoid this problem, remember to use high doping in the vicinity of an ideal
+Ohmiccontactregion. Otherwise,alowbarrierSchottkycontactmayalsobeused.
+5.2.2 Schottky contacts
+Schottky contacts to the semiconductor are defined by the barrier height of the
+electrodemetalandasurfacerecombinationvelocity.
+ThesurfacepotentialataSchottkycontactisdefinedby:
+= χ−χ −ϕ + .
+V V (5.45)
+s ref b applied
+χ χ ffi
+where and are the electron a nities of the semiconductor and a reference
+ref
+ϕ
+material,respectively,and istheSchottkybarrierheight.
+b
+Note that this applies only for n-contacts. For p-contacts, this equation needs to
+be modified by the semiconductor bandgap to calculate the proper hole barrier.
+Thesumofthebarrierheightsforelectronandholesisexpectedtobeequaltothe
+bandgap[1].
+Ingeneral,thequasi-FermilevelsEs andEs arenolongerequaltoV andare
+fn fp applied
+definedbyacurrentboundaryconditionatthesurfaceinstead:
+= γ therm − ,
+J v (n n ) (5.46)
+sn n n s eq
+= γ therm − ,
+J v (p p ) (5.47)
+sp p p s eq
+where J and J aretheelectronandholecurrentsatthecontact,n andp arethe
+sn sp s s
+actualsurfaceelectronandholeconcentrations,andn andp aretheequilibrium
+eq eq
+electron and hole concentrations if infinite surface recombination velocities are
+. .ϕ = ϕ =
+assumed(ie V ).
+n p applied
+Thethermalrecombinationvelocitiesaregivenby:
+r
+kT
+therm = ,
+v (5.48)
+n 2m π
+s n
+kT
+therm = ,
+v (5.49)
+p 2m π
+p
+γ γ . .
+The constants and provide a mechanism to include any correction (e g due
+n p
+totunneling)tothestandardtheory.
+
+
+=== PAGE 103 ===
+5.2BoundaryConditions 101
+5.2.3 Abrupt heterojunctions
+Anabruptjunctionisalsoconsideredaboundaryconditionintheprogrambecause
+most physical quantities are discontinuous at the interface. Similar to a Schottky
+contact,anabruptheterojunctionexhibitsnon-ohmicbehavior,suchasrectification
+ff
+e ects.
+Thephysicalmodelusedbythesoftwareforcurrenttransportacrossthejunction
+is the thermionic emission model [1]. A similar expression for the current flux
+acrossthejunctioncanbedefinedas:
+= γ therm − ,
+J v (n n ) (5.50)
+hn hn bn b b0
+= γ therm − ,
+J v (p p ) (5.51)
+hp hp bp b b0
+where n and p denote the electron and hole concentrations, respectively, on the
+b b
+barriersideofthejunction. n andp arethecorrespondingconcentrationswhen
+b0 b0
+thequasi-Fermilevelsarethesameasthoseontheoppositeside. Theseequations
+ensurethat,whenthequasi-Fermilevelsonbothsidesofthebarriersarethesame,
+the net current is zero. The derivation of the boundary conditions of the above
+equationscanbefoundinRefs. [8]and[9].
+Thethermalrecombinationvelocitiesaregivenby:
+r
+kT
+therm = ,
+v (5.52)
+bn 2m π
+s bn
+kT
+therm = .
+v (5.53)
+bp 2m π
+bp
+OthersymbolshavesimilarmeaningsasthoseinSection5.2.2.
+Theabruptheterojunctionmodeldescribedhereisimportanttoaccuratelymodel
+. .
+thethermionicemissionbehavior(e g temperaturedependence)ofadeviceusing
+anabruptheterojunctionasameansofcarrierconfinement.
+Theabruptjunctionmodelhasitslimitations,however,especiallywhenbothsides
+. .
+of the junction are heavily doped with the same type of dopant (e g donors). In
+suchacase,theFermilevelisstronglypinnedatthebandedgesonbothsides,and
+the potential barrier is forced to form a sharp peak above the Fermi level. Since
+thepeakregioninthebarrierisstronglydepletedofcarriers,theresistanceisvery
+. .
+highaccordingtoEquation(5.6). Ifthisjunctionhappenstobereversebiased(ie
+thecarriersonthebarriersidetendtobemoredepletedwhenthebiasisapplied),
+thehighresistancecancauseanunrealisticallylargevoltagedropthere.
+ffi
+Fortunately, the di culty associated with a highly doped abrupt heterojunction
+doesnotoccurveryoftenneartheactiveregions,becausejunctionstherearerarely
+heavily doped with the same dopant on both sides. If the heavily doped contact
+
+
+=== PAGE 104 ===
+102 DRIFT-DIFFUSIONMODEL
+region has an abrupt heterojunction, problems may arise. An example of this is
+/
+GaAs AlGaAs,whichmayhaveaheavilydopedGaAssubstrateundertheheavily
+dopedcladdingregion.
+Inmostcasestheabruptjunctionmodelimplementedintheprogramisadequate.
+Insettingupanewdevicestructureonemayignoretheproblemmentionedabove
+unlessthesimulationresultshowsanunrealisticallylargevoltagedrop. Theuser
+may be able to spot such a problem just from simulator’s run-time printout. For
+example, if the printout shows shows that 10 Volts are needed to pass a few mA
+ofcurrent,itusuallyindicatesthereisabarrierofsomekind.
+Byplottingthebanddiagram,itshouldbepossibletolocateifanabruptjunction
+is causing this problem. If so, we can replace the abrupt junction with a graded
+ff
+barrierwithouta ectinganyactiveregions. Usuallyagradedbarrierwithgrading
+length of 100 Åor so is adequate to replace the heavily doped junction that is
+causingthetrouble.
+ff
+This limitation of the program arises from the assumption of drift-di usion as
+the key transport mechanism. In reality the main mechanism of carrier transport
+acrossthethinandsharpbarrierisquantumtunneling.
+5.2.4 Neumann boundaries
+Along the outer non-contacted edges of simulated devices, homogeneous reflect-
+ing Neumann boundary conditions are imposed so that current only flows out of
+the device through the contacts. Additionally, in the absence of surface charge
+along such edges, the normal electric field component goes to zero. In a similar
+fashion, current is not permitted to flow from the semiconductor into an insulat-
+ff ff
+ingregion;further,attheinterfacebetweentwodi erentmaterials,thedi erence
+between the normal components of the respective electric displacements must be
+equaltoanysurfacechargepresentalongtheinterface.
+5.2.5 Lumped elements
+Lumped elements have been created to cut down the number of grid points to
+discretize some device structures, thereby saving CPU time. Lumped resistance
+might be useful in a simulation of a semiconductor device structure with a sub-
+strate contact located far away from the active region. If the whole structure
+were to be simulated, a tremendous number of grid points, probably more than
+half, would be wasted to account for a purely resistive region of the device. Be-
+cause CPU time is generally a superlinear function of the number of grid points,
+includingsuchregionscanbequiteexpensive.
+Applying this boundary condition creates an extra unknown (V ), the voltage on
+s
+
+
+=== PAGE 105 ===
+5.2BoundaryConditions 103
+ff
+thesemiconductorcontact,whichifdefinedbyKircho ’sequation:
+X
+− N
+V V b
+applied s − + = ,
+(J J ) 0 (5.54)
+n p
+R
+s i=1
+where N is the number of boundary grid points associated with the electrode of
+b
+interest.
+Note that this auxiliary equation, due to the currents inside the summation, has
+dependenciesonthevaluesofpotentialandcarrierconcentrationsatthenodeson
+theelectrodeaswellasallnodesdirectlyadjacenttotheelectrode. Itisimportant
+torememberthatalumpedelementcontactwillhaveasinglevoltage(orpotential-
+adjustedforpossibledopingnon-uniformity)associatedwiththeentireelectrode.
+The simulator should be used as much as possible to calculate any resistance
+componentsthatmightbeincludedaslumpedelements. Forinstance,inthecase
+of substrate resistance of a semiconductor device, one could just simulate the n-
+substrate with ohmic contacts at both ends. From the plot of the contact current
+versusvoltage,theresistancecanbedirectlyextractedfromtheslope.
+5.2.6 Current boundary condition
+The current boundary condition is a very important option in the simulation of
+device. For example, when a laser diode is biased beyond threshold, the gain
+and carrier concentration essentially saturate. This also causes the bias voltage to
+saturate,whilethecurrentcontinuestorisebecauseofstimulatedemission. Under
+suchconditions,operatingthesimulatoratavoltage-controlledmodewouldcause
+thecurrenttojumptohugevaluesforasmallincreaseinvoltage.
+Insomedevices(notnecessarilylasers),theterminalcurrentisamulti-valuedfunc-
+tionoftheappliedvoltage. Thisconditionimpliesthatforsomevoltageboundary
+conditions, a numerical procedure may end up, depending on the initial guess
+solution, with a solution in either of two distinct and stable states. Furthermore,
+/ =
+a condition of primary interest is at the trigger point, where dV dI 0, which is
+ffi
+di cult to obtain with a simple voltage boundary condition. Additionally, it is
+nearlyimpossibletocomputeanysolutionsinthenegativeresistanceregimewith
+voltageinputs.
+ffi
+A possible alternative to the di cult situation mentioned above would be to
+define a current controlled boundary condition, since voltage can be thought of
+as a single-valued function of the terminal current. Such a boundary condition
+hasbeenimplementedinthesoftware,asanauxiliaryequationwithanadditional
+ff
+unknownboundary potential. Like the lumped element case, a Kircho equation
+
+
+=== PAGE 106 ===
+104 DRIFT-DIFFUSIONMODEL
+iswrittenatthecontactpoints:
+X
+N
+b
+− + = .
+J (J J ) 0 (5.55)
+source n p
+i=1
+Notethatunlikethelumpedelementcase, J isaconstantspecifiedbytheuser
+source
+andhasnodependenceontheboundarypotentialV (theV dependenceisburied
+s s
+in the summation). Since the full Newton’s method is used for the solution of all
+equations in the program, no degradation of convergence has been observed for
+currentcontrolledsimulations.
+/
+The choice of a voltage or current bias is mostly a function of the dI dV slope;
+/
+this is explained in more detail in Sec. 4.1. For regions where dI dV is small, the
+voltage boundary condition is definitely preferable; this occurs frequently below
+the turn-on voltage or under reverse bias conditions. If the opposite is true, then
+thecurrentbiasispreferable.
+Itisnotuncommonforthenegativeresistanceregimeofcertaindevicestohavea
+/
+slope dI dV very close to zero. Such behavior should be considered when using
+a current source to trace out an entire I-V curve. It might be preferable to switch
+backtoavoltagesourceafterpassingthetriggerpoint.
+5.3 Pure Resistor Regions and Metal Macros
+Forresistorsandmetals,weassumethefollowingconditionsaretrue:
+•
+Charge neutrality: we assume that the space charge at any point is always
+zeroevenwhencurrentflows.
+• ff
+Zero di usion current: the distribution of carriers is uniform enough that
+onlydriftcurrentexists.
+•
+Equilibrium carrier density: we assume that carrier density stays constant
+evenwhencurrentflowssothatnorecombinationoccurs.
+•
+Uniformmaterialpropertiesthroughoutthelayer.
+Undersuchassumptions,thePoissonandcurrentcontinuityequationsreduceto:
+!
+ϵ ϵ
+∇· 0 dc∇ =
+V 0 (5.56)
+q
+∇· =
+J 0 (5.57)
+
+
+=== PAGE 107 ===
+5.3PureResistorRegionsandMetalMacros 105
+Thesecanbecombinedintoasingleequationbywritingthedriftcurrentas:
+= σ∇
+J V (5.58)
+/
+Therefore,onlythePoissonequationneedstobesolvedinmetal resistorregions.
+Model History
+Crosslight’s metal models have undergone a number of major changes over the
+yearssoitisimportanttodocumentthehistoryofthesechangesforexistingusers.
+Pseudo-metalsemiconductor
+Prior to the 2007.3 version, the standard metal model described above was used
+to represent resistors. However, this model had some limitations. For semicon-
+ff
+ductorregions,thedrift-di usionmodelsolvesthreeequationssosolvingasingle
+equation for certain points did not integrate very well other models such as our
+small-signalACsolverorthequantumtunnelingcode.
+To simplify integration of metals with these models, starting from version 2007.3,
+Crosslight’s device simulators approximated a resistor region as a special kind of
+∼
+semiconductor with a heavy carrier mass ( 10) and very small bandgap (0.1 eV).
+Thisapproachallowedthesemiconductortoduplicatemanypropertiesofmetals
+including Fermi level pinning. However, the need to define an equivalent carrier
+mobility (to match the desired metal resistivity) introduced a dependency on the
+carrier density. As this was controlled by the increased DOS mass, there was
+/
+a mismatch with the conduction transport mass used in the quantum tunneling
+formulationwhichrequiredfurthercorrections.
+Feedback from users has ultimately demonstrated that this pseudo-metal semi-
+conductor approach has its own set of limitations, especially with thicker layers.
+As of the October 2014 version, this approach is now considered obsolete and
+the pre-2007 standard model has been restored. However, our AC and quantum
+tunnelingmodelshavenowbeenimprovedandmaybeusedinconjunctionwith
+resistors.
+Bandalignment
+Starting with version 2013, a subroutine was added to automatically adjust the
+ffi
+workfunctionofresistorsandalignitwiththea nityoftheneighboringsemicon-
+ductor. This was done to facilitate the use of metals which, in most applications,
+are used for ohmic contacts. However, since thermionic emission is used at all
+
+
+=== PAGE 108 ===
+106 DRIFT-DIFFUSIONMODEL
+ffi
+internalboundaries,Schottkycontactsofpoorqualitymaybeformedifthea nity
+oftheresistormacroisnotadjustedproperly. AnexampleofthisisITOwhichcan
+be either a p (for GaN) or n (for OLED) contact metal depending on the applica-
+ffi
+tion: the a nity needed to successfully inject the correct carriers changes greatly
+inthesetwocases.
+Thepre-2013Schottky-likebehaviorcanberecoveredusingtheno_auto_workfunction
+statement. ThismaybenecessaryincaseswheretheSchottkybehaviorisexpected,
+ff ffi
+when the e ect of the metal’s a nity must be studied, or in thermal simulations
+ffi
+wherea nityshiftsduetotemperaturemayruintheautomaticalignmentprocess.
+Interaction with quantum tunneling models
+Oneshouldexercisecautionwhensettingupquantumtunnelingbetweenametal
+macroandasemiconductorbarrier. Whenusingthepropagationmatrixapproach,
+theprogramusesthedefaultdensityofstate(DOS)massfromthemacrotodefine
+ff
+thetunnelingprobability;putdi erently,tunnelingdependsonthekineticenergy
+of an individual particle. However, the DOS mass is a measure of the shape of
+theE(k)dispersionrelationanddescribes“howmany”carriersthereareinaband
+rather than “how fast” those carriers are traveling. These two mass values may
+notalwaysbethesame.
+/
+Luckily, the DOS mass is not needed in the current version of the metal resistor
+macros and unlike previous the pseudo-metal approach, we no longer need to
+calculate an equivalent carrier mobility. Instead, we use experimental data and
+themobility-carrierdensityrelationshipiscompletelyabstractedaway:
+1
+σ = = µ +µ
+q( n p) (5.59)
+ρ n p
+Thetunnelingtransportmassinourmodelisthusdefinedinthefollowingway:
+• /
+1 Internally, the DOS mass of metal resistor macros is set at a default value
+of 0.1 for n and p. This can be overridden by explicitly declaring the DOS
+massintheresistormacro.
+•
+2 The transport mass is calculated using a ratio of 1:1 with the DOS mass.
+Thisratiomaybeoverriddenusingthecommandscond_dos_mass_ratio_n
+andcond_dos_mass_ratio_p.
+
+
+=== PAGE 109 ===
+5.4BandgapNarrowingEffect 107
+ff
+5.4 Bandgap Narrowing E ect
+Itisobservedexperimentallythattheshrinkageofbandgapoccurswhenimpurity
+concentration is particulary high, eg. n > 1023m −3. This e ff ect is so called
+imp
+ff
+bandgapnarrowinge ectwhichisascribedtotheemergingoftheimpurityband
+formedbytheoverlapedimpuritystates. Thebandgapnarrowingmodelproposed
+bySlotboomisgivenby
+( r )
+n n
+∆ E = E ln imp + ln2 imp + 0 . 5 (5.60)
+g ref
+n n
+ref ref
+,
+where E n andn represent energy parameter, density parameter and impu-
+ref ref imp
+rityconcentration,respectively.
+Incaseofsilicon,E andn wereobtainedbyfittingexperiment,whichyeilds
+ref ref
+= .
+E 0009 [V] (5.61)
+ref
+n = 1023 [m23] (5.62)
+ref
+ff
+It should be noted that the bandgap narrowing e ect is doping dependent ef-
+ff
+fect, whereas the many body e ect, which reduces band gap as well, is carrier
+ff
+dependente ect.
+It should also be pointed out that the macro system in Crosslight software pro-
+vides an easy way for user to define any kind of bandgap narrowing model since
+dopantdensityisaninternalvariableautomaticallypassedtoanymacrofunctions,
+includingthebandgap.
+5.5 Trap Models
+Adeepleveltraplocatedwiththesemiconductorbandgapisdescribedbyboththe
+chargeproperty(deepdonorordeepacceptor)asitappearsinPoisson’sequation
+andbyarateequationwithcaptureandescapeterms:
+tj = − − ,
+R c nN (1 f ) c n N f (5.63)
+n nj tj tj nj 1j tj tj
+tj = − −
+R c pN f c p N (1 f ) (5.64)
+p pj tj tj pj 1j tj tj
+Traps can be defined as either localized defects using the doping statement or as
+an integral part of a material using the material statement. The latter method is
+especially convenient when dealing with amorphous materials like a-Si:H. When
+combiningthetwomethods,thefollowingrulesareused:
+
+
+=== PAGE 110 ===
+108 DRIFT-DIFFUSIONMODEL
+•
+1. Loadallmacrosandinitializetrappropertiesandtraplevelmodelsifany
+materialstatementsdefinetraps.
+•
+2. Gettrapinformationfromdopingstatementregardingtrapconcentration
+ff
+and level. This will a ect all materials in a given area since doping is done
+atthemeshlevelanddoesnotdistinguishbymaterial.
+•
+3.
+– If (2) exists for traps, we should now have density, level and charge-
+types. Calculatecapturecrosssectionaccordingtomateriallifetimefor
+trap_1only.
+/
+– If(2)doesNOTexist,assumealowmid-gapdonorof1.e61 m3. Then,
+calculate capture cross section according to material lifetime for trap_1
+only.
+•
+4. Check trap_conc_i commands. If they exist, we ADD that concentration
+tothatobtainedin(2).
+•
+5. Check for trap_level_i statements which override values obtained from
+(2)and(3).
+•
+6. Check for trap_ncap_i and trap_ncap_i statements that override values
+obtainedfrom(3).
+The software is limited to only a few species of traps (defined by numeric labels)
+ff
+but a single species of trap can represent many di erent trap levels within the
+bandgap. In the extreme of densely populated traps such as those appearing
+in amorphous materials, it is more convenient to use a continuous function to
+describetheenergydistributionofthetraplevels.
+As of the 2015 version, the software supports Gaussian, exponential tail and
+uniformtrapdistributions.
+Trap Photo-Excitation
+When the photon energy of light is less than the semiconductor bandgap, it is
+still possible to generate photo-carriers if deep level traps are sensitive to light.
+Electrons and holes being trapped in the deep level trap centers require less than
+bandgap energy to be excited to the conduction or valence bands. We shall refer
+tothisprocessastrapphoto-excitation.
+ff
+In such a case, the Schokley-Read-Hall recombination terms of the drift-di usion
+must be revised to include photo-carrier generation terms due to emission from
+
+
+=== PAGE 111 ===
+5.5TrapModels 109
+traps(G andG ):
+tn tp
+tj = − − − ,
+R c nN (1 f ) c n N f G (5.65)
+n nj tj tj nj 1j tj tj tn
+tj = − − −
+R c pN f c p N (1 f ) G (5.66)
+p pj tj tj pj 1j tj tj tp
+We will derive the generation term G from the consideration that it must be
+tn
+proportionalto trap density and electronoccupancy. It must also be proportional
+to light intensity. Let us recall the photon generation term of direct electron-hole
+pairs:
+= α
+G v S (5.67)
+eh g
+α
+where v is the group velocity of light, S the photon density and the absorption
+g
+ffi
+coe cient.
+Inanalogy,wecanwritedownthetrapexcitationtermas:
+= σ
+G v SN f (5.68)
+tn g tj tj xn
+σ
+where hastheunitofareaandshallbedefinedasthetrapphoto-excitationcross
+xn
+section. Please note that this cross section times the amount of trapped electrons
+ffi
+(i.e., N f ) may be compared with usual bulk material absorption coe cient in
+tj tj
+/
+unitsof1 m.
+Similarly,trapexcitationforholesisgivenby:
+= − σ
+G v SN (1 f ) (5.69)
+tp g tj tj xp
+Toactivatethismodel,theusershouldusethetrap_excitationstatement.
+
+
+=== PAGE 112 ===
+110 DRIFT-DIFFUSIONMODEL
+
+
+=== PAGE 113 ===
+hapter
+C 6
+NUMERICAL TECHNIQUES AND
+3D SIMULATION
+ff
+Thischapterdiscussesnumericalissuesrelatedtosolvingthedrift-di usionequa-
+/
+tions on a discretized 2 3 dimensional finite element mesh. The 3D mesh may be
+regarded as a collection of 2D planes with carefully constructed plane-to-plane
+finite element connectivity. The reduction of 3D into 2D in case of cylindrical
+symmetryisalsodiscussed.
+6.1 Numerical Techniques
+6.1.1 Introduction
+ff
+All Crosslight software packages involve solving the drift-di usion equations
+alongwithafewothers,mostlyrelatedtotheopticalpartofthedevicesimulation.
+SinceasubstantialamountofcomputationtimeisspentontheDDequations,we
+shallconcentratemainlyonthenumericaltechniquesrelatedtothemhere.
+Equations(5.1)to(5.3)describetheelectricalbehaviorofthebulkorquantumwell
+semiconductordevices. Poisson’sequation(Equation5.1)governstheelectrostatic
+potential and the continuity equations (Equations (5.2)-(5.3)), govern the carrier
+concentrations.
+ff
+These di erential equations are discretized as described in the next section. The
+resulting set of equations is coupled and nonlinear. Consequently, there is no
+method to solve the equations in one direct step. Instead, solutions must be
+obtained by a nonlinear iteration method, starting from some initial guess. The
+solutionmethodsaredetailedinsubsection6.1.3,andthechoiceofinitialguessis
+explainedinsubsection6.1.4.
+
+
+=== PAGE 114 ===
+112 NUMERICALTECHNIQUESAND3DSIMULATION
+6.1.2 Discretization
+To solve the device equations on a computer, they must be discretized on a sim-
+ulation grid. That is, the continuous functions of the PDE’s are represented by
+ff
+vectorsoffunctionvaluesatthenodes,andthedi erentialoperatorsarereplaced
+ff
+by suitable di erence operators. Instead of solving for four unknown functions
+(potential, electron and hole concentrations, and the electron or hole energy), the
+simulatorsolvesfor3Nor4Nunknownnumbers,dependingonthemodelchoice,
+whereNisthenumberofgridpoints.
+ff
+The key to discretizing the di erential operators on a general triangular grid is
+the box method [10]. Each equation is integrated over a small polygon enclosing
+each node, yielding 4N nonlinear algebraic equations for the unknown potential,
+concentrations and the wave amplitude. The integration equates the flux into the
+polygon with the sources and sinks inside it, so that conservations of current and
+electricfluxarebuiltintothesolution.
+The integrals involved are performed on a triangle by triangle basis, leading to a
+simpleandelegantwayofhandlinggeneralsurfacesandboundaryconditions. In
+thiscasetheintegralissimplyreplacedbyasummationoftheintegrandevaluated
+atthenodemultipliedbytheareasurroundingit.
+In the case of the continuity equations, the carrier fluxes must be evaluated with
+ff
+care; the classic finite di erence formulas are modified as first demonstrated by
+ScharfetterandGummel(SG-formula)in1969[11]. Fromtheuser’spointofview,
+thediscretizationiscompletelyautomaticandnointerventionisrequired.
+Forthehydrodynamicmodel,theSG-formulafordiscretizationmustbemodified.
+ThedetailsareworkedoutintheAppendix.
+6.1.3 Newton’s method
+ff
+We discuss the numerical solution of drift-di usion equations. In Newton’s
+method, all of the variables in the problem are allowed to change during each
+iteration, and all of the coupling between variables is taken into account. Due to
+this,theNewtonalgorithmisverystable,andthesolutiontimeisnearlyindepen-
+dentofbiasconditions.
+The basic algorithm is a generalization of the Newton-Raphson method for the
+rootofasingleequation. Equations(5.1)–(5.3)canbewrittenas:
+F
+j (Vj1,
+E
+j1,
+E
+j1
+)
+=
+0
+,
+(6.1)
+v fn fp
+F
+j (Vj1,
+E
+j1,
+E
+j1
+)
+=
+0
+,
+(6.2)
+n fn fp
+F
+j (Vj1,
+E
+j1,
+E
+j1
+)
+=
+0
+,
+(6.3)
+p fn fp
+
+
+=== PAGE 115 ===
+6.1NumericalTechniques 113
+where jrunsfrom1toN,and j1includes jitselfplusitssurroundingmeshpoints.
+ffi
+Equations(6.1)to(6.3)representatotalnumberof3Nequations,whichissu cient
+tosolvefor3N variables: (V1,E1 ,E1 ,V2,E2 ,E2 ,...,VN,EN ,EN).
+fn fp fn fp fn fp
+Oncetheequationsarediscretizedintheaboveform,standardNewtontechniques
+canbeusedtosolveforthem. TheseinvolvetheevaluationoftheJacobianmatrix
+to linearize Equations (6.1) to (6.3), followed by a linear solver (involving LU
+factorizationofthematrix)andfinally,nonlineariterationtogetthefinalsolution.
+Since the Jacobian matrix is sparse, sparse matrix techniques are used to improve
+thecomputationspeed.
+The major acceleration of a Newton iteration is the Newton-Richardson method,
+whereby the Jacobian matrix is only refactored when necessary. When it is not
+necessary to factorize, the iterative method using the previous factorization is
+employed. The iterative method is extremely fast provided the previous factor-
+ization is reasonable. Frequently the Jacobian need only be factorized only once
+or twice per bias point using the Newton-Richardson method, as opposed to the
+twentytothirtytimesrequiredintheconventionalNewtonmethod. Thedecision
+to refactor is made on the basis of the decrease per step of the maximum error
+ff
+of both the equation residuals and the variable di erences. This mechanism has
+beenautomatedwithintheprogramandnouserinterventionisneeded.
+6.1.4 Initial guess and adaptive bias stepping
+Several types of initial guess solutions are used in the simulator. The first is the
+simplechargeneutralassumptionusedtoobtainthefirst(equilibrium)biaspoint.
+For the wave equation, the guess solution is a delta function at the center of the
+activeregion. Thisisthestartingpointofanydevicesimulation.
+Anylatersolutionwithappliedbiasneedsaninitialguessofsometype,obtained
+by modifying one or two previous solution(s). When only one previous solution
+is available, the solution currently loaded is used as the initial guess, modified
+by setting the applied bias at the contact points. The same is true for the wave
+ff
+equation. Whentwoprevioussolutionswithtwodi erentbiasesareavailable,itis
+possibletoobtainabetterinitialguessbyextrapolatingthetwoprevioussolutions
+All of these steps are automated within the program and no user intervention is
+needed.
+AschematicofthebiasingstrategyisgiveninFigure6.1.
+As in any Newton method, convergence strongly depends on the wise choice of
+the initial guess solution. In principle, the Newton nonlinear iteration should
+always converge as long as the initial guess is close enough to the solution. The
+closertheinitialguessistothesolution,thefewernonlineariterationsarerequired
+
+
+=== PAGE 116 ===
+114 NUMERICALTECHNIQUESAND3DSIMULATION
+Equilibrium/Initial Solution
+Update Current/Voltage Bias
+Bias step reduction
+Frequently-Updated
+Wave Equation Solver
+All No
+Solvers Convergent &
+Consistent
+Yes
+Figure6.1: Flowdiagramofhowthesimulatorperformsatypicalsimulation.
+to reach convergence. The program takes this fact into account and implements
+anadaptivemethodtocontrolthebiasstepafterthesuccessfulconvergenceofthe
+previoussolution.
+Assuming that the previous solution takes K number of iterations for a bias
+1
+∆
+step of V to reach convergence and the user believes (by experience) that the
+1
+∆
+optimal number of iterations should be K , the current bias step V is adjusted
+0 2
+∆ = ∆ /
+to V V K K . In this way an optimal step can be determined such that the
+2 1 0 1
+nonlinear Newton iteration is controlled to converge within K iterations. Again
+0
+thisprocedureiscompletelyautomatedfortheuser.
+One common cause of convergence problems in a Newton method is oscillations
+in the solution. This usually occurs when the initial guess is poor and the solver
+overshoots the solution. In order to prevent this, a damping value has been
+implementedwhichpreventsthesolvertochangethesolutiontoomuchbetween
+successive iterations. This value is defined in the newton_par statement. A
+ff
+small damping value will damp the oscillations e ectively but may cause slower
+convergence. A large value allows faster convergence when the initial guess is
+poorbutcarriesalargerriskofoscillations.
+Another important topic for the Newton solver is the choice of solver variables:
+pleaserefertosection4.7fordetails.
+
+
+=== PAGE 117 ===
+6.1NumericalTechniques 115
+6.1.5 Transient simulation
+ff
+The method used to discretize the di erential equations in time is the backward
+Eulermethod. Itsbasicapproximationisthefollowingequation:
+∂ − −∆
+S S(t) S(t t)
+= .
+(6.4)
+∂ ∆
+t t
+This method has the advantages of being highly stable and recovers the steady
+∆ → ∞
+statesolutioninthelimit t .
+Strictlyspeaking,thesimulationsystemhasmorethan5setsofequationswhenthe
+trapdynamicequation(Equation(5.11))isalsoincludedinatransientsimulation.
+However, this equation is only dependent on local variables and can be solved
+beforethemajorNewtonstepinvolvingallmeshpoints.
+Once all the equations are discretized in terms of solution of the previous time
+step, one cantreatthe solution of the presenttime step usingthe same method as
+. .
+for the steady state solution, ie one can linearize the discretized equations and
+useNewton’smethodtosolvethem.
+6.1.6 Mesh issues
+Correct allocation of the grid is a crucial issue in device simulation. The number
+of nodes in the grid (N) has a direct influence on the simulation time, where the
+numberofarithmeticoperationsnecessarytoachieveasolutionisproportionalto
+Np wherepusuallyvariesbetween1.5and2.
+ff ff
+Because the di erent parts of a device have very di erent electrical and optical
+behavior,itisusuallynecessarytoallocateafinegridtosomeregionsandacoarse
+grid to others. Whenever possible, it is desirable not to allow the fine grid in
+some regions to spill into regions where it is unnecessary, in order to maintain a
+reasonablesimulationtime. Formoremeshallocationsuggestions,pleasereferto
+sections4.5and4.6.
+Thefirststepinmeshgenerationistospecifythedeviceboundariesandtheregion
+boundaries for each material. The program uses triangles and trapezoids as the
+basic building blocks to describe an arbitrary device. Furthermore, the edge of
+eachpolygoncanbebenttothedesiredshape.
+Thebasicoperationinthemeshgeneratoraftertheboundarieshavebeendefined
+is to draw lines parallel to the edges of the polygons (see Figure 6.2). This way
+oneobtains,smallertrapezoidswhichcanbebisectedintotwotriangles(thebasic
+elementsinthefiniteelementmethod).
+Another basic operation is doubling the mesh density in a specified region as
+shown in the example of Figure 6.2. This is accomplished by drawing a new line
+
+
+=== PAGE 118 ===
+116 NUMERICALTECHNIQUESAND3DSIMULATION
+d2
+d1
+Figure 6.2: Schematic for the basic operations in the mesh generator. Two mesh
+linesinthed direction,areusedtodoublethemeshnearthecenterofthepolygon.
+2
+betweentheoldmeshlines. Repeatingthisoperation,onecanmanuallygenerate
+ameshwithanyvariationofmeshdensities.
+Thesimulatorhasprovidedanotherpracticalapproachtoautomaticmeshgener-
+ation and refinement. The mesh is refined according to the variation of specified
+physical quantities. For example, in a case where the potential variation between
+two adjacent nodes is greater than a value specified by the user, the program will
+automatically allocate additional mesh points between the two nodes. More de-
+tail can be found in the description of the statement refine_mesh in the reference
+section.
+6.2 The Cylindrical Coordinate System
+6.2.1 Introduction
+Since many devices are fabricated with cylindrical symmetry (e.g. VCSELs, pho-
+todetectors), it is a good idea to establish a cylindrical coordinate system for
+device simulation. By making use of the rotational symmetry, we can reduce the
+three-dimensional coordinate system to a two-dimensional one. To do so, we
+ff
+firstconsiderourdi erentialequationsystemsunderageneralcoordinatesystem.
+Then,weapplythetheorytothecylindricalsystem.
+
+
+=== PAGE 119 ===
+6.2TheCylindricalCoordinateSystem 117
+6.2.2 Somegeneralconsiderationsforanarbitrarycoordinatesys-
+tem
+ff
+Ourpurposeistore-writethedrift-di usionequation,usuallywrittenincartesian
+coordinates,(x,y,z),inthenewcoordinatesystem(q ,q ,q )whichareorthogonal
+1 2 3
+to each other. We start by considering a small distance along each of the three
+coordinates: s
+! ! !
+∂ x 2 ∂ y 2 ∂ z 2
+= , = + + .
+ds H dq H (6.5)
+j j j j ∂ ∂ ∂
+q q q
+1 2 3
+Thenthegradientofascalarvariableuisgivenby:
+∂ ∂ ∂
+1 u 1 u 1 u
+∇ = + +
+u e e e (6.6)
+∂ 1 ∂ 2 ∂ 3
+H q H q H q
+1 1 2 2 3 3
+wheree isusedtodenotetheunitvectorforeachofthenewcoordinates.
+j
+∇·
+Letusderivetheexpressionforthedivergence, AofanarbitraryvectorA. We
++ +
+considerasmallvolumedefinedwithinfromq toq dq ,q toq dq ,andq to
+1 1 1 2 2 2 3
++ +
+q dq . Theout-goingflux(A)thoughthesurfacesatq andq dq ofthissmall
+3 3 1 1 1
+volumeisgivenby:
+∂
+| − | =
+(A 1 H 2 H 3 ) q1 +dq1 dq 2 dq 3 (A 1 H 2 H 3 ) q1 dq 2 dq 3 ∂
+q
+(A 1 H 2 H 3 )dq 1 dq 2 dq 3 (6.7)
+1
++
+Similarly,thefluxthroughsurfacesatq andq dq isgivenby:
+2 2 2
+∂
+(A H H )dq dq dq (6.8)
+∂ 2 3 1 1 2 3
+q
+2
++
+andthefluxthroughsurfacesatq andq dq isgivenby:
+3 3 3
+∂
+(A H H )dq dq dq (6.9)
+∂ 3 1 2 1 2 3
+q
+3
+The divergence is defined as the the total out-going flux divided by the volume
+underconsideration:
+" #
+∂ ∂ ∂
+1
+∇· = + +
+A (H H A ) (H H A ) (H H A ) (6.10)
+∂ 2 3 1 ∂ 3 1 2 ∂ 1 2 3
+H H H q q q
+1 2 3 1 2 3
+6.2.3 Cylindrical coordinate system
+, , ,θ,
+The relation between the old (x y z ) and the new coordinate system (r z ) is
+1 1 1 r
+givenby:
+= θ
+x rcos
+1
+
+
+=== PAGE 120 ===
+118 NUMERICALTECHNIQUESAND3DSIMULATION
+= θ
+y rsin
+1
+=
+z z
+1 r
+(6.11)
+To avoid confusion with the (x,y,z) system used in our simulation software, we
+,
+have used a new set of symbols here. In our simulator, x y are the lateral and
+verticalcoordinatesofa2Dplaneandzisadepthcoordinateusedtostackplanes.
+Inthecylindricalsystem,thez axisisusuallynormaltothelayersandcorresponds
+r
+to ysothatrcorrespondstox.
+Itiseasytofindthat:
+= , = , = .
+H
+r
+1 Hθ r H
+z
+1 (6.12)
+Therefore,thegradientisgivenby:
+∂ ∂ ∂
+u 1 u u
+∇ = + +
+u
+∂
+e
+r ∂θ
+eθ
+∂
+e
+z
+(6.13)
+r r z
+r
+andthedivergenceisgivenby:
+" #
+∂ ∂ ∂
+1
+∇· = + +
+A
+∂
+(rA
+r
+)
+∂θ
+(Aθ)
+∂
+(rA
+z
+) (6.14)
+r r z
+r
+or
+∂ ∂ ∂
+1 1
+∇· = + +
+A
+∂
+(rA
+r
+)
+∂θ
+Aθ
+∂
+A
+z
+(6.15)
+r r r z
+r
+6.2.4 Application to devices with cylindrical symmetry
+∂
+For device with cylindrical symmetry, yields zero. The operators of gradient
+∂θ
+anddivergencebecome:
+∂ ∂
+u u
+∇ = +
+u e e (6.16)
+∂ r ∂ z
+r z
+r
+" #
+∂ ∂
+1
+∇· = +
+A (rA ) (rA ) (6.17)
+∂ r ∂ z
+r r z
+r
+Therefore it is easy to see that in the cylindrical system, all we need to do is to
+replaceAbyrAandmultiply 1 infrontofthedi ff erentialoperators.
+r
+ff
+Ournexttaskistoconvertthenewdi erentialequationintoasuitablediscretiza-
+tion scheme for the cylindrical system. Let us recall how we discretize the drift-
+ff
+di usion equation in the old coordinate system. We evaluate the gradient (the
+electric field or the current density vector) for each boundary of the finite box
+which we createfor the neighboring elements. We then sum up the total flux and
+
+
+=== PAGE 121 ===
+6.33DModelinginSemiconductors 119
+divide it by the area of the finite box. In the new system, we need to multiply the
+fluxbyrwhichisevaluatedattheboundarypoint. Wealsodividethetotalfluxby
+the area of the finite box and by r evaluated at the center of the box (or the center
+point).
+Itisobviousthatweshouldkeepinmindthatthemissingdimensionisnolonger
+infinite but has rotational symmetry. For example, we need to integrate current
+π
+densityoverthe2 radianstogetthetotalcurrent.
+6.3 3D Modeling in Semiconductors
+6.3.1 Introduction
+Computational resources have always been at a premium so that historically,
+TCADmodelswerefirstdevelopedin1Dand2D.MostoftheCrosslighttoolshave
+been developed along the same lines, relying on a triangle-based finite element
+method. This is naturally a 2D approach, with the 1D case approximated as a
+ffi
+singlecolumnoftriangles. However,computingpowerhasincreasedsu ciently
+that3Dsimulationisnowwithinthereachofmostordinarycomputerusers.
+Someoutstandingissuesmustberesolvedtoextendthesolverfrom2Dto3D:
+• /
+The user input interface should be a natural extension of a 2D simulation.
+All material macros in 2D should be usable in 3D. All physical models and
+boundaryconditionsmustbeextendableto3D.
+•
+A useful 3D simulation should be able to handle geometry and material
+variationinthez-dimensioneasily.
+•
+Smartmemorymanagementschememustbedevelopedsothatthe3Dpack-
+agecanberunonanythingfromalaptoptoasupercomputer.
+ffi
+We have successfully overcome most of these di culties and created an option
+for 3D modeling. We call this capability “3D-Current Flow” or “3D-Flow” since
+it allows current to flow both in all three dimensions. We will explain the design
+ideasbehindthismodelinthefollowingsubsections.
+6.3.2 From 2D to 3D
+While surface meshing of 3D objects is well-understood and used in applications
+such as ray tracing & computer graphics, the generation of volumetric mesh is
+more complex and still the subject of intense research by many groups. Work
+
+
+=== PAGE 122 ===
+120 NUMERICALTECHNIQUESAND3DSIMULATION
+along these lines generally involves generating tetrahedral elements, which can
+ffi
+be di cult to do properly: algorithms often struggle to prevent the creation of
+“slivers” which have poor aspect ratios and can connect non-neighboring points
+[12].
+However, we already have a two-dimensional mesh generation and refinement
+system which works very well for TCAD applications. It is natural to try extend
+thissystemasfaraswecanandadaptitto3Dsimulations.
+As usual, we identify the parallel cross sections of a device that have the most
+,
+variationinphysicalvariablesanddefinethemasx yplanes. Withintheseplanes,
+weusethesame2Dmeshgenerationroutinesasbefore. Thezdirectionwillhavea
+relativelyslowervariationandcanbemoresparselymeshedtoreducetheoverall
+number of mesh points: every z mesh point will be accompanied by a 2D mesh
+plane.
+For example, a ridge waveguide laser would use the waveguide cross-section as
+,
+thex ydirectionandthezaxiswouldbethelongitudinalpropagationaxis. Onthe
+,
+other hand, an LED with complex electrode shapes would define the x y planes
+to be parallel to the electrodes and the z axis would be perpendicular to the QW
+layers. Inacylindricalsystem,3Dsimulationsimplyalackofrotationalsymmetry
+, , θ
+andthe x y(orr z )planeswouldstacktogetherinthe direction.
+r
+6.3.3 3D structure and material input
+A3Dsimulationin.solisalwaysdefinedbyusingthe3d_solution_methodstate-
+=
+ment with the option 3d_flow yes. Other options can also be added to control
+the way the mesh planes connect to each other as will be explained later in this
+chapter.
+Thenextstepoftheinputistodefineregionsthathavethesamematerialproper-
+ties and composition. These are called ‘segment” or “z-segment” and are defined
+by the z_structure statement. A segment can have multiple mesh planes: these
+will share the same material properties such as bandgap and doping but physi-
+cal variables such as potential and carrier concentrations are allowed to change
+betweenplanes.
+To define a 3D volume, at least 2 mesh planes must be defined. However, at least
+3 mesh planes must be present to get a variation along the z-axis. Segments con-
+taining a single mesh plane are allowed but must have zero thickness: additional
+planesandsegmentswillbeneededtodefinea3Dvolume.
+After all the z_structure statements have been issued, multiple load_mesh state-
+mentsmustbeissued. Eachofthesestatementsmustusethezseg_numparameter
+to identify the segment they belong to. In the special case where there is only a
+=
+singlesegment,thiscanbeomittedandzseg_num 1willbeassumed.
+
+
+=== PAGE 123 ===
+6.33DModelinginSemiconductors 121
+After the mesh has been loaded, the material properties for each segments must
+be defined. This must be done inside blocks bracketed by begin_zmater ...
+end_zmater. These blocks must also be numbered by zseg_num with the ex-
+=
+ception of the case with a single segment: in this case, zseg_num 1 will be
+assumedandthe_zmaterstatementscanbeomitted.
+Materialpropertiesthatneedbedefinedinthiswayinclude:
+•
+materialdeclarations: load_macroanddefine_material
+•
+activeregiondeclarations: active_regandget_active_layer
+•
+dopingstatements
+•
+contactdefinitions
+Note that for material declarations, a macro should be loaded only once, in the
+segmentwhereamaterialfirstappears. Furtheroccurrencesofthismaterialshould
+invokedefine_materialinsteadofload_macro.
+Justasmaterialscanreoccurbetweensegments,socancontactsthesameboundary
+conditions applies everywhere and the electrode current is also summed up for
+all segments. If each segment is to be biased independently from the other, then
+ff
+di erent contact numbers must be used. For example, it is possible for a tunable
+DBR laser to have a shared bottom electrode (#1) with split top contacts for the
+gain(#2),tuning(#3)andDBR(#4)segments.
+The2D.layerfilescanbeusedina3Dsimulationtofacilitatethisinput: the.mater
+and.dopingfilesitgeneratescanbeincludedinsidethe_zmaterblocks. However,
+when processed by itself, a layer file will always number materials 1,2,3,... as it
+encountersthemwhichcancauseconflictsbetweensegments. Toavoidthis,make
+suretousetheprevious_layerstatementtorefertotheprecedingsegment’s.layer
+file: thiswillfixnumberingissuesandwillalsodetectmaterialsthathavealready
+beendeclaredsoitwillissuedefine_materialstatementswhereappropriate.
+However,contactsineach2Dlayerfileshouldbenumberedaccordingtothefinal
+3Dstructureandwhetherornottheywillbesharedbetweensegments.
+6.3.4 3D mesh generation
+As explained above, the three-dimensional mesh consists of a series of two-
+dimensional mesh planes stacked together. The position of these mesh planes
+is determined by the length of the segments and the number of planes that have
+been assigned. This number must be assigned manually by the user, just like the
+numberofmeshpointsinacolumnorlayer.
+
+
+=== PAGE 124 ===
+122 NUMERICALTECHNIQUESAND3DSIMULATION
+Whenasegmenthasmultipleplanes,therewillusuallybeplanesatthebeginning
+and end of the segment. If there are multiple segments, this can cause a problem
+since two mesh planes cannot exist in the same z position. The software has two
+ways of dealing with this, depending on the value of the xy_compatible_mesh
+parameterin3d_solution_method:
+•
+Ifsetto“no”(thedefault),meshplanesoneithersideofthesegmentbound-
+arywillbeshiftedbyasmallvalue.
+•
+If set to “yes”, then one of conflicting the planes will be eliminated and no
+shiftingisrequired.
+=
+Care should be taking when using xy_compatible_mesh yes. If there is a het-
+erojunction at a segment boundary, then eliminating the extra plane can have
+disastrousconsequencesonconvergence. Justlikethe2Dcase,thecloselyspaced
+meshpointsoneithersideofthejunctionareneededtogetconvergence.
+For the other planes inside a segment, their position can be also be controlled via
+mesh point ratios: the z_structure statement supports a feature similar to that of
+put_meshinthe2Dmeshgenerator.
+6.3.5 Discretization in 3D
+Asexplained insubsection6.1.2,every meshpoint hasa polygonassociated with
+it. To connect mesh points between planes, we extrude this polygon in either
+direction to the midpoint of the preceding and following mesh plane. This forms
+ff
+prism-like 3D objects that are di erent from the traditional tetrahedral elements
+usedin3DFEM.
+Fluxconservationisconsistentwiththeboxmethoddescribedearlier: connecting
+mesh points are assigned part of the flux based on the overlap between the two
+extruded polygons. A projection is used to account for the case where the two
+meshplanesarenotparallel.
+6.3.6 Taper structures
+To explain how tapers are handled in the software, we need to introduce the
+conceptof“taperlines”asillustratedinFig. 6.3.
+ConsiderastructurewithataperextendingfrompointsA1-B1onsegment1toA2-
+B2onsegment2. Wedefinea“taperline”A1-C1onsegment1andacorresponding
+taperlineA2-C2(pointC2ishiddenbehindthefigure). Thesetaperlinesareused
+
+
+=== PAGE 125 ===
+6.33DModelinginSemiconductors 123
+Segment 2
+A2
+B2
+A1
+B1
+C1
+Segment 1
+ff
+Figure6.3: Schematicoftaperlinesbetweentwodi erentsegments.
+to extend a particular boundary from one plane to the corresponding boundary
+ontheother.
+Thiswilldivide themesh oneitherside ofthe taperlineand forcemesh pointsto
+connectacrossplaneswithoutcrossingthetaperlines: thisisespeciallyimportant
+/
+when dealing with semiconductor insulator interfaces. As a result, the extrusion
+processdescribedabovenolongerfollowsthezaxis: itfollowstaperlines.
+To define a taper in .sol, two segments must be defined with the taper_pointsj
+parameters: multiple sets of taper points can be used to define multiple taper
+lines. The two segments must not overlap and the taper region will extend in the
+empty space between the last plane of the first segment and the first plane of the
+secondsegment.
+Note that a very common misconception is that material properties in tapers
+are linearly interpolated between planes: for the electrical calculations, this is
+completely untrue. Tapers only control the connectivity between mesh planes:
+actualmeshplanesmustbeassignedatvariouszpositionsinordertosamplethe
+variationofphysicalproperties.
+6.3.7 3D simulator control
+Oncethe3Dmaterialdataandmeshhasbeencreated,a3Dsimulationisrelatively
+straightforward. The.solfileworksthesameasbeforeandbiascanstillbeapplied
+to specified electrodes. When the Newton solver is called, all mesh planes will
+ff
+be solved simultaneously to obtain the 3D solution. The main di erence is that
+
+
+=== PAGE 126 ===
+124 NUMERICALTECHNIQUESAND3DSIMULATION
+/
+2D simulations use currents in A m units (since the z depth is not known). A
+3D simulation, just like a cylindrical simulation, can compute the full current in
+Amperes.
+For simulations with split contacts between segments, we advise caution when
+biasing as you may inadvertently create a short between neighboring electrodes
+in certain situations. This can usually be avoided by biasing multiple electrodes
+simultaneously.
+For plotting results, the .plt file can still be used: plotting statements such as
+lplot_xy, lplot_xyz, vplot_xy, etc... can be used to view 3D data. CrosslightView
+canalsoplotdatafrom3Dsimulations.
+6.4 3D modeling in PICS3D
+PICS3D adds an extra complication to the 3D modeling. As will be discussed in
+Chapter 16 and Sec. 18.4, the lasing behavior is controlled by an additional set
+of equations which depend on the longitudinal round-trip gain (RTG) 1. These
+equations are based on the propagation of the optical mode in the cavity and are
+mostoftenwrittenusingtransfermatrixformalism.
+As such, RTG evaluation requires gain and index profiles at various points in the
+cavity. These points can be considered an “optical mesh” and do not necessarily
+matchthepositionoftheelectricalmeshplanesdescribedintheprevioussection.
+Theopticalmeshalwaysfollowsthedirectionofthelightpropagationinthecavity
+so by the usual convention, it always follows the z-direction. For edge emitting
+devices like DFB lasers, the z-direction is defined as the direction in which x-y
+mesh planes are stacked: we will assume we are dealing with such a device for
+therestofthissection.
+With this in mind, we can consider how to evaluate the RTG equations. The
+problem here is one of consistency: to calculate the propagation, the gain profile
+is needed, which requires knowing the local photon density and the associated
+longitudinal hole burning. However, the photon density itself is only known by
+calculatingtheRTG.
+In older versions of PICS3D, the solution to this problem was to use a quasi-3D
+approach and tabulate the gain at various photon densities. The RTG equations
+were then solved separately from the main Newton solver to get the photon
+density and longitudinal gain profile. However, this method sometimes led to
+convergenceissues.
+As of version 2008, PICS3D fully couples the RTG equations and solves them
+1Thisdoesnotapplytothe2Dsimulationsthatusethesimplerphotonrateequationfromthe
+LASTIPmodel
+
+
+=== PAGE 127 ===
+6.43DmodelinginPICS3D 125
+in the main Newton solver. The RTG equations are still use the “optical mesh”
+but the modal gain and index for the propagation are directly interpolated from
+the electrical mesh at every iteration of the Newton solver. This means that all
+edge-emitting PICS3D simulations must be done in full 3D. In these simulations,
+PICS3Dreliesontheabilitytosolvemultipleelectricalmeshplanessimultaneously
+to interpolate the gain and index profiles onto the optical mesh. This increased
+self-consistency makes the model fully 3D and greatly increases the convergence
+andstabilityofthesoftware.
+Asaresult,alledge-emittinglasersimulationsinPICS3Dmustusethe3d_solution_method
+=
+statement with 3d_flow yes. However, the z_connect option is available to turn
+ff
+on or o the electrical coupling between mesh planes: only the ability to solve
+multiple mesh planes simultaneously is actually required for the 3D simulation.
+ff
+Inmanydevices,thelongitudinalcurrentcontributionisnegligiblesoturningo
+theelectricalconnectionbetweenmeshplaneshasafewadvantages:
+•
+it can often result in a smaller and more stable sparse matrix since the con-
+nectingelementsbetweenplaneswillbeleftoutofthesparsematrixentirely
+•
+it can avoid unintentionally shorting contacts between segments in certain
+biasconfigurations
+6.4.1 3D VCSEL modeling in PICS3D
+For cylindrical devices such as VCSELs, the z-axis is as defined in Sec. 6.2. This
+means that the propagation is normal to the QW layers and the optical mesh is
+perpendicular to what is used in edge-emitting devices. In addition, rotational
+symmetryimpliesthatonlyasinglemeshplaneisrequiredtodoafull3Dmodel:
+3d_solution_methodisnotrequiredformostcases.
+However,thesamebasicprinciplesofthecoupledRTGmethodstillapply: optical
+properties are derived from the electrical mesh points and used to calculate the
+mode propagation. The coupled RTG equations are solved in the main Newton
+solveralongsidetherestoftheelectricalproblem.
+
+
+=== PAGE 128 ===
+126 NUMERICALTECHNIQUESAND3DSIMULATION
+
+
+=== PAGE 129 ===
+hapter
+C 7
+AC ANALYSIS AND HIGH
+FREQUENCY PARAMETERS
+For many users of Crosslight simulation software, assessment of high frequency
+performance of their devices is a key reason of the modeling. Analysis of high
+frequency behavior of a semiconductor device is more than solving the wave
+propagation in a passive medium. The response of a semiconductor to high
+frequency modulation is rather complex and requires special transformation of
+ff
+the drift-di usion equations. This chapter gives an outline of the AC analysis
+theoryforsemiconductordevices.
+7.1 Theory
+7.1.1 Introduction
+AC small signal analysis for semiconductor equations was first developed by
+Laux [13] in 1985. A modified version of this technique including the deep level
+trap model was later developed by Li and Dutton [14]. We shall follow their
+formulation in this section. We derive the formulas in subsection 7.1.2. The
+numericaltechniquesaregiveninsection7.2.
+
+
+=== PAGE 130 ===
+128 ACANALYSISANDHIGHFREQUENCYPARAMETERS
+7.1.2 Basic formulas
+Were-writethebasicsemiconductorequationsandtrapdynamicmodelasfollows:
+!
+X
+ϵ ϵ
+−∇· 0 dc∇ = − + + − − + δ −
+V n p N (1 f ) N f N ( f ) (7.1)
+D D A A tj j tj
+q
+j
+X
+∂ n ∂ f
+∇· − tj − − − + = + D
+J R R R R G (t) N (7.2)
+n n sp st au opt ∂ t D ∂ t
+j
+X
+∂ ∂
+p f
+∇· + tj + + + − = − + A
+J R R R R G (t) N (7.3)
+p p sp st au opt ∂ t A ∂ t
+j
+∂
+f
+tj − tj = tj
+R R N (7.4)
+n p tj ∂ t
+where:
+tj = − −
+R c nN (1 f ) c n N f (7.5)
+n nj tj tj nj 1j tj tj
+tj = − −
+R c pN f c p N (1 f ) (7.6)
+p pj tj tj pj 1j tj tj
+The basic variables involved in the AC analysis are V, the potential; n and p,
+the electron and hole concentrations, respectively; and f , the trap occupancy of
+tj
+the jth trap species. To simplify our derivation, we use the following notation to
+representEquations(7.1)to(7.4):
+, , , =
+F (V U U f ) 0 (7.7)
+1 n p tj !
+∂ n ∂ f ∂ U
+, , , = + D n
+F (V U U f ) N (7.8)
+2 n p tj ∂ D∂ ∂
+U U t
+n n !
+∂ p ∂ f ∂ U
+, , , = − + A p
+F (V U U f ) N (7.9)
+3 n p tj ∂ A∂ ∂
+U U t
+p p
+∂
+f
+, , = tj
+H (U U f ) N (7.10)
+j n p tj tj ∂
+t
+where we have changed the variables n and p into U and U , their respective
+n p
+normalized quasi-Fermi levels. For the electron or hole transport equations (F
+2
+or F ) the first term on the right hand side represents
+∂n
+or
+∂p
+, giving the time
+3 ∂t ∂t
+dependence of electron or hole concentration; the second term gives the time-
+dependentchangeincarrierconcentrationassociatedwiththetrapdynamics.
+Ingeneral,theACinputsignal(voltage)andsolutionvariablesareexpressedas:
+ξ = ξ +∆ξ eiωt
+(7.11)
+0
+
+
+=== PAGE 131 ===
+7.1Theory 129
+ξ ∆ξ
+where istheDCsolutionand isthecomplexACsolutionunderamodulation
+0
+ω = π ξ
+frequency 2 f. This form can represent any variable of the system (V, U ,
+n
+U ,or f )asacomplexsolution.
+p tj
+ξ
+By substituting back into the trap equation and doing a Taylor series expansion
+tofirstorderattheDCsolution,Equation(7.4)becomes:
+∂ ∂ ∂
+H H H
+j∆ + j∆ + j∆ = ω∆
+U U f N i ftj (7.12)
+∂ n ∂ p ∂ tj tj
+U U f
+n p tj
+∆
+Solvingtheabovefor f gives:
+tj
+! !
+∂
+H
+∂
+H
+∂
+H
+−1
+∆ = j∆ + j∆ ω− j
+f U U N i (7.13)
+tj ∂ n ∂ p tj ∂
+U U f
+n(cid:18) p (cid:19) (cid:18) tj (cid:19)
+−
+∂Hj ∂Hj
++
+i
+ω
+N
+∆
+U
+−
+∂Hj ∂Hj
++
+i
+ω
+N
+∆
+U
+∆ f =
+∂Un ∂ftj tj n
+(cid:18)
+∂Up
+(cid:19)
+∂ftj tj p
+(7.14)
+tj
+(N ω )2 +
+∂Hj 2
+tj ∂ftj
+whichcanberewrittenas:
+∆ = ω ∆ + ω ∆
+f F ( ) U F ( ) U (7.15)
+tj n n p p
+By similarly expanding the Poison equation and electron and hole continuity
+equationsasafirstorderTaylorSeriesandthensubstitutingtheaboveexpression
+∆
+for f ,weobtainthefollowingequations:
+tj
+∂ ∂ ∂ ∂
+F F F F
+1∆ + 1 ∆ + 1 ∆ + 1 ∆ + ∆
+V U U (F U F U )
+∂ ∂ n ∂ p ∂ n n p p
+V U U f
+n p tj
+=
+0 (7.16)
+∂ ∂ ∂ ∂
+F F F F
+2∆ + 2 ∆ + 2 ∆ + 2 ∆ + ∆
+V U U (F U F U )
+∂ ∂ n ∂ p ∂ n n p p
+V U U f
+n p t j !
+∂ n ∂ f
+= + D ω∆
+N i U (7.17)
+∂ D∂ n
+U U
+n n
+∂ ∂ ∂ ∂
+F F F F
+3∆ + 3 ∆ + 3 ∆ + 3 ∆ + ∆
+V U U (F U F U )
+∂ ∂ n ∂ p ∂ n n p p
+V U U f
+n p t j !
+∂ ∂
+p f
+= − + A ω∆
+N i U (7.18)
+∂ A∂ p
+U U
+p p
+×
+Werewritethese3equationsin3 3matrixformas:
++ ξ =
+(J D) 0 (7.19)
+
+
+=== PAGE 132 ===
+130 ACANALYSISANDHIGHFREQUENCYPARAMETERS
+foreachmeshpointinthesemiconductor,wheretheJmatrixorJacobiancontains
+thefirst3termsineachequationwhileDcontainstheremainingtermsconcerning
+thetrapsandtheright-handsideoftheequation.
+ξ = ∆ ,∆ ,∆
+Using this notation with ( V U U ) the D matrix at each point is of the
+n p
+form:
+0 1
+D = B B B B B B B B B B B @ 0 0 0 − ( ∂ ∂ U n n + N D ∂ ∂ ∂ F F f ∂ ∂ t 1 3 j U f F F D n n ) ( ( i ω ω ω ) ) + ∂ ∂F ft 2 j F n ( ω ) − ( − ∂p + N ∂ ∂ ∂ ∂ F F f f t t 1 2 j j ∂ F F fA p p ( ( ) ω ω i ω ) ) + ∂F3F ( ω ) C C C C C C C C C C C A (7.20)
+∂ftj n ∂Up A∂Up ∂ftj p
+Considertheboundarypointsandtheinternalmeshpointsseparatelysothat:
+→ +
+J J J (7.21)
+B
+and
+→ +
+D D D (7.22)
+B
+The matrix equation can then be rewritten in a separated form for internal and
+boundarymeshpointsasfollows:
++ ξ+ + ξ =
+(J D) (J D ) 0 (7.23)
+B B B
+∆ ∆ =
+AC Dirichlet boundary conditions imply that U and U 0 so that the AC
+n p
+voltagedriveatthecontacthastheboundarysolution:
+0 1
+B B B ∆ V B C C C
+B C
+ξ = B B 0 C C (7.24)
+B @ A
+0
+∆
+where V istheappliedACvoltageofonevolt.
+B
+SincethefirstcolumnintheDmatrixmustbezerothematrixequationbecomes:
++ ξ = − ·ξ ≡
+(J D) J B (7.25)
+B B
+To simplify the numerics, we now wish to write equations involving only real
+numbers:
+= +
+D D iD (7.26)
+r i
+ξ = ξ + ξ
+i (7.27)
+r i
+Thematrixisthusrewrittenas:
++ + ξ + ξ =
+(J D iD)( i ) B (7.28)
+r i r i
+Byexpandingtherealandimaginaryparts,anewexpandedmatrixcanbewritten:
+! ! !
++ − ξ
+J D D B
+r i r = (7.29)
++ ξ
+D J D 0
+i r i
+
+
+=== PAGE 133 ===
+7.2NumericaltechniquesinACanalysis 131
+7.2 Numerical techniques in AC analysis
+Our task has been reduced to solving the expanded matrix equation detailed in
+ξ ,ξ
+the previous subsection. The AC solution matrix ( ) is easily solved using
+r i
+the sparse matrix inverter to invert the expanded Jacobian and multiply by the
+matrix on the RHS. However, the inversion can be slow because the expanded
++
+Jacobian J D is twice the order of original Jacobian matrix obtained from the DC
+solution. We use direct solution techniques to perform the matrix inversion so
+thatconvergenceisguaranteedforallfrequencies.
+In our simulator, the AC analysis is implemented as a post-processor, i.e., the
+analysisisdoneaftertheDCsolutionisobtainedfromthemainsolverinputfile(
+with.solextension). Thisisdoneintwosteps:
+•
+The AC analysis matrix is constructed from Jacobian matrix elements used
+for DC simulation. To enable export of the additional data from the usual
+DCanalysis,weusethemore_outputstatement.
+•
+The AC analysis is activated by the input file with extension .plt. The input
+file must specify which data set (thus the DC bias condition) is used for the
+AC analysis. The statement ac_voltage is used to apply a 1V AC signal on
+one of the contacts (or electrodes). The resulting AC current data are stored
+inanoutputfiledefinedbytheuserforlaterplotting.
+•
+Once the AC current is calculated, a statement such as plot_ac_curr is used
+toplottheresults.
+The basic outputs are the complex AC currents at all the electrodes and the AC
+current distribution, in response to the applied AC voltage (one volt) at one of
+the electrodes. The following important quantities can be extracted from the AC
+current:
+•
+The conductance matrix elements are computed from the real part of the
+electrodeACcurrentwithonevoltappliedACbiasatoneoftheelectrodes.
+•
+The capacitance matrix elements are computed from the imaginary part of
+ω
+theelectrodeACcurrent,dividedby ,withonevoltappliedACbiasatone
+oftheelectrodes.
+•
+The current gain can be computed from ratio of the AC current magnitudes
+between two electrodes, with one volt applied AC bias at one of the elec-
+trodes.
+
+
+=== PAGE 134 ===
+132 ACANALYSISANDHIGHFREQUENCYPARAMETERS
+I I
+1 2
++ TWO-PORT(cid:3) +
+V V
+1 2
+- NETWORK -
+Port #1 Port #2
+Figure 7.1: Schematics of a general 2-port network. Please note the direction of
+currentflow.
+•
+Thevoltagegainisslightlymorecomplicated. Itmustbedoneintwosteps.
+Forexample,wewishtoobtainthevoltagegain
+∆V2.
+Thismaybewrittenas:
+∆V1
+∆ ∆ ∆
+V I V
+2 = 2 × 2
+(7.30)
+∆ ∆ ∆
+V V I
+1 1 2
+ff
+whichmeanswemustapplytheac_voltagecommandtwicetotwodi erent
+electrodestoobtaintheindividualratios.
+7.3 Two-Port Network Parameters
+ffi
+Linearnetworks,ornonlinearnetworksoperatingwithsignalssu cientlysmallto
+causethenetworkstorespondinalinearmanner,canbecompletelycharacterized
+by parameters measured at the network terminals (ports) without regard to the
+contentsofthenetworks. Oncetheparametersofanetworkhavebeendetermined,
+its behavior in any external environment can be predicted without regard to the
+contentsofthenetwork. Weshallintroducesomeuseful2-portparametersinthis
+sectionandexplainhowtheyareextractedfromDCsimulations.
+A general 2-port network is indicated in Fig. 7.1. Please note that the positive
+ff
+directionofthecurrentflowisdi erentthaninthesimulatorandall2-portparam-
+ff
+etersrelatedtocurrentflowdirectionwillbedi erentbyasignfromcurrentflow
+calculated from the simulator which assigns a positive sign to all current flowing
+outofadevice.
+
+
+=== PAGE 135 ===
+7.4ACPhoto-response 133
+In an AC analysis of semiconductor devices, it is common to share one contact
+for the input and output. For example, it is often convenient to use the common
+emitter configuration in a bipolar transistor. By default, all contacts of a device
+ffi
+have zero AC voltage bias from a DC simulation. Thus, it is su cient to specify
+a single contact as input or output since all other contacts are grounded in AC
+voltages. Such a situation is ideal for the computation of the Y-parameters which
+aredefinedasfollows(referringtoFig. 7.1).
+= +
+I Y V Y V
+1 11 1 12 2
+= +
+I Y V Y V (7.31)
+2 21 1 22 2
+ItisoftenconvenienttoexpresstheY-parametersrelativetothesystemcharacter-
+= /
+istic admittance Y 1 Z where Z is the system characteristic impedance (often
+c c c
+settobe50Ohm). Wedenotetherelativeadmittanceusinglowercaselettershere,
+= /
+forexample, y Y Y .
+11 11 c
+Based on our discussions in previous sections, the complete set of Y-parameters
+can be obtained if we excite the device twice, once at the input and once at the
+output contact. Once the Y-parameters are obtained, the important S-parameters
+can be computed from the following equations (please refer to any text books on
+microwavetheories):
+− + +
+(1 y )(1 y ) y y )
+= 11 22 12 21
+s
+11 + + −
+(1 y )(1 y ) y y
+11 22 12 21
+−
+2y
+= 12
+s
+12 + + −
+(1 y )(1 y ) y y
+11 22 12 21
+−
+2y
+= 21
+s
+21 + + −
+(1 y )(1 y ) y y
+11 22 12 21
++ − +
+(1 y )(1 y ) y y
+= 11 22 12 21
+s (7.32)
+22 + + −
+(1 y )(1 y ) y y
+11 22 12 21
+Thetheoriesdiscussedinthissectionstronglysuggestaconvenientwayofstudy-
+ing the 2-port parameters: if you wish to understand the S-parameters, always
+go back to the Y-parameters which may be easily understood from a simple AC-
+voltage excitation of the input or output. Also, a convenient way to check the
+correctnessof2-portparametersshouldbetoplottheY-parameterswhichmaybe
+comparedwithAC-currentresponsesfromsingle-terminalexcitations,keepingin
+ff
+mindthesigndi erencementionedearlierinthissection.
+7.4 AC Photo-response
+InstandardACanalysis,theACsourceisvoltageappliedtooneoftheelectrodes.
+The source of perturbation appears as the B vector on the right hand side of
+

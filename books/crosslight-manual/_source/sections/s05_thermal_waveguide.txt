@@ -1,0 +1,1335 @@
+=== PAGE 228 ===
+226 FINERPOINTSABOUTQUANTUMWELLS
+IMREF. A fraction of total carrier density in QWs or QDOTs is used to represent
+the density of hot carriers escaping from QWs or QDOTs. The theory is based on
+Ref.[73].
+/
+Assuming that the carrier capture escape processes in QWs or QDOTs can be
+/
+described by the following two-level quantum capture escape model in the tra-
+ditional quasi-equilibrium transport theory as shown in Fig.10.8(a), where n , n
+1 2
+are the density of carriers on the two levels. J , J are the injection and outflow
+in out
+τ τ τ
+densityofcarriers. , , arethecarrierlifetimeofcapturebytheconfined
+cap esc interb
+level, escape and interband recombination from the confined level, respectively.
+Then, the rate equation of carriers in QWs or QDOTs in the quasi-equilibrium
+transportmodelis
+dn n
+t = − t + +
+J J (10.71)
+τ in out
+dt
+interb
+= +
+wheren n n . Inournon-equilibriumcarrierescapescheme,afractionofthe
+t 1 2
+confinedcarriersarefreetogodirectlyviaaverageconductivitywithaveragelocal
+velocity: V . Then the carrier transport process can be shown as in Fig.10.8(b),
+fesc
+therateequationofcarriersinQWsorQDOTsis
+dn n
+t = − t + + −
+J J J (10.72)
+τ in out fesc
+dt
+interb
+where J isthecarrierdensityescapingfromwellsordotsbeforebeingthermal-
+fesc
+ized,givenby
+F n V
+= esc t fesc
+J (10.73)
+fesc
+d
+whereF isthefractionoftotalcarrierdensityescapingfromthewellsordots. d
+esc
+isthethicknessofthewellsordots.
+According to Ref.[74], the lifetime of carriers escaping before being thermalized
+canbedeterminedbyasimilarform:
+d
+τ =
+(10.74)
+fesc
+V F
+fesc esc
+= πℏ/ ∗ ∗ ff = = ∗=
+whereV 2 dm ,m isthee ectivemass. IfF 0.1,d 3nm,m 0.1,then
+fesc esc
+τ =
+12fs, which is close to the quantum well tunneling escape time as shown
+fesc
+in Ref.[74]. This means that our fractional density escape scheme is equivalent to
+thetraditionaltimeconstantescapescheme.
+
+
+=== PAGE 229 ===
+hapter
+C 11
+THERMAL EFFECTS IN
+SEMICONDUCTORS
+ff
+Thischapterdealswiththermale ectsinsemiconductors. Aswewillshow,there
+are a variety of heating sources in semiconductors: it is critical that these sources
+beaccuratelyformulatedwhenmodelingdeviceswhereself-heatingisimportant.
+Examplesofsuchdevicesarehighpowertransistorsandlaserdiodes.
+11.1 Temperature dependent parameters
+Asuccessfulthermalsimulationrequiresaccuratetemperature-dependentparam-
+eters. Typically, the most important parameters that need to vary with the tem-
+ffi
+peraturearebandgap,mobility,recombinationcoe cientsandrefractiveindex.
+However, the software makes no assumption as to which parameter should be
+ff
+a ected by the temperature. Instead, it allows all material parameters to be a
+function of the temperature. To do so, the parameter definition in the material
+macro should be a function of the reserved “temper” variable. This will tell the
+software to use the local temperature at any given mesh point to evaluate the
+functionandgettheparametervalue.
+ff
+Note that not all the macros in the database have thermal e ects included. The
+user is advised to review the material parameters he plans to use and modify
+them as required. In particular, the refractive index is seldom defined as function
+ff
+oftemperatureinthedefaultmacrosandthise ectmaybeimportantforthermal
+lensinginlasers.
+
+
+=== PAGE 230 ===
+228 THERMALEFFECTSINSEMICONDUCTORS
+11.2 Isothermal temperature variation
+Crosslightsoftwareallowstheusertovarytheisothermaltemperatureofasimula-
+tion. Thisisthetemperaturethatisusedduringtheinitialequilibriumcalculations
+and during the rest of the simulation if self-heating is neglected. Note that even
+with self-heating neglected, the material parameters will still be evaluated at the
+localmeshtemperature(whichisthesameastheisothermaltemperature).
+11.3 Heat flow and temperature distribution
+11.3.1 Expression of heat flux
+ff
+Itiswellknownthattheheatinge ectisveryimportantforsemiconductorlasers
+inalmostallapplications. Theheatgenerationoftenlimitswhatadesignercando
+withapassivelycooleddeviceandthemaximumpowerthatcanbereached.
+Fromthepointofviewofsimulationandmodeling,theconcernistwo-fold. First,
+wemustfindoutthetemperaturedistributionfromallpossibleheatsources. This
+involvesamuchlargersimulationareathanthesmallregionnearthep-njunction.
+Wemustconsiderhowtheheatingpowerflowsthoughthewholesubstrateaswell
+ff
+as from any wire bonds. Second, we must consider how the heating a ects the
+laser performance. This means we must accurately evaluate the degradation of
+ffi
+power, e ciency and other parameters due to the the non-uniform temperature
+distribution. This is not a trivial task because virtually all variables and material
+parametersaretemperaturedependent. Ourgoalistoprovideathermalmodeling
+environmentsothatallpossiblesourcesoftemperaturedependencecanbetaken
+intoaccount.
+We are concerned with the generation and flow of lattice heating power in a
+semiconductor. We first consider the heat flux and then the heat source. We
+introduce the thermal conductivity such that the heating power flux (in Watt / m2)
+isgivenby:
+= −κ∇
+J T (11.1)
+h
+Conservation of energy requires that the temperature distribution satisfy the fol-
+lowingbasicthermalequation:
+∂
+T
+ρ = −∇· +
+C J H (11.2)
+p ∂ h
+t
+or
+∂
+T
+ρ = ∇·κ∇ +
+C T H (11.3)
+p ∂
+t
+
+
+=== PAGE 231 ===
+11.4Heatsources 229
+ρ
+where C is the specific heat and is the density of the material. H is the heat
+p
+source.
+11.3.2 Thermoelectric power and thermal current
+Thetemperaturegradientinducesacurrentoftheform[75][76][77]:
+− µ ∇
+q nP T (11.4)
+n n
+totheelectroncurrentand
+− µ ∇
+q pP T (11.5)
+p p
+totheholecurrent.
+Thethermoelectricpowers,P andP aregivenby:
+n p
+(cid:20) (cid:18) (cid:19)(cid:21)
+k 5 n
+= B − −ν+
+P ln (11.6)
+n
+q 2 N
+c
+and (cid:20) (cid:18) (cid:19)(cid:21)
+k 5 p
+= B − −ν+
+P ln (11.7)
+p
+q 2 N
+v
+ν
+where is the exponent used in the field-dependent relaxation time. For phonon
+ν = − /
+scattering[78], 1 2
+11.4 Heat sources
+The heat source can be separated into contributions from Joule heat, genera-
+/ /
+tion recombination heat and Thomson Peltier heat. Following the suggestion of
+Ref.[75]wediscussthesetermsinmoredetailinthefollowingsubsections.
+/
+11.4.1 Joule optical heat
+There are two sources of Joule heating. One is from the steady state or low
+frequencypartoftheelectricalfield:
+J2 J2
+H Joule−dc = µ n + µ p (11.8)
+q n q p
+n p
+The other part comes from the optical frequency (optical heat). When the optical
+wave passes a lossy semiconductor, the wave is absorbed by the lossy material.
+The absorbed energy can either generate electron hole pairs or be dissipated and
+
+
+=== PAGE 232 ===
+230 THERMALEFFECTSINSEMICONDUCTORS
+become Joule heat. We also refer to this type of heat source as the optical part of
+theJouleheating.
+The internal loss of a semiconductor laser is the cause of the optical part of the
+Joule heating while the band to band absorption is the source for electron-hole
+pair generation in photo-detectors. A simple derivation of this term follows. The
+opticalpowerdissipatedperunitvolumecanbeexpressedas:
+powerloss = σ F2 = ϵ ϵ ω F2 . (11.9)
+op op 2 0 op
+wheretheopticalfieldF istherootmeansquareoftheoscillatingfield.
+op
+γ
+Forconvenienceaconstant isintroducedsuchthatthecomplexwaveamplitude
+isrelatedtotheelectricfieldby:
+|
+F
+|2= γ |
+W
+|2 .
+(11.10)
+γ
+Todetermine weusethefollowingbasicrelation:
+Z Z
+S
+ℏω = ϵ ϵ |
+F
+|2
+dv
+= ϵ γ ϵ |
+W
+|2
+dv
+= ϵ γ < ϵ > .
+(11.11)
+0 1 0 1 0 1
+Thepowerlossbecomes:
+powerloss
+=
+S
+ℏω2ϵ |
+W
+|2 / < ϵ > .
+(11.12)
+2 1
+orintermsofmaterialinternallossandlocalindex:
+ϵ = α/
+n k (11.13)
+2 1 i 0
+H Joule−op
+=
+S
+ℏω2n
+1
+α
+i
+|
+W
+|2 /
+(k 0
+< ϵ
+1
+>
+)
+.
+(11.14)
+11.4.2 Recombination heat
+When an electron-hole pair recombines, the energy either converts to a photon
+(radiative)orturnsintoheat(non-radiative). Forthepurposesofdeterminingthe
+locallygeneratedheat,radiativerecombinationsareconsideredasaheattermbut
+arepartiallycanceledoutbyotherterms(seebelow).
+ff
+Foreachelectron-holepairrecombined,theheatreleasedisthedi erencebetween
+thequasi-Fermilevels:
+= + + + −
+H (R R R R )(E E ) (11.15)
+rec trap Aug spon stim fn fp
+An additional term is also needed to account for recombination events above the
+Fermilevel. Thiscontributionisrelatedtothethermoelectricpowerby:
+= −
+H qR T(P P ) (11.16)
+rec2 total p n
+whereP andP arethermoelectricpowerforholeandelectrons,respectively.
+p n
+
+
+=== PAGE 233 ===
+11.5Thermalboundary 231
+11.4.3 Radiative heat
+Photonswhichescapethecavityremoveheatfromthedevice(radiativecooling);
+thisdefinesanegativeradiativeheatterm:
+= − + ℏω
+H (R R ) (11.17)
+rad stim spon
+In the above, it is assumed that all photons which are emitted at a specific mesh
+point remove heat locally. This contribution is very close in magnitude to the
+− ≈ ℏω
+radiativerecombinationtermsintherecombinationheatabovesinceE E .
+fn fp
+Photonswhicharetrappedinthecavityleavetheirenergyelsewhereinthedevice;
+this is the optical heat term defined in previous sections. Therefore, the total
+amountofradiativecoolingisnotequaltotheopticaloutputpowerofthedevice.
+Inmostrealdevices,somephotonsemittedbyspontaneousemissiondonotcouple
+into a mode but still manage to escape the cavity. This may be accounted for in
+futureversionsofthesoftwarebyascalingfactortoR .
+spon
+/
+11.4.4 Thomson Peltier heat
+The Thomson and Peltier heat terms are related to the spatial variation in the
+thermoelectricpower:
+= − ∇ + ∇
+H Pt−Th T(J n P n J p P p ) (11.18)
+This heat source can be divided into its individual components by isolating the
+ff
+di erentcontributionstothespatialgradient:
+∂ ∂
+P P
+∇ = n∇ + n∇
+P T n (11.19)
+n ∂ ∂
+T n
+withasimilarequationfortheholethermoelectricpower.
+ff
+TheThomsone ectisthusduetothechangeinlocaltemperaturewhilethePeltier
+e ff ectcomesfromthechangeinthelocalcarrierconcentration.1
+11.5 Thermal boundary
+We need to establish some realistic boundary conditions for the heat transport
+equation. In our simulator they are separately defined for electrical contacts and
+otherpartsofdevice.
+1Prior to v.2016, the Thomson heat source was not correctly calculated and reported values
+that actually referred to H . Also prior to that version, the Peltier heat source referred to the
+rec2
+combinedPeltier-Thomsonterm.
+
+
+=== PAGE 234 ===
+232 THERMALEFFECTSINSEMICONDUCTORS
+Forelectricalcontacts,theyaredefinedinthecontactstatement:
+•
+1)Thermalcontacttype1. Thecontactisaheatsinkassumedtohavealattice
+temperaturegivenbytheparameterlattice_temp.
+•
+2)Thermalcontacttype2. Thecontactisassumedtohaveanout-goingheat
+powerflowgivenbytheparameterheat_flow. Thelatticetemperatureofthe
+contactisunknownandistobedeterminedbythethermalequationsolver.
+•
+3)Thermalcontacttype3. Thecontactisassumedtobeconnectedtoather-
+malconductorwithitsconductancegivenbyparameterthermal_cond. This
+thermalconductorisconnectedtoaheatsinkwithafixedtemperaturegiven
+by parameter extern_temp. Again the lattice temperature of the contact is
+unknownandistobedeterminedbythethermalequationsolver.
+Please note that due to recent improvements in the external circuit model
+(minipsice,self-heatingduetocontactresistanceisnolongerhandledauto-
+matically by the software. Instead, the heat flow due to the external resistor
+shoulddefinedusingthecontact_heatingcommand.
+If the user used a .layer file to facilitate the input, then contact statements may
+havebeengeneratedinthe.materfile. Asthesedefaultcontactswilluseadefault
+boundaryconditionofType1anda300Klatticetemperature,itisstronglyrecom-
+mendedthatallthermalsimulationsre-issuethecontactdeclarationsinthe.solto
+definethecorrectthermalboundaries.
+For other parts of a simulated device, the heat flow follows the same rules as the
+current flow and no heat can flow across the mesh boundary. To override this
+anddefinenon-contactthermalboundaries,usethethermal_interfstatement: the
+sameboundarytypes(1-3)apply.
+11.5.1 Comparison between thermal and electrical boundaries
+For the electrical solver, contact boundaries are an isopotential region; current at
+the contact is an output quantity, calculated using the gradient of the Fermi level
+(Eq.5.6)andsummedupoverallboundarymeshpoints.
+Even when the current on an electrode is explicitly controlled during the simu-
+lation, the above still holds true: voltage on the electrode is the control variable
+that applies to all boundary mesh points. Current control is enforced by using an
+additionalequationintheJacobiantocomparetheelectrodecurrenttothedesired
+value.
+When discussing the heat flow equation and its boundaries, the following com-
+parisonisuseful:
+
+
+=== PAGE 235 ===
+11.5Thermalboundary 233
+•
+temperatureisanalogoustovoltage
+•
+heatflowisanalogoustocurrent
+Therefore, all mesh points at thermal boundaries share a single unique tempera-
+ture: this is analoguous to the isopotential boundary used in the electrical solver.
+Thisobservationholdstrueforboundarieswhethertheyaredefinedbycontactor
+bythermal_interf. Italsoappliestoallthermalboundarytypesastheyareallex-
+pressedaseitherdirectcontrolovertheboundarytemperatureorasanadditional
+equationthatmonitorstheheatflow.
+In practice, this means that a non-contact region (e.g. a sidewall) without a
+thermal_interf definition does NOT behave in the same way as one that does
+haveaboundarythatimposeszeroheatflow. Whilebothwillhavezeroheatflow,
+the former will allow all mesh points to have their own local temperature; the
+latterwillforceallboundarymeshpointstoauniquesharedtemperature.
+
+
+=== PAGE 236 ===
+234 THERMALEFFECTSINSEMICONDUCTORS
+
+
+=== PAGE 237 ===
+hapter
+C 12
+WAVEGUIDE OPTICAL MODES
+12.1 Introduction
+Many optoelectronic devices simulated by Crosslight software contain a waveg-
+uide. It is thus necessary to solve the lateral optical modes of a waveguide. Since
+ff
+the optical modes couple to the drift-di usion model through carrier-dependent
+ffi
+refractiveindex,ane cientsolutionofthewaveequationsiscritical.
+12.2 Scalar Wave Equation For Lateral Modes
+Our basic assumption in dealing with 2D simulation of optical wave is that it
+β =
+propagates along the z dimension with a factor exp(j z) exp(jk n z) where
+0 eff
+ff
+n is the complex e ective index. The wave equation can then be reduced in
+eff
+dimensionbyvariableseparation.
+Whenthewaveguidedimensionofanedgetypeofsemiconductorlaseriscompa-
+rable to or larger than the wavelength, the lateral optical modes can be described
+bythescalarwaveequationasfollows:
+∇2W(x , y) + k2( ε (x , y) − n2 )W(x , y) = 0 (12.1)
+0 eff
+ε ,
+where (x y) is the optical dielectric constant (not to be confused with the static
+dielectricconstant).
+ff
+Our basic task is then to find the e ective index and the related optical mode
+,
+W(x y). Thereareseveralnumericalmethodsweusetosolvetheopticalmodes:
+•
+SORiterativemethod. Convenientforsimplesingleconfinedmode;useable
+butsomewhatoutdated.
+
+
+=== PAGE 238 ===
+236 WAVEGUIDEOPTICALMODES
+• ff ff
+E ectiveindexmethod(EIM):quasi-2Dmodelwhichise ectivefordevices
+with index varying slowly in one direction but fails to capture important
+ff
+e ectsinridgewaveguidestructures.
+The EIM method solves a single mode 1D wave equation in the y-direction
+foraseriesverticalcuts. Itthenusestheeigenvaluesfromtheseverticalcuts
+astheindexdistributionalongthex-directionandsolvesamultimodewave
+equationsinthisaxis.
+• ff
+Enhanced e ective index method (EEIM) which is an extension of EIM. It
+canbeusedtomodelradiativeboundary.
+•
+AnalyticalapproximationbyGaussianfunction.
+•
+Userdefineddatafile.
+•
+Direct 2D eigensolver using an Arnoldi restarted method. This highly so-
+phisticatedsolutionmethodshouldbeusedinstructureswithastronglateral
+indexstep. Itisespeciallyusefulforstructureswithmultiplelateralmodes.
+12.2.1 Multi-lateral mode model
+A semiconductor laser can be driven into multi-lateral mode operation at high
+currentinjectionlevelsifhigherorderlateralmodesaresupportedbythewaveg-
+uide structure. The 2D module solves the wave equation for the lateral modes at
+everycurrentbiasandsolves,self-consistently,thephotondensitiesofthemodes.
+An additional photon rate equation for each additional lateral mode is included.
+ff
+Note that the lateral modes are coupled directly though the drift-di usion equa-
+ff
+tion via the stimulated recombination term and through the nonlinear gain e ect
+asdescribedlaterinthischapter.
+12.3 Vectorial Helmholtz wave equation
+12.3.1 Basic Vectorial Wave Equations
+In this section, we derive the vectorial wave equation following Ref. [79]. For a
+harmonic guided wave propagating in the positive z direction, we consider the
+vectorfieldsinthefollownotation:
+, , , = , , ω −β
+E(x y z t) (E E E )exp[j( t z)] (12.2)
+x y z
+, , , = , , ω −β
+H(x y z t) (E E E )exp[j( t z)] (12.3)
+x y z
+= ε = µ
+D E B H (12.4)
+
+
+=== PAGE 239 ===
+12.3VectorialHelmholtzwaveequation 237
+FromMaxwell’sequationsforsource-freeregions:
+∇· = , ∇· =
+D 0 B 0 (12.5)
+∇×
+E
+= −∂B = −
+j
+ωµ
+H (12.6)
+∂t
+∇×
+H
+= ∂D =
+j
+ωε
+E (12.7)
+∂t
+weobtain:
+∇×∇× E = ∇ ( ∇· E) −∇2E = ω2µε E = k2E (12.8)
+= π /λ
+wherek 2 n isthewavenumber.
+Thus,
+∇· D = 0or ∇· (k2E) = 0 (12.9)
+E ·∇ k2 + k2∇· E = 0 (12.10)
+∇· E = − (1 / k2)E ·∇ k2 (12.11)
+Using the Maxwell’s equations above, we obtain the vectorial Helmholtz wave
+equation:
+!
+E ·∇ k2
+∇2E + k2E +∇ = 0 (12.12)
+k2
+Letusconsiderthetransversecomponentoftheaboveequationwiththenotation:
+!
+∂ ∂
+= , , , ∇ = , ,
+E (E E 0) 0 (12.13)
+T x y T ∂ ∂
+x y
+We note that in most cases, it is reasonable to assume that ∂ (k2) = 0. We then
+∂z
+obtain: !
+E ·∇ k2
+∇2E + (k2 −β2)E +∇ T T = 0 (12.14)
+T T T T k2
+whichisthevectorialwaveequation.
+Thexcomponentoftheaboveisasfollows:
+!
+∂2E ∂2E ∂ E ∂ k2 E ∂ k2
+x + x + (k2 −β2)E + x + y = 0 (12.15)
+∂ x2 ∂ y2 x ∂ x k2 ∂ x k2 ∂ y
+! !
+∂ ∂ E E ∂ k2 ∂2E ∂ E ∂ k2
+x + x + x + (k2 −β2)E + y = 0 (12.16)
+∂ x ∂ x k2 ∂ x ∂ y2 x ∂ x k2 ∂ y
+Ourfinalexpressionforthexcomponentofthewaveequationisasfollows:
+! !
+∂ 1 ∂ ∂2E ∂ E ∂ k2
+(k2E ) + x + (k2 −β2)E + y = 0 (12.17)
+∂ x k2∂ x x ∂ y2 x ∂ x k2 ∂ y
+
+
+=== PAGE 240 ===
+238 WAVEGUIDEOPTICALMODES
+Similarly,theycomponentcanbewrittenasfollows:
+! !
+∂2E ∂ 1 ∂ ∂ E ∂ k2
+y + (k2E ) + (k2 −β2)E + x = 0 (12.18)
+∂ x2 ∂ y k2∂ y y y ∂ y k2 ∂ x
+Oncethetransversecomponentsaresolved,wecanobtainthezcomponentfrom
+thezero-divergenceasfollows:
+!
+1
+E = ∇ · (k2E ) (12.19)
+z j β k2 T T
+12.3.2 Interpretation of TE Vectorial Solutions
+In this subsection, we attempt to provide a simple prediction or interpretation of
+thevectorialwavesolutionincomparisonwiththescalarsolution. Weconcentrate
+, ,
+ontheTEmode((E 0 E ))whichisusedinmostdevicedesigns.
+x z
+=
+Westartbyrewritingthevectorialwaveequationequation(12.16)usingE 0as
+y
+follows: " #
+∂2E ∂2E ∂ E ∂ (k2)
+x + x + (k2 −β2)E + x = 0 (12.20)
+∂ x2 ∂ y2 x ∂ x k2 ∂ x
+We find that the vectorial wave equation can be written in the same form as the
+ff = π /λ
+scalaroneifweintroducea“vectoriale ectiveindex”k 2 n .
+ve ve
+∂2E ∂2E
+x + x + (k2 −β2)E = 0 (12.21)
+∂ x2 ∂ y2 ve x
+" #
+1 ∂ E ∂ (k2)
+k2 = k2 + x (12.22)
+ve E ∂ x k2 ∂ x
+x
+Therefore, interpretation of the vectorial wave equation can be made using the
+ff
+scalar equation and the “vectorial e ective index”. Let us consider qualitatively
+ff
+the e ect of vectorial wave using the schematic in Fig. 12.1. We consider only the
+case of continuous index profile because the physical conclusion is the same for
+abruptindexprofile.
+∂(k2)
+Based on Fig. 12.1, we decide that is negative in positions with index change.
+∂x
+Since E (x) decays in the positive x-direction, we conclude that Eq. (12.22) yields
+x
+ff ff
+increased e ective index in locations of index change. The increased e ective
+ff
+index in positions of index change can be used to interpret or predict the e ect of
+vectorialwaveequationsascomparedwiththescalarequation.
+ff
+Todemonstratethee ectoftheincreasedindex,wesetupaseriesofscalarwave
+simulations as shown in Fig. 12.2. We artificially put an increased index in three
+
+
+=== PAGE 241 ===
+12.3VectorialHelmholtzwaveequation 239
+Scalar
+TE
+Wave
+Index
+Figure 12.1: Schematics of the right half of the optical mode along the lateral
+direction. Thesolidlinesaretherefractiveindexandthescalarmode. Thedashed
+ff
+linesarethe“vectoriale ectiveindex”andthecorrespondingwavedistribution.
+ff
+di erent positions in the simulations. In a device with index change far from the
+center of the mode, the increased index of the vectorial term causes the wave to
+spreadoutmorethanscalarwave. Iftheindexchangeisclosetothemodecenter,
+moreopticalconfinementisprovidedbytheuseofthevectorialwave.
+Inmostlaserdiodestructures,theindexchangeinthex-directionisusuallylocated
+farfromthemodecenter. Forexample,atypicalburiedheterostructurelasermay
+/
+usesatwomicronwideactiveregionwidthtoprovidethelateralelectrical optical
+confinementsotheindexchangeisaboutonemicronawayfromthemodecenter.
+This means that the vectorial TE mode produces a mode which spreads out more
+inthexdirectionthanthescalarmode.
+We may therefore use the scalar mode solver in most situations: common laser
+designs operate in the TE mode and have a lateral index variation that is weak
+/
+and orfarawayfromthemodecenter.
+12.3.3 Interpretation of TM Vectorial Solutions
+, ,
+A similar derivation may be done for the TM ((0 E E )) vectorial mode by ex-
+y z
+ff
+changing the x and y-axis. However, we must now consider the e ect of index
+discontinuitiesintheydirectionrelativetothepeakofE .
+y
+In most device designs, the optical mode is centered on a quantum well region
+which provides the optical gain: this means that the index discontinuity between
+
+
+=== PAGE 242 ===
+240 WAVEGUIDEOPTICALMODES
+1
+0.9
+0.8
+0.7
+0.6
+0.5
+0.4
+0.3
+0.2
+0.1
+0
+0.8 0.9 1 1.1 1.2 1.3 1.4 1.5 1.6 1.7
+ytisnetnI
+evaW
+dash:with index step; solid:without
+y(um)
+(a)
+1
+0.9
+0.8
+0.7
+0.6
+0.5
+0.4
+0.3
+0.2
+0.1
+0
+0.8 0.9 1 1.1 1.2 1.3 1.4 1.5 1.6 1.7
+ytisnetnI
+evaW
+dash:with index step; solid:without
+y(um)
+(b)
+1
+0.9
+0.8
+0.7
+0.6
+0.5
+0.4
+0.3
+0.2
+0.1
+0
+0.8 0.9 1 1.1 1.2 1.3 1.4 1.5 1.6 1.7
+ytisnetnI
+evaW
+dash:with index step; solid:without
+y(um)
+(c)
+Figure 12.2: A simple laser structure used to understand the increased index
+µ
+causedbythevectorialterm. Theactivelayeris0.05 mGaAs. Thewaveguiding
+µ
+layer is 0.03 m Al(0.2)Ga(0.8)As and the cladding layer is Al(0.8)Ga(0.1)As. The
+increasedindexstepisplacedatvariousdistancesfromtheactivelayertosimulate
+ff µ µ µ
+thee ectofthevectorialterm:a)0.2 m,b)0.1 m,c)0.03 m
+
+
+=== PAGE 243 ===
+12.3VectorialHelmholtzwaveequation 241
+1
+0.8
+0.6
+0.4
+0.2
+0
+0 0.5 1 1.5 2 2.5 3
+ytisnetnI_evaW
+Vectorial TM mode profile (E-field)
+Distance (micron)
+(a)
+3.7
+3.6
+3.5
+3.4
+3.3
+3.2
+3.1
+0 0.5 1 1.5 2 2.5 3
+xednI
+evitcarfeR
+laeR
+Distance (micron)
+(b)
+ff
+Figure 12.3: A simple laser structure used to demonstrate the e ect of the index
+discontinuityonthevectorialTMmodeprofile. Thestructureconsistsofa7.6nm
+GaAsQWwithgraded(71%to33%)AlGaAsbarriers.
+the well and barrier is only a few nanometers away from the mode peak. This
+further means that the mode profile in E is discontinuous near the wave peak
+y
+which produces a significantly lower mode confinement factor compared to a
+scalarwavesolution,ascanbeseeninFig.12.3.
+It is therefore recommended that all optical mode calculations for TM be done
+usingthevectorialmodesolverratherthanthedefaultscalarwavemodel.
+We note in passing that many authors calculate the TM mode by using equations
+based on the magnetic field H. While this formulation produces a smooth wave
+ff
+profile due to the continuity of H at the QW boundary, it produces a di erent
+x
+confinementfactorandintroducesadditionaltermsinthecalculationsofthemodal
+gain. In our model, we thus make the choice of using the simpler formulation
+basedonEeventhoughitproducesdiscontinuouswaveprofilesforTMmodes.
+
+
+=== PAGE 244 ===
+242 WAVEGUIDEOPTICALMODES
+Y
+q
+q
+^
+X
+q
+Y
+X
+Z
+Figure12.4: Schematicrepresentationofthefar-fieldemissionofasemiconductor
+laser.
+12.4 Far-field computation
+After solving for the waveguide modes, it is straightforward to compute the far-
+ff . .
+field emission pattern. The problem is basically that of di raction: ie, given the
+distributionofapropagatingbeamata2Dcrosssection,calculatethedistribution
+at a distance from this cross section. The formulation for this problem has been
+well established in classical electrodynamics and the user is referred to standard
+textbooksonthesubject.
+A semiconductor laser emits light in the form of a narrow spot of elliptical cross
+section. The spatial intensity distribution of the emitted light near the laser facet
+is known as the near-field. During its propagation, the spot grows in size due to
+beamdivergence.
+Thedimensionsoftheellipticalspotanditsdivergenceanglesareimportantbeam
+parameters associated with the laser mode. The far-field pattern is the angular
+distribution of beam intensity far from the laser facet. It is an important factor in
+ff
+the design of laser geometries since it directly a ects the coupling of power from
+thelasersourcetotheobjectbeingilluminated(e.g. anopticalfiber).
+Fig.12.4givesaschematicrepresentationofthefar-fieldemissionofasemiconduc-
+θ θ
+torlaser. Thefullanglesathalfpowerare ⊥and ∥inthedirectionsperpendicular
+θ
+to and along the laser junction plane, respectively. Typically, ∥ is of the order of
+◦ θ ◦
+10 , whereas ⊥ is considerably larger (35 to 65 ), depending on the detailed
+near-fielddistribution.
+
+
+=== PAGE 245 ===
+12.5EnhancedEffectiveIndexMethod 243
+40
+30
+20
+10
+0
+-10
+-20
+-30
+-40
+-10 -8 -6 -4 -2 0 2 4 6 8 10
+)eerged(
+y-ateht
+range: [ 0.0000, 1.0000 ]
+1
+2
+3
+5 4
+6
+8 7
+9
+theta-x (degree)
+Figure12.5: Anexampleofthefar-fieldemissionpatternfromanon-planarridge
+/ µ
+waveguideGaAs AlGaAslaseremittingat0.78 m.
+The program solves the wave equation and the semiconductor equations self-
+consistently and yields accurate near-field distribution as part of the output data.
+Thefar-fieldmodelisgivenbyanadditionalpost-processingstepbythesoftware.
+Refs. [1] and [35] give mathematical formulas for the far-field distribution based
+on the solution to the wave equation in free space. Since these mathematical ex-
+. .
+pressionswerederivedforbroad-arealasersonly(ie,assumingthex-dimensionis
+infinite),theprogramhasextendedtheirformulastoanarbitrarytwo-dimensional
+situationusingthesamesolutionapproachassuggestedin[1]and[35].
+/
+As an example, we consider a ridge waveguide GaAs AlGaAs laser emitting at
+µ
+about 0.78 m. The far-field pattern is computed based on the near-field solution
+and is presented in Fig. 12.5 as a contour plot of the far-field power. The contour
+θ
+lines are evenly spaced in power level (at 10% power intervals). The angles ⊥
+θ
+and ∥ canbedirectlyextractedfromthecontourplot.
+ff
+12.5 Enhanced E ective Index Method
+12.5.1 Introduction
+ff
+In the standard e ective index method (EIM), all boundaries are assumed to be
+zero or decay exponentially. As a result, radiative modes are excluded. In this
+section,wewilldescribeanextensionoftheEIMwhichallowsustotreatradiative
+
+
+=== PAGE 246 ===
+244 WAVEGUIDEOPTICALMODES
+Top boundary H=0
+Even/
+Radiati
+Odd
+Boundar
+Boundary
+Bottom boundary H=0
+Figure 12.6: Boundary conditions and division of columns and rows in the en-
+ff
+hancede ectiveindexmethod(EEIM)
+modesaswellasconfinedmodes.
+ThestandardsetupisasillustratedinFig. 12.6. Wefollowthesolutionapproach
+of Ref. [80] and assume the wave is TE-polarized. It is convenient to solve the H
+field in this case. The mode is assumed to be confined in y-direction, i.e., the top
+and bottom boundaries have zero field intensities. The left boundary is assumed
+to be either even (with derivative zero) or odd (with field zero). This is most
+suitablefordevicewithsymmetryaxisplaceontheleftofthesimulationarea.
+Theradiativeboundaryisassumedtobeontherightside. Thiswillbemostcon-
+venientforcasessuchasARROWwaveguidetypeoflasersandotherantiguiding
+lasers.
+12.5.2 Rectangular model
+Foranarbitrarydevicestructure,itisalwayspossibletodivideintocolumnsand
+rows. The more divisions, the higher the accuracy that can be achieved (at the
+cost of computation time). The program is designed such that the user specifies
+the columns and the program determines the rows automatically. Usually, it is
+ffi
+e cient to divide the structure into 2 or 3 columns according to the geometry of
+thedevice. Forexample,aridgewaveguidelaserisbestdividedintotwocolumns
+withboundaryattheridgewall.
+AccordingtoRef.[80],thebasicwaveequationfortheTEmodecanberepresented
+
+
+=== PAGE 247 ===
+12.5EnhancedEffectiveIndexMethod 245
+bythefollowingmagneticfieldequation:
+∇2H(x , y) = k2( ε−ε )H(x , y) (12.23)
+0
+Thehorizontalboundarybetweenrow1androw2is:
+∂ ∂
+H H
+= | = |
+H H ; (12.24)
+1 2 ∂ 1 ∂ 2
+y y
+Theverticalboundarybetweencolumn1andcolumn2is:
+∂ ∂
+1 H 1 H
+= | = |
+H H ; (12.25)
+1 2 ε ∂ 1 ε ∂ 2
+y y
+1 2
+Ineachverticalsegment,onlyhorizontalboundariesbetweendielectricsoccur,and
+ε , = α β
+is now a step function of y. We separate the variable so that H(x y) (x) (y).
+β
+Thefunction isaverticaleigenfunctionforthisverticalsegmentwitheigenvalue
+δ
+satisfyingtheequation:
+d2β
+= k2( δ−ε (y)) β (12.26)
+dy2 0
+α
+satisfiesasimilarequation:
+d2α
+= k2( ε−δ ) α (12.27)
+dx2 0
+β
+Although there are, in general, an infinite number of eigenfunctions for each
+vertical segment, we include only some finite number N of these to construct a
+generalsolution. Thegeneralsolutioninsegmentjcanbewrittenas:
+X N p p
+, = ε−δ + − ε−δ β
+H (x y) [aexp(k x) bexp( k x)] (y) (12.28)
+j i 0 i i 0 i i
+i=1
+δ β ε
+Our task is to determine the eigenvalue and function in the first step, and
+ffi
+andthecoe cientsofa andb inthesecondstep.
+i i
+12.5.3 Numerical approach
+Our first step is to solve Eq. 12.26 within each column. The analytical expression
+β δ
+for is expressed in term of unknown . Assuming there are M layers, we have
+ffi
+2M number of unknown coe cients in this expression. The horizontal boundary
+conditiongivesasetof2Mequationsthatcanbesolvedbysettingthedeterminant
+
+
+=== PAGE 248 ===
+246 WAVEGUIDEOPTICALMODES
+δ
+to be zero. The zeros of the determinant is used to find the roots of . A singular
+ffi
+valuedecomposition(SVD)methodisthenusedtodeterminethe2Mcoe cients.
+Weshallcallthisprocedure“searchingforrootsiny-direction”(y-root).
+Zeroboundaryontopandbottomwillproduceacompletesetofeigenvectorsthat
+β
+can be used to construct any wave function. Thus, more base functions result
+in a higher accuracy of the constructed wave function. However, the use of more
+base function in y-direction slows down the solution substantially. Here we will
+β = , ,...,
+choosealimitednumberofbasedfunctions( )wherei 1 2 N.
+i
+β
+Oncewehavethe basefunctions,wecanconstructthefinalH-fieldasinEq.12.28.
+ffi
+For each column j, the H-field consists of 2N coe cients of a and b. The verti-
+i i
+cal boundary conditions can be used to write down two equations for H-fields
++
+connecting H-field in j column with that in the j 1 column. The boundary con-
+dition on the right boundary requires that traveling wave to the left be zero. This
+boundary condition can be used to model both radiating wave to the right or for
+confinedwavewithdecayingwave.
+β
+If we multiply the two equations by (y) and integrate over y, we will get 2N
+k
++
+equations relating columns j and j 1. Using this technique for all columns will
+ffi ffi
+produceasu cientnumberofequationstodetermineallthea andb coe cients
+i i
+ε
+and the modal eigensolution for . We shall call this procedure “searching for
+modesinx-direction(x-root)”. Thisstepgeneratesthefinalresultsfortheoptical
+modes.
+The modal optical dielectric constant can be used to determine the modal optical
+gainasfollows:
+= − ε /
+g Im( )k0 n (12.29)
+eeim eff
+√
+= ε ff
+where n Re( ) is the real part of modal e ective index. We shall call this
+eff
+ff
+EEIM modal gain to di erentiate it with the usual modal gain (approximated by
+averaging the local material gain with the weight of wave intensity). We shall
+refertothelatterasaveragingmodalgain.
+The use of averaging modal gain has great numerical advantage of being stable
+ff
+against the Newton’s method used by the drift-di usion equations. But the aver-
+aging gain is inaccurate when there is radiative loss in the case of leaky modes.
+However, direct use of the EEIM gain will cause numerical problems near lasing
+condition.
+As a compromise, we estimate the radiation loss at transparent condition by
+setting all imaginary parts of the dielectric constants to zeros and use the EEIM
+gain obtained this way as the radiation loss. We will use this estimated radiation
+losstocorrecttheaveraginggainthroughoutthewholesimulation.
+In summary, we have been able to used the EEIM to estimate the radiation loss
+anduseittocorrecttheaveragingmodalgain.
+
+
+=== PAGE 249 ===
+12.5EnhancedEffectiveIndexMethod 247
+12.5.4 Estimate of radiative loss
+ff
+UsingtheEEIMmodule,weareabletofindtheradiativemodesandthee ective
+/
+index(oreigenvalueofthewaveequation)associatedwithit. Themodalloss gain
+isrepresentedbytheimaginarypartoftheeigenvalue.
+In many cases, we need to discuss device performance in terms of radiative loss
+and material loss separately. The issue here is how we can separate the radiative
+loss from the material loss since the imaginary part of the eigenvalue of the wave
+equationcomesfrombothmaterialandradiativelosses.
+/
+We recall how we calculate the modal gain loss in the absence of radiative loss.
+/
+Toagoodapproximation,wecalculatethemodalgain lossbyaveragingthelocal
+/
+materialgain lossusingthewaveintensityastheweightfunction. Thisapproach
+simplifiesandstabilizesthenumericalprocedures. Suchmethodofwaveintensity
+averagingcannotbeextendedtothecasewhenthereisradiativeloss. Thereason
+isthatthewaveextendstoinfinitywherethereisradiativeloss.
+ff
+In our simulator, we separate the radiative loss as the di erent between the total
+/ / /
+gain lossandthematerialgain lossfromaveragedlocalmaterialgain loss.
+Weusetwomethodstoestimatetheradiativeloss. Thefirstmethodofestimateis
+tosetallmaterialtobelossless(bysettingimaginarypartofindicestobezero). We
+then apply the EEIM method to compute the total loss with is just the imaginary
+part of the eigenvalue of wave solution. Since the material loss is artificially set
+to zero, the total loss from the EEIM is the radiative loss we needed. We refer to
+such a method of estimate as the “pure index estimate” since purely real indexes
+areusedinthecalculation.
+An alternative method of radiative loss estimate is to compute at every bias both
+/ /
+the total gain loss from the EEIM and also the averaged local gain loss. The
+ff
+di erence between the two is the bias dependent radiative loss. Since the local
+complex index varies as a function of bias, the radiative loss also changes with
+bias. Weshallrefertothismethodofestimateasthe“bias-dependentestimate”.
+The“pureindexestimate”ismostconvenientsinceweonlygetonevalueforeach
+device. In most cases, it gives a good representation of the radiative losses in the
+samedevicewhentherearemateriallosses.
+The “bias-dependent estimate” is more realistic since the radiative loss depends
+/
+also on local material gain loss. Since the numerical fluctuation of EEIM as a
+function of bias can be quit large, the relative error from this method may also be
+substantialascomparedwiththepureindexestimate.
+Tomaintainnumericalstability,westillusethemethodofaveragingthelocalgain
+/
+to obtain the modal material gain loss. Then the radiative loss from either of the
+/
+aboveestimatemethodsissubtractedfromthematerialmodalgain losstoobtain
+/
+thetotalmodalgain losswhichisneededtocomputethelasingcharacteristics.
+
+
+=== PAGE 250 ===
+248 WAVEGUIDEOPTICALMODES
+We use the pure index method as our default setting the simulator. It is the
+most stable since we only have one number to subtract from the material gain.
+Thenumericalfluctuationofthebias-dependentmethodmaybeaproblemwhen
+calculating the light vs. current characteristics so we freeze the value of the
+radiative loss when the total gain near threshold. In both methods, we freeze the
+opticalwavefunctionfromtheEEIMwhenthedeviceisbiasednearthethreshold
+toensureasmoothlightintensityasafunctionofbias.
+12.5.5 Substrate radiative loss
+Acommonsimulationissueistostudytheradiativelosscausedbyhighrefractive
+index substrate. So the direction of radiative wave is downwards in -y direction.
+SinceourEEIMmodelassumesconfinedy-modesandradiativex-modes,wemust
+first rotate our device counter-clockwise by 90 degrees. This may be achieved by
+useofGeoEditorGUIprogramorinthelayerfile.
+12.5.6 Choice of optical window in y-direction
+If the material high index in y-direction is always well centered, it does not mat-
+ter what size of solution region you choose in y-direction (optical boundary in
+init_wave statement). However, there are cases where some columns have no
+opticalconfinementsiny-directionatall.
+Forexample,aridgewaveguidelaserrotatedby-90degreeswillhavethesubstrate
+regionwithnoopticalconfinement. Insuchascase,thebasemodesiny-direction
+depends very much on the choice of optical window. If the window size in y
+ff
+is too small, it obviously will a ect the y-modes. If the size is too large, many
+y-modeswillbeneededtomatchthebasemodesfromothercolumnswithoptical
+confinements in y. With a proper choice of optical window in y-direction, it is
+possiblegetreasonablemodalsolutionsusingonly3-5y-basemodes.
+12.5.7 Run-time messages
+The EEIM model is invoked at every bias step to ensure the variation of modes
+as a function of bias is taken into account. When using the EEIM model, the
+simulator prints out messages stating the status of the execution of the EEIM
+modelprocedures. HerewelisttheRun-timemessageswhenEEIMisinvokedfor
+>
+thefirsttimeaslineswith sign. Ourcommentsarealsogiveninthelisting:
+> -------Start EEIM Model--------
+> With initial root search (this may take a while).
+
+
+=== PAGE 251 ===
+12.5EnhancedEffectiveIndexMethod 249
+Without any previous knowledge of the roots (or modes), we have
+to search the complex delta (for y-modes) and epsilon (for x-modes)
+using a point by point approach. This may take a while.
+> ---Estimate of radiation loss (pure index)---
+As a first time use of EEIM in the program, we estimate
+the radiation loss. This is done by setting all imaginary parts
+of the local index to zero. The imaginary part of
+epsilon (eigenvalue) is used to estimate the radiation modal
+loss.
+> Save base in "tmpb101.dat"
+> Save base in "tmpb102.dat"
+> Save base in "tmpb103.dat"
+> Save base in "tmpb201.dat"
+> Save base in "tmpb202.dat"
+> Save base in "tmpb203.dat"
+...
+> Save base in "tmpb701.dat"
+> Save base in "tmpb702.dat"
+> Save base in "tmpb703.dat"
+The y-base modes are computed and stored in "tmpbijk.dat", where
+i, j, k are integers for ith column and y-base mode number jk. You may
+use the following gnuplot command to view the y-mode:
+plot "tmpbijk.dat" w l.
+Start to search for roots for the final optical field.
+> Initial x-search found roots= 5
+Found 5 possible roots for x-direction.
+> Solve wave in x direction.
+> Find the following possible roots.
+>No./Iter/Error= 1 80 0.7779E-02
+> root= (10.2363356873790,1.027566003195660E-003)
+> EEIM gain[1/m]= -2374.09673169544
+> Save wave in "tmploss01.dat"
+>No./Iter/Error= 2 80 0.6136E-03
+> root= (10.2118941158888,1.060170706117816E-003)
+
+
+=== PAGE 252 ===
+250 WAVEGUIDEOPTICALMODES
+> EEIM gain[1/m]= -2452.35642688367
+> Save wave in "tmploss02.dat"
+>No./Iter/Error= 3 80 0.1955E-04
+> root= (10.1705711295711,1.119772469334270E-003)
+> EEIM gain[1/m]= -2595.48221708482
+> Save wave in "tmploss03.dat"
+We have found the above 3 modes which are saved in "tmplossij.dat".
+You may use the following gnuplot commands to plot modes
+to see if these are physical:
+set parametric
+splot "tmplossij.dat" w l.
+> Radiation loss for pure index model:
+> Mode Loss(1/m)
+> 1 2374.09673169544
+We estimate the radiation loss for the requested first mode as above.
+This loss will be used to correct the material gain
+to get the actual total modal gain.
+> ---End of estimate of radiation loss---
+Once we finished the "pure index estimate", we proceed to
+use EEIM model for optical modes are each bias with run-time
+message similar to the above.
+> Save base in "tmpb101.dat"
+> Save base in "tmpb102.dat"
+> Save base in "tmpb103.dat"
+...
+> -------End of EEIM Model--------
+When the EEIM model is invoked in the next bias step, the roots found in the
+previousbiasareusedasinitialguess. Iftheinitialguessdoesnotproducestable
+solution,theprogramwillre-invoketheEEIMmodelagainwithinitialrootsearch.
+Theinitialrootsearchusuallytakesupmostofthetime.
+Please note that our simulator always gives the pure index estimate the first time
+EEIM is invoked. Then, the modes are solved at every bias steps. If pure index
+estimate is not used, radiative loss at each bias step is calculated and printed at
+
+
+=== PAGE 253 ===
+12.6PerfectlyMatchedLayerBoundary 251
+ff
+di erentbiassteps.
+12.6 Perfectly Matched Layer Boundary
+The finite element (FEM) discretization of the wave equation results in an eigen-
+value matrix problem of the order of the number of mesh points (for scalar equa-
+tions). The matrix problem can easily be set up if the modes are well confined
+withinafiniteregionandtheirintensitiesdecayasafunctionofdistancefromthe
+mode centers. We can obtain a well defined eigenmatrix by deleting the nodes of
+theboundaryassumingzerowaveintensitiesthere. Thesituationforleakymodes
+ismorecomplicatedforfiniteelementanalysis: thereisnosimplewaytotruncate
+themeshtoestablishawelldefinedeigenmatrix.
+Theideaofperfectlymatchlayer(PML)istocreateanartificiallayertoabsorbthe
+radiatingwavewithoutreflectingitback. Sincethewavedecaystozerointensity
+withinthePML,wehaveconvertedtheproblemintooneofconfinedmodesifour
+meshextendstotheouterboundaryofthePML.
+WehaveimplementedamodelofanisotropicPMLduetoSacksandothers[81]. In
+thismodel,theartificialPMLregionhasacomplexanisotropicdielectricconstant.
+Ifthisconstantischosenproperly,thePMLmethodshouldenableustoapplyFEM
+toradiativemodesolutionswhicharemoreaccurateandpowerfulthanEEIM.
+Wedefineanartificiallayerwithananisotropicmediumtensorasfollows:
+0 1
+[ ε ] = [ µ ] = [ Λ ] = B B B B B B0 a 0 b 0 0 C C C C C C (12.30)
+ε µ @ A
+0 0 c
+ε µ
+where and arepermittivitiesoftheisotropicmediumtobematched.
+Without loss of generality, we consider the situation as indicated in Fig. 12.7. As
+proved by Sacks et. al., the reflection from the PML may be eliminated if the
+= = /
+permittivitytensorcomponentsfollowtherelationshipc b 1 a.
+As we show in Appendix A, the wave equation in the PML can be written as
+follows: !
+1
+∂2 ∂2 ∂2 →− →−
++ + E + k2E = 0 (12.31)
+c2∂ x2 ∂ y2 ∂ z2
+Considerascalarfieldbeinghavingthecomponents:
+, , = , β
+E(x y z) W(x y)exp(j z) (12.32)
+!
+1
+∂2 ∂2
++ W(x , y) + (k2 −β2)W(x , y) = 0 (12.33)
+c2∂ x2 ∂ y2
+
+
+=== PAGE 254 ===
+252 WAVEGUIDEOPTICALMODES
+y
+Isotropic
+Medium PML
+X
+W
+X
+Figure 12.7: Schematics of the perfectly matched layer the decay of the wave
+withinit.
+LetusstudytheasymptoticbehaviorofthewaveinthePML.Usually,theradiative
+ff
+wave occurs when the index near the PML is higher than the e ective index, or
+:Re(k2 −β2) > 0. Thewavebehavesas:
+q
+W ∼ exp(jc k2 −β2) (12.34)
+Thus,theimaginarypartofcwillcausethewavetodecaywithinthePMLsothat
+wecantruncateoureigenmatrixontheouterboundaryofthePML.
+Thecriteriaforsettingthepermittivityparametercistoattenuatethewavewithout
+causing reflection. Theoretically, any value of c can be used without causing
+reflection. Howeverinanumericalsimulation,realizationofatheorycanonlybe
+approximate because of discretization using finite number of mesh points. Thus,
+to minimize reflection, we recommend using unity as the real value of c (i.e. the
+samerealreflectiveindexinthePMLasintheisotropicmedium).
+When choosing the imaginary part of c, please note the two extremes. If Im(c) is
+ff
+too large, the substantial di erence between the index of the isotropic medium
+andthePMLmaycausesignificantreflectionandyoumayobservestandingwave
+ripples in the isotropic medium near the PML. On the other hand, if Im(c) is too
+small,theattenuationofthewavewithinthePMLissoweakthatitrequiresathick
+PML layer and many mesh points within the PML. If the thickness of the PML
+is not large enough, the truncation of the eigenmatrix within the PML will cause
+reflection within the PML which may propagate all the way back to the isotropic
+medium. Again,wemayobservestandingwaveripplesintheisotropicmedium.
+Therefore the PML should be adjusted in such a way that standing wave ripples
+
+
+=== PAGE 255 ===
+12.7OpticalPumpingandIncidentLight 253
+donotappearintheisotropicmedium.
+Based on some of our initial tests, a value of 0.02 for the imaginary part of c goes
+well with a PML layer thickness of 5 microns. 50 mesh points may be allocated
+forsuchaPMLlayer.
+12.7 Optical Pumping and Incident Light
+The program allows the use of an external light input to the device. It will be
+treated as a bias component in the same way as electrode bias. For APSYS, this is
+a crucial part of modeling photodetectors and solar cells while PICS3D uses the
+sameideatomodelSOAsandmodulators.
+ff
+When the device being modeled has an active region, there will be two di erent
+wavelengths involved in the simulation: a shorter wavelength controlling the
+opticalgeneration(i.e. theopticalpump)andalongerwavelengthresultingfrom
+/
+theradiative stimulatedemission. InLASTIPandPICS3D,thisisusedforoptically
+pumpedlasers;similarly,APSYScanmodelopticallypumpedLEDs.
+Fig. 12.8 shows that for a typical active region under a specific carrier injection
+condition,itispossibleforthematerialtoexhibitinterbandabsorption(ornegative
+gain,thuse-hpairgeneration)atshorterwavelengthwhileyieldingopticalgainat
+thepeakgainwavelength. Ouraccurateopticalgainspectrummodelisevaluated
+at every mesh point using an active macro (not just the active region) and will
+ff
+thus respond to di erent wavelengths by providing either gain or absorption.
+The transmission of the light through a multi-layer device is modeled using a
+planewavetransfermatrixapproach. Thelocalabsorptionofthepumpgenerates
+ff
+carrierswhich,inturn,maygeneratelightatadi erentwavelength.
+The optical pump may be defined as a single wavelength (i.e. pumping by an
+external laser source) or by using an input spectrum (i.e. a flash lamp or so-
+lar spectrum illumination). If a spectrum is provided, then the transfer matrix
+is calculated for each individual wavelength and the optical generation term is
+integratedoverthewholespectrum.
+As in the key emission wavelength, the incident wave can be also be treated as
+a guided wave and thus all previous discussion of lateral optical mode may be
+appliedwithoutmodification.
+For more information about how to define an incident light source, refer to the
+referencesectionandthelight_powerstatement.
+To control the input light in the simulation, the user should remember that the
+equilibrium calculations define an initial state without any external bias. As the
+inputlightisonekindofbias,itneedstobe“turnedon”withthescanstatement.
+ff
+Thescanvariable“light”startso withavalueofzeroandisusedasamultiplier
+
+
+=== PAGE 256 ===
+254 WAVEGUIDEOPTICALMODES
+2000
+0
+-2000
+-4000
+-6000
+-8000
+-10000
+-12000
+-14000
+0.6 0.65 0.7 0.75 0.8 0.85
+)mc/1(
+niag
+lairetaM
+Pumping
+Lasing
+Wavelength (um)
+Figure 12.8: Optical gain spectrum and indication of pumping and lasing wave-
+lengths.
+to the input light defined in light_power. Setting the value to 1 in a scan fully
+turnsontheinputlightbutlargervaluescanbeused;forexample,onemaywish
+tomultiplyaninputlightspectrumforamulti-sunsolarcellsimulation.
+

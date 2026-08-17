@@ -1,0 +1,2285 @@
+=== PAGE 33 ===
+hapter
+C 1
+INTRODUCTION
+1.1 How to use this manual
+Ifyouhavenotyetinstalledthesoftware,youshouldreadChap. 2andtheninstall
+thesoftware. Afterwards,youshouldreadChap. 3togetstarted.
+If you already have experience with the software and want to know more about
+themodelsimplementedinthepackages,pleasegototherelevantchaptersinthe
+manual:
+•
+Part I contains a rough overview of how the software works and how to
+fix common convergence problems. We strongly urge all new users of the
+softwaretoreadthesechaptersthoroughly.
+•
+PartIIgivesadescriptionofthephysicalandnumericalmodelscommonto
+allourdevicesimulatorsandisrecommendedforallusers.
+•
+PartIIIgivesadescriptionofcertainphysicalandnumericalmodelsthatare
+used only in specific device simulators. Users of our other tools can safely
+skipthechaptersthatdonotconcernthem.
+•
+Part IV contains product-specific tutorial examples. Since some concepts
+re-occur in various devices, users are encouraged to read though all the
+tutorials: even if an example cannot be run, it can still provide valuable
+insightintothesoftware.
+•
+PartVexplainsthevariouscommandsusedinoursoftwareandtheirsyntax.
+Allusersshouldrefertoitasneeded.
+
+
+=== PAGE 34 ===
+32 INTRODUCTION
+1.2 What is Crosslight Software ?
+Crosslight Software provides a number of technology computer aided design
+(TCAD) simulation packages: PICS3D, LASTIP, and APSYS. These packages are
+designedtosimulatesemiconductorelectronicoroptoelectronicdevices. Weshall
+also refer to these simulation software packages as simulators. It also provides
+growthprocessmodelingtools(CSUPREM,Procom)whicharebeyondthescope
+ofthisdocument.
+/
+Crosslightsimulatorsarebasedonfiniteelementanalysisin2 3dimensions. They
+involve a large number of sophisticated physical and numerical models; our pur-
+posehereistogiveacompletedescriptionofthesemodels.
+1.3 What is APSYS ?
+/
+APSYS is a general purpose 2D 3D modeling software program for semiconduc-
+tordevices. Basedonfiniteelementanalysis,itincludesmanyadvancedphysical
+modelssuchashotcarriertransport,heterojunctionmodelsandthermalanalysis.
+ff
+APSYSo ersaveryflexibleandsimulationenvironmentformodernsemiconduc-
+tordevices.
+1.3.1 Applications
+APSYShasawiderangeofapplicationsandcanhandlealmostallsemiconductor
+devices:
+•
+1. SiliconMOSFET,bipolartransistorsandCCD.
+•
+2. HBTbasedonSiGe,AlGaAsandInGaAsP.
+•
+3. GaAsMESFETandPhotodectors.
+•
+4. GaNHEMT.
+•
+5. LightEmittingDiodes(LED).
+•
+6. Electro-absorptionmodulators.
+•
+7. Organicsemiconductordevices(OLED).
+•
+8. Compound,thinfilmandmulti-junctionSolarCells.
+
+
+=== PAGE 35 ===
+1.3WhatisAPSYS? 33
+The main restriction of APSYS is that it does not include a photon rate equa-
+tion. This presumes that the device is pumped below transparency and that no
+/ /
+lasing stimulated recombination occurs although optical absorption carrier gen-
+erationisstillavailable.
+Assuch,itisacomplimentarytooltoLASTIPandPICS3D,whicharespecifically
+designedtosimulatelasersandotherphotonicdevices.
+1.3.2 Capabilities
+APSYS can self-consistently solve the hydrodynamic equations, the heat transfer
+ff
+equationsaswellastheconventionaldrift-di usionequations. Datageneratedby
+APSYSincludesthefollowing:
+•
+1)Currentversusvoltage(I-V)characteristics.
+•
+2)2Dpotential,electricfieldandcurrentdistributions.
+•
+3)2Ddistributionsofelectronandholeconcentrations.
+•
+4)2Ddistributionsofhotcarriertemperaturesinthehydrodynamicmodel.
+•
+5)2Ddistributionsoflatticetemperaturefortheheattransfermodel.
+•
+6)Banddiagramsundervariousbiasconditions.
+•
+7)ResultsofACsmallsignalanalysisforanyfrequencyrange. Extractionof
+2-portACparameterssuchS-andY-parameters.
+•
+8)Quantumwellsubbandstructurewithvalencemixingmodelforquantum
+devices.
+•
+9)2D distributions of occupancy and concentration of deep level traps in a
+semiconductor.
+•
+10)2Dopticalfielddistributionforphotonicdevicessuchasphotodetectors.
+•
+11)SpontaneousemissionspectrumasafunctionofcurrentforLED.
+•
+12)Alloftheaboveasafunctionoftime(transientmodel).
+• ff
+13)Alloftheaboveatdi erentenvironmenttemperatures.
+
+
+=== PAGE 36 ===
+34 INTRODUCTION
+1.4 What is LASTIP ?
+As of the 2016 version of the software, LASTIP’s functionality has been merged
+intoPICS3D.Seethefollowingsectionfordetails.
+1.5 What is PICS3D ?
+PICS3D (Photonic Integrated Circuit Simulator in 3D) is a 3D simulator for laser
+/
+diodesandrelatedwaveguidingphotonicdevices circuits.
+Based on finite element analysis, it solves the semiconductor and optical wave
+equations to provide an accurate description of the device characteristics. When
+/
+calibratedwithspecificmaterial process,itcanbeusedasacomputer-aideddesign
+tooltooptimizeexistingdevicesortoassessnewdesigns.
+1.5.1 Version History
+Asofversion2016thesoftware,PICS3DalsocontainsthefunctionalityofLASTIP.
+ff
+However, PICS3D’s core functionality is compartmentalized into di erent basic
+ff
+editionsthatapplytodi erentkindsoflasers:
+•
+Fabry-Perot Edition: this implements the functionality previously found
+in the LASTIP software. The model is limited to 2D and does no optical
+propagation to find longitudinal modes. Phase matching is ignored and
+lasingisassumedtotakeplaceonthenetmodalgainpeak. SeeSec.15.1for
+details.
+•
+Edge-Emitting Edition: this model is intended for edge-emitting lasers and
+photonicdevices. Alongitudinalpropagationmodelbasedoncoupled-wave
+transfer matrix theory is used. Phase matching of the longitudinal modes is
+considered, with the photon rate equation computed as a complex-valued
+round-tripgainequation. SeeChap.16fordetails.
+•
+VCSELEdition: thismodelisintendedforverticalcavitylasers. Alongtidunal
+propagation model based on thin film transfer matrix theory is used. Phase
+matchingandthe round-tripgain equation areused muchlike theprevious
+model, with additional contributions from the optical standing wave. See
+Chap.17fordetails.
+ff
+Users who wish to model di erent kinds of lasers can do so by adding optional
+ff
+modules to one of these basic editions. Contact Crosslight sales sta for more
+information.
+
+
+=== PAGE 37 ===
+1.5WhatisPICS3D? 35
+1.5.2 Applications
+PICS3Disdesignedtosimulateavarietyofsemiconductoroptoelectronicdevices
+includingthefollowing:
+•
+1. Fabry-Perot(FP)lasers.
+•
+2. DistributedFeedback(DFB)lasers.
+•
+3. DistributedBraggReflector(DBR)lasers.
+•
+4. SemiconductorOpticalAmplifiers(SOA).
+•
+5. Waveguidephotodetectors.
+•
+6. VerticalCavitySurfaceEmittingLasers(VCSELs).
+•
+7. Externalcavitylasers.
+•
+8. Fibergratinglasers.
+•
+9. Electrodeabsorptionmodulators(EAM).
+• /
+10. Multisection MultielectrodeDFBorDBRlasers.
+•
+11. Multisectionphotonicintegratedcircuitcombiningmorethanoneofthe
+abovedevices.
+It is up to the user to determine which of these tools best suits their needs but
+ff
+Crosslightsupportsta canalsohelpwiththisselection.
+NotethatFPlaserscanbemodeledusingeitherthe2Dapproachfromthe“Fabry-
+Perot”basiceditionorthe3Dapproachfrom“Edge-Emitting”edition. Theformer
+approach is quicker and easier to converge but neglects the longitudinal spatial
+ff
+holeburninge ectsthatcanbefoundinthelatterapproach.
+However,the3Dapproachcanbecumbersomeifallofthelongitudinalmodesin
+a FP laser cavity need to be resolved. It’s often easier to simplify the model by
+forcibly neglecting the phase matching condition and using only one longitudi-
+nal mode; see the longitudinal statement. Such an approach combines the best
+featuresofbothmodels.
+
+
+=== PAGE 38 ===
+36 INTRODUCTION
+1.5.3 Capabilities
+PICS3Dprovides a full analysis of a laser by combining 2D waveguide analysis,
+longitudinalpropagationmodels,andvariousmethodsofsolvingthephotonrate
+equation in the cavity. Both quantum well and bulk semiconductor lasers can be
+modeled. Advancedquantumwellmodels(suchask.ptheory)areimplemented,
+which allows the user to model strained quantum wells. The semiconductor
+/
+materials implemented include ternary quaternary III-V materials, nitrides and
+manyothers: additionalmaterialscanbedefinedasneededbytheuser.
+Thecapabilitiesofsimulationincludethefollowing:
+•
+1)Lightversuscurrent(L-I)characteristics.
+•
+2)3Dpotential,electricfieldandcurrentdistributions.
+•
+3)3Ddistributionsofelectronandholeconcentrations.
+•
+4)Banddiagramsundervariousbiasconditions.
+•
+5)Quantumwellsubbandstructurewithvalencemixingmodel.
+•
+6) 3D distributions of occupancy and concentration of deep level traps in a
+semiconductor.
+•
+7)3Dopticalfielddistribution.
+•
+8)3Dlocalopticalgaindistribution.
+• ff
+9)Fullmultiplemodeemissionspectraatdi erentpowerlevels.
+•
+10) Lasing wavelength, output power and longitudinal photon density dis-
+tributionasafunctionofbiascurrent.
+•
+11) Characteristics of DFB lasers with spatial and spectral hole burning ef-
+fects.
+•
+12)Fullmulti-modesimulationofDFBlasers.
+•
+13) Relative Intensity Noise (RIN), Frequency Noise (FM) and spectral line-
+ff
+widthunderdi erentbiasconditions.
+•
+14) Static tuning and dynamic modulation characteristics of single- and
+multi-electrodeDFBorDBRlasers.
+•
+15) Second harmonic distortion in a laser system under direct current mod-
+ulation.
+
+
+=== PAGE 39 ===
+hapter
+C 2
+INSTALLATION
+2.1 System Requirements
+Theminimumsystemrequirementsare:
+• ®
+64-bitIntelPentium 4CPU(orequivalent)
+• ®
+64-bitMicrosoftWindows 7
+•
+1GBofRAM
+•
+4GBofavailablediskspace
+Recommendedsystemrequirementsare:
+• ®
+Inteli7 CPU(orequivalent)
+• ®
+64-bitMicrosoftWindows 10
+•
+8GBofRAM
+•
+4GBofavailablediskspace
+2.2 Installation
+The installation program will guide you through the process. After installation,
+theprogrammaybelaunchedfromtheStartmenu.
+Version-specific instructions may come with your installation CD or download.
+This includes a list of redistributable DLL files from Microsoft which must be
+
+
+=== PAGE 40 ===
+38 INSTALLATION
+installed separately. You may have these files already, as they may have been
+installedbyanotherprogram.
+Note that you should never install multiple software packages in the same direc-
+tory. This may cause version errors between files present in both versions. It is
+strongly recommended to stick with the default installation directory whenever
+possible.
+Ifyouareusingaversionofthesoftwarecontrolledbyadonglekey,youalsoneed
+toinstallthedongledriveratthistime. Thedriverfileshouldbeincludedonyour
+installationCDordownloadfolder.
+Ifyouareusingaremotelicense,pleasemakesurethatyourcomputerhasaccess
+ffi
+to the internet. Some of the programs will need to access a server in our o ce
+to validate your license so make sure to configure your firewall appropriately.
+ConsultyourITdepartmentorCrosslightforassistance.
+2.3 Additional Software
+By default, Crosslight uses the public domain program GNUPLOT to view sim-
+ulation results (http://www.gnuplot.info/). Depending on the plotting device
+selected by the user, GNUPLOT may produce Postscript or PDF files; an appro-
+priateviewermayberequiredtoviewthesefiles.
+ToviewPDFoutput,anumberofprogramsareavailableincludingnativesupport
+in most modern web browsers. However, we recommend the original Adobe
+Acrobat ® Readerprogram(https://get.adobe.com/reader/)toviewthesefiles.
+Forpostscriptfiles,optionsaremorelimited. Onepossibilityisthecombinationof
+GSView(http://www.ghostgum.com.au/software/gsview.htm)andGhostscript
+(https://www.ghostscript.com/download/gsdnld.html): the 64-bit version of
+these programs should be used when inside a 64-bit operating system. However
+developmentofGSViewhasbeenstoppedandnofurtherupdatesareexpectedto
+beavailable.
+Other options include Okular from the KDE project (https://okular.kde.org/
+download.php ; also available on Microsoft Store ® ) and Evince (https://www.
+fosshub.com/Evince.html). These programs can open both Postscript and PDF
+files.
+ResultsmayalsobeplottedwithoutadditionalsoftwarebyusingourCrosslightView
+program.
+
+
+=== PAGE 41 ===
+hapter
+C 3
+BASIC FILES AND PROCEDURES
+3.1 For the Impatient
+Tostartthesoftware,(supposingyouareusingPICS3D;theothertoolsfollowthe
+\
+sameroutine),clickon“PICS3D-20** SimuCenter”intheStartmenu. Thisisthe
+main Graphical User Interface for the program and most simulation tasks can be
+accomplished from within this interface. Depending on the software version you
+are using, older versions of this tool (named Simu*****) may also be found in the
+Startmenu.
+If you have installed the optional tutorial movies, they will be available under
+SimuCenter’s Help menu. After watching these, you may be tempted to start
+modeling your own devices right away. However, we strongly urge you to take
+the time to work through the included tutorial examples to learn how to use the
+software. Nomatterhoweageryouare,thelearningcurvecanbequitesteepand
+youwillbenefitinthelongrunfromaslowerapproach.
+Even after you become familiar with the examples, it is preferable to use an
+existing project as a basis for your own simulations. Whenever possible, you
+should modify existing designs step by step to fit your needs rather than making
+anentirelynewsimulationfromscratch.
+>
+Torunanexistingsimulation(suchasthetutorialexamples),clickonFile- Open
+Project from within Simucenter to browse and select an existing project in the
+examplesdirectory. Loadtheprojectbyclickingonthe.sol,.gainor.spjfile. Toact
+on the input files, right-click on the appropriate file and select the desired action
+fromthepop-upmenu:
+1. Runthe“*.layer”filestoprocessandgeneratethe.geofiles.
+2. Runthe“*.geo”filestogeneratethemesh.
+
+
+=== PAGE 42 ===
+40 BASICFILESANDPROCEDURES
+3. (Optional) Run the “*.mplt” files to inspect the mesh generated if you wish
+toknowifthemeshisreasonable.
+4. (Optional) Run “*.gain” files to preview the gain spectrum or other critical
+physical variables. If no .gain file exists, you can create a basic template by
+right-clickingthe.materfile.
+5. Runthemainequationsolverwiththe“*.sol”inputfile.
+6. (Optional)Analyzeandplottheresultswiththe“*.plt”inputfiles.
+7. (Optional) Results can also be plotted by using CrosslightView. This can
+launched by right-clicking on the .std files in SimuCenter or with the main
+→ →
+menu: “Action View Results CrosslightView”. The program can also
+belaunchedindependentlyfromtheStartMenu.
+IftheprogramstopswhenlaunchingasimulationoropeningoneoftheGUItools,
+thenthemostlikelycausesare:
+1. Missingredistributablelibraries: pleaseconsultinformationsendalongwith
+theprogramforafulllistoffilesthatneedtobeinstalled.
+2. License error: be sure to copy the license file or hardware dongle that was
+senttoyou.
+3. Firewallissues: fornetwork-basedlicenses,yourPCmustallowconnections
+totherelevantlicenseserver.
+ff
+Shouldanyoftheseissuesarise,contacttheCrosslightsupportsta forassistance.
+3.2 How Crosslight Simulation Program Works
+A simulation is controlled by one or more input files which define the device
+structure and the simulation parameters. There are three basic input file types
+ff /
+with di erent file extensions: .layer .geo, .sol and .plt . These are respectively
+/
+usedtoinputthedevicestructure generatethemesh,solvetheequationsandplot
+the results. A detailed description of the hierarchical relationship between these
+fileswillbegivenbelow.
+Each input file is in a text format and contains a collection of statements which
+allowtheusertointeractwiththeprogram. Inputfilesareintendedtobeprocessed
+through the command line and experienced users will often write down their
+contentsdirectly. Workingthroughthecommandlineisoftenconvenientforsuch
+userssinceitlendsitselftobatchfilescriptingandunattendeduseofthesoftware.
+
+
+=== PAGE 43 ===
+3.2HowCrosslightSimulationProgramWorks 41
+However, a number of user interface programs have been designed to facilitate
+inputfilecreationandsimulationworkflow: theseprogramsarealsodescribedin
+thefollowingsections.
+/
+3.2.1 Input Output Files
+TheoverallhierarchybetweenfilesisshowinFig.3.1. Aswediscussedpreviously,
+the main input files users will interact with are .layer, .sol and .plt. There are also
+/
+other auxiliary input output files that the user needs to know in order to use
+ff
+the simulation software e ectively. We give a detailed description of the most
+importantonesbelow:
+1. .layer. Themaininputfilethatdescribestheuserstructure;itcanbedefined
+using the LayerBuilder GUI tool. When processed, it creates a number of
+auxiliaryfiles: .geo,.mater,.doping,andforVCSELstructures,.vcsel. These
+auxiliaryfilesareoverwritteneachtimethe.layerfileisprocessed.
+2. .geo. Themaininputfiletothemeshgenerator,normallycreatedbyprocess-
+ing .layer. Formerly used as a primary input file (before .layer existed); still
+used in that way for some cases, to access mesh generation features beyond
+thescopeofthe.layerformat.
+3. .sol. Themaininputfilethatdefinesthematerialpropertiesandcontrolsthe
+biasandotherconditionsofmainequationsolver.
+4. .doping. Contains doping information that is to be included in the .sol file;
+normallycreatedbyprocessing.layer.
+5. .mater. Containsmaterialdefinitioninformationthatistobeincludedinthe
+.solfile;normallycreatedbyprocessing.layer.
+6. .mplt. Usedtoplotthemeshgeneratedfrom.geofile.
+7. .gain. An important auxiliary input file that can be used to preview the
+optical gain spectrum, spontaneous emission rate spectrum, quantum well
+subbands,andothercriticalphysicalproperties. Thismaybeusedbytheuser
+todosomepreliminaryestimatesbeforethefullsimulationisperformed.
+8. .plt file is used to plot the output data after the simulation completes. The
+programcallsthepublicdomainsoftwareGNUPLOTtodisplaythegraphics
+in various computer platforms and printers. Typically, data is output using
+eitherPDForPostscriptfiles.
+
+
+=== PAGE 44 ===
+42 BASICFILESANDPROCEDURES
+LayerBuilder
+LayerBuilder
+Device structure
+Device Simulator
+Device Simulator
+Output Feiles
+Post-processing:
+.plt or GUI
+Figure3.1: OverallfilehierarchyandflowchartofCrosslightdevicesimulators
+
+
+=== PAGE 45 ===
+3.2HowCrosslightSimulationProgramWorks 43
+ffi
+9. .out and .std. These files appear with a numerical su x such as .out_0001,
+.out_0002, etc... These are numerical output data from the main equation
+solver. Theycanbeusedbythe.pltprogramorCrosslightViewtoplotdata.
+Theseoutputfilesarenotmeanttobeunderstoodbytheuser.
+3.2.2 The direct approach
+Sincethecoresimulationsoftwareinteractsdirectlywiththeinputfiles(.layer,.sol
+and.plt),thedirectapproachistodirectlyeditthesefiles.
+Thisapproachcancertainlyseemdauntingtonewusersbutforexperiencedusers,
+ithasanumberofadvantages:
+1. Allowstheusertousethefullcapabilitiesofthesoftware,includingfeatures
+notyetsupportedbytheGUItools.
+2. Can create of new simulations by modifying an older example or merging
+ff
+partsofdi erentexamples.
+3. Easiertoreproduceproblemswhentechnicalsupportisrequired. Ifanerror
+isencountered,thebasicinputfilescansimplybeemailedforassistance.
+4. Text files are portable across systems: being able to use the direct approach
+meansnothavingtorelyonsetuptoolswhichmaynotbeavailableonother
+computerplatforms.
+InputStatementSyntax
+Tomodifytheinputfiles,itishelpfultograspthebasicsyntaxusedforstatements:
+•
+Commentlinesstartwith“$”andwillbeignoredduringfileprocessing.
+•
+Each line can only have a maximum of 80 characters and any information
+afterthislimitwillbeignoredduringprocessing.
+•
+Statements that need to be split up due to their length should use the con-
+tinuation symbol “&&”. Characters after the continuation symbol will be
+ignored.
+•
+Eachlinecanonlycontainonestatement.
+•
+Eachstatementstartswithakeywordwhichmayormaynotbefollowedby
+=
+parameters specified with “ ”. Some parameters may have a default value
+and do not need to be specified while others are mandatory and must be
+definedbytheuser.
+
+
+=== PAGE 46 ===
+44 BASICFILESANDPROCEDURES
+•
+Each parameter has its own type (character string, integer or floating point
+value). Usingavalueofthewrongtypeisanerror.
+•
+Certain values need to be grouped for input (e.g. a set of (x,y) coordinates).
+The following symbols are invisible to the parser used for processing and
+{ }
+maybeusedtogroupdata: space,“,",“(",“)",“[",“]",“ "and“ ".
+•
+Certain statements (esp. those used to describe material properties such as
+band_gap)canbeusedmorethanonce. Ifso,thenthelastvalueissuedtakes
+precedence.
+In some cases, a formula or table may be used instead of defining a value for a
+materialparameter. PleaseconsultPartVandAppendixBfordetailedinformation
+on the syntax of statements and parameters as well as rules for mathematical
+functionsthatcanbeusedintheinput.
+3.2.3 The graphic user interface
+For users who want to avoid working with the command-line during the simula-
+tion, GUI tools exist to facilitate the process of creating input files and running a
+simulation.
+Atthetimeofprintingofthismanual,thefollowingtoolsareavailable:
+1. SimuCenter: at its heart, a simple text editor for the input files. However,
+/
+it also integrates various device setup utilities and graphic input output
+programs and can launch the main solver. It also includes online help ca-
+pabilities as well as a “Wizard” to assist with use of the various commands.
+Thisshouldbethestartingpointofanysimulation.
+2. LayerBuilder: readsandcreates.layerfilestodefinesimpledevicestructures.
+/
+Limitedtodeviceslaidoutinalayer columngrid,withlimitedfunctionality
+tostretchouttheseboundaries.
+3. GeoEditor: allows the user to draw complex devices with irregular shapes
+that are compatible with the .geo input file format. Should be used in-
+stead of LayerBuilder when the device structure does not follow the typical
+/
+layer columnpatternfoundinmostdevices.
+4. CrosslightView: A 3D color graphic display tool; used to view simulation
+results. CanbelaunchedindependentlyorfromSimuCenter;alsoaccessible
+byright-clickingonthe.stdoutputfilethatuserwishestoplot.
+These GUI tools are intended to be simple enough that they do not require a
+specific manual. Please consult Crosslight tech support for clarification on their
+use.
+
+
+=== PAGE 47 ===
+3.3Definingthedevicestructure 45
+3.2.4 The Setup Utility Programs
+For users who want to create a new structure while avoiding both the direct
+approachandtheGUIprograms,itispossibletocreateabasictemplateinputfile
+using a simplified question & answer workflow. This approach is powered by
+command-line programs which are accessed by right-clicking on one of the main
+inputfiles(.layer,.soland.plt)andselectingthe“Setupbycommand”option.
+After this initial template has been created, the structure may be edited to fill-in
+themissingcommandsormakefurtheradjustmentstothestructure.
+3.3 Defining the device structure
+Thebasicinputfileusedforthemeshgenerationisthe“.geo”file,whichprovides
+a versatile and flexible geometric data specification for finite element analysis.
+Thismeshisthenloadedintothedevicesimulator. Virtuallyanydevicegeometry
+ormaterialvariationmaybehandledbythe“.geo”dataformat. However,itrelies
+onabsolutepointcoordinatestodefinepolygoncornerpointssoitmaybetedious
+touseexceptforthesimplestofdevices.
+Therefore, a separate program called LAYER was created to help generate the
+“.geo” file. The LAYER program is controlled by a simpler input file format with
+file extension “.layer”. The .layer specification allows simultaneous definition of
+the device geometry, doping, material information and mesh parameters, further
+simplifyingtheprocessofdefiningthedevicestructure.
+Thefollowingsubsectionsdescribethe“.geo”andand“.layer”inputfileformats.
+Serious users of the simulator should study the “.geo” input file format. For
+ffi
+beginnersorcasualusers,“.layer”inputfilemaybesu cient.
+In this section, we will also show how to use some of the command-line tools to
+define and process these input files. We will show usage of these tools from the
+command line assuming a default installation directory: this should be replaced
+with your actual installation path. Should spaces be present in the actual instal-
+lation path, the call to the program should also be wrapped in quote marks so
+that the operating system recognizes the command as one long string and not a
+commandthathasmultiplearguments.
+NotethatthesetoolscanalsobeaccessedviaSimuCenterbyright-clickingonthe
+inputfileandselectingtheappropriateaction.
+
+
+=== PAGE 48 ===
+46 BASICFILESANDPROCEDURES
+3.3.1 SetupLayer
+Tocreateabasic.layerfile,wecanusethesetuplayercommand-lineprogram. Let
+usillustrateitsusebyusingthisverysimple1Dlaserdiodestructure:
+µ = −
+1 m Al 0.5 Ga 0.5 As p 1e24m 3
+µ
+0.2 m GaAs undoped,activeregion
+µ = −
+1 m Al 0.5 Ga 0.5 As n 1e24m 3
+Please note that when we enter the layer structure, we start from bottom as layer
+#1andworkourwayupuntilthetoplayerisreached.
+Theprogramiscalledasfollows:
+C:\Work>c:\crosslig\pics3d\setuplayer.exe -layer test1
+withtheinteractivesessionshowingthefollowingupas:
+Setting up file:test1.layer
+We assume a 1D layer structure on the xy-plane.
+Please enter the device width (um)
+(Or half width if it is a symmetric device)
+[typical:1-5 um]
+1.5
+Please enter the total number of mesh points
+for all the layers; typical [20-40]
+30
+Enter the maximum mesh spacing:
+typical [0.1 - 0.5 um]
+0.25
+Please enter the layer structure starting from
+bottom as layer 1
+For layer number 1
+Please enter layer thickness (um)
+1
+Please select doping (1/m^3):
+n-doping: (1) 2.0e24; (2) 1.5e24
+
+
+=== PAGE 49 ===
+3.3Definingthedevicestructure 47
+(3) 1.0e24; (4) 0.5e24; (5) other n-doping
+(6) undoped
+p-doping: (7) 2.0e24; (8) 1.5e24
+(9) 1.0e24; (10) 0.5e24; (11) other p-doping
+3
+Is there DFB/DBR grating structure in this layer? [y/n]
+n
+Is this layer an active layer (y/n)?
+n
+Please enter layer bulk material macro to be used
+(1) gaas -- bulk GaAs
+(2) inp -- bulk InP
+(3) ingaas -- bulk InGaAs
+(4) algaas -- bulk AlGaAs
+(5) ingaasp -- bulk InGaAsP (matched to InP)
+(6) ingaasp_xy -- bulk InGaAsP (strained)
+(7) Enter another macro name other than the above
+4
+Do you wish to grade Al [y/n] ?
+n
+Please enter the Al composition [0-1]
+0.5
+Next?
+(1) next layer
+(2) go back to a previous layer
+(so that I can re-enter parameters)
+(3) repeat the previous few layers
+(as in a MQW device)
+(4) finish.
+(5) cancel without generating input file.
+1
+For layer number 2
+Please enter layer thickness (um)
+0.2
+Please select doping (1/m^3):
+n-doping: (1) 2.0e24; (2) 1.5e24
+(3) 1.0e24; (4) 0.5e24; (5) other n-doping
+
+
+=== PAGE 50 ===
+48 BASICFILESANDPROCEDURES
+(6) undoped
+p-doping: (7) 2.0e24; (8) 1.5e24
+(9) 1.0e24; (10) 0.5e24; (11) other p-doping
+6
+Is there DFB/DBR grating structure in this layer? [y/n]
+n
+Is this layer an active layer (y/n)?
+y
+Please enter active layer material macro
+quantum subbands, gain, etc.
+Please enter the active region material system
+(1) AlGaAs/AlGaAs --- quantum well
+(2) InGaAs/AlGaAs --- strained quantum well
+(3) InGaAsP/InP --- InGaAsP/InGaAsP strained
+quantum well/barrier; substrate=InP.
+(4) AlGaAs --- bulk AlGaAs
+(5) InGaAsP --- bulk InGaAsP lattice matched to InP
+(6) InGaAsP/GaAs --- InGaAsP/InGaAsP strained
+quantum well/barrier; substrate=GaAs.
+(7) InGaAlAs/InP --- InGaAlAs/InGaAlAs strained
+quantum well/barrier; substrate=InP.
+(8) GaN --- bulk GaN (9) AlGaN --- bulk AlGaN
+(10) InGaN --- bulk InGaN
+(11) InGaN/AlGaN -- strained well/barrier;
+substrate = GaN.
+(12) InGaAlP/GaAs --- In(1-xw-yw)Ga(xw)Al(yw)P
+/In(1-xb-yb)Ga(xb)Al(yb)P; substrate=GaAs
+(13) InGaN/InGaN --- Strained well grown on material
+lattice matched to GaN.
+(14) Active macro other than the above
+4
+Enter Al composition (0 to 1)
+0
+Please enter layer bulk material macro to be used
+(1) gaas -- bulk GaAs
+(2) inp -- bulk InP
+(3) ingaas -- bulk InGaAs
+(4) algaas -- bulk AlGaAs
+
+
+=== PAGE 51 ===
+3.3Definingthedevicestructure 49
+(5) ingaasp -- bulk InGaAsP (matched to InP)
+(6) ingaasp_xy -- bulk InGaAsP (strained)
+(7) Enter another macro name other than the above
+4
+Please enter the Al composition [0-1]
+0
+Next?
+(1) next layer
+(2) go back to a previous layer
+(so that I can re-enter parameters)
+(3) repeat the previous few layers
+(as in a MQW device)
+(4) finish.
+(5) cancel without generating input file.
+1
+For layer number 3
+Please enter layer thickness (um)
+1
+Please select doping (1/m^3):
+n-doping: (1) 2.0e24; (2) 1.5e24
+(3) 1.0e24; (4) 0.5e24; (5) other n-doping
+(6) undoped
+p-doping: (7) 2.0e24; (8) 1.5e24
+(9) 1.0e24; (10) 0.5e24; (11) other p-doping
+9
+Is there DFB/DBR grating structure in this layer? [y/n]
+n
+Is this layer an active layer (y/n)?
+n
+Please enter layer bulk material macro to be used
+(1) gaas -- bulk GaAs
+(2) inp -- bulk InP
+(3) ingaas -- bulk InGaAs
+(4) algaas -- bulk AlGaAs
+(5) ingaasp -- bulk InGaAsP (matched to InP)
+(6) ingaasp_xy -- bulk InGaAsP (strained)
+(7) Enter another macro name other than the above
+
+
+=== PAGE 52 ===
+50 BASICFILESANDPROCEDURES
+4
+Do you wish to grade Al [y/n] ?
+n
+Please enter the Al composition [0-1]
+0.5
+Next?
+(1) next layer
+(2) go back to a previous layer
+(so that I can re-enter parameters)
+(3) repeat the previous few layers
+(as in a MQW device)
+(4) finish.
+(5) cancel without generating input file.
+4
+Generating .layer file
+For your convenience, the setup parameters you have just
+typed in have been saved in a file named setup_script.txt.
+You may modify the script file and use it
+(to avoid typing the same parameters all over again)
+when you run the SetupLayer program next time, as follows:
+[path]\setuplayer.exe -vlayer mydevice < setup_script.txt
+This may be launched from the SimuCenter or from DOS prompt
+Thisistheresultingfile(test1.layer):
+$file:test1.layer
+begin_layer
+column column_num=1 w= 0.150000E+01 mesh_num=2 r=1.
+bottom_contact column_num=1 from=0 to= 0.150000E+01 &&
+contact_num=1 contact_type=ohmic
+$
+layer_mater macro_name=algaas &&
+var_symbol1=x var1= 0.500000E+00 &&
+column_num=1
+layer d= 0.100000E+01 n= 13 &&
+n_doping1= 0.100000E+25 &&
+r= 0.800000E+00
+$
+layer_mater macro_name=algaas &&
+var_symbol1=x var1= 0.000000E+00 &&
+active_macro=AlGaAs &&
+avar_symbol1=xw avar1= 0.000000E+00 &&
+
+
+=== PAGE 53 ===
+3.3Definingthedevicestructure 51
+column_num=1
+layer d= 0.200000E+00 n= 5 &&
+shift_center= -0.111111E-01 &&
+r= -0.120000E+01
+$
+layer_mater macro_name=algaas &&
+var_symbol1=x var1= 0.500000E+00 &&
+column_num=1
+layer d= 0.100000E+01 n= 11 &&
+p_doping1= 0.100000E+25 &&
+r= 0.120000E+01
+$
+top_contact column_num=1 from=0 to= 0.150000E+01 &&
+contact_num=2 contact_type=ohmic
+end_layer
+Wewillexplainthe.layerfilecontentsinthefollowingsubsection.
+3.3.2 Growing the layers: .layer files
+The “.layer” format is a simplified way to define the device structure. It is meant
+to be processed and generate the .geo file that is required for mesh generation.
+It also produces other input files that will be used for the main solver (.mater
+and .doping). From the command-line, this processing is done with the layer.exe
+program:
+C:\Work>c:\crosslig\pics3d\layer.exe test1.layer
+Note that if you are using the SimuCenter GUI, this can also be accomplished by
+right-clickingonthe.layerfileandchoosingthe“Process...” option.
+The .layer format is based on the idea that most devices are grown by depositing
+several parallel layers on top of each other. Extra features such as etching and
+regrowth can be modeled by allowing lateral variation of the materials through
+theuseofmultiplecolumns.
+Theselayersandcolumnsdefinethegridlinesthatserveaspolygonboundariesin
+the .geo file. The .layer format simplifies the .geo definition since it automatically
+numbersthepolygonsandcalculatesthecornerpoint’sabsolutecoordinates. The
+onlythingrequiredisknowledgeofthethelayerthicknessesandcolumnwidths.
+Before proceeding any further, let us look at the structure of the .layer file we are
+usingasanexample. Therelevantfilecontentsarebracketedbybegin_layerand
+
+
+=== PAGE 54 ===
+52 BASICFILESANDPROCEDURES
+end_layer. Toprocesslayers,theprogramneedstoknowhowmanycolumnsare
+involved so the next set of commands will be the column statements: columns
+must be numbered 1,2,3,... starting from the left. Layers are not numbered: they
+are added automatically from the bottom up as the .layer file is processed from
+beginningtoend.
+column statements define the width of the columns and also control the lateral
+mesh allocation. In this particular case, we only have one column with 2 mesh
+points so there is no real lateral variation allowed: we refer to this as a 1D simu-
+lation. This is the simplest kind of device we can build and also the quickest to
+model.
+As each layer is being processed, there must be one layer_mater statement for
+each column to define the material. For example, to define a ridge or regrowth,
+ff
+the material in column 2 would be di erent than in column 1. Material numbers
+in .geo are generated automatically when new macro definitions are found and
+assignedtotherelevantpolygon.
+If no material is to be defined in a particular column, use the “void” macro; this
+will prevent any mesh from being allocated in this region. Note that in some
+ff
+cases, this will a ect the physics of the simulation by shifting the position of the
+boundaries. In that case, the “vacuum” or “air” macro may be used instead; this
+will define an insulator region so mesh points will be allocated but there will be
+nocurrentflow.
+ff
+Active regions can be recognized by the two di erent macros they define. The
+reasonforthiswillbeexplainedinmoredetailinsection3.5.
+After the layer_mater statements, there must also be a layer statement to define
+the layer thickness as well as the vertical mesh information. In that sense, layer
+is very similar to the column statement which provides size and lateral mesh
+informationforthecolumns.
+Thelayerstatementalsoprovidesdopinginformationwithn_dopingjorp_dopingj
+wherejisthecolumnnumber. Itisalsopossibletodefinedopingforeachcolumn
+inthelayer_materstatementbutlayerprovidesadditionaltoolstolinearlygrade
+doping levels. Also, note that doping is defined in m
+−3
+for input purposes; care
+should be taken to convert from the commonly-used cm
+−3
+units as low doping
+levelscanleadtopoorconvergence.
+The last statements define equipotential boundary regions and may be placed
+anywhereinthefileafterthecolumnstatements. top_contactandbottom_contact
+define contact regions in a given column on the top or bottom of the layer stack.
+Position information defines the extent of the contact with respect to the contact
+width.
+Notethatourusualconventionistogrowdevicesn-sidedownandtouseelectrode
+#1 as the n electrode. This choice mostly influences the sign of the current on the
+
+
+=== PAGE 55 ===
+3.3Definingthedevicestructure 53
+electrodeswhenbiasisappliedandisforconvenience’ssakeonly.
+3.3.3 Dealing with polygons: .geo files
+Thissectionisforexperiencedusers,newuserscansafelyskipit.
+The.layerexampleaboveproducesthisoutputfile(test1.geo)whenprocessed:
+begin_geometry
+point label=a001 xy=[ 0.000000000000E+000 0.000000000000E+000 ]
+point label=a002 xy=[ 0.000000000000E+000 0.100000000000E+001 ]
+point label=a003 xy=[ 0.000000000000E+000 0.120000000000E+001 ]
+point label=a004 xy=[ 0.000000000000E+000 0.220000000000E+001 ]
+$
+point label=b001 xy=[ 0.150000000000E+001 0.000000000000E+000 ]
+point label=b002 xy=[ 0.150000000000E+001 0.100000000000E+001 ]
+point label=b003 xy=[ 0.150000000000E+001 0.120000000000E+001 ]
+point label=b004 xy=[ 0.150000000000E+001 0.220000000000E+001 ]
+$
+polygon name=p001 4_points=[ a001 b001 b002 a002 ] material= 1 &&
+boundary_1=[ a001 b001 ] &&
+limits_1=[ 0.000000000000E+000 0.150000000000E+001 ]
+polygon name=p002 4_points=[ a002 b002 b003 a003 ] material= 2
+polygon name=p003 4_points=[ a003 b003 b004 a004 ] material= 1 &&
+boundary_2=[ b004 a004 ] &&
+limits_2=[ 0.000000000000E+000 0.150000000000E+001 ]
+$
+end_geometry
+begin_meshgen
+internal_xpoint xp_size= 0.2000E-03
+put_mesh polygon=p001 edge=[ b001 b002 ] &&
+point_from= 0.000000000000E+000 point_to= 0.100000000000E+001 &&
+number= 13 ratio= 0.800000000000E+000
+put_mesh polygon=p002 edge=[ b002 b003 ] &&
+point_from= 0.000000000000E+000 point_to= 0.200000000000E+000 &&
+shift_center= -0.111111000000E-001 &&
+number= 5 ratio= -0.120000000000E+001
+put_mesh polygon=p003 edge=[ b003 b004 ] &&
+point_from= 0.000000000000E+000 point_to= 0.100000000000E+001 &&
+number= 11 ratio= 0.120000000000E+001
+$
+put_mesh polygon=p001 edge=[ a001 b001 ] &&
+point_from= 0.000000000000E+000 point_to= 0.150000000000E+001 &&
+
+
+=== PAGE 56 ===
+54 BASICFILESANDPROCEDURES
+number= 2 ratio= 0.100000000000E+001
+$
+mesh_output mesh_outfile=test1.msh order=yes
+end_meshgen
+Thefirsthalfofa.geofileisbracketedbythebegin_geometryandend_geometry
+statements.
+Withinthissection,pointcoordinatesareassignedlabelsusingthepointstatement.
+Polygons are then defined by using point labels in counter-clockwise order with
+thepolygonstatement.
+ff
+Eachpolygonisalsoidentifiedbyitsmaterialnumber. Di erentmaterialsrequire
+ff
+di erent polygons so that material boundaries can be modeled accurately. As a
+rule, an insulator macro must be given a larger material number than a semicon-
+ductor.
+One major limitation of the .geo format is that it requires that if two polygons
+toucheachother,thesharededgesmustfullyoverlap. Forcomplexgeometries,it
+isrecommendedtosketchoutthepolygonsandpointlabelstoavoiderrorscaused
+by this limitation. In certain cases, it may be necessary to sub-divide polygons in
+ordertoensurethisruleisalwaysenforced.
+Boundaryregionsoccupypartofanedgeandcanbedefinedeitherinthepolygon
+or add_boundary statements. In our device simulators, these are used to define
+equipotential boundaries (i.e. contacts). In the above example, these boundaries
+havebeeninheritedfromthecontactdefinitionsinthe.layerfile.
+Whilepolygonscanbetriangles,trapezoidsarepreferredsinceitiseasiertorefine
+the mesh afterwards. All .geo files obtained by processing .layer will be based on
+trapezoidsduetoitsgridformat.
+For rounded edges, the edge_curve statement may be used to add a concave or
+convexarcs.
+Thesecondhalfofthe.geoformatdealswithmeshallocationandwillbediscussed
+inthenextsection.
+3.4 Creating a good mesh
+In order to run the simulation, we will need a finite element mesh based on the
+geometry and material properties of our device. Usually, the mesh data file is
+given a .msh file extension and it is generated by processing a .geo file. In our
+example,themeshfileisgeneratedwiththiscommand:
+C:\Work>c:\crosslig\pics3d\geometry.exe test1.geo
+
+
+=== PAGE 57 ===
+3.4Creatingagoodmesh 55
+Note that if you are using the SimuCenter GUI, this can also be accomplished by
+right-clickingonthe.geofileandchoosingthe“Generate...” option.
+This will produce a .msh file that contains mesh point and triangle element infor-
+mationaswellasa.mpltfilethatcanusedtoplotthemesh.
+3.4.1 Mesh definition in .layer files
+In the previous section, the mesh allocation was done automatically by the setu-
+playerprogram. Tomodifythenumberofmeshpoints,themesh_numparameter
+in column and the n parameter in laPyer must be chPanged. The number of mesh
+×
+pointsinthissystemwillberoughly (mesh_num) (n);someextrameshpoints
+maybeautomaticallyaddedatcertaininterfaces.
+To control the distribution of mesh points within a layer or column, use the r and
+shift_center parameters of column and layer. These parameters will be part of
+variousput_meshstatementsinthe.geofilewhenthe.layerfileisprocessed. For
+a more detailed explanation of these parameters, consult the reference section for
+theput_meshstatement.
+3.4.2 Mesh definition in .geo files
+Thissectionisforexperiencedusers,beginnersmaysafelyskipit.
+Thesecondhalfofa.geofilecontrolsthemeshgenerationandisbracketedbythe
+begin_meshgenandend_meshgenstatements.
+The basic statement for this section is the put_mesh statement which directly
+allocates the mesh along the edges of a polygon. If your .geo file is a converted
+.layer file, these statements will be initialized with the mesh parameters from the
+columnandlayerstatements. Notethatjustlikein.layer,thedistributionofmesh
+pointsalonganedgecanbecontrolled.
+Tomeshtheinsideofthepolygons,meshlineswillautomaticallypropagatefrom
+onesideofapolygontoitsoppositeedgeandcontinueontoneighboringpolygons
+untiltermination. Fortriangles,itassumedthateachedgeisopposedtotheother
+twobuttrapezoidedgesopposeeachotherinpairs. Crossingmeshlinesarethen
+sub-dividedintomeshtriangles.
+Itisthereforenotnecessarytomeshallpolygonedgesasthemeshlinespropagate
+automatically. Conflicting or redundant put_mesh statements will be overridden
+and the last statement issued will have precedence. Note that un-meshed edges
+will also be assigned a default minimum mesh when detected; this should be
+shownasawarningmessagewhenthe.geofileisprocessed.
+
+
+=== PAGE 58 ===
+56 BASICFILESANDPROCEDURES
+It is recommended that the user practice setting up a simple mesh to get used to
+themeshgeneratorbeforeattemptingamorecomplicateddesign.
+Optionally, you can also use double_mesh to double the mesh density in a spec-
+ified region of a polygon or half_mesh to reduce it. This gives users additional
+controlonthelocalmeshdensitywithoutover-meshingtheentiredevice.
+3.4.3 Troubleshooting mesh
+An unsatisfactory mesh is a major cause of non-convergence. The first step to
+troubleshooting a mesh is to plot it as shown above and check that the mesh
+distributionisOK.
+Thenextstepistocheckifthemeshistoocoarse. Whileitcanbetemptingtoput
+fine mesh everywhere in a device, this is not practical. For example, if the mesh
+is too dense, the simulation time may be prohibitively long. Also, the memory
+requirements may go beyond what the mesh generator supports or even beyond
+/
+whatyourcomputerallows. Thelatterisunlikelyina1D 2Dsimulationbutoften
+occurswith3Dsimulationson32-bitsystems.
+ff
+Therefore, we must make an e ort to allocate mesh points intelligently and con-
+centratethemonlywhereneeded. Ingeneral,themeshmustbedensenearsharp
+ff
+material interfaces (e.g. contacts, boundaries between di erent materials or dif-
+ferent doping levels, etc...) and near other regions where the electrical properties
+change rapidly over a small distance (e.g. areas where there is current crowding,
+tunneljunctions,etc...).
+There is no systematic error analysis that can help you determine if a mesh is
+dense enough. It is recommend that you plot available simulation results to
+ensure that material properties and important quantities like the band diagram
+arewell-sampled.
+However, there is a regrid statement that can assist you in this task. This com-
+mandcanaddmeshpointsanywherethechangeinmaterialparametersbetween
+neighboring mesh points exceeds a specified amount. This will generate a new
+meshfilethatcanbeusedinfuturesimulations.
+AdditionaldiscussionsonthistopiccanbefoundinChap.4.
+
+
+=== PAGE 59 ===
+3.5Materialparameters 57
+3.5 Material parameters
+3.5.1 Material Macros
+IntheCrosslightsystem,manymaterialparametersareneededtomodelthephys-
+ical behavior of devices. Each of these parameter is defined through a separate
+statement such as band_gap. For convenience, these parameters are lumped to-
+getherintoa“macro”. Inthiscontext,a“macro”isagroupsofmaterialparameters
+commands lumped together under the same name: this makes it easy to set all of
+thematerialpropertiesforagivenmaterialusingasinglecommand.
+In order to be used by the software, each material property must be assigned to
+the right mesh points. This is done by using material numbers (1,2,3,...) which
+are defined along with the mesh polygons in the .geo file. Note that we do the
+same for contacts to facilitate the application of bias to the simulation: voltage_1
+orcurrent_1referstobiasonelectrode#1.
+The link between the material numbers and the macro name can be seen in the
+.materfilethatisproducedwhena.layerfileisprocessed:
+contact num= 1 type=ohmic
+contact num= 2 type=ohmic
+load_macro name=algaas mater= 1 &&
+var_symbol1=x var1= 0.5000E+00
+load_macro name=algaas mater= 2 &&
+var_symbol1=x var1= 0.0000E+00
+get_active_layer name=AlGaAs mater= 2 &&
+var_symbol1=xw var1= 0.0000E+00
+active_reg mater= 2 &&
+thickness= 0.200000000000E+000
+When using the .layer format to input the device layout, material numbers are
+assigned automatically by layer.exe and transferred to the .geo file. If the .geo
+format is used to input the device layout directly, the material numbers for each
+mesh polygon must be defined manually; material macros must also be assigned
+manuallyforeachmaterial.
+In this example, we see that there are two kinds of macros: passive and active.
+In our convention, passive macros are recognized by their lowercase names and
+are loaded with load_macro. Active macros can have mixed-case names and are
+loadedwithget_active_layer.
+Passive macros define bulk material properties such as bandgap, carrier mobil-
+ity and refractive indexes. Active macros define material parameters needed to
+/
+calculate the optical properties (gain absorption, spontaneous emission) of this
+
+
+=== PAGE 60 ===
+58 BASICFILESANDPROCEDURES
+ff
+material. Active macros also come in di erent flavors: bulk, QW and complex
+ff ff
+QW.Thedi erencesbetweenthedi erentmodelsarediscussedfurtherinSec.8.1.
+Typically, only the active regions of light-emitting devices need to use active
+macros: the optical transitions in other layers can safely be assumed to be at
+wavelengths that are not of interest. The main reason to use active macros in a
+certain region is that the light emission from that layer is of great interest to the
+devicesimulation: forexampletheactiveregionofalaserdeviceorLEDcontrols
+almostalloftheinterestingdeviceproperties.
+An exception to the above rule is regions where quantum confinement occurs
+(e.g. HEMTsorcertainMOSFETchanneldesigns)anda2Delectrongas(2DEG)is
+expected. Inthatcase,theactivemacroforaQWmustbeusedinthechannelasthe
+active macros enable the quantum-mechanical solvers. This is purely a historical
+accident as Crosslight tools were originally designed to model laser diodes; new
+usersmayfinditbeneficialtokeepthistidbitofinformationinmindasitexplains
+manyofourdesignchoices.
+The actual parameters defined in a macro are outside the scope of this section.
+However users who wish to examine the content of the default macros should
+look to their installation directory. The default macros are contained in the
+crosslight.mac(silicon,GaAsandmostIII-Vcompounds)andmore.mac(nitrides,
+organic semiconductors, metals) files. A few sample macros are also included in
+AppendixB.
+Additional help regarding macro syntax is included in the header of these files.
+Thiscanbeofhelptoadvanceduserswhowishtocreatenewmaterialdefinitions
+orwhohaveaccesstobettermaterialdataandwanttooverridethedefaultmaterial
+parameters. However,itisSTRONGLY recommendedthatthedefaultmacrofiles
+ff
+notbealteredinanywaysincethatwoulda ectallthesimulationsthatusethese
+defaultfiles.
+Instead, the use_macrofile statement can be used to load a custom or modified
+macro file for use in a simulation. Material parameters can also be overwritten
+directly in the simulation file by re-issuing the statement that defines it once the
+macroshavebeenloaded.
+SimplifiedComplexQWLibrary(SCXLIB)
+Starting with the 2014 version of the software, a simplified model is being intro-
+duced to define material parameters. We have found that new users often make
+mistakes when invoking the passive and active material macros separately and
+sometimes define conflicting sets of material parameters: for example, the QW
+active macro declaration may define a certain barrier composition but the barrier
+layersthemselveshaveanother.
+
+
+=== PAGE 61 ===
+3.5Materialparameters 59
+To avoid this common problem and ease the learning curve of the software, we
+have introduced the concept of a “library” which is simply a wrapper around
+the “macro” concept. When a material is declared with a library, a single set of
+input parameters is given in the .layer file. The file is then processed and macro
+invocationsareadjustedtocorrectlysendtheparametervaluestotherightvariable
+names.
+Thedefinitionofquantumwellregionsisalsosimplifiedusingthelibrarysystem.
+=
+Inthe.layerfile,eachquantumwelllayerissimplytagged(model quantum_well)
+asfollows:
+layer_mater column_num=1 mater_lib=AlGaAs &&
+var_symbol1=x grade_var=1 &&
+grade_from=0.71 grade_to=0.33
+layer d=0.15 n=10 r=1
+layer_mater column_num=1 mater_lib=AlGaAs &&
+var_symbol1=x grade_var=1 &&
+grade_from=0.33 grade_to=0.0 &&
+model=quantum_well
+layer d=0.001 n=5 r=1
+layer_mater column_num=1 mater_lib=AlGaAs &&
+var_symbol1=x var1=0. model=quantum_well
+layer d=0.005 n=25 r=1
+layer_mater column_num=1 mater_lib=AlGaAs &&
+var_symbol1=x grade_var=1 &&
+grade_from=0.0 grade_to=0.33 &&
+model=quantum_well
+layer d=0.001 n=5 r=1
+layer_mater column_num=1 mater_lib=AlGaAs &&
+var_symbol1=x grade_var=1 &&
+grade_from=0.33 grade_to=0.71
+layer d=0.15 n=10 r=1
+The software will automatically look to the neighboring layers without the quan-
+tumwelltagtodefinetheouterbarrierregions;ifmultipleneighboringlayersare
+tagged as a quantum well, then they all belong to the same quantum-confined
+region. This system thus automatically uses complex QW macros for the tagged
+layers(andouterbarriers)tosupportthiskindofaggregation. Theresultingband
+profileandwavefunctionscanbeseeninFig.3.2.
+
+
+=== PAGE 62 ===
+60 BASICFILESANDPROCEDURES
+Notethatexistingusersofthesoftwaremaycontinuetousetheoldmacrosystem
+so that older input files will continue to work as before. For new users however,
+westronglyrecommendtheuseofthisnewlibrarymethod: wewillprogressively
+updateourtutorialexamplesinthecomingyearstoreflectthis.
+There is one small caveat though: the “macro” and “library” systems cannot co-
+exist in the same simulation: a choice must be made as to which approach is
+used.
+1
+0.5
+0
+-0.5
+-1
+-1.5
+-2
+-2.5
+-3
+-0.004 -0.002 0 0.002 0.004 0.006 0.008 0.01
+)Ve(
+ygrenE
+File:test.gain
+Distance (um)
+Figure3.2: AsamplecomplexQWsetupusingthesimplified“library”method.
+3.6 Previewing Physical Properties
+Beforethemainequationsolverisuseditmaybeagoodideatopreviewphysical
+/
+properties such as the optical gain absorption spectrum. For example, this can
+help confirm that the gain curve is centered on the right wavelength in a laser
+design.
+This can be done with a gain preview (i.e. “.gain”) file, provided that an active
+region is present in the device. A basic input file can be created by right-clicking
+onthe.materfileinSimuCenterorbyrunningthecommandlinesetupprogram.
+Note that this while usage of the setup program is always the same, it will have
+ff
+di erentnamesdependingonthetoolyouareusingorthekindofdeviceyouare
+workingwith:
+•
+setupapsys: usedinnon-laserdevicesimulators.
+
+
+=== PAGE 63 ===
+3.6PreviewingPhysicalProperties 61
+•
+setuplastip: usedinlasersimulators;applicabletoFabry-Perotstructures.
+•
+setuppics3d: usedinlasersimulators;applicabletomodelswhichrelyonthe
+/
+round-tripgain(RTG)method. ThistypicallyimpliesDFB DBRandVCSEL
+structures,orotherstructureswithalongitudinalpropagationmodel.
+Thecommandinvokationandinteractiveprogramoutputisshownbelow:
+C:\Work>c:\crosslig\pics3d\setuplastip -gain test1
+Setting up input file:
+test1.gain
+You may use it to plot the gain/loss spectrum
+and other physical properties
+Enter estimated operating wavelength in um
+for example 0.82:
+0.82
+Enter carrier density range in m**(-3)
+for example:
+5.e23 1.e25
+1e23 5e24
+Enter temperature in degrees Kelvin
+300
+Please enter the graphics device
+(1) postscript (2) window (3) x11
+Your choice?
+1
+Please select the physical properties to plot
+(1) gain spectrum
+(2) spontaneous emission rate
+(3) index change spectrum
+(4) current vs. active region density
+(5) alpha factor spectrum
+(6) gain vs. active region density
+(7) quantum well subbands (k.p)
+(8) dipole moment vs. k (k.p)
+(9) 1 - 4 above
+(10) 1 - 6 above
+(11) finish
+10
+Enter your next choice (1-11)
+11
+Done
+
+
+=== PAGE 64 ===
+62 BASICFILESANDPROCEDURES
+Thiswillproducethefollowingfile:
+$file:test1.gain
+begin_gain
+plot_data plot_device=postscript
+temperature temp= 0.3000E+03
+include file=test1.mater
+gain_wavel wavel_range=[ 0.8000E+00 0.8400E+00] &&
+conc_range=[ 0.1000E+24 0.5000E+25] &&
+curve_number=20
+sp.rate_wavel wavel_range=[ 0.8000E+00 0.8400E+00] &&
+conc_range=[ 0.1000E+24 0.5000E+25] &&
+curve_number=20
+index_wavel wavel_range=[ 0.8000E+00 0.8400E+00] &&
+conc_range=[ 0.1000E+24 0.5000E+25] &&
+init_conc=1.5e24 &&
+curve_number=20
+current_conc conc_range=[ 0.1000E+24 0.5000E+25] &&
+data_point=30 &&
+use_macro=yes fit_outfile=tmp.data
+alpha_wavel wavel_range=[ 0.8000E+00 0.8400E+00] &&
+conc_range=[ 0.1000E+24 0.5000E+25] &&
+curve_number=20
+gain_density conc_range=[ 0.1000E+24 0.5000E+25] &&
+wavel_range=[ 0.8000E+00 0.8400E+00] &&
+data_point=30
+end_gain
+The .gain file includes the material definitions of the .mater file through the in-
+cludestatement. Italsodefinestheisothermaltemperatureusedforthefollowing
+calculations. A series of statements then produces a set of curves to preview the
+physicalpropertiesofthefirstactiveregionfoundinthe.materfile.
+Toplotthesecurves,right-clickonthe.gainfileinSimuCenterorusethecommand
+line. Because the input file defines a postscript plotting device, we use psplot.bat
+to rename the output file produced by GNUPLOT; a pdfplot.bat is also provided
+forPDFoutputs.
+C:\Work>c:\crosslig\pics3d\pics3d.exe test1.gain
+C:\Work>c:\crosslig\pics3d\psplot.bat test1.ps
+If there is more then one active region defined in your structure, you may use the
+gain_modulecommandtoadjustwhichregionthe.gainfileworkswith.
+
+
+=== PAGE 65 ===
+3.7Settingupasimulation 63
+3.7 Setting up a simulation
+The.solfileisthemainsimulationinputusedinCrosslight. Itconsolidatesallthe
+devicestructuralinformationaswellasthematerialandsimulationparameters.
+Onceagain,abasicinputfilecanbecreatedwiththecommand-linesetuptoolsor
+byright-clickingonanempty.solfileinSimuCenter:
+C:\Work>c:\crosslig\pics3d\setuplastip -sol test1
+Setting up .sol file for filebase=test1
+Please enter the cavity length (um):
+200
+Please enter the expected emission wavelength (um):
+0.83
+Please enter 1 for 1D laser optical wave boundary
+Please enter 2 for other 2D laser boundary
+1
+Please enter the current bias you wish to apply (mA)
+100
+Please enter the contact number for the n-type laser contact
+(look up .layer or .geo file if necessary)
+1
+Generating .sol file
+ff
+As mentioned in the previous section, the di erent setup tools will produce dif-
+ferentoutputs;picktherighttoolforyourapplication. Sinceweareworkingona
+Fabry-Perotlaserinthisexample,wegetthis.solfile:
+$file:test1.sol
+begin
+load_mesh mesh_inf=test1.msh
+include file=test1.mater
+include file=test1.doping
+output sol_outf=test1.out
+newton_par damping_step=5. max_iter=100 print_flag=3
+use_sor max_iter=3000 print_sor=noprint
+init_wave &&
+length= 0.2000E+03 backg_loss=500. &&
+boundary_type=[2 2 1 1] init_wavel= 0.8300E+00 mirror_ref=0.32 &&
+wavel_range=[ 0.8100E+00 0.8500E+00]
+equilibrium
+
+
+=== PAGE 66 ===
+64 BASICFILESANDPROCEDURES
+newton_par damping_step=1. print_flag=3
+scan var=voltage_1 value_to= -0.1345E+01 print_step= 0.1345E+01 &&
+init_step= 0.2689E+00 min_step=1.e-5 max_step=0.5
+scan var=current_1 value_to= 0.2500E+03 print_step= 0.2500E+03 &&
+init_step= 0.2500E+01 min_step=1.e-5 max_step= 0.2500E+02
+end
+Thereareafewcategoriesofstatementsthatarecommonlyusedin.solfiles.
+/
+3.7.1 Input output
+In this category, we include all the statements that are used to load previously
+generateddatasuchasthemesh(load_mesh)ormergeotherinputfiles(include)
+thatdefinethematerialparametersanddopingprofiles.
+The output statement defines a base name that will be used for the output data
+files. It is generally considered a good idea to used the same base name for input
+andoutputfiles: thisiswhatthecommand-linesetupprogramdoesbydefault.
+UsingthesamebasefilenameisrecommendedasitensuresthattheGUIprograms
+candetectandhandlethefilescorrectly.
+3.7.2 Physical models
+/
+This next set of statements should be located after the input output statements
+and varies a lot for each software and indeed, for any given simulation. These
+statements turn on certain physical models that are needed for that particular
+simulation.
+Inthisexample,theuse_sorstatementisusedtodefineabasic1Dmodesolver. The
+init_wave statement defines the boundary conditions for the waveguide as well
+as other critical parameters for the device (length, mirror reflectivity, background
+losses,etc...).
+Dependingonthetypeofsimulation,otherstatementsmaybeusedinthissection.
+Forexample,asolarcellinAPSYSwouldusethelight_powerstatementtodefine
+theopticalpumpingconditions.
+3.7.3 Bias statements
+This category includes the statements that are used to call the Newton solver
+and find the state of the device under bias. These statements must therefore be
+precededbyatleastonenewton_parstatementtocontrolthesolverparameters.
+
+
+=== PAGE 67 ===
+3.8Runningasimulation 65
+The first of these statements is equilibrium. It calls the Newton solver to get the
+initial solution of the device under thermal equilibrium conditions: this means
+only the Poisson equation is solved and the net current is zero for both electrons
+andholes. Thisisarequiredfirststepbeforebiascanbeapplied.
+Subsequent bias is applied with the scan statement. The variable controls which
+electrode is biased as well as the type of bias which is applied: for example,
+voltage\_1 is the voltage on electrode #1. Multiple bias variables can be applied
+simultaneously.
+Timeisalsoavailableasavariablefortransientsimulations. Notethatifyoustart
+a transient simulation, it is a good idea to consistently continue to use the time
+ffi
+variableasyoumayotherwiseencounterconvergencedi culties.
+3.8 Running a simulation
+To run a simulation, you may right-click the .sol file from SimuCenter or call the
+mainsolverfromthecommandline:
+C:\Work>c:\crosslig\pics3d\pics3d.exe test1.sol
+Thiswillproducesomethinglikethefollowingoutput(truncatedforconvenience):
+-------------------------------------------------------------
+###### ### ##### ##### ##### ######
+# # # # # # # # # # #
+# # # # # # # #
+###### # # ##### ##### # #
+# # # # # # #
+# # # # # # # # # #
+# ### ##### ##### ##### ######
+Version: 2020.05.01
+Build-date:[y/m/d/h]=2020/ 8/ 5/13
+Copyright (c) 1995-2020, Crosslight Software Inc.
+Licensed to:
+Evaluation User
+Simulation for Device:
+test1.sol
+
+
+=== PAGE 68 ===
+66 BASICFILESANDPROCEDURES
+-------------------------------------------------------------
+Date(d/m/y): 15 5 2020
+Time(s/m/h): 11 34 10
+======Statement: load_mesh=====
+Loading mesh file:
+test1.msh
+Total mesh points= 58
+======Statements of load_macro (band_gap,etc)=====
+======Statements of doping=====
+======Statements of contact=====
+Initializing parameters.
+(Please wait)
+--------------Information------------------
+Older solver of sor_par has been replaced
+by direct_eigen with default settings.
+If you really need to go back to older solver
+please use use_sor instead.
+-------------------------------------------
+======Statement: output=====
+======Statement: equilibrium=====
+scan number-> 0
+Solving equations at equilibrium
+Error report for equations and variables:
+it# eqns potential
+1 0.440E+04 0.747E+04
+2 0.414E+04 0.326E+04
+3 0.849E+03 0.435E+03
+4 0.112E+03 0.921E+02
+5 0.549E+02 0.217E+02
+6 0.423E+02 0.127E+02
+7 0.256E+02 0.704E+01
+8 0.126E+02 0.318E+01
+9 0.129E+02 0.365E+01
+
+
+=== PAGE 69 ===
+3.8Runningasimulation 67
+10 0.114E+02 0.422E+01
+11 0.301E+01 0.112E+01
+12 0.147E+01 0.459E+00
+13 0.299E+00 0.929E-01
+14 0.107E-01 0.326E-02
+15 0.131E-04 0.388E-05
+16 0.487E-09 0.424E-09
+Calculate optical index change
+Direct eigen solver at lambda= 0.830000000000000
+Select modes with max index:
+3.64984451858962
+Start Arnoldi eigen solver
+sigma= (763.400219073982,0.000000000000000E+000)
+End of Arnoldi eigen solver
+Eigen Value=[ 0.694621E+003 0.140020E+002] Eqn. Error= 0.2731E-09
+Cmplx lateral modal index for z-segment: 1
+1 (3.48172365230206,3.508816922721083E-002)
+Searching for modal gain peak.
+Modal gain (1/m): -359812.782918322
+At lambda= 0.850000000000000
+Active Reg.# 1 Average Conc. (n&p)= 0.7683E+23 0.1429E+24
+Save bias data and continue.
+Lambda(um)= 0.850000000000000
+Lateral mode(s)= 1
+Emitted Power(mW):
+(Mode) (Total) (Front) (Back)
+1 0.4674E-32 0.2337E-32 0.2337E-32
+Solver converged at
+Voltage: (Volt) 0.0000E+00 0.0000E+00
+Current: (A/m) 0.0000E+00 0.0000E+00
+Data set # 1 printed at
+Voltage: (Volt) 0.0000E+00 0.0000E+00
+Current: (A/m) 0.0000E+00 0.0000E+00
+light: 0.4674E-32
+Printing 2D/3D data to output file
+Data file:test1.out_0001
+Generating .std file
+
+
+=== PAGE 70 ===
+68 BASICFILESANDPROCEDURES
+Completed .std file
+======Statement: scan=====
+scan number-> 1
+Solving equations with bias.
+Changing: voltage_1 with step: 0.2689E+00
+Error report for equations and variables:
+it# eqns potential elec hole other
+1 0.182E+02 0.273E+03 0.273E+03 0.272E+03 0.913E-25
+2 0.181E+02 0.164E+03 0.164E+03 0.164E+03 0.588E-25
+3 0.180E+02 0.937E+02 0.937E+02 0.936E+02 0.841E-25
+4 0.178E+02 0.502E+02 0.502E+02 0.501E+02 0.110E-24
+5 0.175E+02 0.249E+02 0.249E+02 0.250E+02 0.129E-24
+6 0.168E+02 0.113E+02 0.113E+02 0.130E+02 0.136E-24
+7 0.153E+02 0.469E+01 0.468E+01 0.634E+01 0.136E-24
+8 0.120E+02 0.187E+01 0.187E+01 0.329E+01 0.250E-24
+9 0.559E+01 0.826E+00 0.822E+00 0.235E+01 0.711E-24
+10 0.510E-02 0.505E+00 0.506E+00 0.195E+01 0.153E-23
+11 0.393E-02 0.428E+00 0.428E+00 0.111E+01 0.197E-23
+12 0.624E-03 0.414E+00 0.414E+00 0.480E+00 0.298E-23
+13 0.116E-03 0.224E+00 0.224E+00 0.331E+00 0.251E-23
+14 0.223E-04 0.699E-02 0.700E-02 0.577E-02 0.315E-24
+15 0.224E-07 0.469E-08 0.398E-07 0.540E-04 0.302E-27
+16 0.953E-11 0.102E-13 0.422E-12 0.127E-08 0.399E-36
+Modal Gain & Mirror Loss [1/m] -0.359304E+006 0.569717E+004
+Calculate optical index change
+Direct eigen solver at lambda= 0.850000000000000
+Select modes with max index:
+3.64995114629961
+Start Arnoldi eigen solver
+sigma= (727.940677315902,0.000000000000000E+000)
+End of Arnoldi eigen solver
+Eigen Value=[ 0.661040E+003 0.955849E+001] Eqn. Error= 0.2910E-09
+Cmplx lateral modal index for z-segment: 1
+1 (3.47827733528838,2.514625154027444E-002)
+Searching for modal gain peak.
+Modal gain (1/m): -354284.287056734
+At lambda= 0.850000000000000
+
+
+=== PAGE 71 ===
+3.8Runningasimulation 69
+Active Reg.# 1 Average Conc. (n&p)= 0.8041E+23 0.1469E+24
+Save bias data and continue.
+Lambda(um)= 0.850000000000000
+Lateral mode(s)= 1
+Emitted Power(mW):
+(Mode) (Total) (Front) (Back)
+1 0.1829E-22 0.9147E-23 0.9147E-23
+Solver converged at
+Voltage: (Volt) -0.2689E+00 0.0000E+00
+Current: (A/m) 0.2316E-10 -0.2289E-10
+...etc....
+...etc....
+...etc....
+...etc....
+Changing: current_1 with step: 0.9872E+01
+Error report for equations and variables:
+it# eqns potential elec hole other
+1 0.642E+02 0.119E-01 0.735E-02 0.534E-02 0.132E-01
+2 0.387E+01 0.344E-04 0.222E-04 0.263E-04 0.622E-04
+3 0.125E-01 0.359E-08 0.307E-09 0.337E-08 0.201E-06
+4 0.813E-04 0.123E-11 0.413E-12 0.145E-11 0.131E-08
+5 0.460E-06 0.131E-12 0.262E-13 0.155E-13 0.141E-10
+Modal Gain & Mirror Loss [1/m] 0.569680E+004 0.569717E+004
+Calculate optical index change
+Direct eigen solver at lambda= 0.850000000000000
+Select modes with max index:
+3.65739599522727
+Start Arnoldi eigen solver
+sigma= (730.913284438270,0.000000000000000E+000)
+End of Arnoldi eigen solver
+Eigen Value=[ 0.663343E+003 -0.154368E+000] Eqn. Error= 0.5271E-09
+Cmplx lateral modal index for z-segment: 1
+1 (3.48423999577868,-4.054128695061282E-004)
+Searching for modal gain peak.
+Modal gain (1/m): 5696.79608291268
+At lambda= 0.850000000000000
+Active Reg.# 1 Average Conc. (n&p)= 0.1743E+25 0.1813E+25
+
+
+=== PAGE 72 ===
+70 BASICFILESANDPROCEDURES
+Save bias data and continue.
+Lambda(um)= 0.850000000000000
+Lateral mode(s)= 1
+Emitted Power(mW):
+(Mode) (Total) (Front) (Back)
+1 0.6664E+02 0.3332E+02 0.3332E+02
+Solver converged at
+Voltage: (Volt) -0.1978E+01 0.0000E+00
+Current: (A/m) 0.2500E+03 -0.2500E+03
+Data set # 3 printed at
+Voltage: (Volt) -0.1978E+01 0.0000E+00
+Current: (A/m) 0.2500E+03 -0.2500E+03
+light: 0.6664E+02
+Printing 2D/3D data to output file
+Data file:test1.out_0003
+Generating .std file
+Completed .std file
+Date(d/m/y): 15 5 2020
+Time(s/m/h): 16 34 10
+Every time a bias step is attempted, the previously converged solution will serve
+asthe initial guess to the Newton solver. The type of bias step aswell as its value
+isalsoshowninthelog.
+OncetheNewtonsolveriscalled,itwilliterativelyattempttoreducetheequation
+error, which indicates how well the discretized equations are being satisfied. If
+the equations are exactly solved at the end of an iteration, then this value will be
+zero.
+It also tries to minimize the variable error in order to get a stable solution. This
+ff
+is done by comparing the solution between successive iterations: the di erence
+shouldgotozerooncethesolutionstabilizes.
+Thisisshowninthelogintabularformwitheachcolumnhavingitsownmeaning:
+it#: iterationnumber
+eqns: equationerror
+potential: erroronthepotentialvariables
+elec: errorontheelectronvariables(electronconcentrationorquasi-fermilevel)
+
+
+=== PAGE 73 ===
+3.9OutputDataOrganization 71
+hole: errorontheholevariables(holeconcentrationorquasi-fermilevel)
+other : error on other variables not listed above (usually, photon density or
+currentcontrolvariable)
+Ifabiasstepshouldfailtoconverge,itisusuallybecausethepreviouslyconverged
+solution is a poor initial guess for this bias step. In that case, there is a built-in
+algorithm to retry with a smaller bias step which may have a better chance of
+converging.
+If this procedure should also fail, then examining the evolution of the equation
+andvariableerrorsmayprovidecluesonhowtoimproveconvergence.
+3.9 Output Data Organization
+Forperformancereasons,thesoftwaredoesnotprintalloutputdataateverybias
+steptaken. Instead,theoutputdataisdividedintotwocategories: bias-dependent
+/
+data(scan_data)andstructural spectraldata(xy_data).
+The former includes bias current, voltage, laser power, etc... and is accumulated
+at every bias step. The latter includes position-dependent data like the carrier
+densitiesandcertainspectralvalueslikethenetmodalgainwhichisonlyprinted
+atspecifiedintervals. Thisprintingoccurseitherwhenascanstatementisfinished,
+or as specified by the print_step parameter of the scan statement. Whenever
+structural data is printed, any accumulated scan-dependent data up to that point
+isalsoprinted.
+Byconvention,theoutputfilenamesaredefinedbytheoutputstatementin“*.sol”
+and by adding a numbered extension “_####". The extension is always _0001 for
+theinitialequilibriumcalculationsandincreasesbyoneeverytimeprintingofthe
+dataisrequested.
+This means that all output data is assigned a “data set number” for later use. For
+=
+example, let us supposed that there is a scan from 0V to 1V with max_step 0.3.
+Then the following data sets would be produced: #1 (equilibrium), #2 (0.3 V), #3
+(0.6 V), #4 (0.9V) and #5 (end of scan at 1V). This can be confirmed by examining
+the“.sol.msg”filewhichcontainsalistofalldatasetsprintedinasimulationand
+theassociatedbiasvalue.
+3.10 Analyzing the Results
+To plot data, you can either use the CrosslightView GUI or use a .plt file. This
+input file is responsible for post-processing and can created in the same way as
+
+
+=== PAGE 74 ===
+72 BASICFILESANDPROCEDURES
+theotherinputfiles: byright-clickinginSimuCenterorusingthecommandline:
+C:\Work>c:\crosslig\pics3d\setuplastip -plt test1
+Setting up .plt file for filebase=test1
+Please enter the graphics device
+(1) postscript (2) window (3) x11
+Your choice?
+1
+Generating .plt file
+Adding a new plot to .plt file
+Please select the type of plot:
+(1) 1d plot along y
+(2) 1d plot along x
+(3) 2d contour plot
+(4) 2d vector plot
+(5) 3d surface plot
+(6) I-V characteristics
+(7) I-t characteristics
+(8) L-I characteristics
+(9) finish
+plot_type?
+8
+Please enter the electrode number for I
+I_electrode_num?
+1
+Adding a new plot to .plt file
+Please select the type of plot:
+(1) 1d plot along y
+(2) 1d plot along x
+(3) 2d contour plot
+(4) 2d vector plot
+(5) 3d surface plot
+(6) I-V characteristics
+(7) I-t characteristics
+(8) L-I characteristics
+(9) finish
+plot_type?
+1
+Please enter the x-position of the 1d plot
+
+
+=== PAGE 75 ===
+3.10AnalyzingtheResults 73
+(1) at 0
+(2) at 1/10 xsize
+(3) at 1/4 xsize
+(4) at 1/2 xsize
+(5) at 3/4 xsize
+(6) at xsize
+x-position?
+4
+Please enter the variable you wish to plot
+(1) electron concentration (2) hole concentration
+(3) trap concentration (4) potential
+(5) both electron & hole conc. (6) energy bands
+(7) elec current [x-component] (8) elec current [y-component]
+(9) hole current [x-comp] (10) hole current [y-comp]
+(11) displac. curr. [x-comp] (12) displac. curr. [y-comp]
+(13) total current [x-comp] (14) total current [y-comp]
+(15) x-comp. electric field (16) y-comp. electric field
+(17) trap occupancy (18) optical generation rate
+(19) optical field (20) hot electron energy
+(21) donor concentration (22) acceptor concentration
+(23) radiative recombination (24) Auger recombination
+(25) SRH recombination (26) lattice temperature
+(27) electron conc difference between nodes
+(28) wave intensity (29) local gain
+(30) stimulated recombination
+variable?
+28
+Adding a new plot to .plt file
+Please select the type of plot:
+(1) 1d plot along y
+(2) 1d plot along x
+(3) 2d contour plot
+(4) 2d vector plot
+(5) 3d surface plot
+(6) I-V characteristics
+(7) I-t characteristics
+(8) L-I characteristics
+(9) finish
+plot_type?
+9
+Thiscreatesthefollowing:
+
+
+=== PAGE 76 ===
+74 BASICFILESANDPROCEDURES
+$file:test1.plt
+begin_pstprc
+plot_data plot_device=postscript
+get_data main_input=test1.sol &&
+sol_inf=test1.out &&
+xy_data=[ 3 3] scan_data=[1 3]
+plot_scan scan_var=current_1 &&
+variable=laser_power
+plot_1d variable=wave_intensity &&
+from=[ 0.7500E+00 0.0000E+00] &&
+to=[ 0.7500E+00 0.2200E+01]
+end_pstprc
+Torunthis.pltfile,youcanrightclickonthefileinSimuCenteroronceagainuse
+thecommandline:
+C:\Work>c:\crosslig\pics3d\pics3d test1.plt
+C:\Work>c:\crosslig\pics3d\psplot test1.ps
+Thiswillproducetwoplots. ThefirstistheLIcurveforthewholesimulation: the
+specified scan_data range in get_data covers the whole simulation. The second
+plotwillbethewaveintensityprofileatthelastbiaspoint(#3).
+Notethatcertainseldom-usedvariablesarenot(bydefault)availableforplotting.
+To make them available, you may need to use the more_output statement in the
+.solfileandre-runthesimulation.
+
+
+=== PAGE 77 ===
+hapter
+C 4
+CONVERGENCE AND OTHER
+NUMERIC ISSUES
+This chapter deals with convergence of the sparse matrix solver. In most cases,
+the simulator will attempt to correct the problem by using a smaller bias step but
+there are cases where the equation and variable error terms cannot be reduced
+properly. This will stall the progress of the simulation and cause the simulator to
+printanerrormessage.
+ffi
+There are several possible causes of convergence di culties: we have tried to
+discuss the most common problems and their solution in the following sections.
+ff
+Notethattheremaybeseveraldi erentsolutionstothesameproblem.
+Please report all other cases of non-convergence to Crosslight for technical as-
+sistance. However, please keep in mind that the the simpler the structure, the
+easier it is to debug. If possible, start from a simplified 1D device that works and
+progressively iterate towards your final design until the convergence problem
+appears.
+4.1 Choice of voltage or current bias
+ff
+The choice of voltage or current bias a ects the convergence and stability of the
+Newton solver. In order to guarantee convergence, small changes in the applied
+biasshouldalwaysresultinsmallchangesintheoverallsolution.
+One particular situation where current bias is not appropriate is when the total
+amountofcurrentflowinginthedeviceisverysmall. Undertheseconditions,the
+actual current amount may fluctuate due to lack of numerical precision, making
+ffi
+it di cult to use current bias. This situation can be detected by observing the net
+ff
+currentoveralltheelectrodes: ifthesumisnotzero,thenKircho ’sCurrentLaw
+
+
+=== PAGE 78 ===
+76 CONVERGENCEANDOTHERNUMERICISSUES
+isviolatedandthecurrentistoolowtouseasacontrolvariable.
+Thesolvercanalsoenteranon-convergentstateiftheappliedvoltagebiasismuch
+higher than the turn-on voltage. Since the conductivity increases exponentially
+withbiasinatypicaldiode,seeminglysmallchangesinvoltagecanresultinvery
+largechangesofthesolution.
+Thisleadsustoasimplegeneralrule:
+•
+Usevoltagebiasfordeviceswithhighresistance
+•
+Usecurrentbiasfordeviceswithlowresistance
+For example, a typical diode under forward bias has low resistance past its turn-
+on point but high resistance at lower bias or under reverse bias conditions. With
+thesetwoextremesinmind,thefollowinggeneralstrategyisrecommendedwhen
+settingupasimulationunderforwardbias:
+1. Solveforequilibriumsolution
+2. Apply voltage until 80-90% of the built-in bias value is reached. It is also
+possible to automatically terminate a voltage scan when a certain current is
+reachedbyusingtheauto_finishparameterinthescanstatement.
+ff
+3. VerifythatKircho ’sCurrentLawissatisfiedatthisbiaspoint
+4. Applycurrentbiasuntildesiredvalueisreached
+For laser devices, the photon coupling adds some complications that need to be
+considered. Once threshold is reached, the carrier concentration and Fermi-level
+splitting at the junction are pinned by the large stimulated recombination term.
+It is almost impossible to apply any voltage bias (which is roughly equal to the
+Fermilevelsplittingatthejunction)withoutdisturbingthesolution.
+Therefore,underlasingconditions,theonlywaytoperformthesimulationprop-
+erly is to use current controlled bias. The general strategy outlined above should
+beslightlyrevisedtoensurethatthecurrentscanstartsbelowthreshold.
+For non-laser devices, there are a few typical applications where, based on the
+experience of the Crosslight team, the consistent use of voltage bias is strongly
+recommended:
+•
+Devices based on organic semiconductors (OLED) and other materials with
+widebandgap
+•
+Deviceswithalargecontactresistance
+•
+Solarcellsandphotodectors
+
+
+=== PAGE 79 ===
+4.2SpecialbiasconsiderationsforPICS3D 77
+4.2 Special bias considerations for PICS3D
+InPICS3D,thecouplingofthephotondensityismorecomplicatedthaninLASTIP
+soitisnotincludedbydefault. Thisintroducessomeextrastepsthatmustbetaken
+whendefiningtheappliedbiasinasimulation.
+In order to turn on the photon coupling, we need to know how many photons
+are in each longitudinal modes. This can be obtained by evaluating the round-
+trip gain equation (RTG) which is a function of the longitudinal index and gain
+ff
+profiles. However, these profiles are also a ected by the local photon density
+ffi
+through longitudinal spatial hole burning (LSHB) so it is di cult to set the initial
+guess.
+To solve this conundrum, we consider the case where the laser cavity is below
+threshold. Itisthensafetoassumethatthephotondensityiscloseenoughtozero
+ff
+that the index profile is una ected by LSHB. We can then use the unperturbed
+indexprofiletogetaninitialestimateofthephotondensity.
+It is therefore required that the scan preceding the introduction of the photon
+=
+coupling use the auto_finish rtgain condition to terminate. This will calculate
+the positions of the longitudinal modes as well as provide an initial guess of the
+photondensityineachmode.
+However, the choice of the RTG value on which to terminate this scan can have a
+strong influence on the simulation and its convergence. If it is too high, then the
+photon density may not be as close to zero as originally thought and the initial
+guess may be inaccurate when the photon coupling is turned on. On the other
+hand,iftheendingvalueistoolow,thensomemodescriticaltothesimulationmay
+be missing from the initial mode search. As a compromise, we suggest that the
+RTGendingvaluebesetjustabovethetransparencydensityofthegainmaterial.
+Withthisinmind,letusrevisethegeneralstrategyfromaboveforPICS3Duse:
+1. Solveforequilibriumsolution
+2. Apply voltage until 80-90% of the built-in bias value is reached. It is also
+possible to automatically terminate a voltage scan when a certain current is
+reachedbyusingtheauto_finishparameterinthescanstatement.
+ff
+3. VerifythatKircho ’sCurrentLawissatisfiedatthisbiaspoint
+=
+4. Apply current bias with auto_finish rtgain. The peak value of the RTG
+ff
+should be high enough to o set the mirror losses while still being less than
+1.0(inordertoavoidthelasingthreshold).
+5. Double-checkthemodesfoundinthemodesearchtomakesureallrelevant
+modesareincluded.
+
+
+=== PAGE 80 ===
+78 CONVERGENCEANDOTHERNUMERICISSUES
+=
+6. Applycurrentbiaswithsolve_rtg yesuntildesiredvalueisreached
+ForhighlyresistivedevicesorVCSELswithverylowthresholdcurrents,itmaybe
+=
+advisable to merge steps 2 & 4 and use the auto_finish rtgain condition during
+the voltage scan. A second termination condition using auto2_finish can be used
+toensurethecurrentislargeenoughforthefinalstep.
+4.3 Unphysical boundary
+When the boundary condition is not reasonable, it may cause convergence prob-
+lems. One such example occurs when an Ohmic contact is too close to an active
+regionoranareawithlargesplittingofIMREF’s.
+The Ohmic contact is an ideal boundary that forces the IMREF’s to the same
+equilibriumlevel. Suchanabruptchangemaybehardforthecontinuityequation
+tofollowandtherefore,leadtoalossofconvergence.
+Anothercommoncaseofnon-convergenceisinthermalsimulationswherethean
+external heat resistor is attached to a contact which is too close to the self-heating
+region.
+4.4 Thermal runaway
+ff ff
+Sincematerialpropertiesarea ectedbytemperaturee ects,convergencemaybe
+ff
+adversely a ected if the temperature increases too quickly in the device. In that
+case, the solution from a previous bias step may be too poor to use as the initial
+guessofthenextbiasstep.
+Inthatcase,theonlyremedyistousesmallerbiasstepstoensureasmoothincrease
+in temperature. The max_step parameter of the scan statement may be used to
+controlthestepsize.
+Theheat_flowstatementalsosupportsamax_temp_incrparameterthatwillforce
+theuseofasmallerstepifthetemperatureincreaseistoohigh. However,thiscan
+cause a simulation to fail if the smaller step falls below the minimum allowed by
+themin_stepparameterinscan.
+4.5 Coarse mesh
+A coarse mesh is a common cause of non-convergence. It is wise to stop the
+simulationandplotthebands,thedistributionofpotentialandthecarrierconcen-
+
+
+=== PAGE 81 ===
+4.6Finemesh 79
+trationsatthepointoffailureoratapreviousdataset. Inspectionoftheplotsmay
+enable you to locate rough mesh points in regions where solutions vary rapidly
+withdistanceorarepoorlysampled.
+ffi
+In particular, you should make sure to have su cient mesh points near these
+regionsofinterest:
+•
+BarriersformedbySchottkycontacts,heterojunctionsorboundariesbetween
+ff
+di erentdopinglevels
+• /
+Interband intrabandtunneljunctions
+•
+Regionswithstrongcurrentcrowding
+•
+Quantum well regions where there are many energy levels and the wave
+functionsmustbesampledcorrectly
+•
+Regionswheretheopticalmodepeaks
+Foragivennumberofmeshpoints,theirdistributionwithinagivenlayercanalso
+have an influence on convergence. If one of the above situations occurs within
+a layer, mesh point ratios should be used to put denser mesh near the region of
+interest. If there is a region of interest on both sides of a layer, symmetric mesh
+point distribution should be considered. For more details on mesh point ratios,
+consultthereferencemanualfortheput_mesh,layerandcolumnstatements.
+If an increased number of mesh points is still called for, then you may wish to try
+automaticmeshrefinementwiththeregridcommand.
+. .
+If a refined mesh does not help, try to reduce the complexity of the device (e g
+try a 1D device with similar structure). Testing a simple device may help you
+to find out the cause of the problem in the more complex device. Sometimes
+ffi
+you may find that the solution has di culty converging for a particular type of
+junction. Thiscanbecausedbyapproximationsmadetoboundaryconditions,or
+byunintentionallyimposingunrealisticboundaryconditions.
+4.6 Fine mesh
+Justascoarsemeshcanleadtolackofconvergence,toofineameshcansometimes
+also cause problems. In particular, regions with very low resistivity (metals,
+highly-dopedcontactregions,etc...) areatrisk. Thereasonforthisissimple: ifthe
+∆
+whole layer has a very small voltage drop, then the V between closely-spaced
+meshpointscanbecomenegligible.
+
+
+=== PAGE 82 ===
+80 CONVERGENCEANDOTHERNUMERICISSUES
+In the limiting case of a material with low resistivity, applying Ohm’s law in this
+situation will result in a situation where ∆ I = ∆V → 0 and the current between
+R 0
+closely-spaced mesh points becomes numerically unstable. The simulator will
+usuallyprintamessageaboutitsinabilitytoaccuratelycontrolthecurrentinthis
+situation.
+We note that this is a very rare situation that can usually be remedied by simply
+alteringthedistributionofmeshpointsinthelow-resistanceregion.
+4.7 Use of basic variables
+The default basic variables in our simulator are the potential and quasi-Fermi
+levels. In some structures with many current blocking or high resistance regions,
+ffi
+the solution at low bias is di cult to obtain with high accuracy. Devices of this
+typeincludeslaserdiodes(LD)withhighlydopedcurrentblockinglayers,junction
+ff
+fielde ecttransistors(JFET)andchargecoupleddevices(CCD).
+The reason is that under high resistance, the current is so small that to satisfy the
+current continuity equation within a small but finite tolerance, there are actually
+manypossiblesolutionsforthequasi-Fermilevels. Asaconsequence,thevariables
+tend to vary between these many solutions and refuse to converge to a unique
+solution. Since the value itself of the quasi-Fermi levels is not small under these
+conditions,thisfluctuationcannotsimplybeneglected.
+Thechoiceofelectronandholeconcentrationsasthebasicsolutionvariableavoids
+the fluctuation problem mentioned above. The minority carrier concentration
+density is too low to show up in the error vector and we do not care about the
+accuracyoftheminoritycarriersinthoseregionswithlowcurrentdensities.
+The newton_par statement provides the parameter change_variable to allow the
+usertoswitchfromFermilevelstocarrierconcentrations. However,useofcarrier
+concentrationalsohasdrawbacks.
+The accuracy for minority carriers may not be accurate. The variables may also
+varyover20ordersofmagnitudesandasaresult,theinversionoftheJacobianma-
+ff
+trixmaycausenumericaloverflowproblems. Therefore,someoftheo -diagonal
+ff
+matrixelementsmustbereducedartificiallywhichmaya ecttheoverallsolution.
+4.8 Slow transient technique
+Forstructureswithhighresistivityorwithcomplicatedhighdoping,convergence
+ffi
+may be di cult at low bias before current is turned on. For example, nitride-
+basedMQWstructureswithstrongpolarizationinterfacechargesareknowntobe
+
+
+=== PAGE 83 ===
+4.9Poorinitialguesssolution 81
+ffi
+di culttoconverge.
+One useful and surprisingly powerful technique is the “slow transient” method.
+ffi
+Forexample,wemayhaveanoriginaldi cultstep:
+scan var=voltage_1 value=-3.5
+Wecanreplacethiswith:
+scan var=voltage_1 value=-3.5 var2=time value2_to=1.0
+This means that the voltage will be increased over the course of 1 second. This
+ff
+is slow enough that transient e ects will be minimal (since carrier lifetimes are in
+the ns range). However, the time step is also small enough that the displacement
+current makes a numerically significant contribution to the current continuity
+equations.
+Thereisphysicalandnumericalbasisforsuchamethod: highlyinsulatingregions
+inherentlycauseinstabilitieswiththecurrentcontinuityequationsimplybecause
+ff
+thesystemmayflipbetweendi erentstatesthathavesimilarsteadystatecurrents.
+/
+In reality, this flip is facilitated by a transient charging discharging current which
+drives the system into the correct physical steady state. As a matter of fact, one
+can make the point that there is no such thing as steady state: just the limiting
+→ ∞
+case where dt . Adding a transient component merely restores some of the
+originalphysicstotheequations.
+ffi
+Suchatechniquehasbeenusedtotacklesomeconventionallydi cultcasessuch
+/
+asfloatingpolygateinMOSFETandhighlyinsulatingorganic insulatorstructures.
+4.9 Poor initial guess solution
+As is well known for Newton’s method, a poor initial guess solution may cause
+the solution to diverge. Such a situation is normally not a concern because the
+simulator has automated the procedure of finding the best guess solution. If a
+solution is not found with an initial guess solution from a previous bias, then the
+simulatorautomaticallyreducesthebiasstepandtriesanewNewtoniteration.
+As mentioned previously, simulations of some structures with highly doped cur-
+ffi
+rent blocking layers have di culty converging at low bias because of high resis-
+tance. A poor initial guess may cause problems in this situation. One may wish
+toavoidthesolutionatlowbiasbyapplyingalargeinitialbiasstep. Ifthedevice
+structureisrelativelysimplethistrickoftenworks.
+
+
+=== PAGE 84 ===
+82 CONVERGENCEANDOTHERNUMERICISSUES
+In a case where the device structure is complicated and the doping of the current
+blocking layer is high, this trick may fail. One of the reasons for such a failure is
+that the guess solution (equilibrium solution) is too far away from the solution at
+high bias. Such a condition is worsened by high doping at the current blocking
+layer.
+ffi
+A trick to overcome the convergence di culty is to solve for an “ easy device” at
+high bias first. Then the solution from the “ easy device” is used to initialize the
+solutionforthe“targetdevice”athighbias. Herethe“easydevice”hasthesame
+mesh and geometric structure as the “ target device” except the current blocking
+layerislightlydoped. Forthesimulator,astructurewithalightlydopedblocking
+layerisaneasystructure.
+4.10 Current-blocking structures
+4.10.1 n-p-n & p-n-p junctions
+ffi
+Convergence may be di cult for structures which use n-p-n or p-n-p junction to
+block the currentflow for a certain region. This kind of design is commonly used
+inburiedheterostructure(BH)lasers.
+Thistypeofstructurerequiresspecialattentionsincetheuseofquasi-Fermilevels
+ffi
+as the default variables often causes convergence di culties. As mentioned in a
+previoussection,thechangeofvariablefromFermilevelstocarrierconcentrations
+may avoid such convergence problems. However, if the Fermi levels solution is
+desiredforanyreason,oriftheuseofnewvariablesfails,thefollowingtechniques
+maybeusedtoforcetheconvergenceofthesolverusingquasi-Fermilevels.
+ffi
+Current-blocking structures have di culty converging because more material re-
+gions are involved. The heavy doping in the current blocking layer also tends to
+ff
+cause trouble, because the current flow condition there is very di erent from that
+intheotherregions.
+Toguaranteegoodconvergence,wemustsupplythesimulatorwithagoodguess
+solution at a reasonably high bias voltage. Slowly ramping up the bias voltage
+does not always help because low bias itself is a problem, as was discussed in
+previoussections.
+We recommend the following trick whenever a heavily doped current-blocking
+structureshowsnon-convergence:
+1. Create an identical structure with lightly doped current blocking layer. De-
+clare this lightly doped current blocking layer as having a “new_doping”
+insteadoftheusual“doping”.
+
+
+=== PAGE 85 ===
+4.10Current-blockingstructures 83
+2. Run the simulator for this structure and ramp up the voltage to 80-90 % of
+the bandgap of the active region. This should be much easier than before
+since we are dealing with a structure where the doping has been artificially
+reduced.
+3. Rampupthedopingdensityintheblockinglayer(markedas“new_doping”)
+toarealisticdopinglevel.
+/
+4. Nowthatthedevicestructure dopingiswhatweintendtosimulate,continue
+thesimulationwithcurrentbiasandotherstandardsimulationtasks.
+/
+4.10.2 Barriers Superlattices
+≫
+High barriers ( kT) may block current injection if only thermionic emission is
+/
+considered. TheyarecommonlyfoundatSchottkycontactsoratmaterial doping
+interfaces. Quantum tunneling may be required to overcome this and allow the
+currenttoflowproperly. Periodicstructuresmayalsosupportminibandtunneling
+atsomecarrierenergies(Esaki-Tsumodel).
+The user is advised to consult Chapter 9 for a more complete discussion of tun-
+nelingmodels.
+4.10.3 Insulating layers
+Inoursoftware,insulatingmaterialssuchasSiO areoftendescribedbyaspecial
+2
+=
+kindofmacro(materialtype insulator). Regionsusingthesemacrosarespecialin
+thatthecurrentcontinuityequationisnotsolved: instead,thecurrentisexplicitly
+set to zero. This means that features that enhance the current (tunneling, impact
+ionization, etc...) will not function since they would multiply a current value that
+isexactlyzero.
+In order for these features to function, the zero current must be replaced with
+a numerically small value that better represents reality. This can be done by
+consideringtheinsulatormaterialasawidebandgapsemiconductor. Forexample,
+usersmaysubstitutethesio2macrofors-sio2intheirdesign.
+4.10.4 Deep MQW regions
+Very deep and shallow QWs such as those found in nitride-based devices may
+ff
+block current if we assume that all carriers are thermalized (i.e. Drift-Di usion
+model). This can manifest itself as an unrealistically high turn-on voltage since a
+strongerfieldisrequiredtogetthecurrentflowing.
+
+
+=== PAGE 86 ===
+84 CONVERGENCEANDOTHERNUMERICISSUES
+/
+A non-local quantum transport correction term can facilitate the current injection
+and solve the related convergence issues. This can be turned on by using the
+q_transportstatement.
+4.11 Use of Auxiliary Ohmic Contacts
+A powerful technique to force the simulation software to converge is the use
+of auxiliary ohmic contacts. For some complex devices, certain high resistance
+areasarefarawayfromanyboundaries. Forexample,ap-n-i-p-nstructureunder
+reverse bias condition has its i-region well isolated from the ohmic contacts. As a
+result,thevariablesmayfluctuateinthei-regionandwemayhaveaconvergence
+problemnomatterhowfinethemeshspacingis.
+In such a case, we may add an auxiliary ohmic contact to be attached to a single
+mesh point in the isolated high resistant region. When we use voltage control
+on the auxiliary contact, the solver should be easier to converge because the new
+contactpreventsthevariablesfromfluctuatinginthehighresistanceregion.
+However, the voltage control on the contact may cause current to flow in or out
+of it while in reality, no current should exist in such a contact. To eliminate the
+ff
+e ects of the auxiliary contact, we can use current control to reduce its current to
+zeroafterthedesiredbiasontheotherelectrodeshasbeenobtained.
+For example, in the above p-n-i-p-n structure (see Fig. 4.1), we wish to reverse
+biastobreakdownatabout10volts. Wecansimultaneouslyrampupthevoltages
+at the auxiliary contact to about 5 volts to ensure convergence. After the device
+breaks down and current starts to flow at around 10 volts of total bias, we can
+use current control to force the current at the auxiliary contact to be zero, thus
+ff
+eliminate its e ects on the device. Without the the auxiliary contact, the above
+ffi
+devicewouldbedi culttobiastobreakdown.
+4.12 Bandgap reduction technique
+Widebandgapmaterialsarehardtoconvergesincetheirintrinsiccarrierdensities
+are low. The reverse junction current is orders of magnitude lower than their
+narrowbandgapcounterparts. Theproblemismoreseriousifimpactionizationis
+involvedbecausethesurgeofionizationcurrentinreversejunctionmayneverbe
+detected by the numerical solver since the reverse current is below the numerical
+floatingpointaccuracy.
+One technique is to artificially reduce the bandgap first, achieve the desired bias
+currentandfinallyincreasethesemiconductorbandgapbacktoitsoriginalvalue.
+
+
+=== PAGE 87 ===
+4.13Negativedifferentialmobilityissues 85
+10 volts
+n
+p
+5 volts
+i current=0
+auxiliary contact
+n
+p
+Figure4.1: Schematicfortheuseofauxiliarycontactforap-n-i-p-nreversebiased
+structure.
+Forexample:
+equilibrium bandgap_reduction = 0.2
+scan var=voltage_1 value_to = -0.5
+scan var=current_1 value_to = 10e-3
+scan var=bandgap_reduction value_to=0.0 var2=current_1 value2_to=10e-3
+scan var=voltage_1 value_to = 0.0
+→
+Thisreducestheoriginalbandgapvalueby20%(e.g. 1eV 0.8eV)andincreases
+the bias to the desired value. Afterwards, the bandgap is restored to its original
+value while keeping the desired bias current fixed; the voltage will change to
+match.
+Asafinalstep,wegettheIVcurvebyrampingdownthebias: sincethebandgap
+wasalteredduringwhenthebiaswasrampedup,theIVcurveisincorrectforthis
+region. In this situation, care should be taken to only plot data from the last scan
+statement.
+ff
+4.13 Negative di erential mobility issues
+ff
+Formaterialswithnegativedi erentialmobilityduetotransitionofelectronsfrom
+Γ /
+the band to L and or X bands, convergence may become a problem when the
+
+
+=== PAGE 88 ===
+86 CONVERGENCEANDOTHERNUMERICISSUES
+2.5
+2
+1.5
+1
+0.5
+0
+0 2 4 6 8 10 12
+)s/m
+5E(
+yticoleV
+.celE
+Field (E5 V/m)
+Figure4.2: FielddependenceelectronvelocityofundopedGaAs. Thesolidcurve
+isthe“n.gaas”mobilitymodelwhilethedashcurveisthe“beta”model.
+applied voltage is high. Examples of such problems are a HEMT under high
+voltagebiasandalaserdiodeunderhighcurrentinjectioncondition.
+The steady state solution can be driven into non-convergence because of the neg-
+ff
+ativedi erentialresistanceduetothespecialfielddependencemobilityasshown
+inFig. 4.2(asdefinedbythe“n.gaas”velocitymodelinthegaasmacro).
+ff
+Inreality,thedevicemaybedrivenintounstableoroscillationstates(Gunne ect)
+atsomebiaspoints. WerarelyseesuchkindofnegativeI-Vcharacteristicsinsteady
+/
+state measurements. A possible explanation is that the field current adjusts itself
+in the region of negative resistance in the form of transient redistribution and the
+steadystateterminalI-Vcurvebypassesthepeakofnegativeresistance.
+Thus, to overcome the non-convergence in steady state simulation in such a sit-
+ff
+uation, we suggest using a di erent form of mobility model (such as the “beta”
+model,asillustratedbydashlineinFig. 4.2).
+Analternativemethodtoovercomethenon-convergenceistousetransientsimu-
+lation while biasing the FET. This method means the simulator and the computer
+hardwaremustworkharder.
+
+
+=== PAGE 89 ===
+4.14Widebandgapmaterialatlowleakagecurrent 87
+4.14 Wide bandgap material at low leakage current
+It is challenging to simulate leakage or reverse junction current in wide bangap
+materials such as SiC and GaN. Because minority carrier density is orders of
+magnitudelowerthaninsmallergapmaterialsuchassilicon,theleakagecurrent
+is often more than 10 orders of magnitude smaller than the turn-on current. This
+ff
+results with working with numbers with widely di erent scales, so that their
+relative precision is close to the number of available digits in double precision
+arithmetic.
+ffi
+As a result, convergence is di cult to achieve due to the lack of minority carrier
+to induce any current in the solver. This manifests itself as a sparse matrix with a
+very poor condition number since the current continuity of the minority carriers
+ffi
+isdi culttoenforce.
+Onepossiblemethodtoavoidthisconundrumwouldbetouseset_minority_carrier
+to artifically increase the minority carrier until a high-current region can be
+reached. Later on, the current could be rescaled back to the original small value
+accordingsomepreviousconvergentreference.
+Ifawidegapmaterialisincontactwithametal,thecurrentconservationmayalso
+ff
+be broken down for small leakage current due to the large di erence in material
+conductivity. In such a case, it is suggested that the metal resistivity be increased
+until current conservation is achieved. Since the total resistance of the whole
+structureislargeforlowleakagecurrent,theartificialincreaseinmetalresistivity
+wouldnotcausesignificantcomputationerrorintheIVcharacteristics.
+
+
+=== PAGE 90 ===
+88 CONVERGENCEANDOTHERNUMERICISSUES
+

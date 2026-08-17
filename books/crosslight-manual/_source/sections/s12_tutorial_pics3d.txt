@@ -1,0 +1,1831 @@
+=== PAGE 436 ===
+434 LASTIPEXAMPLES
+9
+8
+7
+6
+5
+4
+3
+2
+1
+0
+0 1 2 3 4 5 6 7 8
+)Wm(
+rewoP
+resaL
+edoM
+llA
+File:gaas20.plt
+Laser Current<1>(mA)
+Figure21.11: Totalpowerfromallmodes
+5
+4.5
+4
+3.5
+3
+2.5
+2
+1.5
+1
+0.5
+0
+0 1 2 3 4 5 6 7 8
+)Wm(
+rewoP
+resaL
+File:gaas20.plt
+Laser Current<1>(mA)
+Figure21.12: Poweroutputfrommodenumber1
+
+
+=== PAGE 437 ===
+hapter
+C 22
+PICS3D EXAMPLES
+22.1 Introduction
+ThischapterwilldescribeafewselectedexamplesofPICS3D.Theseexampleshave
+been selected to teach the basic operation of the software, explain key concepts
+/
+essential to device simulation, showcase some popular applications devices and
+preemptively answer common user questions. The relevant input files can be
+found in a compressed archive distributed along with the software; the name of
+thesectioninthischaptercorrespondstoafolderinthisarchive.
+®
+NotethatthedefaultinstallationdirectoryofthesoftwareinaMicrosoftWindows
+environment is the Program Files directory: this directory is protected by the
+operatingsystemandshouldnot beusedtounpacktheexamplearchive.
+Instead, we recommend that the archive be unpacked to a folder where the user
+accounthasfullreadandwriteprivileges. Previousversionsofthesoftwareused
+\
+a directory under c: crosslig; such a name has the advantage of not including a
+spaceinthepathname,whichfacilitatestheuseofbatchfilesincludedtoautomate
+runningoftheexamples.
+Theexamplesfromthischapterareonlyasmallsubsetoftheincludedtutorialfiles.
+There are a number of other examples that are supported through accompanying
+ff
+README files and comments in the simulation files. Crosslight support sta
+will also be happy to explain these examples in more detail if you need further
+assistance.
+It is relevant to note that all examples are subject to change as the software is
+updated. Betweeneachrelease,thereareoftenbugfixes,materialmacrochanges,
+ff
+new models and other improvements which can a ect the results. In most cases,
+these should result in negligible changes in the results which do not alter the
+tutorial value of these examples. If any major inconsistencies are found, please
+
+
+=== PAGE 438 ===
+436 PICS3DEXAMPLES
+ff
+report them to Crosslight support sta . Most examples listed here were last
+updated as part of the 2009 manual release. Whenever possible, we will note
+exampleswhichhavebeenupdatedsince.
+Throughoutthischapter,wewillconcentrateonthespecificsimulationstatements
+and physical models that are needed for a particular device. Particular attention
+ff
+willalsobegiventomodelparametersthatmaya ecttheconvergenceorreliability
+ofthesimulation.
+It is also assumed that the reader is familiar with the basic structure of the input
+filessosomeofthebasicsetupstepswillbeomittedforthesakeofbrevity. Ifyou
+have not already done so, we strongly urge you to read through Chapter 3. Of
+particular interest will be the sections dealing with the use of the command-line
+setup tools as well as their integration into SimuCenter. If you are working using
+GUItoolssuchasLayerBuilder,additionalonlinehelpisavailable.
+In some cases, the setup tools will only provide the basic framework of an input
+file and some direct editing may be required to complete the setup. If this is the
+case, new users are encouraged to use the built-in Wizard option in SimuCenter:
+this will present all the available statements and parameters. New statements
+maybecreatedbyright-clickingonanemptylineandselectingtheWizardoption
+whileexistingstatementscanbemodifiedbyusingthesameprocedureontheline
+containingthatstatement.
+NotethatusersofotherCrosslighttoolsbesidesPICS3Dmayalsobenefitfromthis
+chapter;conversely,PICS3Dusersmayalsobenefitfromtheothertutorialchapters
+inthismanual. Mostofthetime,thesyntaxusedinthesechaptersissharedacross
+all Crosslight tools: only commands that define unique models specific to a tool
+willbeinapplicable.
+
+
+=== PAGE 439 ===
+22.2A_tutorial 437
+Figure22.1: 2Dcutofquarter-wave-shiftedDFBlaser
+22.2 A_tutorial
+Thisexampleisanindex-coupleddistributedfeedback(DFB)laserwithaquarter-
+wavephaseshiftinthemiddle. Thiskindofstructureisoftenusedtoguaranteethe
+device lases on a single longitudinal mode and provides some immunity against
+externalcavityfeedback. Usersofpreviousversionsofthesoftwarewillnotethis
+examplehasbeenalteredsignificantly.
+Layer Structure
+We start by defining a 2D cut of the device as shown in Fig. 22.1. The device is
+µ
+grown on an InP substrate and a bulk active region tuned to 1.3 m is used for
+simplicity:
+µ =
+1.0 m InP n 2e24
+µ = = =
+0.3 m In 1−x Ga x As y P 1−y x lattice-matched,y 0.26 n 5e23
+µ = =
+0.2 m In 1−x Ga x As y P 1−y x lattice-matched,y 0.64 undoped
+µ = = =
+0.3 m In 1−x Ga x As y P 1−y x lattice-matched,y 0.26 p 5e23
+µ =
+1.0 m InP p 2e24
+When defining this structure, care must be taken when selecting the macros: the
+ff
+materialpropertieswillbeverydi erentiftheselectedmacroislattice-matchedto
+GaAsorInP.Somemacrosalsoallowforstraininwhichcasetheexactcomposition
+
+
+=== PAGE 440 ===
+438 PICS3DEXAMPLES
+must be provided. The user is advised to consult the comments accompanying
+each macro to select the right one: improper macro selection is a common cause
+ofproblemswithsimulationsusingtheInGaAsPsystem.
+An easy way to do this is to use the LayerBuilder GUI: it not only shows a full
+alphabetized list of available macros but also the comments in the macro header.
+It is also possible to consult the macros directly by opening the crosslig.mac and
+more.mac files in your installation directory with a text editor. However, we do
+not recommend making any changes to the default macro files: it is better to use
+acustommacrofileifyouwishtomakechangestothematerialparameters.
+Forthesakeofsimplicity,thegratinglayerhasbeenabstractedawayintheabove
+structure. Conceptually, we may assume that part of the top cladding layer is in
+ff
+factanaveragematerialforthegrating. Wewilldefineane ectivegratingaspart
+of the longitudinal setup in the .sol file below. More accurate models to define
+gratinglayersareavailable,aswillbeshowninSec.22.4.
+Foranadditionalsimplification,weneglectanychangesinthelateraldirectionso
+the 2D cut is actually a 1D device. We have touched on this subject in a previous
+LASTIPexample(Sec.21.2)sowewillomittherestofthesetupstepsforthelayer
+file. Ascanbeseenbelow,itisquitesimple:
+$file:inp13.layer
+begin_layer
+column column_num=1 w=0.100000E+01 mesh_num=2 r=1.
+bottom_contact column_num=1 from=0 to=0.100000E+01 contact_num=1 &&
+contact_type ohmic
+$
+layer_mater mater_lib=InP column_num=1
+layer d=1.0 n=10 n_doping1=2e24 r=0.9
+$
+layer_mater mater_lib=InGaAsP-InP column_num=1 var_symbol1=y var1=0.26
+layer d=0.3 n=9 n_doping1=5e23 r=0.9
+$
+layer_mater mater_lib=InGaAsP-InP column_num=1 var_symbol1=y var1=0.64 &&
+model=bulk_active
+layer d=0.2 n=12 r=-1.1
+$
+layer_mater mater_lib=InGaAsP-InP column_num=1 var_symbol1=y var1=0.26
+layer d=0.3 n=9 p_doping1=5e23 r=1.1
+$
+layer_mater mater_lib=InP column_num=1
+layer d=1.0 n=10 p_doping1=2e24 r=0.9
+$
+top_contact column_num=1 from=0 to=0.100000E+01 contact_num=2 contact_type= &&
+
+
+=== PAGE 441 ===
+22.2A_tutorial 439
+ohmic
+end_layer
+Simulation Setup
+Thefollowing.solfileisusedtorunthisexample:
+$file:inp13.sol
+begin
+3d_solution_method 3d_flow=yes z_connect=no
+z_structure uniform_length=500.0 zplanes=7 zseg_num=1
+load_mesh mesh_inf=inp13.msh
+$
+$ Include the gain file which contains material info.
+include file=inp13.gain
+include file=inp13.doping
+$
+output sol_outf=inp13.out
+$
+$ Set parameters for wave equation
+init_wave backg_loss= 0.5000E+03 init_wavel=1.3 &&
+boundary_type=[2 2 1 1] wavel_range=[1.28 1.32]
+direct_eigen
+$ Set Newton parameters for equilibrium solution
+newton_par damping_step=3. var_tol=1.e-8 res_tol=1.e-8 &&
+max_iter=100 opt_iter=15 stop_iter=50 print_flag=3
+$
+$ Solve equations at equilibrium
+equilibrium
+$
+rtgain_phase density=1.25e24
+$
+$ You may stop here to examine the round trip gain
+$
+$stop
+$
+$ Set Newton parameters for solution with bias
+newton_par damping_step=1. var_tol=1.e-4 res_tol=1.e-4 &&
+max_iter=50 opt_iter=15 stop_iter=9 print_flag=3
+
+
+=== PAGE 442 ===
+440 PICS3DEXAMPLES
+$ Ramp up bias voltage
+scan var=voltage_1 value_to=-5.0 &&
+init_step=1e-3 max_step=0.1 &&
+auto_finish=current_1 auto_until=1e-3 auto_condition=above
+$ Ramp up bias to near threshold as judged by RT-Gain
+scan var=current_1 value_to=20e-3 &&
+init_step=1e-3 max_step=5e-3 print_step=10e-3 &&
+auto_finish=rtgain auto_until=0.8 auto_within=0.1
+$ Activate 3D C-RTG solver
+scan var=current_1 value_to=20e-3 &&
+init_step=1e-5 max_step=1e-4 print_step=10e-3 &&
+solve_rtg=yes
+$
+end
+$ Longitudinal mode session:
+begin_zsol
+$ Set up grating at 1.3 um
+longitudinal ref_wavel=1.3e-6 &&
+left_f_refl=0 right_f_refl=0
+$ Quarter-wave phase shift: 90 degrees=0.5*pi
+section length=250e-6 kappa_real=2e3 &&
+sec_num=1 mesh_points=10 phase_shift=0.5
+section length=250e-6 kappa_real=2e3 &&
+sec_num=2 mesh_points=10
+$ longitudinal mode search parameters
+mode_srch omega_xrange = 20 adjust_range = yes
+end_zsol
+In this section, we will skip over most of the details regarding the waveguide
+setup and concentrate on the PICS3Dspecific aspects of the simulation. The most
+important point to understand is that there are two aspects to the 3D setup:
+electricalmodelingandopticalmodeling. Thesewillbedescribedbelow.
+
+
+=== PAGE 443 ===
+22.2A_tutorial 441
+3D Electrical Simulation
+Thefirstpartofthe3Dsetupistheelectricalsimulationanditisidenticaltowhat
+would be used in an APSYS simulation. In both cases, the 3D model is activated
+with the 3d_solution_method statement and one or more segments are defined.
+Thesesegmentscombinemultiple2Dmeshplanesanddefinea3Dvolumeforthe
+simulation. For a more detailed discussion on this topic, the user is referred to
+Sec.6.3.
+In this example, the layer file we defined above can represent a 2D cut at any
+z position of the device. Therefore, we have a single segment and only one
+z_structure statement defines the device for the electrical model. Note that since
+=
+thereisonlyasinglesegment,zseg_num 1isimplicitlydefinedwhichsimplifies
+the input file somewhat: we will see in Sec. 22.4 how to deal with multiple
+segments.
+The longitudinal electrical mesh is determined by the number of mesh planes
+defined in z_structure. Since there is only a single segment, a minimum of two
+planes is needed to define a volume. However, a minimum of three planes is
+neededtoobservealongitudinalvariationofmaterialparameters(i.e. longitudinal
+holeburning). Moreplanesprovidebettersamplinginthezdirectionbutrequire
+more memory and processing power so there is always a compromise: we use
+sevenmeshplanesinthisexample.
+3DOpticalSimulation
+Thesecond part of the 3D simulationis the optical propagation: this istied to the
+conceptoftheround-tripgain(RTG)discussedinSec.6.4. Thislongitudinalmodel
+is at the very core of PICS3D and involves several setup steps. These require a
+lengthyexplanationsowewilldividethemintofourmaincategories:
+•
+Opticalpropagationmodel
+•
+Longitudinalmodesearch
+•
+Gainprofiledefinition
+•
+Biassetup
+OpticalPropagationModel
+The optical propagation model is tied to the concept of “sections”: these define
+theoptical cavity inthe same waythat “segments” definethe 3D geometryof the
+µ
+electricalsimulation. Inthiscase,wehavea500 mlaserbutwithaphaseshiftin
+
+
+=== PAGE 444 ===
+442 PICS3DEXAMPLES
+the middle so we use two sections of equal length and define a phase shift at the
+π
+end of the first section. This phase value must be expressed as a multiple of so
+λ
+isequivalentto0.5.
+4
+Within each section, the same propagation model is used: for edge-emitting de-
+vices such as this one, it is the coupled-wave transfer matrix of Sec. 16.5. The
+detuning term is based on the DFB grating’s reference frequency so we must de-
+fineitwiththelongitudinalstatement. Thisstatementalsocontrolstheboundary
+conditionsusedinthelongitudinalpropagationmodel(i.e. mirrorreflectivities).
+κ =
+We also define a pure index grating of 2000 in each section so that the total
+κ =
+grating strength for the laser is L 1. This method of defining the grating is the
+simplest and most convenient way available in PICS3DM˙ ore accurate models are
+available but they require an explicit definition of the grating composition in the
+layerfile: wewillshowanexampleofthismethodinSec.22.4.
+Wenoteinpassingthatthetwostatementsabovereplacesomeofthefunctionality
+providedbyinit_waveinLASTIP iftheuserattemptstouseittodefinethecavity
+length or mirror strength, it will be ignored by the software. In PICS3D the
+init_wave statement is only used to define the background loss of the optical
+propagationandtocontrolthelateralmodesolver.
+LongitudinalModeSearch
+The longitudinal mode search is controlled by the mode_srch statement. This
+statement defines the search range for the longitudinal modes. This can be
+done either explicitly with wavel_xrange or using a fixed-size window with
+omega_xrange. This window is usually centered on the reference wavelength
+of the grating but can be allowed to shift in order to center it on the strongest
+=
+modewith adjust_range yes.
+As described in Chap. 16, longitudinal modes are found using the zeros of the
+Wronskian, which is equivalent to evaluating the RTG. However, evaluating the
+RTGwhileconsideringthephotoncouplingistricky: thephotondensitycanonly
+be known by evaluating the RTG but evaluating the RTG requires knowledge
+of the photon density because of its impact on the longitudinal gain profile (i.e.
+spatialholeburning). Toprovideaninitialguess,wemustassumethatthephoton
+coupling is negligible at first and use a flat gain profile to find the longitudinal
+modes.
+Aspartofitsinitialization,PICS3DrequiresapreviewoftheRTGandlongitudinal
+modesearchwiththertgain_phasestatement. Sincethisstatementonlyproduces
+a preview of the RTG (i.e. with no photon coupling), it must be used before any
+actualbiasisappliedbutaftertheequilibriumcalculations.
+In addition to its normal use in initialization, rtgain_phase can also be useful to
+
+
+=== PAGE 445 ===
+22.2A_tutorial 443
+troubleshootdevicedesignsandensurethatthecavitymodesareasexpected. The
+simulation may be stopped at this point by using the stop statement if the user
+wishestoexaminetheresultbeforegoinganyfurther.
+Theresultsofthelongitudinalmodesearchwillbeshowninthesimulationlogas
+shownbelow:
+Longitudinal modes found:
+Wavelength (um) Round-Trip-Gain
+0.130504E+001 0.976213E-002
+0.130457E+001 0.122080E-001
+0.130398E+001 0.148400E-001
+0.130352E+001 0.201960E-001
+0.130292E+001 0.271156E-001
+0.130247E+001 0.441081E-001
+0.130186E+001 0.760265E-001
+0.130141E+001 0.226975E+000
+0.130061E+001 0.873341E+000
+0.129981E+001 0.171932E+000
+0.129937E+001 0.505705E-001
+0.129874E+001 0.235128E-001
+0.129832E+001 0.126577E-001
+0.129769E+001 0.754646E-002
+0.129728E+001 0.487527E-002
+0.129664E+001 0.318803E-002
+0.129624E+001 0.224836E-002
+0.129559E+001 0.153203E-002
+0.129521E+001 0.113569E-002
+However, more information is also available by using the plot_rtgain statement
+inthe.rtgainfileasshowninFig.22.2.
+≥
+WenoteinpassingthatRTG 1isanunphysicalsituationandshouldbeignored.
+Itusuallyindicatesapointabovethreshold,whichmeansthatthephotondensity
+is too strong to be ignored and the evaluation of the RTG is not realistic (i.e. hole
+ff
+burning and carrier clamping e ects were neglected or solution is not properly
+=
+convergedyet). Tobemoreaccurate,RTG 1isalimitcorrespondingtoanideal
+cavitywithoutspontaneousemission: theRTGonlyapproaches1inarealdevice
+andthereisnoclear-cutvalueoftheRTGatthreshold.
+Gainprofiledefinition
+DuringtheRTGpreview,acarrierdensityvaluemustbeprovidedsincenobiashas
+been applied yet: this is used to obtain the propagation constant from tabulated
+
+
+=== PAGE 446 ===
+444 PICS3DEXAMPLES
+1
+0.8
+0.6
+0.4
+0.2
+0
+-0.2
+-0.4
+-0.6
+1.294 1.296 1.298 1.3 1.302 1.304 1.306
+)iP2(
+esahp
+&
+niag
+TR
+File:inp13.plt Gamma= 0.3528522520
+Wavelength (um)
+Figure 22.2: Round-trip gain (RTG) of quarter-wave-shifted DFB laser below
+threshold
+gain values. A convenient ways to provide these tables is to include the .gain file
+insteadofthe.materfileinthe.sol: the.materfilewillstillbeincludedrecursively.
+Theactualgaintablesforthepreviewaregeneratedbythegain_wavelstatement.
+If it has not been defined already, a simple .gain template with the necessary
+statements can be generated by right-clicking the .mater file in SimuCenter. It is
+a good idea to process this file before the main simulation to optimize the gain
+curvepeakvs. thegrating’sreferencewavelength.
+The user may also find it useful to manually add a gain_density statement to the
+.gain file before processing: this will generate a material gain vs. carrier density
+curve that can help locate a reasonable carrier density at which to preview the
+RTG.
+During the full simulation (i.e. scan statements), PICS3D does not need to use
+tabulated gain values. Instead, it uses the information from the electrical simu-
+lation to obtain local gain values: these values will be linearly interpolated from
+the electrical mesh planes onto the optical mesh points defined by the section
+statementsandusedtoevaluatetheRTG.
+Biassetup
+When applying bias, we still have the same problem of initializing the photon
+coupling that we described earlier: we need to provide an accurate initial guess
+ofthephotondensityandthewavelengthofthelongitudinalmodestoensurethe
+
+
+=== PAGE 447 ===
+22.2A_tutorial 445
+convergence of the Newton solver. As we discussed earlier, this means selecting
+a bias point below threshold so that the starting photon density is negligible and
+theflatgainprofileapproximationisrealistic.
+However,itiswell-knownthatthelongitudinalmodewavelengthscanshiftbelow
+threshold since increasing bias produces carrier-induced index changes. This
+means that we cannot select a bias point that is too far below threshold since we
+might risk missing the lasing mode during the mode search. This is a commonly
+encounteredproblemindeviceswithmanylongitudinalmodessuchasverylong
+Fabry-Perotcavities.
+Areasonablecompromiseistoselectabiaspointwherethemodalgainispositive
+but not yet lasing. To do this, use the auto_finish parameter of the scan state-
+ment. TheRTGvalueselectedtoterminatethescanshouldbelargerthanwhatis
+providedbythemirrorfeedbackbutstilllessthan1.
+This auto_finish parameter is also required by PICS3D to initialize the coupled
+RTG solution in the Newton solver. The photon coupling can be turned on im-
+=
+mediately afterwards by using solve_rtg yes in the next scan statement. Once
+photonthecouplingisturnedon,theusermusttakecaretoalwaysusesmallbias
+steps since the solution state will shift strongly as the threshold region is crossed:
+althoughmodewavelengthstendtostabilizeasthecarrierdensityisclamped,the
+photondensityofthelasingmodeswillincreasebyseveralordersofmagnitude.
+Additional hints on how to configure the bias steps in PICS3D are discussed in
+Chap.4.
+Post-Processing
+Once the simulation has been run, results can be plotted using the following .plt
+file:
+$file:inp13.plt
+begin_pstprc
+plot_data plot_device=pdf
+get_data main_input=inp13.sol &&
+sol_inf=inp13.out &&
+xy_data=[5 5] scan_data=[1 5]
+$
+plot_scan scan_var=current_1 &&
+variable=rtg_2facet_power_allmode &&
+scan_num= 3
+plot_scan scan_var=current_1 &&
+
+
+=== PAGE 448 ===
+446 PICS3DEXAMPLES
+variable=rtg_peak_wavelength &&
+scan_num= 3
+modify_plot longitudinal_mode=10
+plot_scan scan_var=current_1 &&
+variable=wavelength &&
+scan_num= 3
+gain_spectrum variable=rtg_spectrum
+$ Plot at xy cross sections
+$
+lplot_xy variable=band xy_from=[ 0.1000E+00 0.0000E+00] &&
+xy_to=[ 0.1000E+00 0.2800E+01] z=0
+$
+lplot_xy variable=elec_curr_y xy_from=[ 0.1000E+00 0.0000E+00] &&
+xy_to=[ 0.1000E+00 0.2800E+01] z=0
+lplot_xy variable=hole_curr_y xy_from=[ 0.1000E+00 0.0000E+00] &&
+xy_to=[ 0.1000E+00 0.2800E+01] z=0
+vplot_xy variable=total_curr &&
+z=0 grid_sizes=[35 35]
+$
+cplot_xy variable=wave_intensity &&
+z=0 grid_sizes=[35 35]
+splot_xy variable=elec_conc &&
+grid_sizes=(35, 35) &&
+view_xrot=0 view_zrot=30 z=0
+splot_xy variable=hole_conc &&
+grid_sizes=(35, 35) &&
+view_xrot=0 view_zrot=30 z=0
+$
+$ Plot for all dimensions of xyz [for edge laser only].
+$
+splot_xyz variable=wave_intensity &&
+xy_from=[ 0.1000E+00 0.0000E+00] &&
+xy_to=[ 0.1000E+00 0.2800E+01] &&
+grid_sizes=[50, 20] view_zrot=20.
+
+
+=== PAGE 449 ===
+22.2A_tutorial 447
+0.011
+0.01
+0.009
+0.008
+0.007
+0.006
+0.005
+0.004
+0.003
+0.002
+0.001
+0
+0.006 0.008 0.01 0.012 0.014 0.016 0.018 0.02
+)W(
+rewoP
+tecaf-2
+edom-llA
+GTR
+File:inp13.plt
+Contact Current<1>(A)
+Figure22.3: L-IcurveofDFBlaser
+modify_plot show_data_points=yes
+lplot_xyz variable=wave_intensity xy_point=(0.0 1.4)
+$
+end_pstprc
+Whenplottingresults,thereareseveraldi ff erencesbetweenLASTIPandPICS3DT˙he
+mostimportantoneoftheseisthatresultsarealwaysin3Dsonospecialvariables
+are needed for unit conversion. Another important point is that unlike LASTIP
+PICS3D does not apply any scaling factors due to symmetry: this is a software
+design choice prompted by the fact that PICS3D must handle many devices with
+ff
+di erent kinds of symmetry: for example unlike ridge waveguides, VCSELs use
+rotational symmetry. The user should keep this in mind and apply appropriate
+scalingofthecurrentandpowerwhencomparingPICS3DandLASTIPresultsfor
+ff
+the same structure. Many variable names are also di erent than in LASTIP for
+example, most of the variables obtained from the coupled RTG calculations are
+prefixedby“rtg_”.
+To plot the L-I curve for the laser, we use the plot_scan statement as in Fig. 22.3
+. Power from individual modes can also be plotted by specifying the longitu-
+dinal mode index with modify_plot before the plot command. Note that the
+mode_index parameter in plot_scan is used to specify lateral mode index and
+cannotbeusedforthispurpose.
+plot_scan can also be used to plot other variables vs. bias. For example, Fig. 22.4
+shows the peak emission wavelength which confirms our earlier comment about
+the shift in longitudinal mode positions. The change in photon number can also
+
+
+=== PAGE 450 ===
+448 PICS3DEXAMPLES
+1.30002
+1.30001
+1.3
+1.29999
+1.29998
+1.29997
+1.29996
+1.29995
+0.006 0.008 0.01 0.012 0.014 0.016 0.018 0.02
+)mu(
+htgnelevaW
+kaeP
+GTR
+File:inp13.plt
+Contact Current<1>(A)
+Figure22.4: PeakemissionwavelengthofDFBlaservs. bias
+beplottedinthisway.
+To plot spectral data, the gain_spectrum statement has been re-purposed to plot
+ff
+di erent physical quantities. One of these is the mode spectrum as shown in
+Fig.22.5whichshowsthestrongside-modesuppressionandsingle-modebehavior
+thatisexpectedfromthisstructure.
+When plotting structural data, special plotting commands must be used to deal
+withthe3Ddatabutmostoftheplottingcommandsfrom2Dhaveacorrespond-
+ing command in 3D. For example, plot_1d is replaced by lplot_xy or lplot_xyz
+dependingonthedirectionofthelinecut.
+As an example of this, Fig. 22.6 shows the longitudinal distribution of the wave
+intensity: thecutistakeninthecenteroftheactiveregion. Aswediscussedearlier,
+weonlyusedsevenmeshplanessincethereisacompromisebetweentheamount
+of longitudinal sampling and the speed & resources required for the simulation.
+However, we see that even this rough amount of sampling is enough to obtain
+goodresultsfortheL-Icurveandspectralpropertiesofthelaser.
+
+
+=== PAGE 451 ===
+22.2A_tutorial 449
+-20
+-30
+-40
+-50
+-60
+-70
+-80
+-90
+-100
+1.294 1.296 1.298 1.3 1.302 1.304 1.306
+)Bd-01gol01(
+murtcepS
+File:inp13.plt
+Wavelength (micron)
+Figure22.5: ModespectrumofDFBlaser
+1
+0.95
+0.9
+0.85
+0.8
+0.75
+0.7
+0.65
+0.6
+0.55
+0 100 200 300 400 500
+ytisnetnI_evaW
+File:inp13.plt Gamma= 0.3528522520
+Distance (micron)
+Figure22.6: LongitudinalmodeprofileofDFBlaser
+
+
+=== PAGE 452 ===
+450 PICS3DEXAMPLES
+\
+22.3 amplifier_3D inp13amp
+This example is a semiconductor optical amplifier (SOA): we define incoming
+powerontheleftfacetandstudytheoutgoingpowerandamplifiedspontaneous
+emission (ASE) of the device. The modeling techniques described here can also
+be applied to electro-absorbing modulators (EAM) and superluminescent diodes
+(SLED)withafewsimplemodifications.
+Layer Structure
+The layer structure used here is based on the one used in Sec. 22.2. The only
+ff
+di erenceisthatwedonotassumethereisagratinglayerthatisabstractedaway
+and defined later in the simulation: in most SOA applications, optical feedback
+mustbeminimizedsothisdevicereallyhasnograting.
+Inpracticalterms,itmeansthatthe.layerinputfileforthisexampleisexactlythe
+same as in Sec. 22.2. In order to save time, we will simply reuse this file instead
+of creating a new one from scratch. However, for the sake of consistency, we will
+renamethisfiletoinp13amp.layersoitmatchestherestofourprojectfiles.
+Simulation Setup
+ff
+Definingthe3DmodelinanSOAisabitdi erentthanforanedge-emittinglaser.
+Theelectricalpartisthesameasbeforeandweusemultiplemeshplanestodefine
+a simulation volume. Depending on the precision required, more mesh planes
+may be required: SOA saturation at high power is clearly related to longitudinal
+spatial hole burning so the quality of the sampling in the z direction may be
+important.
+Weusethefollowing.solfileforthissimulation:
+$file:inp13amp.sol
+begin
+z_structure uniform_zseg_from=0. uniform_zseg_to=500. zseg_num=1 &&
+zplanes=5
+3d_solution_method 3d_flow=yes
+load_mesh mesh_inf=inp13amp.msh
+$
+include file=inp13amp.gain
+include file=inp13amp.doping
+$
+
+
+=== PAGE 453 ===
+22.3amplifier_3D\inp13amp 451
+output sol_outf=inp13amp.out
+more_output pics3d_ase=yes wave_phase=yes
+$
+$ Set parameters for wave equation
+init_wave backg_loss=500 boundary_type=[2 2 1 1] &&
+init_wavel=1.29 wavel_range=[1.28 1.32]
+direct_eigen
+$
+$ ASE model assumes input single wavelength is close to gain peak
+$
+3d_amplifier_model wavelength=1.29 input_watt=1.e-4
+$
+$ Set Newton parameters for equilibrium solution
+newton_par damping_step=3. var_tol=1.e-8 res_tol=1.e-8 &&
+max_iter=100 opt_iter=15 stop_iter=50 print_flag=3
+$
+equilibrium
+$
+rtgain_phase density=1.4e24
+$
+$
+$ Set Newton parameters for solution with bias
+newton_par damping_step=1. var_tol=1.e-4 res_tol=1.e-4 &&
+max_iter=50 opt_iter=15 stop_iter=9 print_flag=3
+$ Ramp up bias voltage (adjust 1 volt for your case)
+scan var=voltage_1 value_to= -1. print_step= 1. &&
+init_step=0.1 min_step=1.e-5 max_step=0.5
+$ auto_finish=rtgain is actually used to initialize parameters
+scan var=current_1 value_to=18.5e-3 max_step=1.e-3 &&
+auto_finish=rtgain auto_until=0.9
+newton_par damping_step=1. var_tol=1.e-4 res_tol=1.e-4 &&
+max_iter=50 opt_iter=25 stop_iter=9 print_flag=3
+scan var=light value_to=1 init_step=1.e-3 &&
+var2=current_1 value2_to=18.5e-3 max_step=0.02 solve_rtg=yes
+
+
+=== PAGE 454 ===
+452 PICS3DEXAMPLES
+end
+$ Longitudinal mode session:
+begin_zsol
+$ this is to control the data points in ASE spectrum
+freq_control data_points=200
+longitudinal ref_wavel= 0.12900E-05 &&
+left_f_refl= 0.0000E+00 &&
+right_f_refl= 0.0000E+00
+section length= 0.5000E-03 &&
+sec_num=1 mesh_points=20
+mode_srch omega_xrange=10.
+end_zsol
+3DOpticalSimulation
+ff
+The longitudinal part of the 3D problem is a bit di erent since the longitudinal
+behavioriscausedbyanexternallightinputratherthanbeingduetotheexistence
+of cavity modes. The 3d_amplifier_model statement is used to define the wave-
+length and power of this input light. Alternatively, waveguide_input can also be
+used.
+We will consider here an ideal SOA with no optical feedback so the section state-
+ments do not define any grating and the longitudinal statement defines facet
+reflectivitiesofzero.
+In the absence of optical feedback, the longitudinal mode solver will not find any
+modes. However,thesolutionmethodisbasedonavariationofthecoupledRTG
+equationsso we needto define theoptical propagationcorrectly. Thismeans that
+thelongitudinalstatementneedstodefineareferencefrequencythatwillbeused
+tocalculatethedetuningterm: thiscanbesetastheSOA’sinputwavelength. We
+alsoneedtoinitializethemodesearchinthesamewayasforaDFBlaser: theuser
+isreferredtoSec.22.2fordetails.
+When calculating the ASE spectrum, we need to do two things. The first is to use
+the freq_control to define the number of points in the spectrum. The second is to
+usemore_outputtoforcePICS3DtoincludetheASEspectrumintheoutputdata:
+itisnotincludedbydefaultsinceitisnotusuallyrelevantinlasers.
+Biassetup
+When applying bias, we refer to our solar cell example in APSYS (Sec. 20.4) and
+note that the equilibrium calculations produce a state where no bias exists. The
+ff
+input light to the SOA is a form of bias so it is turned o at the beginning of the
+
+
+=== PAGE 455 ===
+22.3amplifier_3D\inp13amp 453
+simulation.
+Just like in Sec. 20.4, we use the “light” scan variable to turn on this input light.
+However,insteadofbeingamultipleoflight_power,thisvariablenowrepresents
+a fraction of the value defined in 3d_amplifier_model. A starting point of zero
+light is also consistent of our usual strategy for the photon coupling: in order to
+ensure convergence of the coupled RTG equations, we assume a flat gain profile
+intheinitialguess.
+=
+Asinpreviousexamples,thephotoncouplingisturnedonbyusingsolve_rtg yes
+in the scan statement. Again, this must be preceded by a scan statement using
+=
+auto_finish rtgain. However,wenotethatintheabsenceofopticalfeedback,the
+round-trip gain value is meaningless: this parameter will only initialize the RTG
+modelandwillnotterminatethecurrentscan.
+Post-Processing
+Afterthesimulationhasbeenrun,theresultscanbeshownwiththefollowing.plt
+file:
+$file:inp13amp.plt
+begin_pstprc
+plot_data plot_device=pdf
+get_data main_input=inp13amp.sol sol_inf=inp13amp.out &&
+xy_data=(4 4) scan_data=(4 4)
+modify_plot show_data_points=yes
+plot_scan scan_var=light variable=rtg_wave_phase
+plot_scan scan_var=light variable=rtg_right_power_allmode
+plot_scan scan_var=light variable=rtg_ase_left
+plot_scan scan_var=light variable=rtg_ase_right
+gain_spectrum variable=rtg_asespec_left
+gain_spectrum variable=rtg_asespec_right
+modify_plot show_data_points=no
+$
+$ Plot for all dimensions of xyz [for edge laser only].
+$
+splot_xyz variable=wave_intensity &&
+xy_from=[ 0.1000E+00 0.0000E+00] &&
+xy_to=[ 0.1000E+00 0.2800E+01] &&
+
+
+=== PAGE 456 ===
+454 PICS3DEXAMPLES
+grid_sizes=[50, 20] view_zrot=20. wave_option=right
+$
+$
+$ Plot at xy cross sections first
+$
+lplot_xy variable=band xy_from=[ 0.1000E+00 0.0000E+00] &&
+xy_to=[ 0.1000E+00 0.2800E+01] z=5
+splot_xy variable=elec_conc z=5. grid_sizes=(35, 35) &&
+xrange=[ 0.0000E+00 0.1000E+01] &&
+yrange=[ 0.0000E+00 0.2800E+01] &&
+view_xrot=0 view_zrot=30
+$
+vplot_xy variable=elec_curr &&
+xrange=[ 0.0000E+00 0.1000E+01] &&
+yrange=[ 0.0000E+00 0.2800E+01] &&
+z=5 grid_sizes=[35 35]
+$
+cplot_xy variable=wave_intensity &&
+xrange=[ 0.0000E+00 0.1000E+01] &&
+yrange=[ 0.0000E+00 0.2800E+01] &&
+z=5 grid_sizes=[35 35]
+end_pstprc
+$
+Again, we use plot_scan to show results vs. bias. In Fig. 22.7, we show the
+expected signal saturation of the SOA as the input power (i.e. “light” variable)
+is varied. We also see in Fig. 22.8 that this is accompanied by a reduction in the
+amountofamplifiedspontaneousemission. NotethattheamountofASEdepends
+onwhichfacetitisbeingobserved.
+TheASEspectrumcanbeplottedinthesamewayastheRTGspectruminalaser:
+aspecificvariablehasbeendefinedtouseinconjunctionwiththegain_spectrum
+statementasshowninFig.22.9.
+
+
+=== PAGE 457 ===
+22.3amplifier_3D\inp13amp 455
+0.008
+0.007
+0.006
+0.005
+0.004
+0.003
+0.002
+0.001
+0
+0 0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 1
+)W(
+rewoP
+thgiR
+edom-llA
+GTR
+File:inp13amp.plt
+Light Power (a.u.)
+Figure22.7: OutputpowerofSOAvs. inputlight
+0.003
+0.0025
+0.002
+0.0015
+0.001
+0.0005
+0
+0 0.1 0.2 0.3 0.4 0.5 0.6 0.7 0.8 0.9 1
+)W(
+rewoP
+thgiR
+ESA
+GTR
+File:inp13amp.plt
+Light Power (a.u.)
+Figure22.8: ASEonrightfacetofSOAvs. inputlight
+
+
+=== PAGE 458 ===
+456 PICS3DEXAMPLES
+0.005
+0.0045
+0.004
+0.0035
+0.003
+0.0025
+0.002
+0.0015
+0.001
+0.0005
+0
+1.28 1.285 1.29 1.295 1.3 1.305 1.31 1.315 1.32
+)ve/W(
+tecaF
+thgIR
+murtcepS-ESA
+File:inp13amp.plt
+Wavelength (micron)
+Figure22.9: ASEspectrumonrightfacetofSOA
+
+
+=== PAGE 459 ===
+22.4DBR\3section_tunable 457
+\
+22.4 DBR 3section_tunable
+This example1 is a tunable edge-emitting laser with a Distributed Bragg Reflector
+(DBR). It consists of three segments: a gain region on the left, a tuner in the
+middle and a Bragg mirror on the right. We use this example to show how
+PICS3D handles complex structures where the device structure changes in the
+longitudinaldirection.
+We also use this example to show how to explicitly define grating layers. Unlike
+thesimplifiedmethodshowninSec.22.2,herePICS3Dwillcalculatethecoupling
+ffi κ
+coe cient ( ) by using the index profile of the grating and its overlap with the
+opticalmode.
+Layer Structure
+Sincethedevicestructurevarieslongitudinallyinthisexample,weneedmultiple
+2Dcutsand.layerfiles: eachofthesecutsrepresentsasinglesegmentthatwillbe
+definedlaterinthe.solfile.
+ff
+The di erent .layer files can be created independently from each other using the
+same techniques discussed in our other examples. However, in order to process
+these files correctly and generate correct material numbers, the previous_layer
+statementshouldbeusedafterthefirstlayer.
+The user can also automatically generate all the .layer files for this project at once
+by using the Layer3D GUI program (shown in Fig. 22.10). Each of the 2D cuts
+are built using the same rules as the LayerBuilder GUI but the previous_layer
+statementwillbeaddedautomatically.
+Thegainsegmentisverysimilartopreviousdeviceswehaveconsidered:
+begin_layer
+column column_num=1 w=1.5 mesh_num=2 r=1.0
+bottom_contact column_num=1 from=0.0 to=1.5 contact_num=1
+layer_mater macro_name=inp column_num=1
+layer d=1.5 n=8 r=0.8 n_doping1=1e24
+layer_mater macro_name=ingaasp var1=0.568 column_num=1 &&
+var_symbol1=y
+layer d=0.08 n=4 r=0.9
+1LastupdatedNov. 2011
+
+
+=== PAGE 460 ===
+458 PICS3DEXAMPLES
+Figure22.10: 2D&3DviewoftunableDBRlaser
+$ total thickness of the following MQW is 0.15 um
+include file=tune1.well
+include file=tune1.bar
+include file=tune1.well
+include file=tune1.bar
+include file=tune1.well
+include file=tune1.bar
+include file=tune1.well
+include file=tune1.bar
+include file=tune1.well
+include file=tune1.bar
+layer_mater macro_name=ingaasp var1=0.568 column_num=1 &&
+var_symbol1=y
+layer d=0.05 n=4 r=1.1
+layer_mater macro_name=inp column_num=1
+layer d=1.55 n=9 r=1.2 p_doping1=5e23
+top_contact column_num=1 from=0.0 to=1.5 contact_num=2
+end_layer
+The active region is an unstrained MQW InGaAsP region tuned to peak around
+µ
+1.55 m. Again, we use external files and the include statement to simplify this
+
+
+=== PAGE 461 ===
+22.4DBR\3section_tunable 459
+declaration:
+layer_mater macro_name=ingaasp var1=0.568 column_num=1 var_symbol1=y
+layer d=0.0225 n=3 r=1.
+layer_mater macro_name=ingaasp var1=0.950 column_num=1 &&
+active_macro=InGaAsP/InP avar1=0.443 avar2=0.95 &&
+avar3=0.262 avar4=0.568 &&
+var_symbol1=y avar_symbol1=xw avar_symbol2=yw avar_symbol3=xb avar_symbol4=yb
+layer d=0.0075 n=3 r=1.
+Users working with the LayerBuilder GUI program can also copy & paste layers
+toeasilycreateaMQWregion.
+For the tuning section, we need to consider what is the mechanism involved.
+In this case, we wish to consider bias-induced index change due to interband
+transitions: thisismodeledbyanactiveregionandanactivemacrojustlikeinthe
+gainsegment.
+ff
+However, this particular active region has a very di erent bandgap and only the
+µ
+tailedgeofthethegaincurveisvisibleinthe1.55 mrange. Wecallthisa“mildly
+active” layer for historical reasons: the gain is calculated but it is so small that it
+ff
+hasnopracticale ectbeyondcontributingtotheindexchange.
+Theresultinglayerfileforthetuningsectionisshownbelow:
+begin_layer
+$ Make sure the program knows there is a segment before this structure.
+$ The programs needs this information to generate the material numbers
+$ correctly.
+previous_layer file=tune1.layer
+column column_num=1 w=1.5 mesh_num=2 r=1.0
+bottom_contact column_num=1 from=0.0 to=1.5 contact_num=1
+layer_mater macro_name=inp column_num=1
+layer d=1.5 n=8 r=0.8 n_doping1=1e24
+$ Passive waveguide material declared to be "active"
+$ so that interband optical model for index change can be used.
+layer_mater macro_name=ingaasp var1=0.5 column_num=1 &&
+
+
+=== PAGE 462 ===
+460 PICS3DEXAMPLES
+active_macro=InGaAsP avar1=0.5 &&
+var_symbol1=y avar_symbol1=yw
+layer d=0.38 n=9 r=1.
+layer_mater macro_name=inp column_num=1
+layer d=1.45 n=9 r=1.2 p_doping1=5e23
+top_contact column_num=1 from=0.0 to=1.5 contact_num=3
+end_layer
+For the DBR segment, we use the same “mildly active” region as the tuner (un-
+strained InGaAs(0.5)P) as the base of the grating. Conceptually, we can imagine
+thatwepartiallyetchthisregionandregrowwithInPtoformanaveragematerial
+(unstrainedInGaAs(0.25)P).
+We quickly note that the regrowth region is below the original layer so things
+lookupsidedown. Thisissimplyduetoourusualconventionofdefiningdevices
+n-sidedownwhichcanbeconfusingiftheoriginaldesignisonap-typesubstrate.
+However,thisconventionismerelyforthesakeofconsistencyandtheuserisfree
+tochangeit.
+Whendefiningthegratinglayer,westartbydefiningalayermadeoftheaverage
+material in layer_mater. However, this is overridden immediately afterwards
+by the grating_compos statement: the original layer material is replaced by a
+virtualembeddedstructureandtwosetsofmaterialmacrosareusedforthesame
+material. This is shown in the following excerpt of the tune3.mater file, which
+generatedwhenallthelayerfilesareprocessed:
+$ -->grating region based on composition variation
+grating_model grating_order=1 &&
+use_active_mater= 5 &&
+d_high= 0.100000000000E+000 d_low= 0.100000000000E+000 &&
+d_fall= 0.000000000000E+000 d_rise= 0.000000000000E+000
+$
+$ -->high index grating region
+load_macro name=ingaasp mater= 5 &&
+var_symbol1=y var1= 0.5000E+00
+get_active_layer name=InGaAsP mater= 5 &&
+var_symbol1=yw var1= 0.5000E+00
+active_reg embedded_structure=1 mater= 5 &&
+thickness= 0.200000000000E+000
+$
+
+
+=== PAGE 463 ===
+22.4DBR\3section_tunable 461
+$ -->low index grating region
+load_macro name=ingaasp mater= 5 &&
+var_symbol1=y var1= 0.0000E+00
+get_active_layer name=InGaAsP mater= 5 &&
+var_symbol1=yw var1= 0.0000E+00
+active_reg embedded_structure=1 mater= 5 &&
+thickness= 0.200000000000E+000
+Whendefiningthegratingcomposition,wespecifybothpassiveandactivemacros
+for the low and high index regions. This means that the grating is also a “mildly
+ff
+active” layer: the index step will be a ected by interband transitions. Note that
+µ
+the bandgap values for the high and low regions are still far away from 1.55 m:
+ff
+otherwise, this would a gain- or loss-coupled laser, which a very di erent kind
+of device. The user can also choose to omit the active macro: this means that the
+indexstepofthegratingwillbefrozenatitsequilibriumvalue.
+Alternatively, one can also define the grating using the grating_model statement
+inthe.layerfile. Inthiscase,therefractiveindexofthehighandlowregionsmust
+be provided instead of the macro parameters. Also, the average material defined
+inlayer_materwillbeusedintheelectricalsimulationinsteadofbeingoverridden
+withthegratingmacros.
+ThelayerfileusedfortheDBRsegmentisshownbelow:
+begin_layer
+$ Make sure the program knows there is a segment before this structure.
+$ The programs needs this information to generate the material numnbers
+$ correctly.
+previous_layer file=tune2.layer
+column column_num=1 w=1.5 mesh_num=2 r=1.0
+bottom_contact column_num=1 from=0.0 to=1.5 contact_num=1
+layer_mater macro_name=inp column_num=1
+layer d=1.3 n=8 r=0.8 n_doping1=1e24
+$
+$ 0.2 um corrugation grating is made between InP and InGaAs(0.5)P
+$ So the average material is InGaAs(0.25)P. Let us declare it
+$ as mild region to let the program treat it mildly.
+$
+layer_mater macro_name=ingaasp var1= 0.25 &&
+
+
+=== PAGE 464 ===
+462 PICS3DEXAMPLES
+active_macro=InGaAsP avar1= 0.25 &&
+column_num=1 embedded_structure=1 &&
+var_symbol1=y avar_symbol1=yw
+grating_compos column_num=1 &&
+d_high= 0.1 d_low= 0.1 &&
+hi_macro_name=ingaasp hi_var1=0.5 &&
+hi_active_macro=InGaAsP hi_avar1=0.5 &&
+lo_macro_name=ingaasp lo_var1=0. &&
+lo_active_macro=InGaAsP lo_avar1=0. &&
+hi_var_symbol1=y &&
+hi_avar_symbol1=yw &&
+lo_var_symbol1=y &&
+lo_avar_symbol1=yw
+layer d= 0.2 n= 9 &&
+n_doping1= 1.E+23 &&
+r= 0.9
+$ Passive waveguide material declared to be "active"
+$ so that interband optical model for index change can be used.
+layer_mater macro_name=ingaasp var1=0.5 column_num=1 &&
+active_macro=InGaAsP avar1=0.5 &&
+var_symbol1=y avar_symbol1=yw
+layer d=0.38 n=9 r=1.
+layer_mater macro_name=inp column_num=1
+layer d=1.45 n=9 r=1.2 p_doping1=5e23
+top_contact column_num=1 from=0.0 to=1.5 contact_num=4
+end_layer
+Simulation Setup
+Thefollowing.solfileisusedinthissimulation:
+$***********
+begin
+use_macrofile macro1=my.mac
+3d_solution_method 3d_flow=yes z_connect=no
+
+
+=== PAGE 465 ===
+22.4DBR\3section_tunable 463
+z_structure uniform_zseg_from=0. uniform_zseg_to=400. zseg_num=1 zplanes=3
+z_structure uniform_zseg_from=400. uniform_zseg_to=500. zseg_num=2
+z_structure uniform_zseg_from=500. uniform_zseg_to=800. zseg_num=3 zplanes=3
+load_mesh mesh_inf=tune1.msh zseg_num=1
+load_mesh mesh_inf=tune2.msh zseg_num=2
+load_mesh mesh_inf=tune3.msh zseg_num=3
+output sol_outf=tune.out
+begin_zmater zseg_num=1
+include file=tune1.gain
+include file=tune1.doping
+end_zmater
+begin_zmater zseg_num=2
+include file=tune2.gain
+include file=tune2.doping
+end_zmater
+begin_zmater zseg_num=3
+include file=tune3.gain
+include file=tune3.doping
+end_zmater
+optical_field profile=effective_index x_segment=4
+init_wave backg_loss=500 &&
+boundary_type=(2 2 1 1 ) init_wavel=1.55 &&
+wavel_range=(1.5, 1.60)
+prop_constant_model zseg_num=1 precalculated_index=yes
+prop_constant_model zseg_num=2 precalculated_index=yes
+prop_constant_model zseg_num=3 precalculated_index=yes
+newton_par damping_step=10. var_tol=1.e-9 res_tol=1.e-9 &&
+max_iter=100 opt_iter=15 stop_iter=50 print_flag=3 mf_solver=2
+equilibrium
+rtgain_phase density=1.6e24 zseg_num=1
+rtgain_phase density=1.6e24 zseg_num=2
+rtgain_phase density=1.6e24 zseg_num=3
+$parallel_linear_solver
+
+
+=== PAGE 466 ===
+464 PICS3DEXAMPLES
+newton_par damping_step=10.0 var_tol=1.e-4 res_tol=1.e-4 &&
+max_iter=30 opt_iter=16 stop_iter=17 print_flag=3 mf_solver=2
+scan var=voltage_1 value_to=-0.8
+scan var=current_2 value_to=-2.4e-3 init_step=1e-6 &&
+min_step=1e-8 max_step=0.1e-3 &&
+var2=current_3 value2_to=-0.3e-3 &&
+var3=current_4 value3_to=-0.9e-3 &&
+auto_finish=rtgain auto_until=0.9 auto_within=0.09
+scan var=current_2 value_to=-7.2e-3 &&
+var2=current_3 value2_to=-0.3e-3 &&
+var3=current_4 value3_to=-0.9e-3 &&
+init_step=1e-6 min_step=1e-8 max_step=0.5e-3 solve_rtg=yes
+newton_par damping_step=10.0 var_tol=1.e-3 res_tol=1.e-1 &&
+max_iter=30 opt_iter=16 stop_iter=17 print_flag=3 mf_solver=2
+scan var=current_4 value_to=-18.e-3 &&
+var3=current_2 value3_to=-7.2e-3 &&
+var2=current_3 value2_to=-0.3e-3 &&
+init_step=1e-6 min_step=1e-8 max_step=0.4e-3 solve_rtg=yes
+$ alternatively, one may tune the laser by changing the middle phase section
+$scan var=current_3 value_to=-10.e-3 &&
+$var3=current_2 value3_to=-7.2e-3 &&
+$var2=current_4 value2_to=-0.9e-3 &&
+$init_step=1e-6 min_step=1e-8 max_step=0.4e-3 solve_rtg=yes
+end
+$ **********************************************************
+begin_zsol
+longitudinal ref_wavel=1.55e-6 left_f_refl=0.3 right_f_refl=0.3
+section length=400.e-6 sec_num=1 mesh_points=10
+section length=100.e-6 sec_num=2 mesh_points=10
+section length=300.e-6 sec_num=3 mesh_points=10
+mode_srch omega_xrange=16. adjust_range=yes
+end_zsol
+
+
+=== PAGE 467 ===
+22.4DBR\3section_tunable 465
+Like all edge-emitting devices in PICS3D this is a 3D simulation with multiple
+=
+meshplanessowemustusethe3d_solution_methodstatementwith3d_flow yes.
+ff
+We also use three di erent z_structure statements to define the segment lengths
+aswellasthenumberofmeshplaneswithineachsegment.
+The 2D mesh used at the various z points in each segment is loaded by a series
+of load_mesh statements. Material properties are loaded in the same way as in
+Sec. 22.2 but since there is more than one segment, the include statements for
+eachsegmentmustbebracketedbybegin_zmaterandend_zmatertoidentifythe
+segmentbeingdefined.
+OpticalPropagationModel
+To define the optical cavity, we use three sections to match the segments defined
+above. Note that no grating is defined at this stage: the earlier grating definition
+ffi
+will be used calculate the coupling coe cient automatically. Based on the index
+stepandwaveprofile,thesolverprintsthiskindofinformationinthesimulation
+logateachbiasstep:
+At lambda= 1.55379871355004
+Grating Reg. Opt. Conf.= 0.180108918999968
+Real kappa (1/m)= 36386.4705291671
+Imag kappa (1/m)= -5.748666808201413E-013
+ffi
+Aswecansee,thegaincouplingcoe cientisnegligible,whichisconsistentwith
+our“mildlyactive”model. Therealpartofthegratingindicatesahighlyreflective
+κ ≈ .
+mirror( L 109forthissegment).
+Tocalculatetheround-tripgain(RTG),weneedareferencepointinthecavity. For
+best results, this point should be in the middle of the gain region so we modify
+thedefaultvalueofref_midpointinthelongitudinalstatement. Wealsousethis
+statement to specify the facet boundary conditions and the reference wavelength
+forthelongitudinalmodesearch.
+To save on computation time, we also use prop_constant_model to instruct the
+software to use precalculated index change tables from the .gain preview. This
+maybelessaccuratethencalculatingtheindexautomaticallybutoftenhelpssolve
+certainconvergenceissues.
+Biassetup
+When defining the .layer files above, we note that we used the same electrode
+ff
+number(1)forthen-sidebottomelectrodebutweusedadi erentnumber(2,3,4)
+
+
+=== PAGE 468 ===
+466 PICS3DEXAMPLES
+forthetopp-sideelectrode. Thismeansthatthebottomelectrodeissharedacross
+allsegmentswhereasthetopelectrodesaresplitandcanbeusedtoindependently
+biaseachindividualsegment.
+Since at the equilibrium point, we define a situation where all electrodes are
+grounded at 0 V, this can create unexpected bias configurations. For example, if
+one were to ramp up the bias on electrode (#2) only, the current would naturally
+flowtowardstheothertopelectrodessincethatistheshortestelectricalpath. This
+isnotthedesiredsituationsoweapplyasmallbiastothebottomsharedelectrode
+(#1)instead. This method shifts the referencegroundand is equivalent to biasing
+allthetopelectrodessimultaneously.
+After this initial voltage scan, there is a trickle of current flowing down in each
+segmentsowecanuseacurrentbiasonthetopelectrodesandbiaseachindividual
+segmentseparately. Wenotethatbyconvention,currentflowingintoanelectrode
+is positive (and vice versa) so that the bias currents on the p-side electrodes are
+negativeinaforwardbiassituation.
+When applying bias on the top electrodes, we use multiple scan variables: this
+is because we want to control multiple currents simultaneously. If we omit a
+particular electrode from the scan (i.e. electrode #1), then only its voltage value
+would be controlled: it would be kept at its previous value during the new scan.
+This means that as we apply current on the top electrodes, the voltage of these
+electrodeschanges;meanwhile,thevoltageonthebottomelectrodestaysfixedat
+-0.8Vbutthecurrentonthiselectrodechanges.
+The current scans are split into three steps: the first step initializes the coupled
+RTG model at a point below threshold, as described in Sec. 22.2. The second one
+rampsthegainsegmentabovethresholdtoproducetheL-Icurveofthelaser. The
+lastscankeepsthegainsegmentcurrentatitspreviousvaluebutappliesatuning
+currenttothemiddlesegment. Inthelasttwoscans,thephotoncouplingisturned
+=
+onwithsolve_rtg yes.
+Post-Processing
+Once the simulation has been run, results can be plotted using the following .plt
+file:
+$file:tune.plt
+$ **************
+begin_pstprc
+plot_data plot_device=pdf
+
+
+=== PAGE 469 ===
+22.4DBR\3section_tunable 467
+get_data sol_inf = tune.out main_input=tune.sol scan_data=(1 4)
+plot_scan scan_var=current_1 variable = rtg_left_power_allmode
+get_data sol_inf = tune.out main_input=tune.sol scan_data=(5 5) &&
+xy_data=(5 5)
+plot_scan scan_var = current_4 variable = rtg_left_power_allmode &&
+scale_horizontal=-1
+plot_scan scan_var = current_4 variable =rtg_peak_wavelength &&
+scale_horizontal=-1
+get_data sol_inf = tune.out main_input=tune.sol &&
+xy_data=(4 4)
+gain_spectrum variable=rtg_spectrum
+get_data sol_inf = tune.out main_input=tune.sol &&
+xy_data=(5 5)
+gain_spectrum variable=rtg_spectrum
+lplot_xy variable=band xy_from=(0.5 1.1) &&
+xy_to=(0.5 2.2) z=200.
+splot_xyz variable=wave_intensity xy_from=(0.05, 0.0) xy_to=(0.05 3.38) &&
+grid_sizes=(80, 20) view_zrot=20.
+end_pstprc
+As before, we use the plot_scan statement to plot bias-related data. However
+because of our current convention, we need to use a scaling factor of -1 to plot
+curvesintheusualdirectionwhenusingthecurrentofthetopelectrodes.
+The L-I curve during bias ramp is shown in Fig. 22.11. We plot versus the cur-
+rent on electrode #2 since the bottom electrode has current contributions from
+other segments. We also plot the power on the left facet since we have already
+determinedthattheDBRsectionontherightishighlyreflective.
+To plot the results of the tuning, we do the same with current #3. As can be seen
+in Fig. 22.12 a), the tuning current produces small variations in the output power
+of the device. This is due to changes in the position of the longitudinal modes
+with respect to the peaks of the gain curve and DBR reflection spectrum. As the
+power of one mode goes down, a new mode becomes favored by the cavity and
+a mode hop occurs. This can be shown by plotting the changes in the peak mode
+wavelengthvsbias,asseeninFig.22.12b).
+Forstructuraldata,thesamerulesasinSec.22.2apply.
+
+
+=== PAGE 470 ===
+468 PICS3DEXAMPLES
+0.003
+0.0025
+0.002
+0.0015
+0.001
+0.0005
+0
+0 0.001 0.002 0.003 0.004 0.005 0.006 0.007 0.008 0.009
+)W(
+rewoP
+tfeL
+edom-llA
+GTR
+File:tune.plt
+Contact Current<2>(A)
+Figure22.11: BiasrampingainsegmentoftunableDBRlaser
+
+
+=== PAGE 471 ===
+22.4DBR\3section_tunable 469
+0.0028
+0.00278
+0.00276
+0.00274
+0.00272
+0.0027
+0.00268
+0.00266
+0.00264
+0.00262
+0 0.002 0.004 0.006 0.008 0.01 0.012 0.014 0.016 0.018
+)W(
+rewoP
+tfeL
+edom-llA
+GTR
+File:tune.plt
+Contact Current<3>(A)
+(a)
+1.5588
+1.5586
+1.5584
+1.5582
+1.558
+1.5578
+1.5576
+1.5574
+1.5572
+1.557
+0 0.002 0.004 0.006 0.008 0.01 0.012 0.014 0.016 0.018
+)mu(
+htgnelevaW
+kaeP
+GTR
+File:tune.plt
+Contact Current<3>(A)
+(b)
+Figure22.12: TuningcharacteristicsofDBRlaser
+
+
+=== PAGE 472 ===
+470 PICS3DEXAMPLES
+Figure22.13: 2DcutofVCSEL
+\
+22.5 VCSELS jim_vcsel
+This example is a basic vertical cavity surface emitting laser (VCSEL). Since the
+optical propagation takes place perpendicularly to the active region, we will use
+ff
+adi erentmethodtodefinesegmentsandsections.
+Layer Structure
+µ
+This VCSEL is a GaAs-based MQW device designed to lase at 0.835 m. The
+/
+DBRs consist of alternating Al 0.25 Ga 0.75 As AlAs quarter-wave layers. However,
+since it would require a lot of mesh to model all the layers of the DBR stack,
+we approximate this region by an average material (Al 0.625 Ga 0.375 As) as shown in
+Fig. 22.13. This is only for the purposes of the electrical simulation though: to
+model the optical propagation, we must explicitly consider the alternating layers
+oftheDBR.
+OpticalPropagationModel
+Since the light propagation takes place in the vertical direction, the .layer file of a
+VCSELmustalsodefinetheopticalcavity. Strictlyspeaking,eachindividuallayer
+shouldbeconsideredasanindividualsectionforthepurposesofpropagationbut
+thatwouldrequiretoomuchcomputationtime.
+
+
+=== PAGE 473 ===
+22.5VCSELS\jim_vcsel 471
+Instead, groups of layers are assigned to the same section by assigning them a
+vcsel_type label in the layer statement. This label refers to a section specified by
+vcsel_section which defines the optical propagation model used for a particular
+layer or group of layers. New users of PICS3D may find it easier to use the
+LayerBuilderGUItodefineVCSELsections: right-clickonagivenlayerandselect
+theVCSELtab.
+Forexample,theaveragelayerusedtorepresenttheDBRelectricallyisassigneda
+model that describes propagation in a periodic stack of layers. The spacer region
+is a single layer and is treated as such optically. For reasons that are explained
+below,theMQWregionisalsoapproximatedbyasinglelayer.
+WhendefiningVCSELsections,caremustbetakennottointerleavesectionlabels:
+itisnotsupportedbythesoftwareatthistime. Forexample,assigningaparticular
+section label (e.g. “b”) to the barrier region and another to the well region (e.g.
+/ /
+“w”) may result in the label sequence “b w b” which would be an error and
+produceincorrectsectionlengths. Therefore,werecommendthatasingleVCSEL
+sectionlabelbeusedfortheentireMQWregion.
+In a simple VCSEL design such as this one, the user needs to define only five
+VCSELsections: n-DBR,n-spacer,mqw_active,p-spacer,p-DBR.Thisisshownin
+the.layerfilebelow:
+begin_layer
+$layer_input_convention layer_unit=relative ref_wavelength=0.84
+$
+column column_num=1 w=7.5 mesh_num=4 r=1.
+$
+bottom_contact column_num=1 from=0 to=7.5 contact_num=1
+$
+$ to save mesh, use effective media: AlGaAs Al=0.625
+$ n-mirror
+$
+vcsel_section vcsel_type=n-dbr &&
+dbr_period_from_macro=yes &&
+active=no mesh_points=10
+$ this is the effective medium
+layer_mater mater_lib=AlGaAs var1=0.625 column_num=1 var_symbol1=x
+$ let’s define a DBR period using macro like this (use column 1 only)
+$ (also possible to define grading within a DBR period)
+
+
+=== PAGE 474 ===
+472 PICS3DEXAMPLES
+vertical_dbr_layer_mater mater_lib=AlGaAs var_symbol1=x var1=0.25 &&
+thick=0.0595
+vertical_dbr_layer_mater mater_lib=AlGaAs var_symbol1=x var1=1. &&
+thick=0.0706
+$ thickness here is actually determined by DBR periods above
+layer d=1. n=15 r=0.9 &&
+n_doping1=2.e24 vcsel_type=n-dbr use_dbr_period=29
+$
+$ add a spacing layer Al(0.6) GaAs of 1 lambda: 0.825/3.2=0.26
+$
+$ We choose the spacer carefully because the emission
+$ wavelength depends on it.
+$
+vcsel_section vcsel_type=n-spacer &&
+grating_model=1layer active=no &&
+mesh_points=5
+layer_mater mater_lib=AlGaAs var1=0.6 column_num=1 var_symbol1=x
+layer d=0.23 n=6 r=0.9 vcsel_type=n-spacer
+$
+$ MQW system:
+$
+vcsel_section vcsel_type=mqw_active &&
+grating_model=1layer active=yes &&
+mesh_points=9
+include file=jim.bar
+include file=jim.well
+include file=jim.bar
+include file=jim.well
+include file=jim.bar
+include file=jim.well
+include file=jim.bar
+$
+$
+$ add a spacing layer Al(0.6) GaAs of 1 lambda: 0.825/3.2=0.26
+$
+$ We choose the spacer carefully because the emission
+$ wavelength depends on it.
+$
+vcsel_section vcsel_type=p-spacer &&
+grating_model=1layer active=no &&
+mesh_points=5
+$
+
+
+=== PAGE 475 ===
+22.5VCSELS\jim_vcsel 473
+layer_mater mater_lib=AlGaAs var1=0.6 column_num=1 var_symbol1=x
+layer d=0.23 n=6 r=0.9 vcsel_type=p-spacer
+$
+$ to save mesh, use effective media: AlGaAs Al=0.625
+$
+vcsel_section vcsel_type=p-dbr &&
+dbr_period_from_macro=yes &&
+active=no mesh_points=10
+$ effective medium layer
+layer_mater mater_lib=AlGaAs var1=0.625 column_num=1 var_symbol1=x
+$ let’s define a DBR period using macro like this (use column 1 only)
+$ (also possible to define grading within a DBR period)
+vertical_dbr_layer_mater mater_lib=AlGaAs var_symbol1=x var1=1. &&
+thick=0.0706
+vertical_dbr_layer_mater mater_lib=AlGaAs var_symbol1=x var1=0.25 &&
+thick=0.0595
+$ thickness here is actually determined by DBR periods above
+layer d=1. n=12 r=1.1 &&
+p_doping1=3.e24 vcsel_type=p-dbr use_dbr_period=20
+$
+top_contact column_num=1 from=0 to=7.5 contact_num=2
+$
+end_layer
+Note that we used the include statement above to repeat the MQW more easily.
+Thewellandbarrierregionsaredefinedbelow:
+layer_mater mater_lib=AlGaAs var1=0.25 &&
+column_num=1 var_symbol1=x
+layer d=0.0100 n=3 r=1. xp1=1 xp2=1 vcsel_type=mqw_active
+layer_mater mater_lib=AlGaAs column_num=1 var1=0. var_symbol1=x &&
+model=quantum_well
+layer d=0.0070 n=3 r=1. xp1=1 xp2=1 vcsel_type=mqw_active
+When using the LayerBuilder GUI, MQW regions can also be created easily by
+copyingandpastinglayers. However,whenusingthismethod,itisrecommended
+that the VCSEL sections be defined only after all layers have been copied. The
+
+
+=== PAGE 476 ===
+474 PICS3DEXAMPLES
+reason for this is that VCSEL section labels get copied right along with the layer
+itselfwhichcaninadvertentlyproducealternatingsectionlabels.
+Thethicknessofthenandpspacerregionsdeterminesthecavitylengthandthus,
+the lasing wavelength. Since longitudinal modes are found where the round-trip
+π = λ
+phase is a multiple of , it is common to use a quick rule (thickness ) when
+n
+designingVCSELs.
+However, this approximation does not include the phase contribution from the
+DBR mirrors (penetration depth) and propagation in the active region (non-zero
+thickness). Therefore, choosing the spacer thickness is an iterative process: the
+estimateabovecanbeusedasastartingguessbuttheoptimalthicknesswilllikely
+be a bit smaller. We recommend using the round-trip gain (RTG) preview from
+.soltofacilitatetheprocedure;seebeloworSec.22.2fordetails.
+When the .layer file is processed, it creates a .vcsel file in addition to the usual
+output files. This contains various statements such as section that define the lon-
+gitudinalcavitymodelthatwillbeusedbyPICS3Dinthe.solfile. Thestartingand
+ending points of these sections should correspond to the layer positions defined
+above:
+$
+$ type:n-dbr
+section length= 0.377290000000E-005 &&
+sec_num= 1 mesh_points= 10 &&
+active=no dbr_period_mater= 1
+passive_3d nref_type2=2.e24 index_nref=2.e24 &&
+sec_num = 1
+$
+$ type:n-spacer
+section grating_model=1layer &&
+length= 0.230000000000E-006 &&
+sec_num= 2 mesh_points= 5 &&
+active=no
+passive_3d nref_type2=2.e24 index_nref=2.e24 &&
+sec_num = 2
+$
+$ type:mqw_active
+section grating_model=1layer &&
+length= 0.610000000000E-007 &&
+sec_num= 3 mesh_points= 9 &&
+active=yes
+$
+$ type:p-spacer
+section grating_model=1layer &&
+
+
+=== PAGE 477 ===
+22.5VCSELS\jim_vcsel 475
+length= 0.230000000000E-006 &&
+sec_num= 4 mesh_points= 5 &&
+active=no
+passive_3d nref_type2=2.e24 index_nref=2.e24 &&
+sec_num = 4
+$
+$ type:p-dbr
+section length= 0.260200000000E-005 &&
+sec_num= 5 mesh_points= 10 &&
+active=no dbr_period_mater= 5
+passive_3d nref_type2=2.e24 index_nref=2.e24 &&
+sec_num = 5
+section_location start= 0.000000000000E+000 end= 0.689590000000E+001
+Simulation Setup
+Thefollowing.solfileisusedtorunthesimulation:
+$file:jim.sol
+$***********
+begin
+load_mesh mesh_inf=jim.msh
+include file=jim.gain
+include file=jim.doping
+output sol_outf=jim.out
+more_output rtgain_scan=yes
+$
+$ **************************
+$ VCSEL parameters:
+$
+vcsel_model index_core=3.2 index_cladding=1.0 &&
+core_radius =7.5 bessel_order=0
+sor_par max_iter=0
+init_wave backg_loss=500 init_wavel=0.83 wavel_range=(0.75, 0.90)
+cylindrical axis=y
+$
+newton_par damping_step=5. var_tol=1.e-9 res_tol=1.e-9 &&
+max_iter=100 opt_iter=15 stop_iter=50 print_flag=3
+$restart
+equilibrium
+rtgain_phase density=4.5e24
+
+
+=== PAGE 478 ===
+476 PICS3DEXAMPLES
+$stop
+$
+newton_par damping_step=1. var_tol=1.e-4 res_tol=1.e-4 &&
+max_iter=50 opt_iter=25 stop_iter=10
+scan var=voltage_1 value_to=-1.3 print_step=1.3 &&
+init_step=0.2 min_step=1.e-5 max_step=0.5
+$ better to start with low RTG and progress slowly
+$ auto_finish=rtgain is mandatory to get RTG ready
+$
+scan var=current_1 value_to=8.e-3 print_step=0.15e-3 &&
+init_step=0.1e-4 min_step=1.e-6 max_step=0.5e-3 &&
+auto_finish=rtgain auto_until=0.95 auto_condition=above
+$ it is wise to start with a small step here.
+scan var=current_1 value_to=8.e-3 solve_rtg=yes &&
+init_step=0.01e-3 max_step=0.1e-3
+$
+end
+$*****************************
+begin_zsol
+longitudinal ref_wavel=0.825d-6 left_f_refl=0.32 right_f_refl=0.32
+$
+include file=jim.vcsel
+$
+mode_srch iter_num=75 wavel_xrange=(0.75e-6 0.9e-6)
+bias3d step_num=10
+end_zsol
+$
+AswepreviouslydiscussedinSec.6.4,allPICS3Dsimulationsarein3D.However,
+since this VCSEL has rotational symmetry, only a single mesh plane is required:
+this means that most of the setup steps are the same as in a 2D simulation. What
+turns this example into a 3D simulation is the simple addition of the cylindrical
+statement: the y axis of the .layer file becomes the z axis of the cylindrical system
+definedin 6.2.
+ff
+Since this simulation is using cylindrical coordinates, a di erent mode solver
+must be used. In this example, we use the fiber-like EIM model from Sec. 17.2 as
+
+
+=== PAGE 479 ===
+22.5VCSELS\jim_vcsel 477
+defined in the vcsel_model statement. As a result, many of the parameters from
+init_wave are inoperative. Here, this statement should only be used to define an
+initial wavelength estimate for the mode solver, a wavelength range for material
+ffi
+propertiesaswellasthebackgroundpropagationlosscoe cient.
+OpticalPropagationModel
+TheRTGiscalculatedbyusingareferencepointinthecavity. Forbestresults,this
+pointshouldbeinthemiddleofthegainregionsowemodifythedefaultvalueof
+ref_midpointinthelongitudinalstatement. Wealsousethisstatementtospecify
+the facet boundary conditions that lie beyond the DBR layers and the reference
+wavelengthforthelongitudinalmodesearch.
+Thesectionsthatdefinetheopticalcavityweregeneratedbythelayer.exeprogram
+earlier. By adding the jim.vcsel file to the simulation with the include statement,
+the.solfilecanusethisinformation.
+LongitudinalModeSearch
+SinceaDBRcavityisveryshort,itmustbetunedcorrectlytomakethemostofthe
+available material gain: the spacer thickness must be adjusted to get the desired
+emission wavelength and the DBR stacks have to be optimized for this particular
+wavelength.
+Todothis,weusetheRTGpreviewweintroducedinSec.22.2. Thispreviewsthe
+round-tripgainofthecavityusingthetabulatedgainfromthe.gainfileanddoes
+apreliminarysearchforlongitudinalmodes. Theoutputisshowninthe.logfile:
+Longitudinal modes found:
+Wavelength (um) Round-Trip-Gain
+0.895948E+000 0.447049E+000
+0.889152E+000 0.615152E+000
+0.834478E+000 0.997190E+000
+0.785883E+000 0.437601E+000
+0.780535E+000 0.344013E+000
+0.771981E+000 0.330875E+000
+0.760833E+000 0.500443E+000
+0.752508E+000 0.136641E+000
+Printing standing wave pattern near the active
+region along with MQW information
+End of Printing
+Longitudinal standing wave gain
+enhancement factor gfactor_stdwave= 1.70915643886328
+
+
+=== PAGE 480 ===
+478 PICS3DEXAMPLES
+1
+0.9
+0.8
+0.7
+0.6
+0.5
+0.4
+0.3
+0.2
+0.74 0.76 0.78 0.8 0.82 0.84 0.86 0.88 0.9 0.92
+niag
+TR
+thgir/tfeL
+Wavelength (um)
+Figure22.14: Feedbackprovidedbybottom(left)andtop(right)DBRstacks
+In addition to this information, more data is available by using the plot_rtgain
+statementinthe.rtgainfile. Forexample,wecanverifytheDBRstacksindividually
+bycomparingtheleft(bottom)andright(top)RTGvalueswithrespecttothecavity
+referencepointdefinedearlier. ThisisshowninFig.22.14.
+ForVCSELs,additionalinformationisavailablefromthestandingwavefile(.stw)
+generated by the RTG preview. This information is provided by adding stand-
+ing_wavetotheplot_rtgainstatement.
+Forexample,thestandingwaveoverlapwiththequantumwellregionisshownin
+Fig. 22.15. In edge-emitting lasers, the standing wave is in the plane of the MQW
+regionsoitscontributionusuallyaveragesout. InacorrectlytunedVCSELcavity
+however, the standing wave produces significant gain enhancement: the value is
+showninthe.logprintoutabove.
+Biassetup
+Whenapplyingbias,wefollowtheguidelinesofSec.4.2. SinceVCSELshavevery
+low threshold currents, the initial voltage scan not only terminates on a current
+condition, it also initializes the coupled RTG model. That model is turned on by
+=
+solve_rtg yesinthefollowingscanstatement.
+In previous sections, we tried to emphasize the fact that the RTG initialization
+should not take place at too low a bias value. This general rule does not apply to
+VCSELssincethecavityisveryshort: evenwithawidesearchwindow,thereare
+fewlongitudinalmodessoitisunlikelythatthelasingmodewillbemissedinthe
+
+
+=== PAGE 481 ===
+22.5VCSELS\jim_vcsel 479
+1.2
+1
+0.8
+0.6
+0.4
+0.2
+0
+0 1 2 3 4 5 6 7 8
+evaw
+gnidnats
+dna
+WQM
+Distance (um)
+Figure22.15: StandingwavepatternofVCSELandoverlapwithMQWregion
+below-threshold search. However, we still need to turn on the photon coupling
+=
+beforethresholdisreached: theauto_finish rtgainscanmustusesmallbiassteps
+inordernottoovershootthedesiredbiaspoint.
+Post-Processing
+Once the simulation has been run, results can be plotted using the following .plt
+file:
+$ **************
+$file:jim.plt
+$ **************
+begin_pstprc
+plot_data plot_device=pdf
+get_data main_input=jim.sol sol_inf=jim.out &&
+xy_data=(4 4) scan_data=(1 4)
+$
+plot_scan scan_var=current_1 &&
+variable=rtg_2facet_power_allmode
+plot_scan scan_var=current_1 &&
+variable=rtg_left_power_allmode
+plot_scan scan_var=current_1 &&
+
+
+=== PAGE 482 ===
+480 PICS3DEXAMPLES
+2.5
+2
+1.5
+1
+0.5
+0
+-0.5
+0 1 2 3 4 5 6 7
+)Ve(
+ygrenE
+File:jim.plt
+Distance (micron)
+Figure22.16: BanddiagramofVCSEL
+variable=rtg_right_power_allmode
+gain_spectrum variable=rtg_spectrum
+$
+$ Plot at xy cross sections first
+$
+plot_1d variable=band from=(0.5 0.0) to=(0.5 6.9)
+plot_2d variable=total_curr grid_sizes=(35, 35)
+plot_2d variable=wave_intensity grid_sizes=(35, 35)
+end_pstprc
+Sincethesimulationusesonlyasinglemeshplane,structuraldataisplottedusing
+the same commands as for 2D simulations. For example, the band diagram in
+Fig. 22.16 was generated with the plot_1d statement. The (x,y) coordinates are
+equivalentto(r,z)inthecylindricalsystem.
+For bias-dependent data, the same plot_scan statement is used. The 3D nature of
+thesimulationisalreadytakenintoaccountsounlike2Dsimulations,thecurrent
+is plotted in Amperes. We show in Fig. 22.17 the power from the “right” side of
+the device which corresponds to the top side of the VCSEL: there are fewer DBR
+layers on that side of the device so it is where most of the output power comes
+out.
+
+
+=== PAGE 483 ===
+22.5VCSELS\jim_vcsel 481
+0.0035
+0.003
+0.0025
+0.002
+0.0015
+0.001
+0.0005
+0
+0 0.001 0.002 0.003 0.004 0.005 0.006 0.007 0.008
+)W(
+rewoP
+thgiR
+edom-llA
+GTR
+File:jim.plt
+Contact Current<1>(A)
+Figure22.17: Emissionpowerfromtopfacet
+
+
+=== PAGE 484 ===
+482 PICS3DEXAMPLES
+

@@ -1,0 +1,52 @@
+{
+  "skill": "pics3d-laser-workflow",
+  "version": "0.1.0",
+  "source_book": "Crosslight Device Simulation Software General Manual — Crosslight Software Inc.",
+  "darwin_compatible": true,
+  "test_cases": [
+    {
+      "id": "should-trigger-01",
+      "type": "should_trigger",
+      "prompt": "我想用 PICS3D 仿真一个 GaN FP 激光器，从零开始不知道输入文件怎么组织，能不能帮我搭一个标准流程？",
+      "expected_behavior": "激活 pics3d-laser-workflow，给出 .layer→网格→.gain→.sol 三步偏置的完整搭建路径",
+      "notes": "正面场景: 新建激光器仿真"
+    },
+    {
+      "id": "should-trigger-02",
+      "type": "should_trigger",
+      "prompt": "我的 DFB 仿真一过阈值就发散，日志里没有 RTG 初始化，怎么改偏置流程？",
+      "expected_behavior": "激活 pics3d-laser-workflow，指出缺少 auto_finish=rtgain 初始化与 solve_rtg 小步长",
+      "notes": "正面场景: 三步偏置缺失诊断"
+    },
+    {
+      "id": "should-trigger-03",
+      "type": "should_trigger",
+      "prompt": "set up a PICS3D laser simulation for a DBR structure, need L-I curve and threshold current",
+      "expected_behavior": "激活 pics3d-laser-workflow，按三步偏置与 RTG 初始化编排仿真",
+      "notes": "正面场景: 英文触发"
+    },
+    {
+      "id": "should-not-trigger-01",
+      "type": "should_not_trigger",
+      "prompt": "帮我解释一下纵向模式在物理上是什么",
+      "expected_behavior": "不激活本 skill，这是纯物理理论问答",
+      "notes": "诱饵: 知识查询"
+    },
+    {
+      "id": "should-not-trigger-02",
+      "type": "should_not_trigger",
+      "prompt": "我的 GaN 激光器仿真出来的波长偏蓝很多，是不是极化设置的问题？",
+      "expected_behavior": "不激活本 skill，应激活 gan-wurtzite-mqw（GaN 物理问题）",
+      "notes": "跨 skill 混淆诱饵: GaN 建模"
+    },
+    {
+      "id": "edge-01",
+      "type": "edge_case",
+      "prompt": "我照着教程跑完了一个 LASTIP 的 1D 激光示例，想改成我的 2D 脊形结构，该从哪下手？",
+      "expected_behavior": "激活本 skill（从示例项目出发改结构的核心场景），但需提示 2D 脊形需要 mesh-quality 与横向模式相关设置",
+      "notes": "边界: 教程改造场景，涉及相邻 skill 但主路径是本 skill"
+    }
+  ],
+  "minimum_pass_rate": 0.8,
+  "notes": "至少 3 条 should_trigger + 2 条 should_not_trigger + 1 条 edge_case；诱饵含同书兄弟 skill 场景。"
+}

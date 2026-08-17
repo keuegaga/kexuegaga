@@ -1,0 +1,2331 @@
+=== PAGE 1374 ===
+1372 POST-PROCESSING&PLOTTINGVARIABLES
+TableG.4–continuedfrompreviouspage
+Variable Definition
+recomb_st Stimulatedrecombinationrate
+unity Specialvariable,alwaysequaltoone
+Variables Defined On 1D Optical Mesh
+These variables are defined for the round-trip gain version of the PICS3Dmodel
+andonlyexistona1Dmeshusedforopticalpropagation. Mostofthesequantities
+aretiedtoaspecificlongitudinalmode.
+TableG.5: Diagnosticz-variables
+Variable Definition
+alpha_l_over_2 Optical propagation constant (net modal gain),
+scaledbylength
+delta_beta_l Detuning of propagation constant from refer-
+encepoint,scaledbylength
+density_mode_average Wave-averagedcarrierdensity;onlyrelevantfor
+opticalsectionsthatdonotcorrespondtoaFEM
+meshsegment
+ffi
+kappa_l_real Realpartofgratingcoe cient,scaledbylength
+ffi
+kappa_l_imag Imaginary part of grating coe cient, scaled by
+length
+ff
+phase_index E ective index for the 1D optical propagation
+model
+
+
+=== PAGE 1375 ===
+Appendix H
+SUPPORTED EXAMPLES
+H.1 APSYS Examples
+------------------------
+A_tutorial
+[title] Simulation of a camel diode: A tutorial.
+[structure] Silicon camel diode.
+[comment] Basic simulation procedures using APSYS.
+------------------------
+basic_silicon\bjt_3d
+[title] Full 3D simulation of BJT.
+[structure] 3D structure of BJT with edge effect.
+[comment] The edge effect makes significant difference.
+------------------------
+basic_silicon\diode
+[title] Turn-on characteristics of pn junction diode.
+[structure] Simple p-n junction diode.
+[comment] Set up of transient simulation.
+------------------------
+basic_silicon\hot_carrier
+[title] Hot electron simulation.
+[structure] N-type MOS transistor.
+[comment] Different I-V is obtained if energy dep. mobility is used.
+------------------------
+basic_silicon\impact_mos
+[title] Impact ionization effect in MOS.
+[structure] N-type MOS transistor.
+[comment] Break down effect due to impact ionization.
+------------------------
+
+
+=== PAGE 1376 ===
+1374 SUPPORTEDEXAMPLES
+basic_silicon\jfet_temperature
+[title] JFET simulation.
+[structure] Silicon JFET.
+[comment] Set up of simulation at different temperatures.
+------------------------
+basic_silicon\jfet_trap
+[title] Deep level traps in JFET.
+[structure] Silicon JFET with deep traps.
+[comment] Deep trap model at low temperature.
+------------------------
+basic_silicon\mini_bjt
+[title] Small size BJT.
+[structure] Silicon bipolar junction transistor.
+[comment] Show how to generate a family of I-V curves.
+------------------------
+basic_silicon\npn_indium
+[title] NPN silicon BJT with indium doped base
+[structure] N-P-N with boron and indum doped base.
+[comment] Show how to use two p dopings with different ionization energies.
+------------------------
+basic_silicon\SOI_impact
+[title] Impact ionization in SOI.
+[structure] SOI with gate length of 1.6 um and poly gate.
+[comment] Switch to current control before snap back in I-V curve.
+------------------------
+basic_silicon\TFT_3D
+[title] 3D Simulation of a-SI TFT device.
+[structure] Strip cell with mirror symmetry in x-direction and z-direction.
+[comment] Show how to simulate 3D a-Si TFT by Csuprem and apsys.
+------------------------
+basic_silicon\thermal_npn
+[title] Thermal analysis of a BJT.
+[structure] Silicon NPN BJT
+[comment] Substantial difference when self-heating effect is included.
+------------------------
+basic_silicon\thyristor
+[title] Simulation of forward I-V characteristics of a thyristor
+[structure] silicon p-n-p-n
+[comment] Use of special convergence techniques to get the S-shape I-V curve
+------------------------
+CCD_CIS\CCD
+[title] Simplified CCD structure
+[structure] Silicon CCD detector
+
+
+=== PAGE 1377 ===
+H.1APSYSExamples 1375
+[comment] Basic simulation procedures using APSYS.
+------------------------
+CCD_CIS\PD_CIS
+[title] 2D CMOS image sensor with photodiode
+[structure] 0.2 um CMOS with .layer format.
+[comment] Demonstration of how clock cycle is controlled in CCD/CIS
+------------------------
+CCD_CIS\PG_CIS
+[title] CIS with a photogate
+[structure] PG+TX-MOS+Reset-MOS
+[comment] Classic design of CIS based on photogate as light integrator
+------------------------
+EAM\CQW_modulator
+[title] Simulation of a vertical coupled quantum well modulator.
+[structure] InGaAs/InAlAs CQW modulator.
+[comment] Detailed analysis and comparison with experiments
+------------------------
+EAM\franz_keldysh
+[title] Franz-Keldysh in Bulk DH Device.
+[material] Bulk InGaAsP at 1.3 micron bandgap.
+[structure] 1D p-n junction EAM
+------------------------
+EAM\Mach-Zehnder-2D
+[title] 2D analysis of InP based MQW Mach-Zehnder modulator
+[structure] MQW ridge waveguide
+[keywords] Quantum confined Stark effect (QCSE), Pockels’ effect, index change
+------------------------
+EAM\QCSE
+[title] Electro-Absorption modulator simulation.
+[structure] SQW EAM of AlGaAs.
+[comment] Use of "self_consistent" needed to update potential profile.
+------------------------
+EAM\QW_exciton
+[title] Exciton model for Electro-Absorption Modulator spectrum
+[structure] SQW EAM of AlGaAs.
+[comment] Use of "self_consistent" and "exciton".
+------------------------
+ESD\impact
+[title] Electrostatic discharge (ESD) simulation
+[structure] A simple silicon diode
+[comment] Basic ESD simulation procedures using APSYS.
+------------------------
+ESD\self_heating
+
+
+=== PAGE 1378 ===
+1376 SUPPORTEDEXAMPLES
+[title] Electrostatic discharge (ESD) thermal simulation
+[structure] A simple silicon diode
+[comment] Basic ESD simulation procedures using self-heating.
+------------------------
+FDTD\2d_lense
+[title] FDTD simulation of 2D lense structure
+[device] 2D lense shape with light incidence from top
+[comment] Illustrates focusing effect
+------------------------
+FDTD\2d_slab
+[title] FDTD material absorption in a simple 2D slab
+[device] Simple silicon slab with light incidence from top
+[comment] Illustrates basic parameter setting for FDTD modeling
+------------------------
+FDTD\3D_lense_PD3x3
+[title] FDTD material absorption in a simple 2D slab
+[device] Simple silicon slab with light incidence from top
+[comment] Illustrates basic parameter setting for FDTD modeling
+------------------------
+FDTD\3D_lense_PD3x3
+[title] 3D micro lense simulation by FDTD
+[structure] 3D lense constructure by multiple segments
+[comment] use of MEEP package
+------------------------
+FDTD\3D_pyramid_cell
+[title] 3D textured thinfilm cell simulation using FDTD
+[structure] muc-Si cell with pyramid texture
+[comment] Use of mesh plane bending to obtain 3D texture
+------------------------
+FDTD\box3d_FDTD
+[title] FDTD interface to APSYS
+[structure] Simple 3D box of silicon with an Al contact pad
+[comment] Illustrates use of FDTD interface through a simple 3D box
+------------------------
+FDTD\inside_src
+[title] FDTD with inside light source
+[structure] silicon device
+[remark] place light source inside of device
+------------------------
+FDTD\Lense_PD_FDTD
+[title] Lensed photodetector simulation using FDTD
+[structure] Silicon PD with lense with SiO2 AR coating
+[comment] Start from .layer and use GeoEditor to construct lense
+
+
+=== PAGE 1379 ===
+H.1APSYSExamples 1377
+------------------------
+FDTD\thick_glass
+[title] FDTD simulation with light source through thick glass
+[structure] p-i-n silicon solar cell with 3mm glass layer.
+[comment] Demo of FDTD simulation of solar cell with thick glass cover.
+------------------------
+HBT\hbt_ingaas
+[title] Simulations of compound semiconductor HBT.
+[structure] InGaAs/InP.
+[comment] Basic procedures of HBT simulation.
+------------------------
+HBT\hbt0_tunnel
+[title] InGaAs/InP HBT models.
+[structure] HBT based in InGaAs/InP material.
+[comment] Effect of tunneling in HBT simulation.
+------------------------
+HBT\sige_hbt
+[title] SiGe HBT simulation.
+[structure] SiGe HBT.
+[comment] Set up of DC and AC simulation for SiGe HBT.
+------------------------
+HBT\sige_hbt2
+[title] Analysis of SiGe HBT Performance
+[structure] Selective-epitaxial SiGe
+[comment] Study of bandgap narrowing effects in SiGe HBT.
+------------------------
+HEMT_and_FET\GaAs_HEMT\hemt3d
+[title] GaN/AlGaN HEMT 3D structure with tapered barrier layer
+[structure] GaN/AlGaN HEMT with deep level traps.
+[comment] Use of y_taper_line to set up taper in 3D HEMT application
+------------------------
+HEMT_and_FET\GaAs_HEMT\impact_ionization
+[title] AlGaAs HEMT simulation with selfconsistent method.
+[structure] GaAs/AlGaAs HEMT with 2D gas system.
+[comment] Use of "complex MQW" to define the 2D gas.
+------------------------
+HEMT_and_FET\GaAs_HEMT\MM_HEMT
+[title] Metamorphic InAlAs/InGaAs/GaAs HEMT.
+[structure] Metamorphic InAlAs/InGaAs/GaAs HEMT with delta doping.
+[comment] Heavily doped layer as the so-called delta-doping layer.
+------------------------
+HEMT_and_FET\GaN_HEMT\AlGaNGaN_HEMT_Brkdwn
+[title] High breakdown voltage AlGaN/GaN HEMT.
+
+
+=== PAGE 1380 ===
+1378 SUPPORTEDEXAMPLES
+[structure] AlGaN/GaN HEMT with magnesium doping layer under 2-DEG channel.
+[comment] Including the following features;
+------------------------
+HEMT_and_FET\GaN_HEMT\AlGaN-hemt
+[title] AlGaN HEMT simulation using piezo surface charge and substrate trap.
+[structure] GaN/AlGaN HEMT with 2D gas system.
+[comment] Piezo surface charge and substrate trap are varied to fit experiment.
+------------------------
+HEMT_and_FET\GaN_HEMT\HEMT_gate_leakage
+[title] Simulation of gate leakage in GaN HEMT
+[structure] GaN/AlGaN/GaN/Schottky
+[comment] To study condition for gate leakage
+------------------------
+HEMT_and_FET\GaN_HEMT\HEMT_nano
+[title] Nano scale AlGaN HEMT simulation
+[structure] GaN/AlGaN QW HEMT
+[comment] Demonstrate the set up of a D-mode AlGaN HEMT
+------------------------
+HEMT_and_FET\GaN_HEMT\HEMT_nano_emode
+[title] Enhancement mode nano scale AlGaN HEMT simulation
+[structure] GaN/AlGaN QW HEMT
+[comment] Demonstrate the use of local adjustment of polarization charges
+------------------------
+HEMT_and_FET\GaN_HEMT\HEMT_selfcs
+[title] AlGaAs HEMT simulation with selfconsistent method.
+[structure] GaAs/AlGaAs HEMT with 2D gas system.
+[comment] Use of "complex MQW" to define the 2D gas.
+------------------------
+HEMT_and_FET\GaN_HEMT\hemt_suprem_quantum
+[title] Process and device simulation of GaN-HEMT with quantum effects
+[structure] GaN/AlGaN HEMT with CSuprem simulation
+[purpose] To provide a template for CSuprem and APSYS simulation of HEMT
+------------------------
+HEMT_and_FET\GaN_HEMT\hot_traps\no_traps
+[title] GaN/AlGaN HEMT hot-carrier effects
+[structure] GaN/AlGaN HEMT with p(-) substate
+[comment] Purpose is to compare with similar cases with deep level traps.
+------------------------
+HEMT_and_FET\GaN_HEMT\hot_traps\traps
+[title] GaN/AlGaN HEMT hot-carrier trapping effects
+[structure] GaN/AlGaN HEMT with deep level traps.
+[comment] Deep level traps in substrate and SiN passivated surface
+------------------------
+
+
+=== PAGE 1381 ===
+H.1APSYSExamples 1379
+HEMT_and_FET\other_FET\broken_gap_FET
+[title] GaSb/InGaAs broken bandgap FET
+[structure] GaSb/InGaN TJ at source
+[comment] Use of equivalent mobility to model broken gap TJ
+------------------------
+HEMT_and_FET\other_FET\GTFET
+[title] Simulation of a Green Tunnel Field Effect
+Transistor (GTFET) with large turn-of swing
+[model] Tunnel junction with PAT
+------------------------
+HEMT_and_FET\other_FET\PAT_in_TFET
+[title] Tunnelling Junction FET simulation
+[structure] vertical silicon FET
+[remark] Demonstration of phonon-assisted and trap-assisted tunnelling
+------------------------
+HEMT_and_FET\other_FET\Sb_FET
+[title] Sb based HEMT simulation
+[structure] AlSb/InAs/AlSb/AlGaSb layers
+[comment] demonstration of setting up a Sb based HEMT
+------------------------
+LED_GaN_MQW\2d\AlGaN_block
+[title] Compare AlGaN blocking layer design with and without supperlattice
+[structure] GaN based MQW system with AlGaN SL blocking layer
+[comment] Use of Piezo charge and quantum tunneling in blocking layer
+------------------------
+LED_GaN_MQW\2d\AlGaN_block\no_sl
+[title] AlGaN blocking layer design (I): no superlattice
+[structure] GaN based MQW system with AlGaN blocking layer
+[comment] Use of Piezo charge and quantum tunneling in blocking layer
+------------------------
+LED_GaN_MQW\2d\AlGaN_block\with_sl
+[title] AlGaN blocking layer design (II): with superlattice
+[structure] GaN based MQW system with AlGaN SL blocking layer
+[comment] Use of Piezo charge and quantum tunneling in blocking layer
+------------------------
+LED_GaN_MQW\2d\complex_well
+[title] Use of complex macros to engineer QW of LED
+[structure] GaN/AlGaN based MQW system.
+[comment] We compare different ways to define a non-symmetric QW
+------------------------
+LED_GaN_MQW\2d\deep_wells\non_seq_trap
+[title] InGaN MQW LED with deep wells.
+[structure] GaN based MQW system with AlGaN blocking layer
+
+
+=== PAGE 1382 ===
+1380 SUPPORTEDEXAMPLES
+[comment] IQE roll-off even for deep wells and high EBL
+------------------------
+LED_GaN_MQW\2d\deep_wells\non_sequential
+[title] InGaN MQW LED with deep wells.
+[structure] GaN based MQW system with AlGaN blocking layer
+[comment] IQE roll-off even for deep wells and high EBL
+------------------------
+LED_GaN_MQW\2d\deep_wells\q_trap
+[title] InGaN MQW LED with deep wells.
+[structure] GaN based MQW system with AlGaN blocking layer
+[comment] IQE roll-off even for deep wells and high EBL
+------------------------
+LED_GaN_MQW\2d\dome
+[title] Epoxy domed LED simulation
+[structure] GaN LED with epoxy dome.
+[comment] Demonstration of setting up ray tracing with dome-packaging.
+------------------------
+LED_GaN_MQW\2d\InGaN
+[title] Piezo and thermal effects in LED.
+[structure] GaN based MQW system.
+[comment] L-I curves would role off due to thermal effect
+------------------------
+LED_GaN_MQW\2d\triangle_well
+[title] Triangle quantum well in LED modeled as graded complex layers.
+[material] InGaN/GaN with graded InGaN
+[comment] To show how to construct a triangle well using cx-InGaN
+------------------------
+LED_GaN_MQW\2d\tunnel_junction
+[title] use tunnel junction as p-contact in LED.
+[structure] GaN based MQW system.
+[comment] demonstrate how to use TJ in LED
+------------------------
+LED_GaN_MQW\2d\tunnel_junction\with_TJ
+[title] use tunnel junction as p-contact in LED.
+[structure] GaN based MQW system.
+[comment] demonstrate how to use TJ in LED
+------------------------
+LED_GaN_MQW\2d\tunnel_junction\without_TJ
+[title] use tunnel junction as p-contact in LED.
+[structure] GaN based MQW system.
+[comment] This project has turned off TJ model to use as a reference
+------------------------
+LED_GaN_MQW\3d_fancy\circle
+
+
+=== PAGE 1383 ===
+H.1APSYSExamples 1381
+[title] 3D simulation of LED with circular contacts
+[structure] geometry defined by circulr masks
+[purpose] templates for simulating devices with complicated geometry
+------------------------
+LED_GaN_MQW\3d_fancy\interdigi
+[title] Simulation of an LED with interdigital electrodes
+[structure] LED with interdigital electrodes
+[comment] Demonstrate how to set up complicated eletrodes using .layer
+------------------------
+LED_GaN_MQW\3d_fancy\spiral
+[title] 3D simulation of LED with spiral-shaped contacts
+[structure] geometry defined by mask data
+[purpose] templates for simulating devices with complicated geometry
+------------------------
+LED_GaN_MQW\3d_fancy\star
+[title] 3D simulation of LED with star shaped contacts
+[structure] geometry defined by mask data
+[purpose] templates for simulating devices with complicated geometry
+------------------------
+LED_GaN_MQW\3d_wellxz\LED_maskeditor
+[title] LED IQE simulation 2010
+[stucture] MQW InGaN/GaN LED with EBL
+[remark] IQE sensitive to band offset
+------------------------
+LED_GaN_MQW\3d_wellxz\LED_maskeditor
+[title] LED simulation set up using MaskEditor/CSuprem
+[stucture] MQW InGaN/GaN LED with EBL
+[remark] Use of Csuprem / MaskEditor for mesh
+------------------------
+LED_GaN_MQW\3d_wellxz\side_contact3d
+[title] 3D AlGaN/AlGaN MQW LED simulation with ray-tracing
+[structure] AlGaN/AlGaN MQW emitting at 0.34 micron.
+[comment] Use of self-consistency model in multiple segment 3D structure
+------------------------
+LED_GaN_MQW\barrier_emit
+[title] LED barrier emission
+[structure] InGaN/GaN MQW.
+[comment] Study of barrier emission spectrum
+------------------------
+LED_GaN_MQW\IQE_droop
+[title] LED IQE simulation 2010
+[stucture] MQW InGaN/GaN LED with EBL
+[remark] IQE sensitive to band offset
+
+
+=== PAGE 1384 ===
+1382 SUPPORTEDEXAMPLES
+------------------------
+LED_GaN_MQW\LED_external_stress\reference
+[title] LED IQE simulation 2010
+[stucture] MQW InGaN/GaN LED with EBL
+[remark] IQE sensitive to band offset
+------------------------
+LED_GaN_MQW\LED_external_stress\with_stress
+[title] LED IQE simulation 2010
+[stucture] MQW InGaN/GaN LED with EBL
+[remark] IQE sensitive to band offset
+------------------------
+LED_GaN_MQW\mplane_LED
+[title] InGaN/GaN QW mplane LED simulation using full k.p theory
+[material] InGaN/GaN
+[device] InGaN/GaN LD
+------------------------
+LED_GaN_MQW\selfconsistent_onetime
+[title] New method of selfconsistent simulation
+[stucture] MQW InGaN/GaN LED with EBL
+[remark] Three stages of simulation to achieve selfconsistency
+------------------------
+LED_GaN_MQW\split_local_trapping
+[title] Introducing split QW state local carrier trapping model
+This directory contains examples to demo. the new split-QW state local
+------------------------
+LED_GaN_MQW\split_local_trapping\AlGaN_local
+[title] Split state model in LED with AlGaN blocking layer
+[structure] GaN based MQW system with AlGaN blocking layer
+[comment] Use of split state model
+------------------------
+LED_GaN_MQW\split_local_trapping\AlGaN_nonlocal
+[title] Split state model in LED with AlGaN blocking layer
+[structure] GaN based MQW system with AlGaN blocking layer
+[comment] Use of split state model
+------------------------
+LED_GaN_MQW\split_local_trapping\GaAs_local
+[title] Demonstrate of local split state trapping model.
+[structure] Simple MQW GaAs/AlGaAs LED
+[comment] Use of large tau causes IQE droop, even in GaAs LED.
+------------------------
+LED_GaN_QDOT\QD_4sizes
+[title] InGaN based LED with quantum dots.
+
+
+=== PAGE 1385 ===
+H.1APSYSExamples 1383
+[structure] MQW-QDOT InGaN/AlGaN LED.
+[comment] Procedures of simulation
+------------------------
+LED_GaN_QDOT\QD_life
+[title] Non-radiative lifetime effect in InGaN LED with quantum dots.
+[structure] MQW-QD InGaN/AlGaN LED.
+[comment] Study of carrier lifetime within QD effect.
+------------------------
+LED_general\BCLED\OneStage
+[title] OneStage bipolar cascade LED LED.
+[material] InGaAs/GaAs MQW
+[structure] tunnel junction is used.
+------------------------
+LED_general\BCLED\PIN
+[title] PIN LED.
+[material] InGaAs/GaAs MQW
+[structure] Simple PIN structure.
+------------------------
+LED_general\dome2d_rt3d
+[title] 3D Ray Tracing structure w/dome
+[structure] Simple InGaAlP/GaAs LED with external
+dome structure to enhance extraction efficiency
+------------------------
+LED_general\led_absorption_each_well
+[title] Extraction of absorption spectrum for each well in MQW LED
+[stucture] MQW InGaN/GaN LED with EBL
+[remark] Use of output_more_spectrum and plot_more_spectrum
+------------------------
+LED_general\pumped_led
+[title] GaN based LED with optical pumping.
+[structure] MQW GaN LED.
+[comment] Demo of MQW LED simulation with incident light.
+------------------------
+LED_general\RT_TE_TM
+[title] Simulation TE/TM raytracing in a LED
+[structure] InGaN LED
+[comment] shows how to plot both TE and TM from LED
+------------------------
+LED_general\Textured_LED
+[title] Simulation of a LED with textured surface.
+[structure] MQW LED with star-shaped contact.
+[comment] A simulation by cooperation of Csuprem,Apsys,FDTD and RT3D.
+------------------------
+
+
+=== PAGE 1386 ===
+1384 SUPPORTEDEXAMPLES
+LED_general\tunnel_spectrum\no_sl
+[title] AlGaN blocking layer design (I): no superlattice
+[structure] GaN based MQW system with AlGaN blocking layer
+[comment] Use of Piezo charge and quantum tunneling in blocking layer
+------------------------
+LED_general\tunnel_spectrum\with_sl
+[title] AlGaN blocking layer design (II): with superlattice
+[structure] GaN based MQW system with AlGaN SL blocking layer
+[comment] Use of Piezo charge and quantum tunneling in blocking layer
+------------------------
+mixed_mode\MOSFET
+[title] Mixmode simulation of external circuit including a MOSFET
+[structure] Simple meshed silicon resistor connected to a test.cir file.
+[comment] CuteSpice command drives the circuit simulator capatible with SPICE
+------------------------
+NAND_flash_memory
+[title] 2D simulation of multi-cell NAND flash memory
+[structure] 50nmx50nm multi-cell flash memory line
+[remark] real device simplified to two select gates and 4 pass gates
+------------------------
+nanowire\nanowire_bulk
+[title] A simple cylindrical bulk nanowire of InGaN/GaN
+[material] wurtzite bulk active layer of InGaN used
+[comment] For more complicated 3D nanowire structure SemiCrafter is recommended
+------------------------
+nanowire\nanowire_mqw
+[title] Modeling nanowire with multiple crystal orientation.
+[structure] InGaN/GaN/ZnO with ZnO as growth template
+[remark] Use of new type of 3D taper: symmetric polygon
+------------------------
+nanowire\nanowire_mqw_ito
+[title] Modeling nanowire with multiple crystal orientation.
+[structure] InGaN/GaN/ZnO with ZnO as growth template
+[remark] Use of new type of 3D taper: symmetric polygon
+------------------------
+nanowire\nanowire_multiplane
+[title] Modeling nanowire with multiple crystal orientation.
+[structure] InGaN/GaN/ZnO with ZnO as growth template
+[remark] Use of new type of 3D taper: symmetric polygon
+------------------------
+NEGF\FINFET_3D_SUPREM_NEGF
+[title] 3D process and NEGF device simulation of FINFET
+[device] FINFET
+
+
+=== PAGE 1387 ===
+H.1APSYSExamples 1385
+[structure] Si on SiO2, with nitride spacer
+------------------------
+NEGF\NEGF_nmos
+[title] NEGF quantum ballistic transport model of NMOS
+[structure] Nano scale MOSFET
+[purpose] To demonstrate the set up of NEGF method with drift-diffusion solver
+------------------------
+nonplanar_layer
+[title] Setting up non-planar layer structure in simulation
+[structure] GaAs/AlGaAs quantum well device
+[comment] Use of modify_layer_height in .layer demonstrated
+------------------------
+OLED\AMOLED_yang
+[title] OLED in AMOLED application
+[structure] m-MTDATA/alpha-NPD/Alq3/LiF/Al/Ag
+[comment] Comparison with published experimental data
+------------------------
+OLED\bilayer
+[title] Bilayer OLED simulation
+[material] NPB/Alq3 OLED
+[demo] Use of metal on OLED to form microcavity; multiple active layers
+------------------------
+OLED\DCM_micro
+[title] Microcavity analysis of an OLED with exciton diffusion model
+[structure] Alq3/DCM:Alq3/TPD/ITO
+[comment] To perform both electrical and optical analysis of an OLED stack
+------------------------
+OLED\EL_abs_spectra
+[title] EL/Absorption Spectrum Model for Organic Light-Emitting Diode
+[structure] Single active layers of Alq3 and Alq3:DCM
+[comments] Use of Frenkel exciton model to generate EL/absorption spectrum
+------------------------
+OLED\EL_fit
+[title] Fitting EL Spectrum of Organic Materials
+[structure] Active layers of organic semiconductors
+[comment] Explain the procedures involved in fitting to experimental EL data
+------------------------
+OLED\PIN_OLED
+[title] Low-voltage electrolumiscent device
+[structure] PIN Organic LED w/Alq3 active region
+[comment] Reasonable agreement with experimental I-V and L-V curves
+------------------------
+OLED\pumped_oled
+
+
+=== PAGE 1388 ===
+1386 SUPPORTEDEXAMPLES
+[title] Opticalled pumped OLED
+[structure] TPD/CBP/F8BT/SiO2
+[comment] Optical pumping to generate exciton only, not free carriers.
+------------------------
+OLED\RC-OLED
+[title] OLED with resonant cavity effect
+[structure] CuPc/TPD/Alq3/LiF
+[comment] For the study of micro cavity effect in OLED
+------------------------
+OLED\tandem
+[title] Tandem OLED with resonant cavity effect
+[structure] Stacks of NPB, Alq3, DCJTB:Alq3, n-doped Alq3 and p-doped NPB
+[comment] Use of tunnel junction to connect series of OLED
+------------------------
+OLED\tandem2
+[title] Tandem OLED with multple active layers.
+[structure] Stacks of NPB, Alq3, C545T:Alq3, n-doped Alq3 and p-doped NPB
+[comment] Use of tunnel junction to connect series of OLED
+------------------------
+OLED\trilayer
+[title] Trilayer OLED simulation
+[material] NPB/Alq3/Alq3:DCM
+[demo] Multiple active layers in OLED
+------------------------
+OLED\triplet_diff
+[title] Simulation of a WOLED with exciton diffusion model
+[structure] ITO/NPD/BCzVBi:CBP/CBP/PQIr:CBP/Ir(ppy)3:CBP/CBP/BCzVbi:CBP/BPhen
+[comment] To demonstrate white OLED simulation with triplet diffusion
+------------------------
+OLED\triplet_diff\no_biex
+[title] Simulation of a WOLED with exciton diffusion model
+[structure] ITO/NPD/BCzVBi:CBP/CBP/PQIr:CBP/Ir(ppy)3:CBP/CBP/BCzVbi:CBP/BPhen
+[comment] This example turns off biexciton quenching.
+------------------------
+OLED\triplet_diff\no_el_transfer
+[title] Simulation of a WOLED with exciton diffusion model
+[structure] ITO/NPD/BCzVBi:CBP/CBP/PQIr:CBP/Ir(ppy)3:CBP/CBP/BCzVbi:CBP/BPhen
+[comment] This example turns off dopant-dopant energy transfer.
+------------------------
+OLED\triplet_diff\ref
+[title] Simulation of a WOLED with exciton diffusion model
+[structure] ITO/NPD/BCzVBi:CBP/CBP/PQIr:CBP/Ir(ppy)3:CBP/CBP/BCzVbi:CBP/BPhen
+[comment] To demonstrate white OLED simulation with triplet diffusion
+
+
+=== PAGE 1389 ===
+H.1APSYSExamples 1387
+------------------------
+other\3D_stacking\xyplane_attachment
+[title] Attachment of multiple 3D object in mesh generation
+[structure] Multiple 3D domain (M3DD)
+[comment] Use 3d_attachment command to construct complicated 3D mesh
+------------------------
+other\amplifier
+[title] Guided wave amplifier on y-z plane.
+[structure] MQW InGaAsP/InP structure at 1.55 um.
+[comment] Transient simulation of traveling wave amplifier.
+------------------------
+other\angled_interface
+[title] Modeling angled interface
+[device] InGaN based MQW
+[comment] Angled cosine factor may be used to modify fixed charge.
+------------------------
+other\bulk_exciton
+[title] Bulk GaAs absorption spectrum simulation using exciton model
+[material] bulk GaAs QW at 0.83 um.
+[comment] Manybody/exciton model as compared with experiment
+------------------------
+other\Esaki_junction
+[title] Esaki tunnel junction
+[structure] Ge tunnel junction
+[comment] Based on 1957 paper in PhysRev.
+------------------------
+other\HB_Varactor
+[title] Simulation of a heterostructure barrier varactor.
+[structure] AlGaAs/GaAs symmetrical heterostructure barrier varactor
+[comment] Use of self-consistent, tunneling, complex-MQW models.
+------------------------
+other\import_gen_rate
+[title] Simulation of Photodetector with Imported Optical Gen. Rate
+[structure] Ridge waveguide SQW PD.
+[comment] Direct use of carrier generation rate from 3rd party software
+------------------------
+other\InN_non_parabolic_surface
+[title] Simulation of a InN solar cell
+[structure] Mg-doped InN layer with an electrolyte layer
+[comment] Space-charge output
+------------------------
+other\jdos_tail
+[title] Adding tail states in joint density of states
+
+
+=== PAGE 1390 ===
+1388 SUPPORTEDEXAMPLES
+[structure] 1D quantum well and bulk active layers.
+[comment] Study of tail states, JDOS and shape of gain/PL spectrum.
+------------------------
+other\laser_heat
+[title] Thermal transient simulation of laser lift-off process
+[structure] Copper, GaN, amorphase GaN and sapphire
+[comment] High power laser pulse is used to heat up GaN/sapphire interface
+------------------------
+other\lead_salt\bulk_leadsalt
+[title] Bulk lead-salt active layer with non-parabolic band model
+[structure] lead-salt PbSrSe
+[comment] Use of generic-bulk macro for lead-salt
+------------------------
+other\lead_salt\lead_salt_cx_mqw
+[title] Lead-salt MQW quantum well gain/spontaneous emisson model
+[structure] complex MQW lead-salt emitting at 5 um.
+[comment] Use of generic-complex-mqw macro for lead-salt
+------------------------
+other\lead_salt\lead_salt111
+[title] Lead-salt MQW quantum well grown in 111 model
+[structure] complex MQW lead-salt PbSrSe
+[comment] Use of generic-complex-mqw macro for lead-salt
+------------------------
+other\mesfet
+[title] Simulation of GaAs MESFET.
+[structure] GaAs MESFET.
+[comment] Set up of a basic MESFET simulation.
+------------------------
+other\miniband\basic_nin
+[title] Use of mini-band transport model for superlattice in GaN-based lasers
+[material] InGaN/AlGaN
+[structure] 2D LD model
+------------------------
+other\QWIP\QWIP_ydir
+[title] Simulation of GaAs/AlGaAs QWIP
+[structure] GaAs/AlGaAs QWIP with 40 wells.
+[comment] Basic simulation procedures using APSYS.
+------------------------
+other\QWIP\QWIP_zdir_no_fdtd
+[title] 3D Simulation of GaAs/AlGaAs QWIP with well on xy-plane
+[structure] GaAs/AlGaAs QWIP with 40 wells with well on xy-plane.
+[comment] Basic simulation procedures using APSYS.
+------------------------
+
+
+=== PAGE 1391 ===
+H.1APSYSExamples 1389
+other\radiation_heavy_ion
+[title] Radiation model for heavy ion strikes
+[structure] 1-um nMOSFET
+[comment] command radiation_heavy_ion demonstrated
+------------------------
+other\RTD\RTD_selfcons
+[title] RTD simulation using tunneling model with self-consistent treatment.
+[structure] 1D RTD with two barriers.
+[comment] Simultanous use of self-consistent MQW and tunneling model.
+------------------------
+other\schottky_tunnel
+[title] Study of tunneling effects in a Schottky diode.
+[structure] 1D Schottky diode.
+[comments] Demo of tunneling effect in Schottky contact.
+------------------------
+other\STL_import
+[title] 3D mesh import using the STL format
+[structure] p-i-n silicon solar cell.
+[comment] A simple example of STL file import procedure
+------------------------
+other\STL_import\STL_organizer_sample
+[Title] How to use the STL_organizer program
+[content] Program files and documents
+[comment] A character user interface program
+------------------------
+other\trap_emission
+[title] Trap emission model
+[structure] GaN and AlGaN bulk HEMT-like structure
+[purpose] To demonstrate trap emission via optical pumping
+------------------------
+other\ZnO
+[title] ZnO/MgZnO material model
+[structure] ZnO/MgZnO QW
+[comment] Setting up wurtzite macro for ZnO/MgZnO MQW
+------------------------
+PhCLED\InGaN
+[title] PhCLED of InGaN/GaN
+[structure] GaN based MQW system.
+[comment] Air holes are used on top to enhanced extraction.
+------------------------
+PhCLED\with_DBR
+[title] Modeling InGaAs/AlGaAs PhCLED/RCLED
+[structure] Cylindrical RCLED with DBR and air hole photonic crystal
+
+
+=== PAGE 1392 ===
+1390 SUPPORTEDEXAMPLES
+[comment] PhC. air holes are used to enhance light extraction
+------------------------
+photo_sensitive\APD_GB
+[title] 2D simulation of InGaAsP/InP APD.
+[structure] InGaAsP/InP APD.
+[comment] Gain-bandwidth calculation using impulse transient simulation.
+------------------------
+photo_sensitive\APD_GB\apd
+[title] 2D simulation of InGaAsP/InP APD.
+[structure] InGaAsP/InP APD.
+[comment] gain-bandwidth study
+------------------------
+photo_sensitive\APD_GB\apd2
+[title] 2D simulation of InGaAsP/InP APD.
+[structure] InGaAsP/InP APD.
+[comment] gain-bandwidth study
+------------------------
+photo_sensitive\APD_GB\apd3
+[title] 2D simulation of InGaAsP/InP APD.
+[structure] InGaAsP/InP APD.
+[comment] gain-bandwidth study
+------------------------
+photo_sensitive\CIGS
+[title] CIGS detector simulation
+[structure] Cu[In(1-x)Ga(x)]Se2 based detector.
+[comment] Dark current simulation
+------------------------
+photo_sensitive\diffraction
+[title] Single Slit Driffraction in Photo-sensitive Devices
+[structure] MSM with 0.8 um inlet slit for light power.
+[comment] Shows how to set up a single slit diffraction model.
+------------------------
+photo_sensitive\extern_optics
+[title] 2D Simulation of Photodetector with External Light Profile
+[structure] Ridge waveguide SQW PD.
+[comment] Use of different forms of external optical field profile
+------------------------
+photo_sensitive\gaas_apd
+[title] A simple 1D example of GaAs/AlGaAs APD
+[structure] GaAs/AlGaAs.
+[comment] Use of bandgap_reduction technique.
+------------------------
+photo_sensitive\GaN_PD\GaN_APD
+
+
+=== PAGE 1393 ===
+H.1APSYSExamples 1391
+[title] 1D simulation of separated-absorption-multipliation(SAM) GaN APD.
+[structure] p-GaN/i-GaN(multiplication layer)/n-GaN/i-GaN(absorption layer)/n-GaN <---light.
+------------------------
+photo_sensitive\GaN_PD\GaN_PIN
+[title] 1D simulation of p-i-n GaN APD.
+[structure] p-GaN/i-GaN/n-GaN.
+[comment] BV and transient simulation for GaN APD is demonstrated.
+------------------------
+photo_sensitive\inp_apd
+[title] 2D simulation of InGaAsP/InP APD.
+[structure] InGaAsP/InP APD.
+[comment] DC and AC simulation with bandgap_reduction technique.
+------------------------
+photo_sensitive\kwon_gaas_apd
+[title] A 1D example of GaAs/AlGaAs/GaAs APD for GBP study
+[structure] GaAs/AlGaAs/GaAs.
+[comment] Use of bandgap_reduction technique.
+------------------------
+photo_sensitive\msm_ac
+[title] MSM PD simulation - AC photo-response analysis.
+[structure] MSM with 0.5 um epi GaAs/AlGaAs/SI-GaAs.
+[comment] AC response analysis for external light input.
+------------------------
+photo_sensitive\msm155
+[title] Modeling optical absorption in active regions of PD.
+[structure] InGaAs/InAlAs/InP.
+[comment] Declaration of active region to allow interband transition model.
+------------------------
+photo_sensitive\PD_raytrace
+[title] Photodetector Ray Tracing simulation of InGaAsP/InP APD.
+[structure] InGaAsP/InP APD.
+[comment] Use of ray tracing technique to generate photo-carriers.
+------------------------
+photo_sensitive\PD3D_external
+[title] 3D Simulation of Photodetector with External Light Profile
+[structure] Tapered ridge waveguide SQW PD.
+[comment] Use of different forms of external optical field profile
+------------------------
+photo_sensitive\PIN_cyl
+[title] Cylindrical PIN PD simulation.
+[structure] InGaAs/InP PD
+[comment] Demo of use of cylindrical coordinate system.
+
+
+=== PAGE 1394 ===
+1392 SUPPORTEDEXAMPLES
+------------------------
+photo_sensitive\SAGCM_APD
+[title] 1D simulation of InP/InGaAs SAGCM APD.
+[structure] InP/InGaAs SAGCM APD APD.
+------------------------
+photo_sensitive\silicon_apd\npip
+[title] Basic impact ionization model for silicon.
+[structure] Simple silicon pn-junctons.
+[comment] Illustrate basic techniques of modeling break-down effects.
+------------------------
+photo_sensitive\silicon_apd\simple
+[title] Basic impact ionization model for silicon.
+[structure] Simple silicon pn-junctons.
+[comment] Illustrate basic techniques of modeling break-down effects.
+------------------------
+photo_sensitive\surface
+[title] Fermi level pinning effect due to surface states.
+[structure] MSM PD.
+[comment] Surface effects reduces dark current of PD.
+------------------------
+photo_sensitive\UV_PD
+[title] GaN Ultra-violet photo-detector using
+[structure] Bulk InGaN/AlGaN for 0.28 micron meter wavelength.
+[comment] Demo of short wavelength photo-detector.
+------------------------
+photo_sensitive\waveguide_pd
+[title] Waveguide photodetector simulation.
+[structure] GRINCH-SQW-SCH waveguide PD.
+[comment] Optical modes must be solved to compute carrier generation.
+------------------------
+photo_sensitive\zener_impact
+[title] Junction breakdown due to Zener effect and impact ionization.
+[structure] Silicon pn-junction.
+[comment] Comparison of Zener and impact ionization effects.
+------------------------
+quantum_MOS\FINFET_qw3d
+[title] Quantum effects in 3D-FINFET
+[structure] FINFET with SiO2 as confining barriers.
+[comment] Current injection in FINFET is 3D in nature.
+------------------------
+quantum_MOS\FINFETs\FINFET_bulk
+[title] FINFET simulation using bulk model
+
+
+=== PAGE 1395 ===
+H.1APSYSExamples 1393
+[structure] FINFET with SiO2 as confining barriers.
+[comment] For the purpose of comparison with the quantum finfet model.
+------------------------
+quantum_MOS\FINFETs\FINFET_qw
+[title] Quantum effects in FINFET
+[structure] FINFET with SiO2 as confining barriers.
+[comment] Quantum effects in FINFET are significant.
+------------------------
+quantum_MOS\FINFETs\simple
+[title] Quantum effects in a simple double gate MOSFET
+[structure] FINFET with SiO2 as confining barriers.
+[comment] Quantum effects in single segment of FINFET is considered.
+------------------------
+quantum_MOS\mobility_transverse
+[title] Comparison of transverse field depedent mobility models.
+[structure] Silicon N-MOS (80 nm)
+[comment] Comparison of models named Intel1, Intel2 and Lombardi
+------------------------
+quantum_MOS\mobility_transverse\intel1
+[title] Comparison of transverse field depedent mobility models.
+[structure] Silicon N-MOS (80 nm)
+[comment] Comparison of models named Intel1, Intel2 and Lombardi
+------------------------
+quantum_MOS\mobility_transverse\intel2
+[title] Comparison of transverse field depedent mobility models.
+[structure] Silicon N-MOS (80 nm)
+[comment] Comparison of models named Intel1, Intel2 and Lombardi
+------------------------
+quantum_MOS\mobility_transverse\lombardi
+[title] Comparison of transverse field depedent mobility models.
+[structure] Silicon N-MOS (80 nm)
+[comment] Comparison of models named Intel1, Intel2 and Lombardi
+------------------------
+quantum_MOS\mobility_transverse\reference
+[title] Comparison of transverse field depedent mobility models.
+[structure] Silicon N-MOS (80 nm)
+[comment] Comparison of models named Intel1, Intel2 and Lombardi
+------------------------
+quantum_MOS\nmos_highk
+[title] Simulation of a high-k MOSFET
+[structure] Silicon MOSFET
+[comment] Shows how to define new materials using custom
+------------------------
+
+
+=== PAGE 1396 ===
+1394 SUPPORTEDEXAMPLES
+quantum_MOS\npoly_experiment
+[title] Quantum MOS gate current study
+[structure] Silicon N-MOS with n+ polysilicon gate.
+[comment] Use of direct tunneling model with quantum confinement in channel.
+------------------------
+quantum_MOS\poly
+[title] Quantum effects in MOS with thin gate oxide and poly-gate
+[structure] Silicon N-MOS with polysilicon gates
+[comment] Quantum effects in MOS are significant.
+------------------------
+quantum_MOS\qw_mos
+[title] Quantum effects in MOS with thin gate oxide
+[structure] Silicon N-MOS and P-MOS
+[comment] Quantum effects in MOS are significant.
+------------------------
+quantum_MOS\SGT
+[title] Simulation of a surrounding gate transistor.
+[structure] cylndrical MOSFET.
+[comment] Quantum effects are included using APSYS.
+------------------------
+quantum_MOS\SGT3d
+[title] Full 3D Simulation of a surrounding gate transistor.
+[structure] cylndrical MOSFET without rotation symmetry.
+[comment] Rotation symmetry broken by gate oxide being non-uniform.
+------------------------
+quantum_MOS\SONOS\300
+[title] Quantum mechanical simulation for a SONOS-EEPROM
+[structure] Semiconductor-oxide-nitride-oxide-semiconductor MOSFET
+[comment] trapping/detrapping, quantum confinement/tunneling.
+------------------------
+quantum_MOS\SONOS\450
+[title] Quantum mechanical simulation for a SONOS-EEPROM
+[structure] Semiconductor-oxide-nitride-oxide-semiconductor MOSFET
+[comment] trapping/detrapping, quantum confinement/tunneling.
+------------------------
+quantum_MOS\uniaxial_SSi
+[title] Simulation of uniaxially stress MOSFET
+[structure] n-MOSFET and p-MOSFET on 100 wafer with 100 or 110 channel
+[comment] Both quantum well property and full MOSFET simulation are studied.
+------------------------
+quantum_MOS\uniaxial_SSi\n_qwell_100
+[title] Study of mass induced mobility enhancement under uniaxial strain.
+[structure] Strained Si with uniaxial tensile strain.
+
+
+=== PAGE 1397 ===
+H.1APSYSExamples 1395
+[comment] A series of preview files are used to conc. average valley mobility
+------------------------
+quantum_MOS\uniaxial_SSi\n_qwell_110
+[title] Study of mass induced mobility enhancement under uniaxial strain.
+[structure] Strained Si with uniaxial tensile strain [110].
+[comment] A series of preview files are used to conc. average valley mobility
+------------------------
+quantum_MOS\uniaxial_SSi\nmos_nostrain
+[title] Unstrained n-MOSFET as referece for strained silicon modeling
+[structure] Silicon N-MOS
+[comment] This structure has zero stress and exports data
+------------------------
+quantum_MOS\uniaxial_SSi\nmos_strain100
+[title] Simulation of strained n-MOSFET [100]
+[structure] Silicon N-MOS with poly gate
+[comment] This structure has 1 GPa tensile stress
+------------------------
+RCLED\70well_noDBR
+[title] Thermal simulation 70 pair MQW RCLED
+[structure] RCLED of InGaAlP emitting at 600 nm
+[comment] Use of current/density dependent lifetime
+------------------------
+RCLED\AlGaAs
+[title] Model of resonant cavity LED (RCLED) with multilayer optic module
+[structure] Cylindrical RCLED with implanted current confinement regions.
+[comment] Note the input of DBR stacks in .sol file
+------------------------
+RCLED\DBR_detuned
+[title] Effect of DBR detuning in RCLED
+[structure] Cylindrical RCLED with implanted current confinement regions.
+[comment] To show that if DBR is detuned, resonance will ocurr at an angle
+------------------------
+RCLED\InGaAs
+[title] Modeling InGaAs/AlGaAs RCLED
+[structure] Cylindrical RCLED with DBR and Ag HR coating
+[comment] Optical phase of Ag mirror affects resonant wavelength
+------------------------
+RCLED\long_cavity
+[title] InGaN based RCLED at 0.52 um.
+[structure] RCLED with long cavity.
+[comment] We find many resonant peaks in both wavelenghths and angles
+------------------------
+RCLED\thermal_70well
+
+
+=== PAGE 1398 ===
+1396 SUPPORTEDEXAMPLES
+[title] Thermal simulation 70 pair MQW RCLED
+[structure] RCLED of InGaAlP emitting at 600 nm
+[comment] Use of current/density dependent lifetime
+------------------------
+RCLED\thermal_rcled
+[title] Thermal simulation of an RCLED
+[structure] RCLED with multiple quantum wells.
+[comment] Demonstration of rolling off RCLED power at higher temperature
+------------------------
+sige_proc_device
+[title] Process and device simulation of SiGe MOSFET
+[strucutre] MOSFET with SiGe pocket
+[purpose] To provide a template for strain treatment of SiGe MOSFET
+------------------------
+solar_cell\compound\3D_beam
+[title] 3D models of triple junction solar cell powered by focused beam
+[structure] 3D triple junction solar cell with tunnel junction.
+[comment] Use of loop structure to set up 3D planes.
+------------------------
+solar_cell\compound\3D_beam_thermal
+[title] 3D models of triple junction solar cell powered by focused beam
+[structure] 3D triple junction solar cell with tunnel junction.
+[comment] Use of loop structure to set up 3D planes.
+------------------------
+solar_cell\compound\3D_beam_zdir
+[title] 3D focused beam model with beam from z-direction
+[structure] 3D triple junction solar cell with tunnel junction.
+[comment] Set up cell with junction parallel to x-y plane.
+------------------------
+solar_cell\compound\CdSe_CZT_CIGS_cell
+[title] CsSe-CIGS cell simulation
+[material] CdSe - CuInGaSe layers
+[remark] provide serveral templates for CIGS based cells.
+------------------------
+solar_cell\compound\diffraction
+[title] triple junction solar cell simulation with diffraction model.
+[structure] 2D triple junction solar cell using diffraction model.
+[comment] Diffraction model takes into account different wavelengths.
+------------------------
+solar_cell\compound\InGaN_cell
+[title] InGaN solar cell
+[material] InGaN
+[purpose] To provide a working template of InGaN cell
+
+
+=== PAGE 1399 ===
+H.1APSYSExamples 1397
+------------------------
+solar_cell\compound\InGaN_Si
+[title] InGaN/Si solar cell
+[structure] InGaN/Si heterojunction solar cell
+[comment] Use of tunneling junction in a special structure
+------------------------
+solar_cell\compound\inverted
+[title] GaInP/GaAs/GaInAs solar cell simulation.
+[structure] 2D triple junction solar cell with tunnel junction.
+[comment] High efficiency (about 34%) solar cell
+------------------------
+solar_cell\compound\invtTJSCEQE
+[title] GaInP/GaAs/GaInAs solar cell simulation for EQE computation.
+[structure] 2D triple junction solar cell with tunnel junction.
+[comment] Using series Project to compute EQE
+------------------------
+solar_cell\compound\multi-light-source
+[title] triple junction solar cell simulation, multiple light source.
+[structure] 2D triple junction solar cell with tunnel junction.
+[comment] Demo of multiple light source
+------------------------
+solar_cell\compound\tj_thermal
+[title] triple junction solar cell thermal simulation.
+[structure] 2D triple junction solar cell with tunnel junction.
+[comment] Setting up thermal boundary conditions.
+------------------------
+solar_cell\compound\triple_junc
+[title] triple junction solar cell simulation.
+[structure] 2D triple junction solar cell with tunnel junction.
+[comment] Use of equivalent mobility for tunnel junction.
+------------------------
+solar_cell\Si_simple
+[title] Silicon solar cell simulation.
+[structure] 1D silicon p-n junction.
+[comment] Use of AM15 solar spectrum to achieve accuracy.
+------------------------
+solar_cell\silicon\EQE_wavelength
+[title] Si solar cell for wavelength dependent simulation
+using internal wavelength scan.
+------------------------
+solar_cell\silicon\import_doping
+[title] Silicon solar cell simulation with imported doping profile
+
+
+=== PAGE 1400 ===
+1398 SUPPORTEDEXAMPLES
+[structure] 1D silicon p-n junction.
+[comment] Use of AM15 solar spectrum to achieve accuracy.
+------------------------
+solar_cell\silicon\IQE_wavelength
+[title] Computing IQE versus wavelength for solar cell
+[structure] silicon P(+)P(-)N structure
+[comment] Using series to scan wavelength
+------------------------
+solar_cell\silicon\LFC_RCC_solar_cell
+[title] Modeling of RCC solar cell with laser fired contact
+[structure] Structure by CSuprem, & combine CSuprem & APSYS
+[comment] RUN_all.bat will run all the 4 steps.
+------------------------
+solar_cell\silicon\LFC_RCC_solar_cell\step01
+[title] Modeling of RCC solar cell with laser fired contact
+[structure] Structure by CSuprem, & combine CSuprem & APSYS
+[comment] RUN_all.bat will run all the 4 steps.
+------------------------
+solar_cell\silicon\LFC_RCC_solar_cell\step02
+[title] Modeling of RCC solar cell with laser fired contact
+[structure] Structure by CSuprem, & combine CSuprem & APSYS
+[comment] RUN_all.bat will run all the 4 steps.
+------------------------
+solar_cell\silicon\LFC_RCC_solar_cell\step03
+[title] Modeling of RCC solar cell with laser fired contact
+[structure] Structure by CSuprem, & combine CSuprem & APSYS
+[comment] RUN_all.bat will run all the 4 steps.
+------------------------
+solar_cell\silicon\LFC_RCC_solar_cell\step04
+[title] Modeling of RCC solar cell with laser fired contact
+[structure] Structure by CSuprem, & combine CSuprem & APSYS
+[comment] RUN_all.bat will run all the 4 steps.
+------------------------
+solar_cell\silicon\metal_tunnel
+[title] Silicon solar cell simulation with Schottky & tunneling.
+[structure] 1D silicon p-n junction.
+[comment] Use of tunneling for Schotky effect.
+------------------------
+solar_cell\silicon\PERT_2coatings
+[title] Silicon PERT Cell.
+[structure] Passivated emitter, rear totally diffused (PERT).
+[comment] PERT Cell with contacts on both sides.
+------------------------
+
+
+=== PAGE 1401 ===
+H.1APSYSExamples 1399
+solar_cell\silicon\photocurrent_life\surf_vel1
+[title] Silicon wafer photo-current lifetime calibration
+[structure] 2D Si wafer, lightly n-doped
+[comment] May be used to calibrate surface recombination velocity
+------------------------
+solar_cell\silicon\photocurrent_life\surf_vel2
+[title] Silicon wafer photo-current lifetime calibration
+[structure] 2D Si wafer, lightly n-doped
+[comment] May be used to calibrate surface recombination velocity
+------------------------
+solar_cell\silicon\PIN
+[title] Silicon solar cell simulation.
+[structure] 1D silicon p-n junction.
+[comment] Use of AM15 solar spectrum to achieve accuracy.
+------------------------
+solar_cell\silicon\poly
+[title] Simple PIN-like solar cell based on Si or poly Si.
+[structure] 2D silicon PIN strcuture.
+[comment] Use of AM15 solar spectrum.
+------------------------
+solar_cell\silicon\RCC_2coatings
+[title] Silicon Rear Contacted cell (RCC) simulation.
+[structure] 2D Si RCC structure with double coating layers.
+[comment] RCC with double coating layers.
+------------------------
+solar_cell\silicon\RCC_2D_coating
+[title] Silicon Rear Contacted cell (RCC) simulation.
+[structure] 2D silicon RCC structure.
+[comment] RCC.
+------------------------
+solar_cell\silicon\RCC_flat2d_rt3d
+[title] Ray-tracing (RT) technique for comparison.
+[structure] RCC structure (x-direction size reduced).
+[comment] For comparison with triangle textured case.
+------------------------
+solar_cell\silicon\RCC_triangle2d_rt3d
+[title] Ray-tracing (RT) technique for comparison.
+[structure] RCC structure with triangle interface.
+[comment] For comparison with flat case. This example uses
+------------------------
+solar_cell\silicon\RCC_triangle3d_rt3d
+[title] Ray-tracing (RT) technique for comparison.
+[structure] RCC structure with triangle interface.
+
+
+=== PAGE 1402 ===
+1400 SUPPORTEDEXAMPLES
+[comment] For comparison with flat case. This example uses
+------------------------
+solar_cell\silicon\temperature_dependent
+[title] Si solar cell for temp dependent simulation with series
+Command.
+------------------------
+solar_cell\silicon\wavelength_dependent
+[title] Si solar cell for wavelength dependent simulation
+with series Command.
+------------------------
+solar_cell\solar_qd_qw\QD
+[title] Simulation of quantum dot solar cell
+[structure] InAs/GaAs dot in i region of pin structure
+[purpose] To demo how effective miniband model is used in QD device
+------------------------
+solar_cell\thinfilm\3d_tandem_texture
+[title] 3D textured thinfilm tandem cell simulation
+[structure] a-Si/muc-Si tandem cell with pyramid texture
+[comment] Use of mesh plane bending to obtain 3D texture
+------------------------
+solar_cell\thinfilm\alpha
+[title] Simple PIN-like solar cell based on alpha-Si, or amorphous Si.
+[structure] 2D silicon PIN strcuture.
+[comment] Use of AM15 solar spectrum.
+------------------------
+solar_cell\thinfilm\Si_Tandem_cell
+[title] Amorphous/micro-crystal silicon tandem cells
+[structure] Ag/ZnO/muC-Si-PIN/a-Si/ITO
+[comment] Use of tunneling junction to connect 2 cells back to back
+------------------------
+solar_cell\thinfilm\SiC_TJ_tandem
+[title] Amorphous SiC and SiGe triple junction tandem cells
+[structure] muC-Si/a-SiGe/a-SiC
+[comment] Use of tunneling junction to connect 3 cells back to back
+------------------------
+solar_cell\thinfilm\SiGe_TJ_tandem
+[title] Amorphous SiGe triple junction tandem cells
+[structure] a-SiGe/a-SiGe/a-Si
+[comment] Use of tunneling junction to connect 3 cells back to back
+------------------------
+solar_cell\thinfilm\STL_import_solar
+
+
+=== PAGE 1403 ===
+H.1APSYSExamples 1401
+[title] STL import example
+[structure] p-i-n silicon solar cell.
+[comment] A simple example of STL file import procedure
+------------------------
+solar_cell\thinfilm\tandem_ito_semicon
+[title] Amorphous/micro-crystal silicon tandem cells - ITO as semiconductor
+[structure] Ag/ZnO/muC-Si-PIN/a-Si/ITO
+[comment] Use of tunneling junction to connect 2 cells back to back
+------------------------
+tunnel_junc_model\physical_tunnel_junc
+[title] Tunneling junction based on non-local physical model
+[structure] GaAs tunneling junction
+[comment] TJ model in forward bias agrees with experiment
+------------------------
+tunnel_junc_model\trap_ass_tunnel
+[title] Trap assisted tunnelling model
+[structure] GaAs p-n junction
+[remark] Demo of TAT in TJ simulation
+------------------------
+tunnel_junc_model\tunnel_junc_IV
+[title] Tunneling junction biased on non-local physical model
+[structure] GaAs/AlGaAs tunneling junction
+[comment] Interband tunneling models are used in both forward and reverse.
+------------------------
+tunnel_junc_model\tunnel_junc_local
+[title] Tunneling junction with heterojunction and MQW
+[structure] Fused junction InGaAlAs/InP/AlGaAs, Also GaN junction
+[comment] Demo. the use of tunneling junction to achieve injection.
+------------------------
+tunnel_junc_model\zener_impact_local
+[title] Simulation of a tunneling junction biased in both directions
+[structure] GaAs/AlGaAs tunneling junction
+[comment] Both impact ionzation and Zener interband tunneling models are used
+------------------------
+typeII_PD
+[title] Simulation of type II MQW photo detector
+[device] Type II MQW of GaAsSB/InGaAsP grown on InP
+[remark] Use of type II QW transport model
+------------------------
+
+
+=== PAGE 1404 ===
+1402 SUPPORTEDEXAMPLES
+H.2 LASTIP Examples
+active_grade\complex
+[title] A layered laser diode simulation with graded complex layers.
+[material] GaAs/AlGaAs at 0.82 microns.
+[structure] 1D laser, GRIN-SCH-SQW structure.
+[purpose] To demo how to grade a complex coupled MQW structure.
+------------------------
+active_grade\grade_function
+[title] Arbitrary composition grading in graded complex layers.
+[material] GaAs/AlGaAs at 0.82 microns.
+[structure] 1D laser, GRIN-SCH-SQW structure.
+[purpose] To demo how to using a composition grading function in .mater
+------------------------
+active_grade\single_well
+[title] A layered laser diode simulation with graded active layer.
+[material] GaAs/AlGaAs at 0.82 microns.
+[structure] 1D laser, GRIN-SCH-SQW structure, with graded active layer.
+[purpose] To provide an example on how to grade the active/barrier layers.
+------------------------
+broad_areas\asymmetric
+[title] Asymmetric broad area laser.
+[material] InGaAs/GaAs at 0.98 micron.
+[structure] An asymmetric broad area laser.
+[comment] How to deal with multiple modes in broad area lasers.
+------------------------
+broad_areas\broad_ingaalp
+[title] Simulation of broad area InGaAlP laser.
+[material] Strained MQW GaInP/AlGaInP (lambda=0.65-0.71 um)
+[structure] Broad area laser.
+[purpose] Set up of multiple mode in broad area laser model.
+------------------------
+bulk_InGaAsP
+[title] 1D/2D bulk DH laser.
+[material] Bulk InGaAsP at 1.3 micron.
+[structure] 1D/2D bulk channel-substrate waveguide laser.
+[comment] For demo of conventional bulk DH laser.
+------------------------
+complex_MQW\combo
+[title] Combination of complex and simple quantum wells.
+[material] InGaAsP MQW emisison at 1.5 um.
+[structure] MQW with mixed type of barriers. Strain compensated.
+[comment] To illustrate the use of complex MQW with simple QWs.
+
+
+=== PAGE 1405 ===
+H.2LASTIPExamples 1403
+------------------------
+complex_MQW\coupled
+[title] Coupled wells.
+[material] InGaAsP MQW at 1.55 um emission.
+[structure] Complex cx-InGaAsP coupled wells.
+[comment] Study of interaction between wells.
+------------------------
+complex_MQW\step_qw
+[title] Optical gain model for step quantum well
+[material] InGaAsP QW on GaAs substrate
+[structure] A step is formed near the barrier to make a 5 layer QW structure
+[comment] Use of inner_bar_gain to calculate optical gain at inner barrier
+------------------------
+complex_MQW\uneven_bar
+[title] Uneven barrier
+[material] AlGaAs/AlGaAs QW at 0.83 um
+[structure] Complex cx-AlGaAs single well with uneven barrier
+[comment] Demo of uneven barrier using complex-MQW feature
+------------------------
+current_blocking\buryhet
+[title] Buried het. laser with irregular shape.
+[material] Bulk AlGaAs at 0.8 micron.
+[structure] 2D bury het. laser.
+[comment] Use of "new_doping" method to treat difficult structure.
+------------------------
+current_blocking\leaky_mqw
+[title] Leakage structure.
+[material]QW InGaAsP/InP at 1.6 micron.
+[structure] 2D MQW laser.
+[comment] Demo of new_doping method in 3-column structure.
+------------------------
+current_blocking\new_doping
+[title] New_doping technique.
+[material] Bulk AlGaAs at 0.8 micron.
+[structure] 2D bury het. laser.
+[comment] To show "new_doping" method for current blocking structure.
+------------------------
+dual_polar
+[title] Dual polarization lasing
+[material] InGaAsP wells grown on InP substrate.
+[structure] 1D laser, MQW strained well, unstrained barrier.
+[purpose] To demo set up of dual polarization simulation.
+------------------------
+
+
+=== PAGE 1406 ===
+1404 SUPPORTEDEXAMPLES
+gainguide_3e
+[title] Three electrode laser.
+[material] GaAs/AlGaAs at 0.82 micron.
+[structure]3-electrode stripe geometry, gain guided laser.
+[comment] Demo of how gain guiding can control the optical beam and modes.
+------------------------
+GaN_growth_plane\miller_index\mplane_wgpara
+[title] InGaN/GaN QW mplane laser diode simulation using full k.p theory
+[material] InGaN/GaN
+[device] InGaN/GaN LD
+[comment] Use of k.p gain data import to speed up 2/3 D simulation.
+------------------------
+GaN_growth_plane\miller_index\mplane_wgperp
+[title] InGaN/GaN QW mplane laser diode simulation using full k.p theory
+[material] InGaN/GaN
+[device] InGaN/GaN LD
+[comment] Use of k.p gain data import to speed up 2/3 D simulation.
+------------------------
+GaN_growth_plane\miller_index\semipolar
+[title] InGaN/GaN QW mplane laser diode simulation using full k.p theory
+[material] InGaN/GaN
+[device] InGaN/GaN LD
+[comment] Use of k.p gain data import to speed up 2/3 D simulation.
+------------------------
+GaN_growth_plane\plane_angle\bulk_effective_mass
+[title] m-plane InGaN/GaN MQW LD simulation
+[material] InGaN/GaN at 0.41 um
+[structure] Simplified 1D MQW structure
+[comment] To illustrate effect of wurtzite crystal orientation
+------------------------
+GaN_growth_plane\plane_angle\bulk_effective_mass\phi0
+[title] m-plane InGaN/GaN MQW LD simulation
+[material] InGaN/GaN at 0.41 um
+[structure] Simplified 1D MQW structure
+[comment] To illustrate effect of wurtzite crystal orientation
+------------------------
+GaN_growth_plane\plane_angle\bulk_effective_mass\phi90
+[title] m-plane InGaN/GaN MQW LD simulation
+[material] InGaN/GaN at 0.41 um
+[structure] Simplified 1D MQW structure
+[comment] To illustrate effect of wurtzite crystal orientation
+------------------------
+GaN_growth_plane\plane_angle\bulk_effective_mass\ref
+
+
+=== PAGE 1407 ===
+H.2LASTIPExamples 1405
+[title] m-plane InGaN/GaN MQW LD simulation
+[material] InGaN/GaN at 0.41 um
+[structure] Simplified 1D MQW structure
+[comment] To illustrate effect of wurtzite crystal orientation
+------------------------
+GaN_growth_plane\plane_angle\mplane_LD
+[title] InGaN/GaN QW mplane laser diode simulation using full k.p theory
+[material] InGaN/GaN
+[device] InGaN/GaN LD
+[comment] Use of k.p gain data import to speed up 2/3 D simulation.
+------------------------
+GaN_growth_plane\plane_angle\mplane_park
+[title] InGaN/GaN QW mplane optical gain model
+[structure] InGaN/GaN MQW.
+[comment] Study of optical gain of arbitrary crystal orientation.
+------------------------
+manybody\GaAs
+[title] Manybody gain enhancement effect.
+[material] AlGaAs QW at 0.83 um.
+[structure] SQW.
+[comment] Manybody effect is done under the Pade approximation.
+------------------------
+manybody\InGaN
+[title] InGaN/GaN MQW laser simulation with manybody effect
+[material] Simplified InGaN/GaN/AlGaN MQW laser.
+[comment] Comparison of manybody gain/PL/index effect on GaN based lasers.
+------------------------
+miniband\basic_nin
+[title] Use of mini-band transport model for superlattice in GaN-based lasers
+[material] InGaN/AlGaN
+[structure] 2D LD model
+[purpose] To demonstrate setting up mini-band transport model
+------------------------
+miniband\LD
+[title] Use of mini-band transport model for superlattice in GaN-based lasers
+[material] InGaN/AlGaN
+[structure] 2D LD model
+[purpose] To demonstrate setting up mini-band transport model
+------------------------
+modulation
+[title]Small signal frequency modulation
+
+
+=== PAGE 1408 ===
+1406 SUPPORTEDEXAMPLES
+[material] InGaAs/AlGaAs at 0.95 microns.
+[structure] 2D laser, GRIN-SCH structure.
+[purpose] To compare the LI and modulation of SQW and MQW.
+------------------------
+mqw_ridge\GaAs
+[title] A classic GRINCH-SCH-SQW laser.
+[material] GaAs/AlGaAs at 0.82 microns.
+[structure] 1D/2D ridge waveguide laser, GRIN-SCH-SQW structure.
+[purpose] To demo a simple yet representative structure.
+------------------------
+mqw_ridge\ingaalas_inp
+[title] InGaAlAl laser.
+[material] QW InGaAlAs/InP at 1.3 micron.
+[structure] 1D GRIN-SCH-SQW laser.
+[comment] An alternative to InGaAsP/InP system.
+------------------------
+mqw_ridge\InGaAs
+[title] InGaAs/GaAs: An early strained QW laser.
+[material] InGaAs/AlGaAs at 0.98 microns.
+[structure] 1D/2D ridge waveguide laser, GRIN-SCH-SQW structure.
+[comment] To show one of the early strained QW laser.
+------------------------
+mqw_ridge\InGaAsN
+[title] InGaAsN/GaAs laser.
+[material] InGaAsN/GaAs at 1.3 um.
+[structure] Ridge waveguide.
+[purpose] To provide a convient structure for a new material system.
+------------------------
+mqw_ridge\qw_InGaAsP
+[title] InGaAsP laser for 1.55 application.
+[structure] 1D/2D MQW ridge waveguide laser.
+[material] MQW strained InGaAsP/InP.
+[comment] To provide a good structure of MQW laser at 1.55 emission.
+------------------------
+mqw_ridge\setup_MQW
+[title] Use of SetupLayer for an InGaAsP MQW laser
+[material] InGaAsP/InGaAsP/InP at 1.55 microns.
+[structure] 1D MQW laser, may be converted to 2D ridge waveguide laser.
+[purpose] To provide a tutorial example on how to use SetupLayer program.
+------------------------
+multi_active
+[title] Super lattice with variable QW with.
+[material] GaAs/AlGaAs.
+
+
+=== PAGE 1409 ===
+H.2LASTIPExamples 1407
+[structure] 1D super lattice with different well widths.
+[purpose] To show different type of active region in one simulation.
+------------------------
+multicavity\bipolar_cascade
+[title] Two color bipolar cascade laser.
+[material] InGaAs/GaAs MQW
+[structure] Two cavities connected by tunnel junction.
+[purpose] To demonstrate the simulation of multi-cavity laser with tunnel junctions.
+------------------------
+multicavity\side_by_side
+[title] Simulation of a multiple cavity laser structure
+[material] GaAs/AlGaAs at 0.81 and 0.84 microns.
+[structure] 3-column, 2 SQW structures.
+[purpose] To show how to set up a 2-cavity laser.
+------------------------
+multimode\bulk2d
+[title] Multimode bulk 2D laser simulation.
+[material] bulk InGaAsP/InP at 1.3 micron.
+[structure] 2D bulk channel-substrate waveguide laser.
+[purpose] Demo of multimode solver based on examples/bulk_InGaAsP
+------------------------
+multimode\ingaasp_gaas
+[title] Multimode QW InGaAsP/GaAs laser.
+[material] QW InGaAsP/GaAs system at 980nm.
+[structure] 2D ridge waveguide LD.
+[purpose] To provide a convenient example of multimode laser 980nm application.
+------------------------
+multimode\kink_effect
+[title] Lateral model dependent mirror reflectivity and kink effect
+[material] AlGaAs QW at 0.83 um.
+[structure] Ridge waveguide.
+[purpose] To set variable mirror reflectivity and study kink effect
+------------------------
+multimode\msas
+[title] MSAS laser with multimode.
+[material] AlGaAs at 0.78 um.
+[structure] MSAS structure.
+[purpose] To demo the power of Arnoldi solver in selecting lateral modes.
+------------------------
+other\chuang_gain
+[title] Gain and subbands of InGaN/AlGaN QW.
+[material] InGaN/AlGaN
+[structure] InGaN/AlGaN QW, 1D.
+
+
+=== PAGE 1410 ===
+1408 SUPPORTEDEXAMPLES
+[comment] To compare with Chuang’s published data.
+------------------------
+other\ex_import_gain
+[title] Export and import of gain data to and from ASCII file
+[material] GaAs/AlGaAs at 0.82 microns.
+[structure] 1D laser, GRIN-SCH-SQW structure.
+[purpose] To provide an example on how to export/import gain/index/PL data
+------------------------
+other\fancy_geo
+[title] Flexible device geometry
+[material] bulk AlGaAs at 0.8 micron.
+[structure] a fancy geometry ridge waveguide laser.
+[purpose] demo of fancy geometry and treatment of curved boundary.
+------------------------
+other\farfield
+[title] Far field computation.
+[structure] non-planar ridge waveguide laser.
+[material] bulk AlGaAs at 0.8 micron.
+[purpose] Demo of far field computation.
+------------------------
+other\gain_index\index_change
+[title] Gain and index change calculations.
+[material] GaAs/AlGaAs, bulk AlGaAs.
+[structure] Bulk and quantum well laser. 1D.
+[comments] study of alpha factor and index change.
+------------------------
+other\gain_index\landsberg
+[title] Gain broadening of Landsberg type.
+[structure] Bulk and QW laser.
+[material] Bulk and QW InGaAsP/InP.
+[purpose] Demo of Landsberg gain broadening.
+------------------------
+other\mmb_gain
+[title] Use of microscopic many-body gain table
+[material] InGaAs/AlGaAs at 1. micron.
+[structure] 1D laser, GRIN-SCH-SQW structure.
+[purpose] To provide a tutorial example on how to import the mmb gain table.
+------------------------
+other\mmb_gain_export
+[title] Export of microscopic many-body gain table (Koch gain table)
+[material] InGaAs/AlGaAs at 1. micron.
+[structure] 1D laser, GRIN-SCH-SQW structure.
+[purpose] To convert into general purpose gain table good for thermal model.
+
+
+=== PAGE 1411 ===
+H.2LASTIPExamples 1409
+------------------------
+other\parameterize
+[title] Parameterization of quantum well optical models
+[material] GaAs/AlGaAs at 0.82 microns.
+[structure] 1D laser, GRIN-SCH-SQW structure.
+[purpose] Speed up of simulation using parameterized optical gain/spon/index.
+------------------------
+other\pump_spectrum
+[title] Opitcally pumped laser using continuous spectrum.
+[material] GaAs/AlGaAs emitting at 0.82 microns.
+[structure] 1D laser, GRIN-SCH-SQW structure.
+[comment] To demonstrate optical pumping using a spectrum.
+------------------------
+other\pumped_laser
+[title] Opitcal pumping.
+[material] GaAs/AlGaAs at 0.82 microns.
+[structure] 1D laser, GRIN-SCH-SQW structure.
+[comment] To demonstrate optical pumping in simulation.
+------------------------
+other\quick_LD
+[title] A quick laser diode simulation.
+[material] GaAs/AlGaAs at 0.82 microns.
+[structure] 1D laser, GRIN-SCH-SQW structure.
+[purpose] To demonstrate how to use the gain preview for a quick laser model
+------------------------
+other\trap
+[title] Trap models for semi-insulating layers.
+[material] QW InGaAsP/InP at 1.55 micron.
+[structure] 2D MQW bury het. laser with semi-insulating blocking layer.
+[comment] Deep level trap model with new_doping technique.
+------------------------
+other\vectorial
+[title] Vectorial wave model.
+[structure] Bulk buryhet laser.
+[material] Bulk AlGaAs at 0.78 um.
+[comments] Difference between scalar and vectorial wave model.
+------------------------
+pml_eeim\eeim_basic
+[title] EEIM lateral modes.
+[material] GaAs/AlGaAs QW.
+[structure] Ridge waveguide.
+[comment] To show the basic set up of EEIM simulation.
+------------------------
+
+
+=== PAGE 1412 ===
+1410 SUPPORTEDEXAMPLES
+pml_eeim\msas_pml
+[title] Use of PML in MSAS Structure
+[material] Bulk DH structure with buried GaAs loss layer.
+[structure] MSAS structure
+[comment] To show the use of PML boundary on MSAS.
+------------------------
+pml_eeim\scowl\PML
+[title] Slab coupled optical waveguide laser (SCOWL).
+[material] InGaAs/AlGaAs at 0.95 microns.
+[structure] 2D laser, GRIN-SCH-MQW structure.
+[comment] To demonstrate the use of PML in SCOWL
+------------------------
+pml_eeim\scowl\without_PML
+[title] Slab coupled optical waveguide laser (SCOWL).
+[material] InGaAs/AlGaAs at 0.95 microns.
+[structure] 2D laser, GRIN-SCH-MQW structure.
+[comment] To be used as a reference case without PML
+------------------------
+pml_eeim\substrate_loss\gaas26a
+[title] Modeling substrate loss using PML.
+[material] AlGaAs QW at 0.83 um.
+[structure] Ridge waveguide laser with lossy substrate closs to active region.
+[comment] To illustrate the use of PML to study substrate radiative loss.
+------------------------
+pml_eeim\substrate_loss\gaas26b
+[title] Modeling substrate loss using PML.
+[material] AlGaAs QW at 0.83 um.
+[structure] Ridge waveguide laser with lossy substrate closs to active region.
+[comment] To be compared with case of gaas26a
+------------------------
+quantum_cascade\main_project\qcl_1d
+[title] 1D macroscopic model of a quantum cascade laser
+[material] InGaAlAs/InP
+[structure] MQW QCL
+[comment] To demonstrate the set up of macroscopic MQW QCL simulation
+------------------------
+quantum_cascade\main_project\qcl_2d
+[title] 2D macroscopic model of a quantum cascade laser
+[material] InGaAlAs/InP
+[structure] MQW QCL
+[comment] To demonstrate the set up of macroscopic MQW QCL simulation
+------------------------
+quantum_cascade\micro_gain\4wells
+
+
+=== PAGE 1413 ===
+H.2LASTIPExamples 1411
+[title] Subband structure design for a four wells QCL
+[material] InGaAs/InAlAs strain balanced MQW.
+[structure] 1D structure with periodic MQW
+[purpose] To provide a tutorial example for setting up basic QC Laser
+------------------------
+quantum_cascade\micro_gain\GaAs
+[title] Subband structure design for GaAs QCL
+[material] GaAs/AlGaAs MQW QCL at 9um.
+[structure] 1D structure with periodic MQW
+[purpose] To provide a tutorial example for setting up basic QC Laser
+------------------------
+quantum_cascade\micro_gain\InGaAs
+[title] Subband structure design for quantum cascade laser
+[material] InGaAs/InAlAs MQW.
+[structure] 1D structure with periodic MQW
+[purpose] To provide a tutorial example for setting up basic QC Laser
+------------------------
+quantum_dots\box_half
+[title] Quantum states of half a quantum dot
+[material] InGaAs/GaAs
+[structure] Half of InGaAs/GaAs quantum dot of box shape
+[purpose] To provide a setup example for a half structure of a quantum dot
+------------------------
+quantum_dots\box_single
+[title] Quantum states of a simple quantum dot
+[material] InGaAs/GaAs
+[structure] InGaAs/GaAs quantum dot of box shape
+[purpose] To provide a setup of a 3D quantum dot structure
+------------------------
+quantum_dots\columnar
+[title] Simulation of a self-assembled columnar structure QDOT laser
+[material] InGaAs/GaAs/AlGaAs
+[structure] Stacked interacting columnar quantum dots
+[purpose] To setup example for coupled structure in cylindrical system
+------------------------
+quantum_dots\columnar\cone2
+[title] Quantum states of stacked columnar quantum dots
+[material] InGaAs/GaAs
+[structure] Stacked interacting columnar quantum dots
+[purpose] To setup example for coupled structure in cylindrical system
+------------------------
+quantum_dots\columnar\cone400
+[title] Quantum states of stacked columnar quantum dots
+
+
+=== PAGE 1414 ===
+1412 SUPPORTEDEXAMPLES
+[material] InGaAs/GaAs
+[structure] Stacked interacting columnar quantum dots
+[purpose] To setup example for coupled structure in cylindrical system
+------------------------
+self-consistent\AlGaAs
+[title] A Simple Self-consistent MQW model
+[material] GaAs/AlGaAs
+[structure] SQW 1D laser structure.
+[purpose] Setting a simple self-consistent 1D model.
+------------------------
+self-consistent\InGaAlAs
+[title] Self-consistent MQW model
+[material] InGaAlAs/InP.
+[structure] MQW 1D laser structure.
+[purpose] Explain the basic steps of turning on self-consistent model
+------------------------
+self-consistent\InGaN
+[title] Piezo-electric effect and self-consistent model.
+[material] GaN-base wurtzite emitting at blue
+[structure] MQW 1D laser structure.
+[purpose] Demo the use of "interface" to define the piezo surface charge.
+------------------------
+self-consistent\nakamura
+[title] Room Temperature-CW Operated InGaN MQW Laser Diode
+[material] InGaN/GaN/AlGaN.
+[comment] Reproduced experiment results of Shuji Nakamura (1997).
+------------------------
+self-consistent\UV_algan
+[title] Piezo-electric effects in a UV-InGaN/AlGaN laser
+[material] GaN-based wurtzite
+[structure] MQW 1D laser structure.
+[purpose] Illustrate the use of "interface" to define the piezo surface charge.
+------------------------
+short_wavelength\GaN\shuji
+[title] A Simplified MQW GaN blue LED/LD
+[material] InGaN/InGaN MQW.
+[structure] N-contact placed on the side.
+[comment] Basic set up with no piezo effects included.
+------------------------
+short_wavelength\ZnSe
+[title] Short wavelength ZnSe laser.
+[material] QW ZnSe-based laser emitting at blue.
+
+
+=== PAGE 1415 ===
+H.2LASTIPExamples 1413
+[structure] 1D and 2D QW laser.
+[comments] Demo of multiple tranverse mode model.
+------------------------
+tau_model
+[title] Intraband relaxation time.
+[material] AlGaAs QW.
+[structure] 1D QW laser.
+[purpose] Illustrate the model of scattering tau parameter.
+------------------------
+temperature\GaAs_temperature
+[titel] Temperature performance of AlGaAs QW laser.
+[material] GaAs/AlGaAs.
+[structure] 1D ridge waveguide laser, GRIN-SCH-SQW structure.
+[purpose] To demo temperature capability.
+------------------------
+temperature\InP_T0
+[title] T0 of InGaAsP long wavelength laser.
+[material] MQW InGaAsP at 1.5 micron.
+[structure] 1D MQW structure.
+[purpose] Show how to calculate T0.
+------------------------
+thermal\bulk1d
+[title]Thermal effects in bulk InGaAsP laser.
+[material]Bulk InGaAsP at 1.3 um.
+[structure]Bulk 1D DH InGaAsP laser.
+[comment] Demo of simple simulation of self-heating effect.
+------------------------
+thermal\external_cir
+[title] External thermal circuit.
+[material] AlGaAs QW at 0.83 um.
+[structure] 1D AlGaAs QW at 0.83 um with external thermal ciruit.
+[comment] Use of external thermal circuit as special boundary.
+------------------------
+thermal\hot_algaas
+[title] Thermal effects in AlGaAs QW laser.
+[material] AlGaAs QW at 0.83 um.
+[structure] 1D and 2D ridge waveguide AlGaAs QW at 0.83 um.
+[comment] Demo of basic set up of a thermal simulation.
+------------------------
+thermal\import_gain
+[title] Use of imported optical gain for thermal simulation
+[material] GaAs/AlGaAs laser at 0.83 micron.
+[structure] 1D laser, GRIN-SCH-SQW structure.
+
+
+=== PAGE 1416 ===
+1414 SUPPORTEDEXAMPLES
+[purpose] To demo imported gain data for thermal simulation.
+------------------------
+thermal\iso_vs_self
+[title] Isothermal versus self-heating simulation.
+[material] MQW InGaAsP at 1.5 micron.
+[structure] 1D MQW structure.
+[purpose] Demo uniform self-heating is equivalent to isothermal simulation.
+------------------------
+thermal\thermal_bound
+[title] Thermal boundaries.
+[material] AlGaAs QW.
+[structure] Ridge waveguide laser with SiO2 cover cooled to 77K.
+[purpose] To demo the set up of pure thermal boundary.
+------------------------
+thermal\thermal_trans
+[title]Thermal transient simulation for bulk InGaAsP laser.
+[material]Bulk InGaAsP at 1.3 um.
+[structure]Bulk 1D DH InGaAsP laser.
+[comment] Demo of thermal transient simulation.
+------------------------
+transient\eye_diagram
+[title] Calculation of eye diagram
+[material] SQW GaAs/AlGaAs
+[comments] Generation of eye diagram from transient simulation data.
+------------------------
+transient\fourier
+[title] Modulation response using Fourier transform technique
+[material] SQW GaAs/AlGaAs
+[structure] 1D GRIN-SCH-SQW laser.
+------------------------
+transient\trans_bulk
+[title] Transient simulation bulk 1D DH laser.
+[material] Bulk InGaAsP/InP.
+[structure] 1D bulk het. laser.
+[comment] Demo of large signal modulation simulation.
+------------------------
+transient\trans_GaAs
+[title] Transient and power spectrum RWD laser.
+[material] SQW GaAs/AlGaAs
+[comments] Large and small signal analysis of GRIN-SCH-SQW laser modulation.
+
+
+=== PAGE 1417 ===
+H.2LASTIPExamples 1415
+------------------------
+tunneling\ingaalp_650nm
+[titel] Short wavelength InGaAlP laser
+[material] MQW InGaAlP/GaAs emitting at 650 nm.
+[structure] 2D non-planar ridge structure.
+[comments] Use of tunneling and grading junction to reduce resistance.
+------------------------
+tunneling\schottky_diode
+[title] Study of tunneling effects.
+[structure] 1D Schottky diode.
+[material] Bulk GaAs.
+[comments] Demo of tunneling effect in Schottky contact.
+------------------------
+type2_MQW\GaAsSb
+[title] A simple type-II electrically pumped laser of Sb based material
+[material] cx-GaAsSb to form type-II QW complex
+[structure] 1D laser
+[purpose] To provide a simple demonstration of setting up a type-II QW laser.
+------------------------
+type2_MQW\type2_setup
+[title] A simple type-II electrically pumped laser
+[material] cx-AlGaAs with artificial band offset to form type-II QW complex
+[structure] 1D laser
+[purpose] To provide a simple demonstration of setting up a type-II QW laser.
+------------------------
+valence_mixing\8x8chuang
+[title] Comparison of different k.p theory for zincblende quantum well
+[material] InGaAsP/InGaAsP at 1.55 microns.
+[structure] MQW structure laser.
+[purpose] Comparing results and speed of 4x4, 6x6 and 8x8 k.p theory
+------------------------
+valence_mixing\8x8compare
+[title] Comparison of different k.p theory for zincblende quantum well
+[material] GaAs/AlGaAs at 0.82 microns.
+[structure] 1D laser, GRIN-SCH-SQW structure.
+[purpose] Comparing results and speed of 4x4, 6x6 and 8x8 k.p theory
+------------------------
+valence_mixing\compare_chuang
+[title] Comparing k.p model with Chuang’s data.
+[material] Quantum well of InGaAsP grown on InP.
+[structure] Single quantum well.
+[comment] Study of k.p model accuracy as compared with published data
+------------------------
+
+
+=== PAGE 1418 ===
+1416 SUPPORTEDEXAMPLES
+valence_mixing\gaas_mixing
+[title] k.p model in AlGaAs devices.
+[material] Quantum well of AlGaAs/AlGaAs at 0.83 um.
+[structure] Single quantum well.
+[comment] Study of valence mixing effect in AlGaAs system.
+------------------------
+valence_mixing\inp15_mixing
+[title] Valence mixing effect in strained InGaAsP.
+[material] Strained quantum well of InGaAsP/InP at 1.55 um.
+[structure] Strained single quantum well.
+[comment] Study of valence mixing effect in InGaAsP/InP system.
+------------------------
+
+
+=== PAGE 1419 ===
+H.3PICS3DExamples 1417
+H.3 PICS3D Examples
+A_tutorial
+[title] A tutorial example of PICS3D.
+[structure] Bulk DH laser, InGaAsP, DFB grating.
+[purpose] To illustrate the set up of a PICS3D simulation.
+------------------------
+AC_analysis\edge
+[title] AC analysis for edge laser for PICS3D.
+[structure] Bulk DH laser, InGaAsP, DFB grating.
+[purpose] To illustrate the set up of a an AC analysis.
+------------------------
+AC_analysis\vcsel
+[title] AC analysis for a simple VCSEL with finely tuned MQW location.
+[structure] Simple VCSEL with MQW.
+[comment] AC analysis method is similar to LASTIP
+------------------------
+amplifier_3d\amp2mode
+[title] Semiconductor Optical Amplifier (SOA) with multi-lateral mode
+[structure] DH InGaAsP/InP 1.3 micron, ridge waveguide
+[comment] 2 lateral modes are included in simulation
+------------------------
+amplifier_3d\BPM_multimode
+[title] BPM-SOA 3D model with multimode initialization
+[structure] Tapered ridge waveguide quantum well SOA
+[comment] Use of multiple lateral mode initial BPM solution
+------------------------
+amplifier_3d\inp13amp
+[title] 3D model of semiconductor optical amplifier (SOA).
+[structure] DH InGaAsP/InP 1.3 micron.
+[comment] Same as the tutorial exmple except DFB gratings removed.
+------------------------
+amplifier_3d\transient
+[title] 3D traveling wave optical amplifier (SOA).
+[structure] DH InGaAsP/InP 1.3 micron.
+[comment] Same as the tutorial exmple except DFB gratings removed.
+------------------------
+blue_LD
+[title] A Simplified MQW GaN blue LED/LD
+[material] InGaN/InGaN MQW.
+[structure] N-contact placed on the side.
+------------------------
+BPM\mask_taper
+
+
+=== PAGE 1420 ===
+1418 SUPPORTEDEXAMPLES
+[title] Set up of 3D simulation of tapered structure laser using mask.
+[structure] AlGaAs SQW laser with ridge width tapered.
+[comment] Use of gemerate_mask program to set up structure
+------------------------
+BPM\symmetric_taper
+[title] 3D simulation of tapered structure laser using BPM.
+[structure] AlGaAs SQW laser with ridge width tapered.
+[comment] Use of BPM in two segments with different mesh structures.
+------------------------
+BPM\taper
+[title] 3D simulation of tapered structure laser using BPM.
+[structure] AlGaAs SQW laser with ridge width tapered.
+[comment] Use of BPM in two segments with different mesh structures.
+------------------------
+broad_area
+[title] Broad area high power laser simulation by PICS3D.
+[structure] FP laser with 0.5um AlGaAs bulk active layer.
+[purpose] To simulate broad area laser PICS3D simulation.
+------------------------
+csuprem_wavegd_stack
+[title] BPM simulation of stacked taper waveguide
+[structure] silicon waveguides with tapers
+[comment] Use of taper and taper_range for complex taper structures
+------------------------
+DBR\3section_tunable
+[title] Multi-Section MQW Tunable DBR Laser Simulation
+[structure] MQW, passive phase tuning, passive DBR tuning sections.
+[purpose] To illustrate the set up of a multi-sectional DBR laser.
+------------------------
+DBR\fiber_grating
+[title] Simulation of fiber-grating DBR laser
+[structure] MQW InGaAsP/InP emitting at 1.49 um with fiber-grating section.
+[comment] Use of fiber/external-cavity option.
+------------------------
+DBR\sampled_grating
+[title] Modeling sampled grating DBR laser.
+[structure] InGaAsP MQW laser with sampled DBR grating.
+[comment] Use of "ref_pitch" and "pitch" to define complex gratings.
+------------------------
+DFB_trans
+[title] 3D Transient simulation.
+[structure] 1D bulk DH laser emitting at 1.3 um.
+[purpose] To illustrate the set up of transient simulation.
+
+
+=== PAGE 1421 ===
+H.3PICS3DExamples 1419
+------------------------
+EAM_DFB_trans
+[title] Two-segment EAM-DFB simulation
+[structure] MQW InGaAsP EAM-DFB laser emitting at 1.55 um with multi-section.
+[comment] Use of self-consistent MQW in EAM modeling
+------------------------
+edge_LD_transient
+[title] Transient simulation for bulk 1D DH laser.
+[structure] 1D bulk heterojunction laser.
+[comment] Demo of large signal modulation simulation.
+------------------------
+facet_effect
+[title] Simulation of Laser Facet Effect Using 3D-Flow Model
+[structure] Multiple segment MQW laser.
+[comment] Full 3D laser simulation with material variation in z-direction.
+------------------------
+grating_2nd
+[title] Second order grating DFB laser.
+[structure] AlGaAs bulk DH laser at 0.86 um, 2nd order DFB gratings.
+[comment] Set up of 2nd order grating; Surface emitting modes.
+------------------------
+hybrid_laser
+[title] Hybrid silicon laser
+[structure] InP based 1.3 micron laser grown on top of silicon waveguide
+[comment] Structure built on Intel-UCSB announcement with taper added
+------------------------
+mplane_InGaN
+[title] 3D simulation of InGaN/GaN LD with PICS3D
+[device] MQW InGaN/GaN laser
+[comment] Generation and import of m-plane gain data in PICS3D
+------------------------
+multicavity
+[title] Simulation of a multiple cavity laser structure
+[material] GaAs/AlGaAs at 0.81 and 0.84 microns.
+[structure] 3-column, 2 SQW structures.
+------------------------
+pa_waveguide\EAM
+[title] 3D Electro-Absorption modulator simulation.
+[structure] SQW EAM of AlGaAs.
+[comment] Use of "self_consistent" and "photo-absorbing waveguide" options.
+------------------------
+pa_waveguide\franz_keldysh
+[title] 3D bulk electro-absorption modulator simulation.
+
+
+=== PAGE 1422 ===
+1420 SUPPORTEDEXAMPLES
+[structure] Bulk InGaAsP material operating at 1.32 um as EAM.
+[comment] Use of Franz-Keldysh model with "photo-absorbing waveguide" option.
+------------------------
+pa_waveguide\waveguide_pd
+[title] 3D-Waveguide photodetector
+[structure] Bulk DH InGaAsP for 1.3-micron detection.
+[comment] Use of C-RTG method for waveguide PD modeling
+------------------------
+pump_laser
+[title] 3D Pumped Edge Emitting Laser.
+[structure] SQW of GaAs/AlGaAs.
+[comment] Use of "light_power" to provide a shorter pump wavelength.
+------------------------
+ring_laser
+[title] Simulation of a ring laser
+[material] InGaAsP MQW for 1.55 emission
+[structure] A single ring waveguide
+------------------------
+SLD\2peaks
+[title] 3D model of super-luminescent diodes (SLD) emitting with 2 peaks
+[structure] SQW SLD of GaAs/AlGaAs with two different SQW
+[comment] Use of multiple wavelength to cover wide emissioin range
+------------------------
+SLD\ase_signal_linewidth
+[title] 3D semiconductor optical amplifier modeling with input linewidth
+[structure] DH InGaAsP/InP 1.3 micron.
+[comment] Demo of signal+ASE spectrum plotting
+------------------------
+SLD\ase_signal_spec
+[title] 3D semiconductor optical amplifier model with input spectrum
+[structure] DH InGaAsP/InP 1.3 micron.
+[comment] SOA with continuous input power spectrum.
+------------------------
+SLD\SLD_1mode
+[title] 3D model of super-luminescent diodes (SLD)
+[structure] Bulk DH InGaAsP/InP 1.3 micron
+[comment] Based of 3D SOA with zero input power
+------------------------
+SLD\SLD_2mode
+[title] Super-luminescent diodes (SLD) model with multi-lateral modes
+[structure] Bulk DH InGaAsP/InP 1.3 micron, ridge waveguide
+[comment] 2 lateral modes are included in simulation
+------------------------
+
+
+=== PAGE 1423 ===
+H.3PICS3DExamples 1421
+spiral_laser
+[title] Simulation of a spiral laser
+[structure] MQW InGaAsP/InP emitting at 1.49 with ring + straight waveguide
+[comment] Use of mixed cylindrical and rectangle coordinates.
+------------------------
+thermal
+[title] Thermal simulation of SQW GaAs/AlGaAs laser.
+[structure] FP SQW GaAs/AlGaAs laser.
+[comment] Please note the mode hopping effects.
+------------------------
+VCSELS\2mqw
+[title] A VCSEL with two MQW regions
+[structure] VCSEL with two MQW region joined by tunneling junction
+[comment] Higher voltage is required to turn on current
+------------------------
+VCSELS\DBR_index_profile
+[title] A simple VCSEL with imported DBR index profile
+[structure] Simple VCSEL with MQW.
+[comment] Index profile may contain linearly graded index profile.
+------------------------
+VCSELS\extern_cavity
+[title] A VCSEL with external air-gap cavity
+[structure] MQW VCSEL with air-gap mirror
+[comment] Threshold depends on both DBR and external mirror
+------------------------
+VCSELS\GaN_VCSEL
+[title] GaN-VCSEL template
+[structure] Electrical pumped VCSEL at 0.41 um
+[comment] Property senstive to choice of macro and polarization charge
+------------------------
+VCSELS\jim_vcsel
+[title] A simple VCSEL with finely tuned MQW location.
+[structure] Simple VCSEL with MQW.
+[comment] The location of MQW is critical for tuning of wavelength.
+------------------------
+VCSELS\jim_vcsel_self
+[title] A simple VCSEL with finely tuned MQW location.
+[structure] Simple VCSEL with MQW. Also 3 layers per period in DBR mirror.
+[comment] The location of MQW is critical for tuning of wavelength.
+------------------------
+VCSELS\lambda_as_layer_unit
+[title] A simple VCSEL with finely tuned MQW location.
+[structure] Simple VCSEL with MQW.
+
+
+=== PAGE 1424 ===
+1422 SUPPORTEDEXAMPLES
+[comment] The location of MQW is critical for tuning of wavelength.
+------------------------
+VCSELS\nonsymmetric
+[title] Full 3D multi-mode simulation of non-symmetric VCSEL
+[structure] MQW VCSEL with non-symmetric top point contact.
+[comment] Demo of multiple segment simulation in cylindrical system.
+------------------------
+VCSELS\pump_vcsel
+[title] Simulation of an optically pumped VCSEL
+[structure] Simple VCSEL with MQW.
+[comment] Use of shorter wavelength to generate carriers in MQW.
+------------------------
+VCSELS\rectangle
+[title] A simple rectangle VCSEL with finely tuned MQW position.
+[structure] Rectangle VCSEL with MQW.
+[comment] Comparison of cylindrical with rectangle VCSEL
+------------------------
+VCSELS\surface_relief
+[title] Simulation of surface relieved VCSEL
+[structure] MQW VCSEL with outer cavity part relieved.
+[comment] Use of multicavity option to treat the relieved outer cavity
+------------------------
+VCSELS\VCSEL_2mode_trans
+[title] Transient simulation of multiple lateral modes for a VCSEL.
+[structure] AlGaAs MQW VCSEL.
+[comment] Two lateral modes are almost equally pumped to lasing.
+------------------------
+VCSELS\VCSEL_2modes
+[title] Multiple lateral modes for a VCSEL.
+[structure] AlGaAs MQW VCSEL.
+[comment] Two lateral modes are almost equally pumped to lasing.
+------------------------
+VCSELS\VCSEL_eim_oxide
+[title] Fused junction VCSEL at 1.55 um with oxide layer confinement.
+[structure] MQW VCSEL combining AlGaAs and InGaAsP system.
+[comment] Use of EIM-VCSEL model.
+------------------------
+VCSELS\vcsel_macro_DBR
+[title] A simple VCSEL with finely tuned MQW location.
+[structure] Simple VCSEL with MQW. Also 3 layers per period in DBR mirror.
+[comment] The location of MQW is critical for tuning of wavelength.
+------------------------
+VCSELS\VCSEL_thermal_oxide
+
+
+=== PAGE 1425 ===
+H.3PICS3DExamples 1423
+[title] Thermal simulation of VVSEL with oxide layer confinement
+[structure] MQW VCSEL with oxide layer, DBR with anisotropic properties
+[comment] Use of tau_model for temp. dependent intraband scattering broadening
+------------------------
+VCSELS\VCSEL_transient
+[title] Transient simulation for VCSEL using single lateral mode
+[structure] Simple VCSEL with MQW
+[comment] To demonstrate the lasing oscillation in VCSEL
+------------------------
+
+
+=== PAGE 1426 ===
+1424 SUPPORTEDEXAMPLES
+

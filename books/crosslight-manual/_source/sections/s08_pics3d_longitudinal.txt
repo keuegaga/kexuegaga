@@ -1,0 +1,2115 @@
+=== PAGE 316 ===
+314 LASTIPSPECIFICMODELS
+
+
+=== PAGE 317 ===
+hapter
+C 16
+PICS3D-SPECIFIC MODELS I:
+Longitudinal Modeling
+16.1 Introduction
+In PICS3D, we consider a 3D model for light-emitting devices. We already dis-
+cussed 3D electrical modeling in Sec. 6.3 so this chapter will touch on the optical
+modelingonly.
+16.2 Basic Equations
+Let us start with an edge-emitting wave-guiding structure and define the z axis
+as the direction of propagation. The basic equation of concern is, of course, the
+Maxwell equation. However, we would like to go further and obtain a set of
+equationsdirectlyusableinsolvingthesystem.
+Under the scalar wave assumption, the wave equation can be solved with the
+techniqueofvariableseparation: weassumethatthesolutiontothewaveequation
+canbewrittenastheproduct:
+, , = ϕ ,
+Eω(x y z) Eω(z)
+0
+(x y) (16.1)
+ω
+where istheopticalfrequencyandzisthedirectionofthewaveguide.
+For the moment, let us assume that the laser is operating in a single transverse
+ϕ ,
+mode. Themodaldistribution (x y)canbeleftoutoftheformulationandcalcu-
+0
+ff
+latedbyothermeanssuchasthee ectiveindexmethodorthebeampropagation
+method.
+
+
+=== PAGE 318 ===
+316 PICS3D-SPECIFICMODELSI:LongitudinalModeling
+Thez-dependentpartoftheelectricfieldEω(z)satisfiestheequation:
+" #
+∂2
+∂ z2
++ k2(z) Eω(z) = fω(z) (16.2)
+where fω(z)istheLangevinnoisefunctionduetospontaneousemission. Eq.16.2is
+thebasicequationwhichwillbeusedfortheopticalwaveinthePICS3Dpackage.
+Wenotethatthenoisefunctionisextremelyimportantforalaserdevicesinceitis
+a driving force for the solution. For an isolated semiconductor laser, the physical
+solution for Eq. 16.2 would be zero if the spontaneous noise term was absent.
+A simple physical explanation is that the spontaneous emission noise generates
+or excites the photons, which are then amplified by the presence of the optical
+gain. Therefore,theopticalpoweratanybiasconditionisdeterminedbothbythe
+spontaneousemissionandtheopticalgain.
+Thecomplexpropagationconstantk(z)containsinformationaboutthesolutionof
+the transverse and lateral dimensions. In other words, it is calculated from the
+ff ff
+e ectiveindexbyusingx-ycrosssectionsatgivenzpositions. Thee ectiveindex
+andk(z)bothdependon:
+• /
+theopticalwavelength frequency
+•
+materialpropertiesanddevicegeometry
+•
+biasvalueandphotondensity(duetonon-lineargainsuppression)
+InPICS3D Eq.16.2issolvedtofindthelongitudinalmodesofthedevice. Thebasic
+solutionmethodwillbeoutlinedinthischapterbutthenumericalimplementation
+inPICS3DusesanalternatederivationshowninSec.18.4.
+16.3 The Green’s Function Method
+Using Green’s function in the analysis of DFB lasers was first proposed by C.H.
+. .
+Henry [82] and later extensively used by Tromborg etal [108][109] in deriving
+analyticalformulasforDFBlasers. PICS3DhasusedtheGreen’sfunctionmethod
+becauseofitsaccuracyintreatingspontaneousemission,itsconceptualsimplicity
+andsuitabilityfornumericalimplementation.
+TheGreen’sfunctionmethodstartswiththewaveequation,(16.2). Theobjectiveis
+toobtainacompactexpressionforthesolutiontothenoise-drivenwaveequation.
+IntheGreen’sfunctionsmethod,thesolutiontoEq.16.2canbewrittenas:
+R
+l , ′ ′ ′
+g(z z )fω(z )dz
+Eω(z) = 0 (16.3)
+W
+
+
+=== PAGE 319 ===
+16.4LongitudinalModesandComplexFrequencies 317
+, ′
+where fω(z) is the local Langevin force, g(z z ) the Green’s function, and W the
+Wronskian of the wave equation. The integration is over the diode cavity length
+ω,
+l. The Wronskian W is a functional of the distribution of the wavenumber [k( z)]
+ingeneral.
+The interpretation of Eq. 16.3 is very simple. According to the basic principle
+ff
+of the Green’s function method, any linear di erential equation with a driving
+source term, has a solution that can be found by decomposing the source into
+many smaller pieces in space. The final solution is the sum (or integration) of the
+solutions due to the smaller source terms. In our case, the driving source is the
+spontaneous noise term and the electric field solution at location z is a sum (or
+integration) of solutions due to the spontaneous emission of a single photon at
+′
+location z . A more detailed discussion of the Green’s function method the the
+treatmentofspontaneousemissionisoutlinedinApp.D.
+The expressions for both the Green’s functions and the Wronskian can be written
+. .
+in terms of the solution for the homogeneous wave equation, ie, the solution to
+Eq.16.2withoutthespontaneousnoiseterms. TheGreen’sfunctioncanbewritten
+as[82][108]:
+, ′ = ′ Θ − ′ + ′ Θ ′ − .
+g(z z ) Z (z)Z (z ) (z z ) Z (z )Z (z) (z z) (16.4)
+R L R L
+Θ
+Here (z)istheHeavisidestepfunction.. Z (z)isthesolutiontothehomogeneous
+L
+wave equation which satisfies the boundary condition at the left laser facet and
+internal interfaces (for multi-section lasers) but may not satisfy the boundary
+conditionattherightlaserfacet. Z (z)isthecorrespondingsolutionwhichsatisfies
+R
+theboundaryconditionattherightfacetandtheinternalinterfaces.
+TheWronskiancanbewrittenas[82][108]:
+d d
+= −
+W Z (z) Z (z) Z (z) Z (z) (16.5)
+L R R L
+dz dz
+Since Z and Z are solutions to the homogeneous wave equation, it follows
+L R
+/ =
+from simple algebra that dW dz 0 in each waveguide section. This means
+that W is position independent. Therefore, under a particular bias condition, the
+Wronskian is only a function of the frequency or wavelength. This conclusion
+is very important and it is the basis for the remaining discussion of modeling
+techniques.
+16.4 Longitudinal Modes and Complex Frequencies
+The Green’s function method gives a clear definition of a longitudinal mode: a
+longitudinal mode corresponds to a maximum of the emission spectrum which
+
+
+=== PAGE 320 ===
+318 PICS3D-SPECIFICMODELSI:LongitudinalModeling
+| |
+corresponds to a minimum value of W . Since the solution must be finite we
+note that for the homogeneous wave equation, the Wronskian is exactly zero on
+a mode peak. In the more general case where the diving force is present, modes
+are instead found at local minima of the Wronskian. Since we have determined
+thattheWronskianisonlyafunctionofthefrequency,thesearchforlongitudinal
+ω
+modesissimplifiedtoasearchofthelocalminimaofW( )
+. .
+Toevaluatethis,wemakeuseofanobservationbyTromborgetal [108][109]that,
+withtheproperchoiceofnormalization:
+ω = −
+W( ) 1 R (16.6)
+g
+whereR isthecomplexroundtripgain(i.e. phaseandamplitude).
+g
+In a real cavity, the spontaneous emission driving force is always present. This
+means that the Wronskian can never be exactly zero and the round-trip gain is
+always less than one. This can be understood by realizing that spontaneous
+emissionalwayscontributesanadditivetermtotheopticalpropagationofawave
+and that the optical gain is not the only contribution to the laser output. Despite
+this, the contribution of the spontaneous emission is quite small above threshold
+=
+and W 0 is usually a good approximation for single-mode lasing behavior.
+However, multi-mode analysis requires inclusion of the spontaneous emission
+sinceingeneral,sidemodesarebelowthreshold. Wewillcomebacktothispoint
+inSec. 18.2.
+Luckily, we can reformulate the problem by treating the additive contribution of
+thespontaneousemissionasanequivalentgainsource. Ourinterpretationhereis
+based on the argument of Henry and Kazarinov [110]. Let us use the convention
+ω
+ofexp(j t)andexpressthecontributionofthespontaneousemissionasacomplex
+frequencyterms. Wedefinethiscontributionsuchthatwhenthistermisincluded,
+=
+the round-trip gain is exactly one. That is, we assert by definition that W 0 on
+thecomplexfrequencyplaneforlongitudinalmodesolutions.
+IfweconsiderasimpleFabry-PerotlaserofcavitylengthL,weget:
+−α − ω / = .
+R R exp[(g )L 2j n L c ] 1 (16.7)
+1 2 i eff 0
+Sincethefrequencyisnowcomplex,theimaginarypartofthefrequencyisequiv-
+alenttoanadditionalgaintermof:
+∆ = ω /
+g 2 n c (16.8)
+im eff 0
+The same argument can be applied to a DFB or any other type of laser structure
+∆
+becausewecanalwaysdivideanarbitrarystructureintosmallsections( L )with
+k
+uniformmaterialvariation. Wethenusetransfermatrixtechniquestoexpressthe
+−α ∆ / + ω ∆ /
+round trip gain in terms of the factor exp[(g ) L 2 j n L c ]. By arguing
+i eff 0
+
+
+=== PAGE 321 ===
+16.5CoupledWaveEquations 319
+that the round trip gain must remain unity at all times, we reach the same result
+asinEq.(16.8).
+We quickly note that the addition of this complex frequency also has numerical
+benefits since it is much easier to search for the zeros of a function than to search
+foritslocalminima.
+16.5 Coupled Wave Equations
+= ω,
+As previously discussed, the wave number k k( z) may depend directly on z
+duetothegratingstructureorvariationinthematerialcompositionandindirectly
+through the carrier density and photon density variations along the waveguide
+(longitudinalspatialholeburning).
+InDFBandDBRlasers,corrugationsaremadealongthewaveguideswhichintro-
+ducecouplingbetweentheforwardandbackwardwaves(alsoreferredtoasright
+going and left going waves). The purpose of this is to perturb the propagation
+ff
+constantk(z)toachievedesirablescatteringe ectsofthepropagatingwaves.
+ff
+In a laser with a grating of period L , the e ective refractive index can be written
+g
+as: !
+π
+2
+= + ∆ +Ω
+n n˜ 2( n)cos z (16.9)
+L (z)
+g
+whereweconsiderthegeneralcasethatthegratingperiodmayvaryasafunction
+∆
+of position. n˜ denotes the slowly varying part of the complex index and 2( n) is
+themagnitudeoftheindexvariation(alsoacomplexquantity).
+β
+Wedefineareferencewavenumber suchthat
+0
+π
+β =
+(16.10)
+0 < >
+L
+g
+<> β
+where isusedtodenotetheaveragegratingperiod. isaconstantindependent
+0
+of the frequency and injection condition and is usually set to the Bragg wave
+numberinsimplegratingstructuresatthresholdcondition.
+In general, we can assume that the change in the grating period is smooth and
+writethefollowingexpansion:
+π
+= β +∆β
+(z) (16.11)
+0 ch
+L
+g
+∆β
+where (z)iscausedbysomeformofchirpgrating(variationofgratingperiod).
+ch
+BasedonEq.(16.9),were-writethewavenumberas
+= β +∆˜ + κ β +∆β + Ω
+k k 2 cos[2( )z j ] (16.12)
+0 0 ch
+= β +∆
+k
+˜ +κ e2j(β
+0
++∆β ch)z+jΩ +κ
+e
+−2j(β
+0
++∆β ch)z−jΩ
+(16.13)
+0
+
+
+=== PAGE 322 ===
+320 PICS3D-SPECIFICMODELSI:LongitudinalModeling
+where ω
+∆ k ˜ = n˜ −β (16.14)
+0
+c
+0
+and ω
+κ = ∆
+n (16.15)
+c
+0
+SinceonlytheopticalfrequenciesclosetotheBraggconditionareconsidered,the
+β
+second term in Eq. (16.13) is small compared with . Similarly, we assume that
+0
+ffi κ β
+thecouplingcoe cient ismuchsmallerthan . Inthefollowingderivation,we
+0
+∆˜ κ
+willneglecthigherordertermsof k and .
+Weproposeatrialsolutionoftheform:
+E = R(z)e −jβ 0z + L(z)ejβ 0z (16.16)
+z
+where L(z) and R(z) are used to denote the slow varying amplitudes of waves
+goingleftandright.
+Wesubstituteitintothewaveequationtogetthefollowingalgebra:
+h i
+−β2 R(z)e −jβ 0z + L(z)ejβ 0z
+0 " ! ! #
+∂ ∂
+R(z) L(z)
+− 2j β e −jβ 0z − ejβ 0z
+0 ∂ ∂
+z z
+! !
+∂2R(z) ∂2L(z)
++ e −jβ 0z + ejβ 0z
+∂ z2 ∂ z2
+(cid:16) (cid:17)
++ k2 R(z)e −jβ 0z + L(z)ejβ 0z = 0 (16.17)
+Treating ∆ k ˜ and κ assmallquantities,weexpandthewavenumberk2 asfollows.
+(cid:16) (cid:17)
+k2 = β2 + 2 β ∆ k ˜ +κ e2j(β 0 +∆β ch)z+jΩ +κ e −2j(β 0 +∆β ch)z−jΩ
+0 0
++ .
+higherorderterms (16.18)
+whichisthensubstitutedintoEq.(16.17).
+Tosimplifythenotation,weintroduceaslowvaryingfunction:
+Ω = ∆β +Ω
+(z) 2 (z)z (16.19)
+g ch
+We further assume that the wave amplitu(cid:16)de is(cid:17)a slow(cid:16) var(cid:17)ying function of z and
+∂2R(z) ∂2L(z)
+neglectthesecondderivativesinvolving: and .
+∂2z ∂2z
+Afterthetermsinvolving
+β2
+arecanceled,weareleftwiththefollowingequation:
+" 0 ! ! #
+∂
+R(z)
+∂2R(z)
+− 2j β e −jβ 0z − ejβ 0z
+0 ∂
+z
+∂2z
+(cid:16) (cid:17)(cid:16) (cid:17)
++ 2 β ∆ k ˜ +κ e2jβ 0z+jΩ g +κ e −2jβ 0z−jΩ g R(z)e −jβ 0z + L(z)ejβ 0z
+0
+= .
+0 (16.20)
+
+
+=== PAGE 323 ===
+16.6TransferMatrixFormulas 321
+Since R(z) and L(z) are independent functions, this equation makes sense only
+whentermswiththesamepropagationfactorsumuptozero. Inotherwords,the
+terms with e −jβ 0z and ejβ 0z must sum up zero, respectively. Collecting these terms,
+wefind:
+!
+∂
+R(z)
+−
+2j
+β +
+2
+β ∆
+k
+˜
+R(z)
++
+2
+β κ
+e
+−jΩ
+gL(z)
+=
+0 (16.21)
+0 ∂ 0 0
+z
+!
+∂
+L(z)
+2j
+β +
+2
+β ∆
+k
+˜
+L(z)
++
+2
+β κ ejΩ
+gR(z)
+=
+0 (16.22)
+0 ∂ 0 0
+z
+whichcanbere-writteninthefamiliarform:
+∂
+R(z)
++
+j(
+∆
+k
+˜
+)R(z)
+= −
+j
+κ
+e
+−jΩ
+gL(z) (16.23)
+∂
+z
+∂
+L(z)
+−
+j(
+∆
+k
+˜
+)L(z)
+=
+j
+κ ejΩ
+gR(z) (16.24)
+∂
+z
+orinmatrixnotation:
+! ! !
+∂
+R(z)
+−
+j(
+∆
+k
+˜
+)
+−
+j
+κ
+e
+−jΩ
+g R(z)
+=
+(16.25)
+∂ z L(z) j κ ejΩ g j( ∆ k ˜ ) L(z)
+16.6 Transfer Matrix Formulas
+In this section, the technique developed by McCall and Platzman [111] is used to
+solvethecoupledwaveequations.
+The complex phase factor
+ejΩ
+g is separated into real and imaginary parts and the
+waveequationrewrittenas:
+∂
+= − ∆˜ + − κ Ω −κ Ω
+R(z) j( k)R(z) [ j cos( ) sin( )]L(z) (16.26)
+∂ g g
+z
+∂
+= κ Ω −κ Ω + ∆˜
+L(z) [j cos( ) sin( )]R(z) j( k)L(z) (16.27)
+∂ g g
+z
+WeintroducethePaulimatrices:
+!
+0 1
+σ =
+(16.28)
+1 1 0
+!
+−
+0 j
+σ =
+(16.29)
+2 j 0
+!
+1 0
+σ =
+(16.30)
+3 0 − 1
+
+
+=== PAGE 324 ===
+322 PICS3D-SPECIFICMODELSI:LongitudinalModeling
+andexpresstheequationintermsofaspinor:
+!
+R(z)
+ψ =
+(16.31)
+L(z)
+Weobtain:
+∂
+ψ = −κ Ω σ +κ Ω σ − ∆˜ σ ψ
+[ sin( ) cos( ) j( k) ] (16.32)
+∂ g 1 g 2 3
+z
+= ψ
+H (16.33)
+= µ · σψ
+(16.34)
+whereboldfaceisusedtodenoteathreecomponentvector.
+Morespecifically,inthreecomponentnotation:
+h i
+µ = −κ Ω κ Ω − ∆˜
+sin( ) cos( ) j( k) (16.35)
+g g
+and 0 1
+Bσ C
+B
+B 1C
+C
+σ = B
+Bσ C
+C
+B C (16.36)
+@ 2A
+σ
+3
++ · σ
+An arbitrary function f of the scalar a b , linear in the Pauli matrices, can be
+reducedtoanotherlinearfunction[112]:
++ · σ = + · σ
+f(a b ) A B (16.37)
+where
+1
+= + + −
+A [f(a b) f(a b)]; (16.38)
+2
+b
+= + − −
+B [f(a b) f(a b)]; (16.39)
+2b
+ThisallowsustoexpandthesolutiontoEq.(16.34)whichcanbewrittenas:
+µ · σ
+ψ = µ − + µ −
+(z) cosh[ (z z )] sinh[ (z z )] (16.40)
+0 µ 0
+µ µ · µ
+where isthecomplexsquarerootof .
+µ2 = κ2 − ( ∆ k ˜ )2 (16.41)
+ff µ
+Wenotethatitmakesnodi erencewhichsignthecomplex takes.
+ψ
+Thetransfermatrixthatmaps fromonelocationtoanotherisgivenby:
+!
+T T
+ψ (z) = 11 12 ψ (z ) (16.42)
+T T 0
+21 22
+
+
+=== PAGE 325 ===
+16.7Braggwavelengthandrelatedreferenceparameters 323
+where
+= µ − − ∆˜ µ − /µ
+T cosh[ (z z )] j( k)sinh[ (z z )] (16.43)
+11 0 0
+T
+= −
+j
+κ
+e
+−jΩ
+gsinh[
+µ
+(z
+−
+z )]
+/µ
+(16.44)
+12 0
+T
+=
+j
+κ ejΩ
+gsinh[
+µ
+(z
+−
+z )]
+/µ
+(16.45)
+21 0
+= µ − + ∆˜ µ − /µ
+T cosh[ (z z )] j( k)sinh[ (z z )] (16.46)
+22 0 0
+and
+Ω = ∆β +Ω
+(z) 2 (z)z (16.47)
+g ch
+16.7 Bragg wavelength and related reference parame-
+ters
+Grating and reference wavelength
+In this section, we discuss several important parameters used in simulation of
+/
+waveguidingstructuresinvolvingDFB DBRgratings. Inarealisticdeviceinvolv-
+ing corrugation gratings, the Bragg wavelength in vacuum is generally not well
+defined: thespacingorthepitchofthegratingisfixedbythefabricationprocedure
+but the modal index of the structure varies with bias and is not known before the
+simulation
+β
+Wehavechosentofixtheparameterofexpansion asaconstantatalltimesfora
+0
+particulardeviceinthesimulator. Thisparameterisgivenbytheaveragegrating
+periodL as:
+g π
+β =
+(16.48)
+0 < >
+L
+g
+β
+Thusintheory, iswelldefinedoncethegratingstructureisknown.
+0
+However, we often need to calculate parameters in the wavelength or frequency
+domainsoweintroduceareferencewavelength:
+π
+2 n
+λ = ref = < >
+2n L (16.49)
+ref β ref g
+0
+where n is a fixed reference index which is normally chosen to be close to the
+ref
+ff
+modalindexatthreshold. IncurrentversionsofPICS3D,n isthee ectiveindex
+ref
+λ
+atequilibriumsothat isalwaysindependentoftheappliedbias.
+ref
+ff
+Thisreferencewavelengthisdi erentfromtheBraggwavelength:
+λ = < >
+2n L (16.50)
+Br eff g
+ff
+wheren isthee ectiveindexatthecurrentbiasvalue.
+eff
+
+
+=== PAGE 326 ===
+324 PICS3D-SPECIFICMODELSI:LongitudinalModeling
+Propagation constant
+Thefundamentalassumptioninthesoftwareforindexchangeisthatthereal_index
+valueinthemacrolibrarycorrespondstotheindexatthermalequilibrium. When
+ff
+the device is biased, the index changes due to various e ects such as interband
+transitions. This can be controlled by the index_model statement although the
+ff
+mostcommone ectsareincludedbydefault.
+Asaresult,thepropagationconstantinthecoupled-modetheoryisevaluatedby:
+β−β = ω−ω / +ω − /
+( )n c (n n ) c (16.51)
+0 ref eff ref eff ref
+ω λ
+where isthefrequencyat . Thisisonlyusedinedge-emittingdevicessince
+ref ref
+propagationinVCSELsisnotbasedoncoupled-modetheory.
+Note that during the preview of the round-trip gain provided by rtgain_phase,
+tabulatedindexchangevaluesareusedtoevaluatethepropagationconstant. This
+ff
+maydi erfromresultsinthemainsimulation.
+Setting the reference wavelength
+Whensettingupadevicesimulation,therearetwowaysofdefiningthereference
+wavelengthinthelongitudinalstatement:
+λ
+1. Setref_waveltothevalueof
+ref
+2. Setref_indextothevalueofn andref_pitchtothevalueofL .
+ref g
+The first method is the easiest and ignores the details of the fabrication process.
+Thesecondmethodismoreaccuratebutrequiresknowledgeofthereferencepitch
+of the grating. However, n must be as close as possible to n at threshold in
+ref eff
+orderforthelongitudinalmodestobeintherightplace.
+From a device design point of view, the question is often reversed: given a Bragg
+wavelength,whatvalueofL shouldbeused? Toanswerthisquestion,anaccurate
+g
+estimate of n is needed: it can be obtained from the simulation itself through
+eff
+the2Dmodesolverresultsatvariousbiaspoints. Thiswillbeaniterativeprocess
+as changing the reference wavelength can alter the threshold value as well as the
+gainandindexprofiles.
+
+
+=== PAGE 327 ===
+16.8CoupledWaveEquationsForSecondOrderGrating 325
+16.8 Coupled Wave Equations For Second Order Grat-
+ing
+16.8.1 Introduction
+/
+When the grating period of the structure is 1 2 of the wavelength, we have a first
+order grating structure which is commonly used for DFB and DBR lasers. In a
+firstordergratingstructure,theforwardwavewillonlycouplewiththebackward
+wave: thereare180degreesbetweenthetwo.
+A grating structure with a period that equals the wavelength is a second order
+ff
+grating. The forward wave will experience a first order di raction in 90 degrees
+ff
+which causes radiation loss and a second order di raction in 180 degrees (or the
+backwardwave). Therefore,wemustmodifythecoupledwaveequationtohavea
+termtoaccountfortheradiationloss. Insubsection16.8.2,wederivethecoupled
+wave equations here based on Ref. [83]. Subsection 16.8.3 is used to formulate
+theradiatingwaves. Subsection 16.8.4derivestheformulasforacommonlyused
+gratingstructureandcomparetheresultswiththoseinRef.[83].
+ffi
+16.8.2 Coupling coe cients
+To be consistent with our convention for propagating waves, we assume a time
+ω −
+dependenceofexp(j t)sothattheforwardwavehasafactorexp( jk z).
+z
+β
+We choose a reference wave number such that the grating property can be
+0
+expanded in term of it. The dielectric function at the optical frequency can be
+writtenas:
+ε , = ε +∆ε ,
+(y z) (y) (y z) (16.52)
+0
+∆ε ,
+where (y z)isnonzeroonlyinthegratinglayers:
+∆ε , = ∆ε ζ − β +ζ + β
+(y z) [ +1 (y)exp( j 0 z) −1 (y)exp( j 0 z)
++ ζ − β +ζ + β
++2 (y)exp( j2 0 z) −2 (y)exp( j2 0 z)] (16.53)
+Ourstartingpointisthefollowingwaveequationinthreedimensions:
+" #
+∂2 ∂2 ω2
++ + ε , , = .
+(y z) E(y z) 0 (16.54)
+∂ y2 ∂ z2 c2
+0
+wherec isthespeedoflight.
+0
+Weconsiderapropagatingfieldofthefollowingform:
+, = − β + β ϕ +∆ ,
+E(y z) [R(z)exp( j z) L(z)exp(j z)] (y) E(y z) (16.55)
+0 0
+
+
+=== PAGE 328 ===
+326 PICS3D-SPECIFICMODELSI:LongitudinalModeling
+∆ ,
+where E(y z)istheradiatingwave.
+Thewaveequationbecomes:
+"
+∂2 ∂2 ω2
++ + ε
+(y)
+∂ y2 ∂ z2 c2 0
+0
+ω2 ω2
++ ∆εζ − β + ∆εζ + β
+c2 +1 (y)exp( j 0 z) c2 −1 (y)exp( j 0 z)
+0 0 #
+ω2 ω2
++ ∆εζ − β + ∆εζ + β , = .
+c2 +2 (y)exp( j2 0 z) c2 −2 (y)exp( j2 0 z) E(y z) 0 (16.56)
+0 0
+LetussubstitutetheexpressionforE(y,z)andworkoutallthetermsasfollows:
+"
+∂2 ∂2 ω2
++ + ε
+(y)
+∂ y2 ∂ z2 c2 0
+0
+ω2 ω2
++ ∆εζ − β + ∆εζ + β
+c2 +1 (y)exp( j 0 z) c2 −1 (y)exp( j 0 z)
+0 0 #
+ω2 ω2
++ ∆εζ − β + ∆εζ + β
+c2 +2 (y)exp( j2 0 z) c2 −2 (y)exp( j2 0 z)
+h 0 0 i
+− β ϕ + β ϕ +∆ , = .
+R(z)exp( j z) (y) L(z)exp(j z) (y) E(y z) 0 (16.57)
+0 0
+ff
+If we collect terms of di erent exponential factors, we obtain the following equa-
+tionsfortermswithnoexponentialwavefactor:
+" #
+∂2 ∂2 ω2 ω2
++ + ε ∆ , = − ∆ε ζ +ζ ϕ
+∂ y2 ∂ z2 c2 0 (y) E(y z) c2 [ +1 (y)L(z) −1 (y)R(z)] (y) (16.58)
+0 0
+− β
+andfortermswithexp( j z):
+0
+" #
+∂2 ∂2 ω2
++ + ε − β ϕ
+(y) R(z)exp( j z) (y)
+∂ y2 ∂ z2 c2 0 0
+0
+h i
+ω2
+= − ∆ε ζ ∆ , +ζ ϕ − β
+c2 +1 (y) E(y z) +2 (y)L(z) (y) exp( j 0 z) (16.59)
+0
+Wedropthetermswith
+∂2R
+and
+∂2L:
+∂z2 ∂z2
+" #
+∂2 ∂ ω2
+−
+2j
+β −β2 + ε
+(y) R(z)
+ϕ
+(y)
+∂ y2 0∂ z 0 c2 0
+0
+ω2
+= − ∆ε ζ ∆ , +ζ ϕ
+c2
+[ +1 (y) E(y z) +2 (y)L(z) (y)] (16.60)
+0
+
+
+=== PAGE 329 ===
+16.8CoupledWaveEquationsForSecondOrderGrating 327
+β
+Similarlyfortermswithexp(j z):
+0
+" #
+∂2 ∂2 ω2
++ + ε β ϕ
+(y) L(z)exp(j z) (y)
+∂ y2 ∂ z2 c2 0 0
+0
+ω2
+= − ∆ε ζ ∆ , +ζ ϕ β
+c2 [ −1 (y) E(y z) −2 (y)R(z) (y)]exp(j 0 z) (16.61)
+0
+or
+" #
+∂2 ∂ ω2
++
+2j
+β −β2 + ε
+(y) L(z)
+ϕ
+(y)
+∂ y2 0∂ z 0 c2 0
+0
+ω2
+= − ∆ε ζ ∆ , +ζ ϕ
+c2
+[ −1 (y) E(y z) −2 (y)R(z) (y)] (16.62)
+0
+The left hand side of equation Eq. (16.58) is very familiar to us. Assuming a fast
+± β ∆ ,
+varying factor exp( j z) for E(y z), we solve the following Green’s function for
+0
+ity-dependence:
+∂2 ω2
+[
+−β2 + ε
+(y)]G(y
+,
+y )
+= δ
+(y
+−
+y ) (16.63)
+∂ y2 0 c2 0 1 1
+0
+Z
+ω2
+∆ , = − ∆ε , ζ +ζ ϕ
+E(y z) c2 G(y y 1 )[ +1 (y 1 )L(z) −1 (y 1 )R(z)] (y 1 )dy 1 (16.64)
+0
+Z
+ω2
+∆ , = − ∆ε , ζ ϕ
+E(y z) c2 G(y y 1 ) +1 (y 1 ) (y 1 )]dy 1 L(z)
+0 Z
+ω2
+− ∆ε , ζ ϕ
+c2 G(y y 1 ) −1 (y 1 ) (y 1 )dy 1 R(z) (16.65)
+0
+ϕ
+Wenotethat (y)satisfiesthefollowingequationforasingletransversemode:
+" #
+∂2 ω2
+−β2 + 0Re[ ε (y)] ϕ (y) = 0 (16.66)
+∂ y2 0 c2 0
+0
+Thisallowsustore-writeEq. (16.60)asfollows:
+" #
+ω2 ω2 ω2 ∂
+ε
+(y)
+− 0ε
+(y)
++
+Im[
+ε
+(y)]
+−
+2j
+β
+R(z)
+ϕ
+(y)
+c2 0 c2 0 c2 0 0∂ z
+0 0" Z 0
+ω2 ω2
+= − ∆εζ ∆ε , ζ ϕ
+c2 +1 (y) c2 G(y y 1 ) +1 (y) (y 1 )]dy 1 L(z)
+0 Z 0 #
+ω2
+− ∆ε , ζ ϕ
+c2 G(y y 1 ) −1 (y) (y 1 )dy 1 R(z)
+0
+ω2
+− ∆εζ ϕ
+c2
++2 (y)L(z) (y) (16.67)
+0
+
+
+=== PAGE 330 ===
+328 PICS3D-SPECIFICMODELSI:LongitudinalModeling
+ϕ
+Wemultiplytheabovewith (y)andintegrateovery:
+( Z )
+ω2 ∂
+β2 −β2 + j 0 ϕ (y)Im[ ε (y)] ϕ (y)dy − 2j β R(z)
+0 c2 0 0∂ z
+! Z 0Z
+ω2 2
+= − ∆ε ϕ ζ , ζ ϕ
+c2 (y) +1 (y)G(y y 1 ) +1 (y 1 ) (y 1 )dydy 1 L(z)
+0 ! Z Z
+ω2 2
+− ∆ε ϕ ζ , ζ ϕ
+c2 (y) +1 (y)G(y y 1 ) −1 (y 1 ) (y 1 )dydy 1 R(z)
+0 Z
+ω2
+−
+c2
+∆ε ζ +2 (y) ϕ (y)2dyL(z) (16.68)
+0
+where
+∂β
+β2 −β2 =
+2
+β ∆ω
+0 0∂ω
+∆ω
+= β
+2 (16.69)
+0
+v
+g
+Wealsonotethatwecanusemodalgainandinternallosstoexpressthefollowing
+integral: Z
+′
+n c
+ϕ ε ϕ = 0 −α
+(y)Im[ (y)] (y)dy (g ) (16.70)
+0 ω i
+0
+Then:
+(
+∆ω ∂
+β + β −α − β
+2 j (g ) 2j
+0 0 i 0∂
+v z
+g
+! Z Z )
+ω2 2
++ ∆ε ϕ ζ , ζ ϕ
+c2 (y) +1 (y)G(y y 1 ) −1 (y 1 ) (y 1 )dydy 1 R(z)
+0 ! Z Z
+ω2 2
+= − ∆ε ϕ ζ , ζ ϕ
+c2 (y) +1 (y)G(y y 1 ) +1 (y 1 ) (y 1 )dydy 1 L(z)
+0 Z
+ω2
+−
+c2
+∆ε ζ +2 (y) ϕ (y)2dyL(z) (16.71)
+0
+AsimilarderivationcanbemadeforEq. (16.62):
+" #
+ω2 ω2 ∂ ω2
+ε
+(y)
+− 0ε
+(y)
++
+2j
+β +
+j Im[
+ε
+(y)] L(z)
+ϕ
+(y)
+c2 0 c2 0 0∂ z c2 0
+0 0 0
+ω2
+= − ∆εζ ∆ ,
+c2
+−1 (y) E(y z)
+0
+ω2
+− ∆εζ ϕ
+c2
+−2 (y)R(z) (y) (16.72)
+0
+
+
+=== PAGE 331 ===
+16.8CoupledWaveEquationsForSecondOrderGrating 329
+" #
+ω2 ω2 ∂ ω2
+ε
+(y)
+− 0ε
+(y)
++
+2j
+β +
+j Im[
+ε
+(y)] L(z)
+ϕ
+(y)
+c2 0 c2 0 0∂ z c2 0
+0 ! Z0 0
+ω2 2
+= − ∆ε ζ , ζ ϕ
+c2 −1 (y)G(y y 1 ) +1 (y 1 ) (y 1 )dy 1 L(z)
+0 ! Z
+ω2 2
+− ∆ε ζ , ζ ϕ
+c2 −1 (y)G(y y 1 ) −1 (y 1 ) (y 1 )dy 1 R(z)
+0
+ω2
+− ∆εζ ϕ
+c2
+−2 R(z) (y) (16.73)
+0
+ϕ
+Wemultiply (y)andintegrateovery:
+" Z #
+∂ ω2
+β2 −β2 +
+2j
+β +
+j
+ϕ
+(y)Im[
+ε
+(y)]
+ϕ
+(y)dy L(z)
+0 0∂ z c2 0
+! Z Z 0
+ω2 2
+= − ∆ε ϕ ζ , ζ ϕ
+c2 (y) −1 (y)G(y y 1 ) +1 (y 1 ) (y 1 )dydy 1 L(z)
+0 ! Z Z
+ω2 2
+− ∆ε ϕ ζ , ζ ϕ
+c2 (y) −1 (y)G(y y 1 ) −1 (y 1 ) (y 1 )dydy 1 R(z)
+0 Z
+ω2
+−
+c2
+∆ε ζ −2 (y) ϕ (y)2dyR(z) (16.74)
+0
+(
+∆ω ∂ ω
+β + β + ′ −α
+2 2j j n (g )
+0 0∂ i
+v z c
+g 0
+Z Z )
+ω2
++ [ c2 ∆ε ]2 ϕ (y) ζ −1 (y)G(y , y 1 ) ζ +1 (y 1 ) ϕ (y 1 )dydy 1 L(z)
+0 ! Z Z
+ω2 2
+= − ∆ε ϕ ζ , ζ ϕ
+c2 (y) −1 (y)G(y y 1 ) −1 (y 1 ) (y 1 )dydy 1 R(z)
+0 Z
+ω2
+−
+c2
+∆ε ζ −2 (y) ϕ (y)2dyR(z) (16.75)
+0
+
+
+=== PAGE 332 ===
+330 PICS3D-SPECIFICMODELSI:LongitudinalModeling
+Ourkeyresultsareofthefollowingform:
+(
+∆ω g −α ∂
++ i −
+j j
+∂
+v 2 z
+g
+! Z Z )
+ω2 2
+1
++ ∆ε ϕ ζ , ζ ϕ
+c2 2 β (y) +1 (y)G(y y 1 ) −1 (y 1 ) (y 1 )dydy 1 R(z)
+0
+0 ! Z Z
+ω2 2
+1
++ ∆ε ϕ ζ , ζ ϕ
+c2 2 β (y) +1 (y)G(y y 1 ) +1 (y 1 ) (y 1 )dydy 1 L(z)
+0
+Z0
+ω2
+1
++
+c2
+∆ε
+2 β
+ζ
++2
+ϕ (y)2dyL(z)
+0
+0
+=
+0 (16.76)
+(
+∆ω ∂ g −α
++ + i
+j j
+∂
+v z 2
+g
+! Z Z )
+ω2 2
+1
++ ∆ε ϕ ζ , ζ ϕ
+c2 2 β (y) −1 (y)G(y y 1 ) +1 (y 1 ) (y 1 )dydy 1 L(z)
+0
+0 ! Z Z
+ω2 2
+1
++ ∆ε ϕ ζ , ζ ϕ
+c2 2 β (y) −1 (y)G(y y 1 ) −1 (y 1 ) (y 1 )dydy 1 R(z)
+0
+Z0
+ω2
+1
++ c2 ∆ε 2 β ζ −2 (y) ϕ (y)2dyR(z)
+0
+0
+=
+0 (16.77)
+Thesearerewrittenas
+( )
+∂ ∆ω g −α
++ − i + + + =
+j h R(z) h L(z) jh L(z) 0 (16.78)
+∂ 1a 1b 2b
+z v 2
+g
+( )
+∂ ∆ω g −α
+− + i − − − =
+j h L(z) h R(z) jh R(z) 0 (16.79)
+∂ 1a 1c 2a
+z v 2
+g
+! Z Z
+ω2 2
+1
+= − ∆ε ϕ ζ , ζ ϕ
+h 1a j c2 2 β (y) +1 (y)G(y y 1 ) −1 (y 1 ) (y 1 )dydy 1 (16.80)
+0
+0
+! Z Z
+ω2 2
+1
+= − ∆ε ϕ ζ , ζ ϕ
+h 1b j c2 2 β (y) +1 (y)G(y y 1 ) +1 (y 1 ) (y 1 )dydy 1 (16.81)
+0
+0
+
+
+=== PAGE 333 ===
+16.8CoupledWaveEquationsForSecondOrderGrating 331
+! Z Z
+ω2 2
+1
+= − ∆ε ϕ ζ , ζ ϕ
+h 1c j c2 2 β (y) −1 (y)G(y y 1 ) −1 (y 1 ) (y 1 )dydy 1 (16.82)
+0
+0
+Z
+ω2
+1
+h 2a = c2 ∆ε 2 β ζ −2 (y) ϕ (y)2dy (16.83)
+0
+0
+Z
+ω2
+1
+h 2b = c2 ∆ε 2 β ζ +2 (y) ϕ (y)2dy (16.84)
+0
+0
+The Green’s function can be written in terms of the solutions of the defining
+equation with the right hand side equal to zero. These solutions are written
+ϕ ϕ
+as (y)+ and (y)−, which are the radiating waves to the positive and negative
+directionofy,respectively:
+8
+>
+G(y , y ) =
+1 > <
+> >
+ϕ (y)+ ϕ (y
+1
+)− y > y
+1 (16.85)
+1 W :ϕ (y)− ϕ (y
+1
+)+ y < y
+1
+wheretheWronskianisgivenby:
+ϕ ϕ
+d (y)+ d (y)−
+= ϕ − ϕ
+W (y)− (y)+ (16.86)
+dy dy
+Forsimplicity,weassumetheradiatingwavesareplanewavesinydirectionwith
+±
+dependenceexp( jk y). Then,
+y
+= −
+W 2jk (16.87)
+y
+8
+>
+1 > <exp[ − jk (y − y )] y > y
+G(y , y ) = > > y 1 1 (16.88)
+1 W : exp[ − jk (y − y)] y < y
+y 1 1
+or
+8
+>
+1 > <cos[ − k (y − y )] + jsin[ − k (y − y )] y > y
+G(y , y ) = − > > y 1 y 1 1 (16.89)
+1 2jk : cos[ − k (y − y)] + jsin[ − k (y − y)] y < y
+y y 1 y 1 1
+ζ = ζ
+For simplicity, we only consider the case of symmetric grating with +m −m .
+= = = = =
+Thenh h h h andh h h .
+1a 1b 1c 1 2a 2b 2
+
+
+=== PAGE 334 ===
+332 PICS3D-SPECIFICMODELSI:LongitudinalModeling
+Weconsiderthefollowingintegral:
+!
+ω2
+−2
+β ∆ε
+h 4 k
+1 0 y c2
+Z Z 0
+= ϕ ζ { − − + − − }ζ ϕ
+(y) (y) cos[ k (y y )] jsin[ k (y y )] (y ) (y )dydy
+1 y 1 y 1 1 1 1 1
+Zy>y1Z
++ ϕ ζ { − − + − − }ζ ϕ
+(y) (y) cos[ k (y y)] jsin[ k (y y)] (y ) (y )dydy
+1 y 1 y 1 1 1 1 1
+Zy<y1Z
+= ϕ ζ { − − + − − }ζ ϕ
+(y) (y) cos[ k (y y )] jsin[ k (y y )] (y ) (y )dydy
+1 y 1 y 1 1 1 1 1
+Zy>y1Z
++ ϕ ζ { − − + − − }ζ ϕ
+(y) (y) cos[ k (y y)] jsin[ k (y y )] (y ) (y )dydy
+1 y 1 y 1 1 1 1 1
+Zy<y1Z
++ ϕ ζ {− − − + − − }ζ ϕ
+(y) (y) jsin[ k (y y )] jsin[ k (y y)] (y ) (y )dydy
+1 y 1 y 1 1 1 1 1
+Zy<Zy1
+= ϕ ζ − − ζ ϕ
+(y) (y)exp[ jk (y y )] (y ) (y )dydy
+1 y 1 1 1 1 1
+Z Z
+− ϕ ζ − ζ ϕ
+2j (y) (y)sin[k (y y)] (y ) (y )dydy
+1 y 1 1 1 1 1
+(cid:12)Z y1 >y (cid:12)
+(cid:12) (cid:12)
+(cid:12) (cid:12)2
+= (cid:12) ϕ ζ − (cid:12)
+(cid:12) (y) (y)exp[ jk y](cid:12) dy
+1 y
+Z Z
+− ϕ ζ − ζ ϕ
+2j (y) (y)sin[k (y y)] (y ) (y )dydy (16.90)
+1 y 1 1 1 1 1
+y1 >y
+In many cases, the grating layer thickness is much smaller than the wavelength.
+ζ
+Asaresult,the (y)functionismuchlikeadelta-functioniny. Therefore,the2nd
+termintheaboveequationisnegligibleandweobtainthefollowing:
+! Z
+ω2 2
+1
+h
+= ∆ε | ϕ
+(y)
+ζ
+(y)exp(
+−
+jk y)dy
+|2
+(16.91)
+1 c2 4 β k 1 y
+0 y
+0
+Z
+ω2
+1
+h = ∆ε ζ (y) ϕ (y)2dy (16.92)
+2 c2 2 β 2
+0
+0
+The above equations can be further simplified assuming
+β =
+k
+= nω = 2πn
+0 y c λ
+∆ε = ∆
+2n n.
+Thefactorforh becomes:
+1
+!
+(cid:18) (cid:19)
+ω2 2 1 ω2 1 2 π 2
+∆ε = ( ∆ε )2 = ( ∆ n)2 (16.93)
+c2 4 β k c2 4n2 λ
+0 y
+0 0
+
+
+=== PAGE 335 ===
+16.8CoupledWaveEquationsForSecondOrderGrating 333
+Thefactorforh becomes
+2
+ω2
+1
+ω
+1 2
+π
+∆ε = ∆ = ∆
+2n n n (16.94)
+c2 2 β c 2n λ
+0 0
+0
+Ourfinalresultsareasfollows:
+(cid:18) (cid:19) Z
+2 π 2
+h = ( ∆ n)2 | ϕ (y) ζ (y)exp( − jk y)dy |2 (16.95)
+1 λ 1 y
+Z
+π
+2
+h = ∆ n ζ (y) ϕ (y)2dy (16.96)
+2 λ 2
+Forasymmetricgratingstructure,thecoupledwaveequationsareasfollows:
+( )
+∂ ∆ω g −α
++ − i + + + =
+j h R(z) h L(z) jh L(z) 0 (16.97)
+∂ 1 1 2
+z v 2
+g
+( )
+∂ ∆ω g −α
+− + i − − − =
+j h L(z) h R(z) jh R(z) 0 (16.98)
+∂ 1 1 2
+z v 2
+g
+ff
+For a real index 2nd order grating, h is real and positive. The e ect of the first
+1
+ff
+orderdi raction(at90degrees)istointroduceanadditionallosstermof2h tothe
+1
+−
+internal loss and an imaginary coupling term of h to the conventional coupling
+1
+ffi κ ff
+coe cient h or ( ). Therefore the e ect is not only to make the laser lossy but
+2
+ff
+also to introduce a lossy coupling term which may a ect the longitudinal modes
+significantly.
+Foracomplexindex2ndordergrating,theimaginarypartofh addsatermIm(h )
+1 1
+∆ω κ
+to the frequency deviation . It also adds a term Im(h ) to the real part of .
+vg 1
+Thereforealossorgaincoupled2ndordergratingcanalsoenhancetherealkappa
+andshifttheemissionfrequency.
+16.8.3 Radiating Waves
+Inmanyapplications,itisdesirabletocalculatetheradiatingwave. Werecallfrom
+previoussubsectionthattheradiatingfieldcanbewrittenasfollows,:
+Z
+ω2
+∆ , = − ∆ε , ζ +ζ ϕ
+E(y z) c2 G(y y 1 )[ +1 (y 1 )L(z) −1 (y 1 )R(z)] (y 1 )dy 1 (16.99)
+0
+where
+
+
+=== PAGE 336 ===
+334 PICS3D-SPECIFICMODELSI:LongitudinalModeling
+8
+>
+1 > <exp[ − jk (y − y )] y > y
+G(y , y ) = − > > y 1 1 (16.100)
+1 2jk : exp[ − jk (y − y)] y < y
+y y 1 1
+Weobtain:
+Z
+ω2
+∆ , = − ∆ε , ζ + ϕ
+E(y z) c2 G(y y 1 ) +1 (y 1 )[L(z) R(z)] (y 1 )dy 1
+0 Z
+ω2
+= − ∆ε , ζ + ϕ
+c2
+0 Z y>y1
+G(y y 1 ) +1 (y 1 )[L(z) R(z)] (y 1 )dy 1
+ω2
+− ∆ε , ζ + ϕ
+c2
+0
+y<y1Z
+G(y y 1 ) +1 (y 1 )[L(z) R(z)] (y 1 )dy 1
+ω2
+1
+= ∆ε − − ζ + ϕ
+c2
+0
+2jk
+y Zy>y1
+exp[ jk y (y y 1 )] +1 (y 1 )[L(z) R(z)] (y 1 )dy 1
+ω2
+1
++ ∆ε − − ζ + ϕ
+c2
+0
+2jk
+y y<y1
+exp[ jk y (y 1 y)] +1 (y 1 )[L(z) R(z)] (y 1 )dy 1
+(16.101)
+ff
+We assume that the 90 degree di raction downwards gets absorbed and we only
+considertheupwardwaves:
+ω2
+1
+∆ , = ∆ε − − ζ + ϕ
+E(y z) c2 2jk exp[ jk y (y y 0 )] +1 (y 0 )[L(z) R(z)] (y 0 )d g (16.102)
+y
+0
+whereweassumeathingratinglayerofd thicknesslocatedat y .
+g 0
+= ω
+Ifthegratingisonthesurface(caseA)ofthedevice,k andwehave:
+y c0
+π
+d
+∆ , = g∆εζ ϕ + − −
+E(y z) λ +1 (y 0 ) (y 0 )[L(z) R(z)]exp[ jk y (y y 0 )] (16.103)
+j
+Γ
+where is the confinement factor for the grating layer. If the grating is buried
+g
+withinthedevice(caseB),k
+= nω
+andwehave:
+y c0
+π
+d
+∆ , = g∆εζ ϕ + − −
+E(y z) λ +1 (y 0 ) (y 0 )[L(z) R(z)]exp[ jk y (y y 0 )] (16.104)
+jn
+To evaluate the emitted power of the radiating field, we consider the expression
+fortheedgeemittingpowerfirst:
+, = − β + β ϕ
+E(y z) [R(z)exp( j z) L(z)exp(j z)] (y) (16.105)
+0 0
+
+
+=== PAGE 337 ===
+16.8CoupledWaveEquationsForSecondOrderGrating 335
+Thebulkphotondensityiswrittenas
+s(y
+,
+z)
+= ϵ n2|
+E
+|2 = ϵ n2|
+R(z)
+|2 +|
+L(z)
+|2] |ϕ
+(y)
+|2
+(16.106)
+0 0
+where we have neglected the interference term. The linear photon density is as
+follows:
+Z
+s(z) = ϵ n2 | E |2dxdy = ϵ n2| R(z) |2 +| L(z) |2] | (16.107)
+l 0 0
+Weassumethat
+Z
+ϕ =
+(y)dydx 1 (16.108)
+In our simulator, many of power quantities are expressed in terms of the total
+photonnumberofthemode, S,whichcanbedirectlycalculated fromtheGreen’s
+function.
+Z Z
+S = s(z)dz = ϵ n2 | R(z) |2 +| L(z) |2] | dz (16.109)
+l 0
+from which we can calculate the amplitude of R and L given the photon number
+inthecavity.
+TheemittedpowerfromthesurfaceforthecaseAisasfollows:
+Z
+P
+= ℏω
+c
+ϵ |∆
+E(y
+,
+z)
+|2dxdz
+top 0 0
+Z
+π2d2
+= ℏω c ϵ g ( ∆ε )2ζ2ϕ (y )2d [L(z) + R(z)]2dz
+0 0 λ2 1 0 wid
+Z
+π2d
+= ℏω
+c
+ϵ g
+(
+∆ε )2ζ2Γ |
+L(z)
++
+R(z)
+|2dz
+0 0 λ2 1 g
+8 R 9
+> >
+π2d > < | L(z) + R(z) |2dz > =
+= ℏω c ϵ g ( ∆ε )2ζ2Γ S> > R > > (16.110)
+0 0 λ2 1 g :ϵ n2 | R(z) |2 +| L(z) |2] | dz ;
+0
+or
+8 R 9
+> >
+π2d > < | L(z) + R(z) |2dz > =
+P = ℏω c g ( ∆εζ )2Γ S> > R > > (16.111)
+top 0 n2λ2 1 g : |
+R(z)
+|2 +|
+L(z)
+|2] |
+dz
+;
+
+
+=== PAGE 338 ===
+336 PICS3D-SPECIFICMODELSI:LongitudinalModeling
+TheupwardspowerwithinthedeviceforthecaseBisasfollows:
+Z
+P = ℏω v ϵ n2 |∆ E(y , z) |2dxdz
+up g 0
+Z
+π2d2
+= ℏω v ϵ n2 g ( ∆ε )2ζ2ϕ (y )2d [L(z) + R(z)]2dz
+g 0 n2λ2 1 0 wid
+Z
+π2d
+= ℏω
+v
+ϵ g
+(
+∆ε )2ζ2Γ |
+L(z)
++
+R(z)
+|2dz
+g 0 λ2 1 g
+8 R 9
+> >
+π2d > < | L(z) + R(z) |2dz > =
+= ℏω v ϵ g ( ∆ε )2ζ2Γ S> > R > >
+g 0 λ2 1 g :ϵ n2 | R(z) |2 +| L(z) |2] | dz ;
+8 R0 9
+> >
+π2d > < | L(z) + R(z) |2dz > =
+= ℏω v g ( ∆εζ )2Γ S> > R > > (16.112)
+g n2λ2 1 g : |
+R(z)
+|2 +|
+L(z)
+|2] |
+dz
+;
+Thesurfaceemittingpower(caseB)isasfollows:
+8 R 9
+> >
+π2d > < | L(z) + R(z) |2dz > =
+P = (1 − r ) ℏω v g ( ∆εζ )2Γ S> > R > > (16.113)
+top top g n2λ2 1 g : |
+R(z)
+|2 +|
+L(z)
+|2] |
+dz
+;
+wherer isthepowerreflectivityofthetopfacet.
+top
+ffi ffi
+We define a unitless coe cient (surface power emisison coe cient) to measure
+thesurfaceemissionintensity:
+π2d
+C
+= g
+(
+∆εζ )2Γ
+(16.114)
+surf n2λ 1 g
+sothattheemisisonpowerforcaseAisgivenby
+8 R 9
+> >
+ℏω c > < | L(z) + R(z) |2dz > =
+P = 0 C S> > R > > (16.115)
+top λ surf : |
+R(z)
+|2 +|
+L(z)
+|2] |
+dz
+;
+andforcaseB:
+8 R 9
+> >
+ℏω v > < | L(z) + R(z) |2dz > =
+P = (1 − r ) g C S> > R > > (16.116)
+top top λ surf : |
+R(z)
+|2 +|
+L(z)
+|2] |
+dz
+;
+16.8.4 A common grating structure
+We are going to solve for a commonly used grating structure with the following
+indexdistribution(seeFig. 16.1).
+
+
+=== PAGE 339 ===
+16.8CoupledWaveEquationsForSecondOrderGrating 337
+n(z)
+n
+z
+c/2
+a/2
+b/2
+Figure16.1: Schematicsofacommongratingstructure.
+∆ = ∆ / < < /
+n(z) n 2; 0 z a 2
+∆
+2 n
+∆ = ∆ / − − / / < < / + /
+n(z) n 2 (z a 2); a 2 z a 2 c 2
+c
+∆ = −∆ / / + / < < / + / + /
+n(z) n 2; a 2 c 2 z a 2 c 2 b 2 (16.117)
+∆ = ∆ ζ β + ζ β
+n(z) n[2 cos( z) 2 cos(2 z)] (16.118)
+1 0 2 0
+where
+β = 2π
+0 a+c+b
+R
+a/2+c/2+b/2
+β
+Integratetheaboveequationby cos( z)dztoobtain:
+0
+0
+
+
+=== PAGE 340 ===
+338 PICS3D-SPECIFICMODELSI:LongitudinalModeling
+Z
+a/2+c/2+b/2
+∆ β
+n(z)cos( z)dz
+0
+Z0
+a/2
+= ∆ / β
+n 2cos( z)dz
+0
+Z0 (cid:20) (cid:21)
+a/2+c/2 ∆
+2 n
++ ∆ / − − / β
+n 2 (z a 2) cos( z)dz
+0
+c
+Za/2
+a/2+c/2+b/2
++ −∆ / β
+( n 2)cos( z)dz
+0
+a/2+c/2
+(cid:12)
+1
+(cid:12) (cid:12)a/2
+= ∆ / β (cid:12)
+n 2 sin( z)(cid:12)
+β 0
+(cid:20) 0 (cid:21) 0 (cid:12)
+∆
+n 1
+(cid:12) (cid:12)a/2+c/2
++ ∆ / + β (cid:12)
+n 2 a sin( z)(cid:12)
+β 0
+c
+0 a/2 (cid:12)
+2
+∆
+n 1
+(cid:12) (cid:12)a/2+c/2
+− β β + β (cid:12)
+[( z)sin( z) cos( z)](cid:12)
+c β2 0 0 0
+0 (cid:12)
+a/2
+1
+(cid:12) (cid:12)a/2+c/2+b/2
+− ∆ / β (cid:12)
+n 2 sin( z)(cid:12) (16.119)
+β 0
+0 a/2+c/2
+Ourresultisasfollows:
+Z
+a/2+c/2+b/2
+∆ β
+n(z)cos( z)dz
+0
+0
+1
+= ∆ / β /
+n 2 sin( a 2)
+β 0
+(cid:20) 0 (cid:21)
+∆
+n 1
++ ∆ / + β / + / − β /
+n 2 a [sin( (a 2 c 2)) sin( a 2)]
+β 0 0
+c
+0
+∆
+2 n 1
+− β / + / β / + / − β / β /
+[ (a 2 c 2)sin( (a 2 c 2)) ( a 2)sin( a 2)
+c β2 0 0 0 0
+0
++ β / + / − β /
+cos( (a 2 c 2)) cos( a 2)]
+0 0
+1
+− ∆ / β / + / + / − β / + /
+n 2 [sin( (a 2 c 2 b 2)) sin( (a 2 c 2))] (16.120)
+β 0 0
+0
+ζ
+Wederivetheexpressionfor here.
+1
+Z Z
+∆ n(z)cos( β z)dz = ∆ n2 ζ cos2( β z)dz (16.121)
+0 1 0
+
+
+=== PAGE 341 ===
+16.8CoupledWaveEquationsForSecondOrderGrating 339
+Z
+a/2+c/2+b/2
+cos2( β z)dz = (a / 2 + c / 2 + b / 2) / 2 (16.122)
+0
+0
+Z
+∆ β = ∆ ζ / + / + /
+n(z)cos( z)dz n (a 2 c 2 b 2) (16.123)
+0 1
+Z
+1
+ζ = ∆ β
+n(z)cos( z)dz (16.124)
+1 ∆ / + / + / 0
+n(a 2 c 2 b 2)
+Similarly,
+Z
+a/2+c/2+b/2
+∆ β
+n(z)cos(2 z)dz
+0
+0
+1
+= ∆ / β /
+n 2 sin(2 a 2)
+β 0
+2
+(cid:20) 0 (cid:21)
+∆
+n 1
++ ∆ / + β / + / − β /
+n 2 a [sin(2 (a 2 c 2)) sin(2 a 2)]
+β 0 0
+c 2
+0
+∆
+2 n 1
+− β / + / β / + / − β / β /
+[2 (a 2 c 2)sin(2 (a 2 c 2)) (2 a 2)sin(2 a 2)
+c 2 β2 0 0 0 0
+0
++ β / + / − β /
+cos(2 (a 2 c 2)) cos(2 a 2)]
+0 0
+1
+− ∆ / β / + / + / − β / + /
+n 2 [sin(2 (a 2 c 2 b 2)) sin(2 (a 2 c 2))] (16.125)
+β 0 0
+2
+0
+Z
+1
+ζ = ∆ β
+n(z)cos(2 z)dz (16.126)
+2 ∆ / + / + / 0
+n(a 2 c 2 b 2)
+=
+Inthespecialcaseofc 0:
+Z
+a/2+b/2
+∆ β
+n(z)cos( z)dz
+0
+0
+∆
+n
+= π / +
+sin( a (a b)) (16.127)
+β
+0
++ +
+1 a b c
+ζ = π / +
+sin( a (a b)) (16.128)
+1 / + / + / π
+(a 2 c 2 b 2) 2
+1
+ζ = π / +
+sin( a (a b)) (16.129)
+1 π
+
+
+=== PAGE 342 ===
+340 PICS3D-SPECIFICMODELSI:LongitudinalModeling
+Z
+1
+ζ = ∆ β
+n(z)cos(2 z)dz (16.130)
+2 ∆ / + / + / 0
+n(a 2 c 2 b 2)
+Z
+a/2+c/2+b/2
+∆ β
+n(z)cos(2 z)dz
+0
+0
+1
+= ∆ β /
+n sin(2 a 2) (16.131)
+β 0
+2
+0
+1
+ζ = π / +
+sin(2 a (a b)) (16.132)
+2 π
+2
+In the case of thin grating layer of d with a confining factor for the grating layer
+g
+Γ =
+of ,exp(jk y) 1andwehavethefollowingresults:
+g y
+(cid:18) (cid:19)
+2 π 2
+h
+=
+(
+∆ n)2ζ2Γ
+d
+1 λ 1 g g
+(cid:18) (cid:19)
+2 π 2 1
+= ( ∆ n)2 sin2( π a / (a + b)) Γ d
+λ π2 g g
+(cid:18) (cid:19)
+2 2
+= ( ∆ n)2sin2( π a / (a + b)) Γ d (16.133)
+λ g g
+Z
+π
+2 1
+h = ∆ n ζ (y) ϕ (y)2dy = ∆ nsin(2 π a / (a + b)) Γ (16.134)
+2 λ 2 λ g
+(cid:18) (cid:19)
+2 2
+h / h = λ ∆ nsin2( π a / (a + b))d / sin(2 π a / (a + b)) (16.135)
+1 2 λ g
+2
+h / h = = ∆ nsin2( π a / (a + b))d / [sin( π a / (a + b))cos( π a / (a + b))]
+1 2 λ g
+∆
+2 nd
+= g π / +
+tan( a (a b)) (16.136)
+λ
+TheratioaboveisidenticaltothatderivedinRef. [83].
+16.8.5 Case of thicker grating layer
+In case of thicker grating layer (comparable or greater than wavelength) we need
+ffi
+toevaluatethecouplingcoe cientandsurfurceemittingpowermoreaccurately.
+
+
+=== PAGE 343 ===
+16.93DOpticalAmplifierModel 341
+We need to modify Eqs. 16.114 and 16.133. In both of these equations, the factor
+Γ
+d shouldbereplacedbythefollowingintegral:
+g g
+Z
+Γ
+d
+= | ϕ
+(x
+,
+y)exp[
+−
+jk (y
+−
+y )]dxdy
+|2/
+d (16.137)
+g g y c wid
+where d is the width of the grating layer. The integral is performed over the
+wid
+x-yplaneonthegratingregion. The y isthey-positionwithinthegratingchosen
+c
+suchthatthe2ndterminEq. 16.90iszero. Itisusuallyreasonabletochoose y as
+c
+thecenterofthegrating. Theaboveintegralcanbeperformednumerically.
+16.9 3D Optical Amplifier Model
+PICS3D is ideal for the study of semiconductor optical amplifiers (SOA). The
+ff
+simulationapproachissimilartothatforlasers,withthemaindi erencebeingthe
+presence of an external light source. We assume that this light is input from the
+=
+left facet (z 0), which requires a reformulation of the transfer matrix; in lasers,
+the light source is internal so that round-trip gain is instead evaluated using a
+referencepointinsidethecavity.
+Thismodelcanadditionallybeusedforsuperluminescentdiodes,whicharemod-
+eledasSOAswithnegligibleinputlightsothattheoutputsignalconsistsprimarily
+of amplified spontaneous emission (ASE) rather than an amplified external light
+signal. Note that in normal laser models, the ASE spectrum is usually neglected
+since the spontaneous emission spectrum collapses into a laser line above thresh-
+old.
+Additionally,stand-alonemodulatordevicescanbestudiedwiththismodel: they
+are treated as reverse-biased SOAs, so that the gain becomes negative. In the
+same way, photo-absorbing waveguide devices can be studied. If the Quantum-
+ff
+Confined Stark E ect (QCSE) is present in the device, the self_consistent com-
+mandwillbeneeded.
+To use PICS3D in this manner, the 3d_amplifier_model command is used. Note
+ff
+that at equilibrium, the external light source defined in this model is turned o :
+it must be enabled in the simulation with the scan command, just like any other
+formofdevicebias.
+We also note that this command is exclusively used for the case of an external
+light source. In the case where the amplifier or modulator is integrated into a
+monolithiclasercavity,thelightsourceisinternalizedandtheusuallasertransfer
+matrixmodelshouldbeused.
+
+
+=== PAGE 344 ===
+342 PICS3D-SPECIFICMODELSI:LongitudinalModeling
+16.10 Beam Propagation Method
+All the models described so far in this chapter are based on the separation of
+ϕ ,
+variables performed in Sec. 16.2. That is, the lateral mode profile (x y) changes
+0
+verylittleinthezdirection.
+In cases where this is assumption is not respected (e.g. tapered lasers), the beam
+propagationmethod(BPM)maybeusedtoobtaintheforwardandbackwardfield
+profilesandevaluatetheWronskianandround-tripgain.
+As of version 2009, PICS3D uses a new FEM-BPM method: it will be detailed in
+subsequentrevisionsofthemanual.
+16.11 Device structures
+It is now appropriate to discuss some of the laser structures modeled by PICS3D
+andhowtheycorrespondtotheaboveequations:
+• κ=
+Fabry-Perotlasersarethelimitingcasewhere 0.
+• κ
+Conventional DFB lasers have a real with no z-dependence. Preferably,
+the device should be AR-coated so that the phase contribution at the facets
+canbeneglected.
+• κ Ω
+PhaseShiftedDFBlasersareassumedtohavereal andzero (z)butwith
+a phase shifted section (or a section without gratings) somewhere along the
+waveguide.
+•
+Chirped Grating DFB lasers can be represented by a linear change in z of
+∆β
+. Thiscanberealizedwithchangingthegratingperiodlinearly.
+ch
+•
+Longitudinal Graded Index lasers can be represented by a linear change in
+∆˜
+k.
+•
+DBRlaserscanbeconsideredasaspecialcaseofDFBlaserswithnograting
+intheactivesection. Thepassivemirrorsectionhasaregulargratingwitha
+lowmaterialgain. Insuchacase,morethanonematerialsegmentmayneed
+tobedefined.
+• / κ
+Gain LossCoupledDFBlaserscanbeconsideredashavingcomplex .
+•
+Taperedstructureswithlongitudinalvariationofthecrosssectionandopti-
+calconfinementofthelaseraremodeledwiththebeampropagationmethod
+(BPM).
+
+
+=== PAGE 345 ===
+16.12SlopeEfficiencyIssues: 3Dvs. 2DSimulation 343
+PICS3Dprovideseverypossibilityofdefiningvariousvariableswithintheframe-
+κ . .
+work of the coupled wave equation. It is interesting to note that a complex (ie,
+ff κ
+gain coupled structure) has a similar (but not identical) e ect on as changing
+Ω
+the phase (z) (chirp grating). This is consistent with the well known fact that
+g
+gaincoupling,chirpgratingandphaseshiftingallgivesimilarresultsintheemis-
+sion characteristics of the laser and help move the main emission peak into the
+spectrumbandgap.
+ffi
+16.12 Slope E ciency Issues: 3D vs. 2D Simulation
+16.12.1 Introduction
+Forlaserdiodeswithstronglongitudinalvariationorwavelength-dependentfeed-
+backmechanisms,suchasDFBandDBRlasers,3Dsimulationisalwaysnecessary.
+However, for Fabry-Perot (FP) lasers, it would be interesting to compare 2D and
+3Dmodelofpoweremissioncharacteristics. Tobemorespecific,weareinterested
+ffi
+incomparingtheslopee ciencyofthetwomodelsandtrytogetsomeinsightas
+towhen&whya3Dmodelwouldbewarrantedforthesedevices.
+In the following discussion, we assume the laser has been biased well-above
+threshold,withstimulatedemissionasthedominantrecombinationterm.
+LetusrecallpoweremissionmodelsinLASTIP(2Dmodel)foraFabry-Perotlaser.
+α
+Weusethemirrorloss :
+m
+1
+α = −
+ln[R R ] (16.138)
+m 1 2
+2L
+whereListhecavitylength;R andR arethefacetpowerreflectivities.
+1 2
+Followingstandardpractice,our2DsimulatorLASTIPcomputesthepoweremit-
+ted (P ) from the laser diode as the photon number in the cavity (S) times the
+e
+mirrorlossandphotonenergy:
+= α ℏω
+P v S (16.139)
+e g m
+where the group velocity of light within the laser (v ) is used to convert photon
+g
+densityintoaphotonflux.
+Ina2Dsimulation,thereisnoexplicitpropagation,whichisequivalenttoasserting
+that the modal optical gain and current injection are uniform in the z-dimension.
+Using our previous assumption that stimulated emission is the dominant recom-
+binationterm,theinjectedpowercanbewrittenas:
+= ℏω
+P v g P (16.140)
+inj g m tot
+

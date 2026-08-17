@@ -1,0 +1,1751 @@
+=== PAGE 345 ===
+16.12SlopeEfficiencyIssues: 3Dvs. 2DSimulation 343
+PICS3Dprovideseverypossibilityofdefiningvariousvariableswithintheframe-
+κ . .
+work of the coupled wave equation. It is interesting to note that a complex (ie,
+ff κ
+gain coupled structure) has a similar (but not identical) e ect on as changing
+Ω
+the phase (z) (chirp grating). This is consistent with the well known fact that
+g
+gaincoupling,chirpgratingandphaseshiftingallgivesimilarresultsintheemis-
+sion characteristics of the laser and help move the main emission peak into the
+spectrumbandgap.
+ffi
+16.12 Slope E ciency Issues: 3D vs. 2D Simulation
+16.12.1 Introduction
+Forlaserdiodeswithstronglongitudinalvariationorwavelength-dependentfeed-
+backmechanisms,suchasDFBandDBRlasers,3Dsimulationisalwaysnecessary.
+However, for Fabry-Perot (FP) lasers, it would be interesting to compare 2D and
+3Dmodelofpoweremissioncharacteristics. Tobemorespecific,weareinterested
+ffi
+incomparingtheslopee ciencyofthetwomodelsandtrytogetsomeinsightas
+towhen&whya3Dmodelwouldbewarrantedforthesedevices.
+In the following discussion, we assume the laser has been biased well-above
+threshold,withstimulatedemissionasthedominantrecombinationterm.
+LetusrecallpoweremissionmodelsinLASTIP(2Dmodel)foraFabry-Perotlaser.
+α
+Weusethemirrorloss :
+m
+1
+α = −
+ln[R R ] (16.138)
+m 1 2
+2L
+whereListhecavitylength;R andR arethefacetpowerreflectivities.
+1 2
+Followingstandardpractice,our2DsimulatorLASTIPcomputesthepoweremit-
+ted (P ) from the laser diode as the photon number in the cavity (S) times the
+e
+mirrorlossandphotonenergy:
+= α ℏω
+P v S (16.139)
+e g m
+where the group velocity of light within the laser (v ) is used to convert photon
+g
+densityintoaphotonflux.
+Ina2Dsimulation,thereisnoexplicitpropagation,whichisequivalenttoasserting
+that the modal optical gain and current injection are uniform in the z-dimension.
+Using our previous assumption that stimulated emission is the dominant recom-
+binationterm,theinjectedpowercanbewrittenas:
+= ℏω
+P v g P (16.140)
+inj g m tot
+
+
+=== PAGE 346 ===
+344 PICS3D-SPECIFICMODELSI:LongitudinalModeling
+Thelasingconditionrequiresthat:
+= α +α
+g (16.141)
+m0 i m
+α
+where istheinternalmaterialloss.
+i
+ffi
+Thee ciencycanthusbewrittenas,
+α
+P
+η = e =
+(1
++ i
+)
+−1 =
+(1
++
+F )
+−1
+(16.142)
+2D α r
+P
+inj m
+whereF istheratiobetweentheinternallossandthemirrorloss.
+r
+For the convenience of later discussions, for 2D simulations this loss ratio can be
+expressedas:
+α
+2L
+= − i
+F (16.143)
+r2D
+ln[R R ]
+1 2
+16.12.2 3D simulation: general consideration
+Now let use examine the situation in 3D simulation with consideration of lon-
+gitudinal spatial hole burning, defined here as gain and index variation in the
+z-directioncausedbyinhomogeneousstimulatedrecombination.
+InthecaseofaFPlaserwithuniformalongthecavity,anyvariationinopticalgain
+mustbeaccompaniedbyvariationinwaveintensitywhenthelaseriswellabove
+threshold[seeEq. (16.140)].
+In the following derivation, we neglect the photon energy and group velocity
+ffi
+terms since they cancel out when doing the ratio for the e ciency. All power
+definitionsshouldthereforebeconsideredexpressionsofphotondensity.
+We separate the linear power density in an arbitrary laser into right-going and
+left-goingwaves:
+= +
+P (z) P (z) P(z) (16.144)
+tot r l
+These waves obey cavity boundary conditions so that on the inside of each facet,
+wehave:
+=
+P (0) P(0)R
+r l 1
+=
+P(L) P (L)R (16.145)
+l r 2
+,
+withR R astheleftandrightfacetpowerreflectivities.
+1 2
+Aftersome algebraic manipulation, these boundary conditions allow us to define
+theoutputpowerintermsoftheinternalpowerdistribution:
+= − + −
+P P(0)(1 R ) P (L)(1 R )
+e l 1 r 2
+− −
+1 R 1 R
+= 1 + 2
+P (0) P (L) (16.146)
+tot + tot +
+1 R 1 R
+1 2
+
+
+=== PAGE 347 ===
+16.12SlopeEfficiencyIssues: 3Dvs. 2DSimulation 345
+By definition of gain and loss, we have the following relation if we neglect any
+couplingbetweentheleftandright-goingwaves.
+dP
+r = −α
+(g (z) (z))P
+m i r
+dz
+dP
+l = − −α
+(g (z) (z))P (16.147)
+m i l
+dz
+The power injection for the right-going wave through stimulated emission is as
+follows:
+Z Z !
+L L dP (z)
+= r +α
+P (z)g (z)dz (z)P (z) dz
+r m i r
+dz
+0 Z0
+L
+= α + −
+(z)P (z)dz P (L) P (0) (16.148)
+i r r r
+0
+where only the definition of Eq. 16.147 is used and no assumptions of uniformity
+inanyquantity(asidefromthegroupvelocity)ismade.
+Inordertowriteanexpressionforthetotalinjectionpowerinthelasercavity,we
+derive a similar expression for the power injection of the left-going wave. When
+bothexpressionsareused,thisgivesus:
+Z
+L
+=
+P P (z)g (z)dz
+inj tot m
+Z0
+L
+= α + − + −
+P (z) (z)dz P (L) P(L) P(0) P (0)
+tot i r l l r
+Z0
+L
+= α +
+P (z) (z)dz P (16.149)
+tot i e
+0
+where the emission power term P arises naturally out of the application of the
+e
+internalfacetboundaryconditions.
+ffi
+Therefore, we obtain the following expression of e ciency for a general laser
+diode:
+η =
+(1
++
+F )
+−1
+(16.150)
+3D r3D
+where R
+α
+P (z)dz
+= i tot
+F (16.151)
+r3D
+P
+(0)1−R1 +
+P
+(L)1−R2
+tot 1+R1 tot 1+R2
+/ ff
+Pleasenotethattheabovederivationneglectsanygrating couplinge ects. How-
+ffi
+ever,itcanbeshownthatifthecouplingcoe cientisreal-valued,thentheformula
+in Eq. 16.151 applies to any type of laser (including FP, DFB, DBR and VCSEL),
+withlongitudinalvariationsofanyquantity.
+
+
+=== PAGE 348 ===
+346 PICS3D-SPECIFICMODELSI:LongitudinalModeling
+Thisexpressionleadstosomeusefulconclusions. Supposethatwefixthephoton
+densityatthefacetsinordertocomparelaserswiththesameoutputpower.
+Iftheintensityprofiledipsinthemiddleofthecavity(suchasinaFPlaser),then
+byvirtueoftheendpointsbeingfixed,theintegralinthenumeratorwillbesmall
+ffi
+andthusleadtoahighere ciency.
+/
+However,ifthepowerpeaksinthemiddleofthecavity(suchasin1 4wavelength
+shifted DFB laser and VCSEL ) then the integral in the numerator rises and the
+ffi
+laserwillbelesse cient.
+16.12.3 Fabry-Perot laser with uniform gain
+We shall show that for FP laser with uniform gain, Eq. 16.151 reduces to our
+standard2DexpressioninEq.16.143.
+= =
+For the sake of simplicity, we assume that R R R . If the gain is uniform in
+1 2
+thelongitudinaldirection,wecanwritethewaveintensityasfollows:
+(cid:8) (cid:9)
+= + −
+P (z) P exp[gz] exp[g(L z)] (16.152)
+tot 0
+= −α
+where gisthenetmodalgain: g g .
+m i
+TheintegralinthenumeratorofEq.16.151becomes:
+Z
+L
+α = α − /
+P (z)dz 2 P [exp(gL) 1] g (16.153)
+i tot i 0
+0
+= α = −
+Usingthelasingcondition gL L ln(R),weobtain:
+m
+Z
+L α −
+1 R
+α = i
+P (z)dz 2P (16.154)
+i tot 0α
+R
+0 m
+WenoticethatinthedenominatorofEq.16.151,
++
+R 1
+= = + =
+P (0) P (L) P [1 exp(gL)] P (16.155)
+tot tot 0 0
+R
+Therefore,weobtainthefollowingresultsforFPlaserunderuniformgain:
+R
+α
+P (z)dz
+= i tot
+F
+r3D − / +
+2P (0)(1 R) (1 R)
+tot
+2P
+α
+i
+1−R
+= 0α m R
+2P
+1−R
+0 R
+α
+= i
+(16.156)
+α
+m
+
+
+=== PAGE 349 ===
+16.12SlopeEfficiencyIssues: 3Dvs. 2DSimulation 347
+Wave Intensity
+P (z)
+tot
+Optical Gain
+z
+Figure16.2: SchematicsofvariationofpowerandgainwithinaFabry-Perotlaser.
+whichisexactlytheexpressionweuseinthe2Dmodel.
+16.12.4 Fabry-Perot laser with non-uniform gain
+Inthissubsection,weallowtheopticalgaininFPlasertovary. Ingeneral,thereis
+no analytical expression if the net modal gain is allowed to vary along the cavity
+ff
+but we can assume a reasonable form this variation in order to study its e ect on
+laseremissioncharacteristics.
+We thus assume the following parabolic variation of the net optical gain (see
+Fig.16.2):
+(cid:18) (cid:19)(cid:18) (cid:19)
+2 L 2
+= +∆ −∆ −
+g(z) g g g z (16.157)
+0
+L 2
+The optical power of the right-going wave can be expressed as follows by using
+thedefinitionofopticalgaininEq.16.147andintegratingbyparts.
+! " #
+(cid:18) (cid:19) (cid:18) (cid:19) (cid:18) (cid:19)
+P (z) ∆ g 2 2 L 3 L 3
+r = +∆ − − +
+ln (g g)z z (16.158)
+0
+P (0) 3 L 2 2
+r
+Bysymmetryconsideration,wecanwritedownsimilarexpressionfortheoptical
+poweroftheleft-goingwave.
+Thelasingconditionbecomes:
+Z
+L
+= −
+g(z)dz lnR (16.159)
+0
+
+
+=== PAGE 350 ===
+348 PICS3D-SPECIFICMODELSI:LongitudinalModeling
+or
+1
++ ∆ / = −
+g 2 g 3 lnR (16.160)
+0
+L
+whichistobecomparedwiththecaseofuniformgain: g
+= −1lnR.
+0 L
+Sincethestimulatedrecombinationisdominantabovethresholdandbyassuming
+uniform current injection, we require that the product of gain and total optical
+power is also uniform. This requirement cannot be rigidly enforced for parabolic
+gain variation but we believe it will be reasonable to at least require that the
+productofgain-powerbeequalatfacetsandatthemiddlepointofthecavity:
+(cid:18) (cid:19)(cid:20) (cid:18) (cid:19) (cid:18) (cid:19)(cid:21)
+L L L
++ = +
+g(0)[P (0) P(0)] g P P (16.161)
+r l r l
+2 2 2
+Notingthat: (cid:20) (cid:18) (cid:19)(cid:21)
+L
+= + + ∆
+P (0) P 1 exp g L 2 g (16.162)
+r 0 0
+3
+and (cid:18) (cid:19) (cid:18) (cid:19) (cid:20)(cid:18) (cid:19) (cid:21)
+L L 2 L
+= = + ∆
+P P P exp g g (16.163)
+r l 0 0
+2 2 3 2
+Eq.16.161becomes:
+(cid:20) (cid:18) (cid:19)(cid:21) (cid:20)(cid:18) (cid:19) (cid:21)
+L 2 L
++ + ∆ = +∆ + ∆
+g 1 exp g L 2 g 2(g g)exp g g (16.164)
+0 0 0 0
+3 3 2
+UsingthelasingconditioninEq.16.160,theabovebecomes:
+√
++ = +∆
+g (1 R) 2(g g) R (16.165)
+0 0
+Combining the lasing condition in Eq. 16.160 with with Eq. 16.165, we obtain the
+followingsolutionofLSHB undertheassumptionofparabolicgainvariation:
+" √ #
+−1
+1 2 2 R
+∆ g = − lnR × + √ (16.166)
+L 3 1 + R − 2 R
+1 2
+= − − ∆
+g lnR g (16.167)
+0
+L 3
+HavingsuccessfullysolvedthepowerdistributionwithintheFPlaserwithLSHB,
+ffi
+wemaynowproceedtocomputethequantume ciencyusingEq(16.151):
+R
+α L
+P (z)dz
+F = i 0 tot
+r3D
+2P
+(0)1−R
+totZ 1+R (
+(cid:18) (cid:19)
+"
+(cid:18) (cid:19) (cid:18) (cid:19)
+# )
+α R L ∆ g 2 2 L 3 L 3
+= i +∆ − − +
+exp (g g)z z dz (16.168)
+− 0
+1 R 3 L 2 2
+0
+
+
+=== PAGE 351 ===
+16.12SlopeEfficiencyIssues: 3Dvs. 2DSimulation 349
+Wefinditconvenienttowritetheaboveintegralinthefollowingform:
+Z
+α L
+R 2
+= i + ∆ +
+F exp[(g g)z h(z)]dz (16.169)
+r3D − 0
+1 R 3
+0 (cid:18) (cid:19) " (cid:18) (cid:19) (cid:18) (cid:19) #
+∆ gz ∆ g 2 2 L 3 L 3
+= − − +
+h(z) z (16.170)
+3 3 L 2 2
+∆
+Sinceh(z)isasmallquantity(linearin g)equaltozeroatfacetandatthemid-point
+ofthecavity,wemayusethefollowingTaylorexpansion:
+Z (cid:20)(cid:18) (cid:19) (cid:21)
+α L
+R 2
+= i + ∆
+F exp g g z dz
+r3D − 0
+1 R 3
+Z0 (cid:20)(cid:18) (cid:19) (cid:21)
+α L
+R 2
++ i + ∆
+exp g g z h(z)dz (16.171)
+− 0
+1 R 3
+0
+= +
+term1 term2 (16.172)
+Wefindthefirsttermabovereducestousualratiobetweeninternallossandmirror
+loss:
+Z (cid:20)(cid:18) (cid:19) (cid:21)
+α L
+R 2
+= i + ∆
+term1 exp g g z dz (16.173)
+− 0
+1 R 3
+0 (cid:26) (cid:20)(cid:18) (cid:19) (cid:21) (cid:27)
+α
+R 2
+= (cid:16)i (cid:17) + ∆ −
+exp g g L 1 (16.174)
+0
+(1
+−
+R) g
++ 2∆
+g
+3
+0 3
+Usingthelasingconditionagain,
+α −
+R 1 R
+= − i
+term1
+(1 − R)1lnR R
+L
+α
+= − i
+1lnR
+L
+α
+= i
+(16.175)
+α
+m
+The second term term2 may be regarded as a correction term to the standard
+ffi
+mirrorlossmodelforthecomputationofquantume ciency. Itmaybeevaluated
+analytically. Since the final expression is rather lengthy, we shall only plot the
+= . α =
+numericalresultsofthecorrectiontermforatypicalcaseofR 032and 1000
+i
+/
+1 minFig. 16.3.
+Pleasenotethatthecorrectionterm,term2,isproportionaltotheinternalloss. This
+correctiontermbecomeslargerasthecavitylengthincreases,whichisexpectedfor
+atermthataccountsforlongitudinalvariations. Forashortlaser,themagnitudeof
+the correction term relative to the conventional mirror loss in FP laser is typically
+around0.1%andcanusuallybeneglected.
+
+
+=== PAGE 352 ===
+350 PICS3D-SPECIFICMODELSI:LongitudinalModeling
+0.0018
+0.0016
+0.0014
+0.0012
+0.001
+0.0008
+0.0006
+0.0004
+0.0002
+0 500 1000 1500 2000 2500 3000 3500 4000 4500 5000
+noitcerroC
+.ffE
+esrevnI
+Cavity Length (um)
+ffi
+Figure 16.3: Correction to the inverse e ciency of a Fabry Perot laser due to
+longitudinal spatial hole burning. The facet power reflectivity is taken to be 0.32.
+/
+Theinternallossissettobe10001 m
+16.12.5 Conclusions
+In conclusion, we have derived a convenient formula for computation of slope
+ffi
+e ciencyoflasingcharacteristicsfromagivenpowerdistribution. Itisconvenient
+ffi
+tobeusedtoanalyzetheemissione ciencyofanarbitrarylaserundercondition
+oflongitudinalspatialholeburning(LSHB).ForaFabry-Perotlaser,useofmirror
+/ /
+loss(1 L)ln(1 R)isequivalenttoamodelofpowerdistributionwithuniformgain.
+ff ffi
+The e ect of LSHB on the e ciency of the standard mirror is in general rather
+small(about0.1%)foraFabry-Perotlaser. Thus,asfarasFPlasersareconcerned,
+2D simulation (as in LASTIP) and 3D simulation (as in PICS3D) should yield the
+sameresultforpracticalpurposes.
+In the case of a phase shifted DFB, the LSHB influence can be very significant. In
+ff
+that case both the gain distribution and index distribution will greatly a ect the
+mirrorloss. Thusitisimportanttoperformlongitudinalmodelling.
+However, there are exceptions to the above guidelines. In particular, high-power
+Fabry-Perot lasers often deserve full 3D simulation and consideration of LSHB
+ff
+e ects:
+•
+TheyhaveamuchlongercavitythantypicalFabry-Perotlasers.
+•
+Theyareoftendesignedtohaveasymmetricfacets,sothattheoutputpower
+is primarily emitted from one side. This, coupled with the longer cavity
+
+
+=== PAGE 353 ===
+16.12SlopeEfficiencyIssues: 3Dvs. 2DSimulation 351
+length,automaticallyimpliesthattheinternalpowerdistributionisstrongly
+ff
+asymmetricandthatLSHBe ectswillbeimportant.
+•
+High output powers also mean a large internal photon density, such that
+power-dependent loss terms such as two-photon absorption much be con-
+ff
+sidered. Thesee ectsintroducelongitudinallossvariationwhichreinforces
+LSHB: the longitudinal net gain profile now depends on more than just the
+longitudinalcarrierdistribution.
+The author of this section (Simon Li) wishes to acknowledge helpful discussions
+onthetopicoflongitudinalspatialholeburningwithRichardSchatzandSebastian
+Mogg,RoyalInstituteofTechnology,Stockholm.
+
+
+=== PAGE 354 ===
+352 PICS3D-SPECIFICMODELSI:LongitudinalModeling
+
+
+=== PAGE 355 ===
+hapter
+C 17
+PICS3D-SPECIFIC MODELS II:
+VCSEL Theory
+17.1 Introduction
+In the previous chapter, we introduced the longitudinal model used by PICS3D
+foredge-emittingdevices. ForVCSELs,muchofthetheoryremainsthesamebut
+thereareafewimportantchangesthatneedtobediscussed.
+The first major change is that the equations must be solved in the cylindrical
+coordinate system shown in Fig. 17.1. For a more detailed explanations on how
+ff
+the drift-di usion and Poisson equations are altered by the change in coordinate
+system,theuserisreferredtoSec.6.2.
+17.2 Lateral Modes: Fiber-Like Index Model
+TheexactsolutionoftheopticalmodeinVCSELinvolvesthevectorwavesolution
+of a microcavity with complex boundaries. To see the complexity involved in a
+vectorwavesolutionofevenasimplecylindricalboundary,thereaderisreferred
+to Ref. [113]. Consequently, we have decided to start our VCSEL model from a
+simplescalarwavesolutionandbuildupourcapabilitiesinlaterversions.
+We consider the solution of a scalar wave propagating in the axial direction of a
+VCSELstructure(seethefirstandthesecondstructureinFig.17.2. Weassumethat
+the wave distribution in the VCSEL is such that the top cylinder determines the
+opticalconfinementinthelateraldirectionandthelowercylinderonlycontributes
+ff
+an e ective index change in the lateral cladding (outer core). Essentially, we
+approximatetheopticalconfinementproblemtothatofanopticalfiber.
+
+
+=== PAGE 356 ===
+354 PICS3D-SPECIFICMODELSII:VCSELTheory
+y (z )
+r
+0
+x (r)
+Figure17.1: CylindricalcoordinatesystemusedtosolveVCSELequations
+We shall call this approximation a fiber-like index model in vertical structures
+[see the third structure in Figure 17.2]. Under this approximation, the problem is
+reduced to a simple one-dimensional equation with cylindrical boundaries and a
+closed-formsolution[114].
+Thebasicscalarwaveequationisgivenby:
+!
+1
+∂ ∂
+W 1
+∂2W ∂2W
+r + + + k2W = 0 . (17.1)
+r ∂ r ∂ r r2 ∂θ2 ∂ z2
+r
+wherez isintheaxialdirectionandcoincideswiththey-axis.
+r
+Ithasthefollowingsimplesolutionwithcylindricalsymmetry:
+= −
+W W (r)exp( jk z ) (17.2)
+r z r
+whereW (r)issolvedfromtheBesselequationoforderm:
+r
+!
+d2W 1dW m2
+r + r + k2 − k2 − W = 0 . (17.3)
+dr2 r dr z r2 r
+UsingthewellestablishedBesselandHankelfunctions,thescalarwaveequation
+ffi
+can be solved e ciently in PICS3D. The fiber-like solution is the default lateral
+opticalmodelusedinPICS3D.
+
+
+=== PAGE 357 ===
+17.3EffectiveIndexMethodforVCSELs 355
+n
+n
+1
+1 > n 2
+V
+FI
+n
+C
+b i
+d
+S
+ee
+E
+rx
+L
+i l -
+M
+k eo
+d e l
+ff
+Figure17.2: Schematicofhowthefiber-likee ectiveindexapproximationisused
+foracylindricalVCSEL.
+ff
+17.3 E ective Index Method for VCSELs
+17.3.1 Introduction
+In the previous section we describe a fiber-like solution for the lateral optical
+mode of a VCSEL; such a model has the advantage of being easy to interpret and
+handle. However, when the VCSEL structure becomes more complex, especially
+whenthereisoxideconfinementlayer,amoresophisticatedlateralmodelbecomes
+necessary.
+ff
+The VCSEL E ective Index Method (VCSEL-EIM) approximation was first pro-
+posed by Hadley[115] and has been successfully used to calculate the optical
+modes of more complicated VCSEL structures. In PICS3D, we use this VCSEL
+EIMcalculationmethodforthecalculationofthelateralopticalmodesinVCSELs
+anditespeciallyrecommendedforstructureswithanoxideconfinementaperture.
+17.3.2 Models
+ThescalarwaveequationinVCSELsisdescribedbythefollowingwaveequation:
+ϵ (r , z) ∂2F(r , z ,ϕ, t)
+∇2F(r ,
+z
+,ϕ,
+t)
+− =
+0
+,
+(17.4)
+c2 ∂ t2
+
+
+=== PAGE 358 ===
+356 PICS3D-SPECIFICMODELSII:VCSELTheory
+ϵ ,
+where (r z) is the relative permittivity, c is the speed of light in vacuum. The
+solutionofaboveelectricfieldcanbeseparatedintolongitudinal(E(z))andlateral
+i
+,ϕ,
+(E(r t))componentsinVCSELs:
+F(r
+,
+z
+,ϕ,
+t)
+≈
+E(z)E(r
+,ϕ,
+t)e
+−iωt,
+(17.5)
+i
+ff
+where i denotes a region in the transverse direction in which the e ective index
+ω
+is calculated, and is the angular oscillation frequency of the light. Substituting
+0
+equation(17.5)into(17.4)andwriting ∇2 = ∂2/∂ z2 +∇2,wehave:
+⊥
+∂2E(z)
+i E(r ,ϕ, t) + E(z) ∇2E(r ,ϕ, t) +ϵ (r , z)k2E(z)E(r ,ϕ, t)
+∂ z2 i ⊥ i 0 i
+∂
+E(r
+,ϕ,
+t)
+∂2E(r ,ϕ,
+t)
++ ϵ , −ϵ , =
+2i (r z)k E(z) (r z)E(z) 0 (17.6)
+i 0 i
+c
+∂
+t
+i i c2∂2t
+= ω / ,ϕ,
+where k c. By neglecting the second derivative of E(r t) with respect to
+0 0
+time(slowly-varyingenvelopeapproximation)andwritingtherelativepermittiv-
+ϵ , ϵ
+ity (r z)asthesumofastructuralcomponent (z)andanonstructural(depending
+i
+ϵ
+onthecarrierconcentration,temperatureetc.) component (r),wecangetthefol-
+r
+,ϕ,
+lowingtwoequationsforE(z)(i.e. theopticalstandingwavepattern)andE(r t)
+i
+ff
+(i.e. thelateralmode)underthee ectiveindexapproximation:
+∂2E(z)
+i + k2(1 −ξ ) ϵ (z)E(z) = 0 , (17.7)
+∂ z2 0 i i i
+∂ ,ϕ,
+E(r t) ic
+= 0
+[
+∇2 + k2∆ϵ
+(r)]E(r
+,ϕ,
+t)
+,
+(17.8)
+∂ t 2k ⟨ϵ⟩ ⊥ 0 eff
+R R 0 i
+⟨ϵ⟩ = ∗ ϵ / ∗ ∆ϵ = ξ⟨ϵ⟩+ϵ
+where E (z) (z)E(z)dz E (z)E(z)dz and (r) (r). c is the
+i i i i i i eff i i r 0
+ξ ff
+speedoflight. Therealpartoftheeigenvalue isrelatedtothee ectiveindexand
+i
+the imaginary part is related to the cavity loss (or gain). Using the conventional
+LP notation, the transverse component of the electrical field can be written in
+mn
+thefollowingway:
+E (r
+,ϕ,
+t)
+∝ Ψ
+(r
+,ϕ,
+t)e
+−i∆ω mnt,
+(17.9)
+mn mn
+Ψ
+where istheslowlyvaryingmodalfielddistributionfunction,andtherealpart
+mn
+∆ω
+of is the deviation of the LP mode from the angular oscillation frequency
+mn mn
+ω
+. For a system with a cylindrical symmetry with respect to the electrical field,
+0
+Ψ
+themodalfielddistributionfunction musthavethefollowingform
+mn
+Ψ
+(r
+,ϕ,
+t)
+≡ Ψ
+(r
+, t)eimϕ.
+(17.10)
+mn mn
+Combining expressions of (17.8)-(17.10) and neglecting the time derivative of the
+Ψ ,ϕ,
+slowlyvaryingmodalfielddistributionfunction (r t),wegetthefollowing
+mn
+eigenvalueequationincylindricalcoordinates:
+" #
+− c 1 ∂ ∂ m2
+0
+r
+− + k2∆ϵ Ψ = ∆ω Ψ .
+(17.11)
+2k ⟨ϵ⟩ r ∂ r ∂ r r2 0 eff mn mn mn
+0 i
+InPICS3D,theequations(17.6)and(17.11)aresolvednumericallytoobtainlateral
+opticalmodesinVCSELs.
+
+
+=== PAGE 359 ===
+17.4LongitudinalModesinVCSEL 357
+17.4 Longitudinal Modes in VCSEL
+Inboththelateralmodelsdescribedearlierinthischapter,wehaveaseparationof
+variables. Thismeansthatlikeinouredge-emittingmodelfromChap.16,wecan
+ff
+solvethelongitudinalfieldprofileseparately. However,therearesomedi erences
+ff
+thatjustifytheuseofadi erentmodeltodoso.
+Recallthatforafirst-ordergrating,theperiodisapproximately:
+λ .
+13
+= ≈ ≈ . µ
+L 02 m
+g × .
+2n 2 32
+/
+ThismeansthatatypicalDFB DBRlasercavitywillhaveseveralthousandgrating
+ff
+periods. Thecombinede ectofthisgratingonthepropagatingwaveisdescribed
+by the coupled mode theory of Sec. 16.5. In this model, it is assumed that the
+gratingisaweakperturbationwithasinusoidalshape.
+ff
+HoweverinaVCSEL(Fig.17.3),thegratingsconsistofmultiplelayersofdi erent
+ff
+materials with a large di erence in refractive indices: using a sinusoidal function
+canberatherinaccurate. WealsonotethatthenumberofgratingsusedinVCSEL
+≈ ×
+isrelativelysmall( 100). Thereforeitismoreconvenienttoapplythe2 2matrix
+methodcommonlyusedinmultiplelayeroptics.
+In the transfer matrix method, (TMM, see also Fig. 17.4), simple matrix elements
+represent propagation within a layer and the interface between layers: these are
+/
+stacked together to build an equivalent transmittance reflectance transfer matrix
+for a stack of layers. This is used to evaluate the round-trip gain and locate the
+positionofthelongitudinalmodes.
+Thebasicmatrixelementsare
+" #
+− β −
+exp[ j (z z )] 0
+1 k (17.12)
+β −
+0 exp[j (z z )]
+1 k
+forpropagationinsidealayerofindexn and
+1
+" #
+/ /
+1 t r t
+1 1 1 (17.13)
+/ /
+r t 1 t
+1 1 1
+ffi
+for the interface between layers. The reflection and transmission coe cients are
+givenby:
+−
+n n
+= 1 2
+r (17.14)
+1 +
+n n
+r1 2
+n 2n
+= 1 2
+t (17.15)
+1 +
+n n n
+2 1 2
+
+
+=== PAGE 360 ===
+358 PICS3D-SPECIFICMODELSII:VCSELTheory
+Light output
+Metal contact
+p-type doped
+DBR mirror
+MQW active region
+n-type doped
+DBR mirror
+Substrate
+Light output
+Figure 17.3: Schematics of surface-emitting lasers of front and back emission,
+respectively.
+N n2
+N-1 n1
+3 n1
+2 n2
+layer 1 nn11
+/
+Figure 17.4: Schematic of a simple multi-layer optical model for DFB DBR grat-
+ings.
+
+
+=== PAGE 361 ===
+17.4LongitudinalModesinVCSEL 359
+For a periodic stack of layers, these matrices are combined using the approach
+suggestedbyMakinoin[116]. Wealsonotethatthismodelcoupleswellwithour
+ff
+earlier lateral models: the lateral e ective index is used in the propagation and
+interfacematrix.
+
+
+=== PAGE 362 ===
+360 PICS3D-SPECIFICMODELSII:VCSELTheory
+
+
+=== PAGE 363 ===
+hapter
+C 18
+PICS3D-SPECIFIC MODELS III:
+Spectrum and Modulation Response
+18.1 Update notes
+PICS3D has been undergoing several important changes in the model in the last
+fewyearsaswetransitionfromanolderquasi-3Dmodelcontrolledbythescan3d
+statementtoafullycoupled3Dmodelbasedontheround-tripgain(RTG).
+Asaresult,therehavebeenseveralimportantmodelchanges: mostoftheinforma-
+tion from the previous two chapters remains unchanged from previous versions
+butthischapterisstillundergoingmajorrevisions. Somesectionsmaybeincom-
+plete or have been temporarily removed while features from the previous model
+arere-implementedunderthenewsystem.
+Hereisabriefsummaryofchanges.
+•
+As of version 2008, PICS3D can no longer process the scan3d statement: all
+inputfilesmustbeconvertedtousetheRTGmodel.
+•
+As of version 2009, PICS3D uses a new more stable rate equation model for
+thelongitudinalmodes. ACmodelnowconsistentwiththatofLASTIP.
+•
+Asofversion2012,theolder(pre-2008)ACmodelderivedbyTromborg[108,
+117, 118] is re-introduced as an “analytical” solution to supplement the ex-
+/
+isting fully coupled analysis. While we believe the AM FM response from
+this model is inferior to our new derivation, the old model allows for noise
+terms (RIN, FN) and second harmonic distortion (SHD) analysis which are
+notsupportedinthefull3Dmodel.
+
+
+=== PAGE 364 ===
+362 PICS3D-SPECIFICMODELSIII:SpectrumandModulationResponse
+18.2 Multi-mode complex pole expansion
+As we discussed in Sec. 16.4, a complex frequency term is used to represent the
+contributionofthespontaneousemissiontothelaserspectrum. Thismeansthatall
+longitudinal modes are zeroes of the Wronskian when evaluated on the complex
+plane.
+Using this approach, we concentrate on getting the stationary multi-mode solu-
+tion of a laser. We neglect any carrier dynamics and note that in Eq. (16.3), the
+ω
+numeratorisonlyweaklydependenton .
+/
+Sincenow1 Wisnon-singularforrealopticalfrequencies,itcanbeexpandedover
+ω /
+thepoles of1 W onthecomplexfrequencyplane:
+i
+X
+1 1
+(cid:17)
+(18.1)
+W dW( ω−ω )
+i dω i
+/ ω ω ω
+The derivative dW d in (18.1) is evaluated for equals , which is one of the
+i
+zerosoftheWronskianonthecomplexplane.
+InApp. E,weshowthattheopticalmodespectrumofalasercanbewrittenas:
+=
+(2
+π
+)
+−1R
+sp,i
+Iω (18.2)
+[( ω−ω re,i )2 +ω2 im,i ]
+where the parameter R sp,i defines the spontaneous emission rate into mode i. It is
+givenby: (cid:20) (cid:21)(cid:20) (cid:21)
+R R
+l
+n(z)n
+|
+Z (z)
+|2dz l|
+Z (z
+′
+)
+|2n(z ′
+)g(z
+′
+)n dz
+′
+g 0 0 sp
+0 0
+R sp,i = c (cid:12) (cid:12)
+(cid:12)
+R
+l
+(cid:12) (cid:12)
+(cid:12)2
+(18.3)
+(cid:12) n(z)n Z2(z)dz(cid:12)
+0 g 0
+Integrating over z, we get the total number of photons in the cavity I p,i in the ith
+mode:
+=
+R sp,i
+I p,i ω (18.4)
+2 im,i
+whichagreeswithresultsfromotherworksintheliterature(see,e.g.,Ref.[108][109]).
+=
+In the above formulas, Z 0 (z) Z 0,i (z) is the solution to the homogeneous scalar
+ω = ω
+wave equation at , v the group velocity, g(z) the modal gain, and n the
+i g sp
+inversion parameter. The expression (18.3) agrees completely with the results in
+Refs.[108][109].
+The above derivation shows that the longitudinal modes can be represented by
+a set of poles on the complex frequency plane. The simulator’s multi-mode cal-
+culation then becomes a task of searching and following such a set of complex
+poles.
+
+
+=== PAGE 365 ===
+18.3ModeSpectrum 363
+18.3 Mode Spectrum
+Once the steady state solution for the complex frequencies is found, we can com-
+pute the emission spectrum of the laser. We start by noting that the modal spec-
+trumofEq.(18.2)isactuallythespectrumforthetotalphotonnumberinthewhole
+cavity.
+For the emission spectrum from each facet, this must be scaled to represent the
+numberofphotonsactuallytransmittedbythatfacet. Togetthelocalphotonflux
+inside the facet, we normalize the forward and backward waRves L(z) and R(z) so
+L =
+that for each longitudinal mode, we have the normalization S(z)dz 1 where
+i
+0
+S(z)
+= |
+L(z
+,
+i)
+|2 +|
+R(z
+,
+i)
+|2.
+i
+We note that L(z) and R(z) are known quantities used to evaluate the round-trip
+gainandtheWronskianduringthesearchforlongitudinalmodes. Thediscretiza-
+tion is chosen so that the device is divided into sections where the optical prop-
+ffi
+agation coe cient is uniform and the fields are sampled on either side of these
+sections.
+For any given facet, we use only the forward or backward flux and correct for
+ffi
+the the facet transmission coe cient. The photon density per unit of angular
+frequencyisthengivenby:
+Sω,left
+= |
+L(0
+,
+i)
+|2(1 −
+R
+left
+)
+[( ω−
+(2
+ω
+π
+r
+)
+e
+−
+,i )
+1
+2
+R
++
+sp,
+ω
+i
+2 im,i ]
+(18.5)
+fortheleftfacetand:
+Sω,right
+= |
+R(L
+,
+i)
+|2(1 −
+R
+right
+)
+[( ω−
+(2
+ω
+π
+r
+)
+e
+−
+,i )
+1
+2
+R
++
+sp,
+ω
+i
+2 im,i ]
+(18.6)
+fortherightfacet.
+Wenotethatthisresultisthe“pure”spectrumofthelaser,beforeanyconvolution
+withthefiniteresolutionofaspectrumanalyzer.
+18.4 Time-DependentSolutionofLongitudinalModes
+Wenowconsideratime-dependentmodelwherethemodeamplitudevariesasa
+resultofanexternaltime-dependentbias. Weassumethattheexternalbiassource
+ω
+has a frequency much smaller than the optical frequency . This assumption is
+reasonablesincethetypicalopticalfrequencyis3 × 1014Hz,whileatypicalexternal
+modulationbiasingsourceisontheorderof10GHz(1 × 1010 Hz).
+
+
+=== PAGE 366 ===
+364 PICS3D-SPECIFICMODELSIII:SpectrumandModulationResponse
+L(z)
+r r
+L R
+R(z)
+r r
+1 2
+z
+Figure18.1: Schematicoftheevaluationofround-tripgaininalaser.
+For any theory of large signal, our requirement is that it must be consistent with
+∆ → ∞
+our model in CW. That is, at t , the equation must reduce to our CW
+theory. Therefore, it is useful for us to expand on our Green’s function results
+fromChap. 16tobuildourtime-dependentmodel.
+18.4.1 Alternative CW Solution of Longitudinal Modes
+Let us consider a laser device as shown in Fig. 18.1. We choose a reference point
+whereboththeleft-andright-goingwaves(L(z),R(z))arenon-zero. Byexamining
+the equivalent reflectivities to the left (r ) and right (r ), we have the following
+L R
+equations:
+= +
+L(z) r R(z) F (18.7)
+R L
+= +
+R(z) r L(z) F (18.8)
+L R
+whereF andF arenoisesourcesterms.
+L R
+ff
+We note that we do not define r and r at this point. They are merely e ective
+L R
+ffi
+reflection coe cients and this derivation hold true no matter which method is
+being used to calculate the mode profiles. We then combine these two equation
+andnotethatbydefinition,theround-tripgainR isequaltotheproductofr and
+g L
+r :
+R
+− = + =
+(1 R
+g
+)R(z) r
+L
+F
+L
+F
+R
+Fω (18.9)
+
+
+=== PAGE 367 ===
+18.4Time-DependentSolutionofLongitudinalModes 365
+As previously shown, the Wronskian is position-independent so the same holds
+trueforR . Wethusre-useourpreviousresultandnotethatunderCWconditions,
+g
+ω
+thelaseroscillatesatthecomplexsolution :
+s
+− ω =
+1 R ( ) 0 (18.10)
+g s
+18.4.2 Longitudinal Mode Transient Model
+ff
+Aswementionedearlier,thetimescaleinvolvedcanbeseparatedintotwodi erent
+ω
+types. Theopticalfrequencycausesthemodestovarywithexp(j t)whiletheslow
+Ω
+externalmodulationcausesamuchslowerchangeexp(j t)inthewaveamplitude.
+ff
+We assume that above time scales are so di erent that they can be treated as
+decoupled.
+Ω
+If we apply an external modulation of exp(j t), the round trip gain as calculated
+by the optical frequency only may not be unity since the photon density must be
+allowed to change with time. However the derivation in the previous section is
+still valid if we assume the reflectivity is not the reflectivity at optical frequency
+but the instantaneous reflectivity at the transient state. That is we can still use
+ω+Ω ff
+R ( )whichincludesthetransiente ect.
+g
+This approximation is consistent with our slow modulation hypothesis. At these
+timescales,thereisenoughtimeforphotonstodoseveralround-tripsinthecavity
+and establish a solution that satisfies both mirror conditions simultaneously just
+likeinourearlierderivationfortheWronskian. However,thesephotonsmaynot
+necessarilybeinequilibriumwiththeslowercarriers.
+In this case, we shall go back to our basic equation and regard the frequency as
+ω+Ω ω >> Ω
+where . Ourbasicequationbecomes:
+− ω+Ω ω+Ω =
+(1 R
+g
+( ))R( ) Fω+Ω (18.11)
+ω ≈
+SinceR ( ) 1,wemakethefollowingsimplification:
+g
+" #
+∂
+ln(R )
+ω+Ω = ω + g Ω
+R ( ) R ( ) 1 (18.12)
+g g ∂ω
+∂
+ln(R )
+≈ ω + g Ω
+R ( ) (18.13)
+g ∂ω
+Wecanderive
+∂ln(Rg)
+bynotingthatforaFPlaser:
+∂ω
+= − +
+R r r exp( j2Lk g L) (18.14)
+g 1 2 r m
+
+
+=== PAGE 368 ===
+366 PICS3D-SPECIFICMODELSIII:SpectrumandModulationResponse
+Applyingthis,weget:
+!
+∂ ln(R ) 2L ∂ g
+g = − + m
+j jL (18.15)
+∂ω ∂ω
+v
+g
+(cid:16) (cid:17)
+wherethegroupvelocityisbewrittenasv
+= ∂kr
+−1
+.
+g ∂ω
+WeassertthatsinceEq.(18.15)isderivedfromtheround-tripgain,itisapplicable
+toanykindoflaser,notjustFabry-Perotcavities. However,therealandimaginary
+ff ffi
+parts on the right-hand side are e ective coe cients only. For example, in a DFB
+ff
+laserLwouldbethee ectivecavitylengthofaparticularlongitudinalmoderather
+theactuallengthofthelaser.
+Bysubstitutionintoourbasicequation,weget:
+" ! #
+∂
+2L g
+− ω + + m Ω ω+Ω =
+1 R
+g
+( ) j jL
+∂ω
+R( ) Fω+Ω (18.16)
+v
+g
+Atthispoint,weassumethatthelaserisoscillatingatthepeakgainwavelengthso
+that
+∂gm ≈
+0. TakingtheinverseFouriertransformtogettheslowtimedependence
+∂ω
+Ω = ∂
+andnoting j ,weobtain:
+∂t
+" #
+∂ ω,
+2L 1 R( t)
+− ω, + ω, =
+1 R
+g
+( t)
+ω, ∂
+R( t) Fω,t (18.17)
+v R( t) t
+g
+p
+= ϕ
+We can use the photon number S(t) to express R S(t)exp(j (t)). From this, we
+get:
+2L 1 ∂ R(t) L 1 ∂ S(t) 2L ∂ϕ (t)
+= +
+j (18.18)
+∂ ∂ ∂
+v R(t) t v S(t) t v t
+g g g
+Ourkeyresultisasfollows:
+" #
+L 1 ∂ S(t) 2L ∂ϕ (t)
+− + + =
+1 R (t) j R(t) F (18.19)
+g ∂ ∂ t
+v S(t) t v t
+g g
+In our simulation, we are not directly concerned with the phase variation but we
+are more interested in the emission frequency. The phase factor can be written as
+ω +ϕ ∆ = −
+exp[j t (t)]. Weconsiderashorttimeinterval t t t .
+0
+ω +ϕ
+Thephaseattimet isgivenby j t (t ). Assumingthefastoscillationfrequency
+0 0 0 0
+doesnotchangesubstantially,thenewphaseis:
+∂ϕ
+(t)
+ω +ϕ + ∆
+j t (t ) t (18.20)
+0 0 ∂
+t
+
+
+=== PAGE 369 ===
+18.4Time-DependentSolutionofLongitudinalModes 367
+Thereforethenewfrequencyshouldbe:
+∂ϕ
+(t)
+ω = ω +
+(t) (18.21)
+0 ∂
+t
+ω
+Our basic equation in terms of S(t) and (t) can be written in a form easy for
+numericalimplementation:
+" #
+∂
+L 1 S(t) 2L
+− + + ω −ω =
+1 R (t) j ( (t) (t )) R(t) F (18.22)
+g ∂ 0 t
+v S(t) t v
+g g
+Theaboveequationleadstothenewoscillationcondition:
+∂
+L 1 S(t) 2L
+− + + ω −ω =
+1 R (t) j ( (t) (t )) 0 (18.23)
+g ∂ 0
+v S(t) t v
+g g
+WehaveimplementedEq.(18.23)inPICS3D:eachlongitudinalmodeisgoverned
+by such an equation. These equations are coupled together in the main Newton
+solver alongside all the other equations (e.g. current continuity) described in
+Chap. 5. This makes PICS3D a full 3D model and is at the heart of what we call
+the“coupledRTGmethod”.
+18.4.3 Comparison with Conventional Photon Rate Equation
+We are going to make sure the above is consistent with the commonly used rate
+equation for a FP laser. In the common textbook model, we are only interested in
+thepropagationofphotons,notfields,andchangesintheemissionfrequencyare
+neglected.
+ff
+If we remove the terms related to these e ects from Eq. (18.23) and rearrange it,
+weget:
+(cid:12) (cid:12)
+(cid:12) (cid:12) L 1 ∂ S(t)
+(cid:12) (cid:12) = +
+R (t) 1 (18.24)
+g ∂
+v S(t) t
+g
+Ifwetakethelogarithmoneachside,weget:
+(cid:12) (cid:12)
+(cid:12) (cid:12)
+(cid:12) (cid:12) = + ∗
+ln R (t) ln(r r ) g L (18.25)
+g 1 2 m
+fortheleftsideand
+!
+∂ ∂
+L 1 S(t) L 1 S(t)
++ ≈
+ln 1 (18.26)
+∂ ∂
+v S(t) t v S(t) t
+g g
+
+
+=== PAGE 370 ===
+368 PICS3D-SPECIFICMODELSIII:SpectrumandModulationResponse
+fortherightside,assuming 1 ∂S(t) ≪ L fortheexpansion.
+S(t) ∂t vg
+/
+Soforslowand orsmall-signalmodulation,weget:
+∂
+L 1 S(t)
++ ∗ =
+ln(r r ) g L (18.27)
+1 2 m ∂
+v S(t) t
+g
+whichisequivalenttoourdesiredexpression:
+(cid:18) (cid:19)
+∂
+1 1 1 S(t)
+− =
+g ln (18.28)
+m ∂
+L r r v S(t) t
+1 2 g
+√
+ffi =
+Note that r1,r2 are field reflection coe cients so a factor of 2 due to r R may
+bepresentinsometextbooks.
+18.5 AC modeling in PICS3D
+Asofversion2009,thenewrateequationmodelinEq.(18.23)isusedforallaspects
+ofPICS3D.ForACmodeling,itjustbecomesonemoreequationtobesolvedand
+ff
+the techniques of Chap. 7 are used. This means that many e ects such as carrier
+transittimesarenowincludedinthemodulationresponse.
+However we note that Eq. (18.23) is complex-valued so there are actually two
+terms. The real part in
+∂S
+gives the amplitude response and, as shown in the
+∂t
+previous section, should reduce to the AM response from LASTIP in the case of a
+ω −ω
+Fabry-Perotlaser. Thesecondtermin (t) (t )producesthefrequencyresponse
+0
+(FM).
+18.6 Analytical model
+Asofversion2012,theolder(pre-2008)ACmodelderivedbyTromborg[108,117,
+118] is re-introduced as an “analytical” solution to supplement the existing fully
+coupled analysis. This solution is based on a transient perturbation of the steady
+state solution but explicitly considers derivatives of the Wronskian rather than
+ff
+lumpingalle ectsintotheround-tripgainaswehavepreviousdone.
+Asaresult,Tromborg’sACmodelreliesonlongitudinalintegralsofthesepertur-
+bation terms rather than coupling directly to the sparse AC solver used for the
+ff
+drift di usion equations. We thus consider this an “analytical” 1D model since it
+ff
+mainlyconsidersthelongitudinalspatialholeburninge ects. Webelievethatour
+fullycoupledapproachissuperiorsincecarriertransporttimescanhaveastrong
+
+
+=== PAGE 371 ===
+18.6Analyticalmodel 369
+ff
+e ectonthemodulationspeedofalaserandthisrequirestreatmentoftransverse
+ff
+e ects.
+However,theTromborgmodeldoesdefinenoiseandsecond-harmonicgeneration
+termswhicharenotcurrentlyavailableinourfull3Dmodelsowere-introduceit
+here.
+18.6.1 Modulation response
+Without going into the detail of Tromborg’s approach, we define the following
+generalformulafortheweighedlongitudinalperturbationofsomequantityX(z):
+,
+δ ∂ ∂
+W k W
+= −
+C (z) j (z) (18.29)
+X δ ∂ ∂ω
+k(z) X
+where k(z) is the wave propagation constant and W is the Wronskian defined in
+earliersections.
+The transient modulation response of the optical power and phase is defined as
+a function of the change in the carrier (N) and phoRton (S) longitudinal profiles.
+Usingtheshorthandnotationofthedotproductfor dz,wewrite:
+∆
+1 d P
+= ·∆ + ·∆
+P C N C S (18.30)
+0 Nr Sr
+2 dt
+∆ϕ
+d
+= ·∆ + ·∆
+C N C S (18.31)
+Ni Si
+dt
+whererandiindicatetherealandimaginarypartsoftheperturbationfunctions.
+Wealsoassumethatthecurrentisactingasthemodulationsourcewhichimposes
+thefollowingcurrentcontinuityequationatallz-points:
+∆
+d N
+= ∆ −∆ /τ − ∆
+J N (N) v g S (18.32)
+R g
+dt
+τ
+where (N) is the carrier lifetime representing all recombination mechanisms
+R
+exceptthestimulatedemission.
+Assuming that the modulation does not strongly distort the shape of the photon
+densityprofile,wecanrelatethevariationofthepowerP(ascalar)tothatofS(z):
+∆ / = ∆ /
+S(z) S (z) P P (18.33)
+0 0
+∆ = ∆ Ω
+Further assuming an input modulation J J (z)exp(j t), we can eliminate the
+0
+carrierdensityfluctuationandobtainausefulformulationfortheAMresponse:
+(cid:14)(cid:0) (cid:1)
+·∆ Ω+ /τ
+2C J j 1
+∆ / = Nr (cid:14)(cid:0) R(cid:1)
+P P (18.34)
+0 Ω+ · Ω+ /τ − ·
+j 2C v gS j 1 2C S
+Nr g 0 R Sr 0
+
+
+=== PAGE 372 ===
+370 PICS3D-SPECIFICMODELSIII:SpectrumandModulationResponse
+TheFMresponsecanbederivedinthesamewayfromtheimaginarytermsofthe
+perturbationfunctions. Re-usingourresultsfromtheAMresponse,weget:
+" #
+(cid:18) (cid:19)
+d ∆ϕ (t) C ·∆ J C · v gS ∆ P
+∆ω = = Ni + · − Ni g 0
+C S (18.35)
+Ω+ /τ Si 0 Ω+ /τ
+dt j 1 j 1 P
+R R 0
+18.6.2 Second Harmonic Distortion
+,
+The rate equations for the photon number I (t) and the carrier density N(z t) can
+p
+bewrittenusingthesamenotationasabove:
+dI
+p = { ·∆ + ·∆ }
+2I (t) C N C S (18.36)
+p Nr Sr
+dt
+dN
+= − − ,
+J R(N) G(N S)S (18.37)
+dt
+Weassumethattheinjectioncurrentdensityismodulatedatanangularfrequency
+ω
+:
+J(z
+,
+t)
+=
+J (z)
++∆ J(z)ejΩt
+(18.38)
+s
+To evaluate the second harmonic distortion (SHD), the carrier density and the
+photonnumberareexpandedtosecondorder:
+N(z
+,
+t)
+=
+N (z)
++∆
+N
+(z)ejΩt +∆
+N
+(z)ej2Ωt
+(18.39)
+s 1 2
+I (t)
+=
+I
++∆
+I
+ejΩt +∆
+I
+ej2Ωt
+(18.40)
+p ps p1 p2
+Inaddition,tosimplifythecalculation,wemaketheassumptionthat
+S (z)
+, = s
+S(z t) I (t) (18.41)
+p
+I
+ps
+∆ ∆
+Equations(18.36)–(18.41)aresolvedfor I and I ,followingastraightforward
+p1 p2
+smallsignalanalysis. WethendefinetheSHDas:
+∆
+I
+= p2
+SHD (18.42)
+∆
+I
+p1
+18.6.3 Noise Terms
+The noise analysis in Tromborg’s model follows the same approach as the modu-
+lation functions defined above. However, instead of a current source modulating
+the laser, additional noise terms are added to equations 18.30 and 18.31. The
+noisespectrumisthenderivedfromtheFouriertransformandcorrelationofthese
+Langevin noise functions. The derivation of these terms is beyond the scope of
+thissectionandtheuserisreferredto[108]forfurtherdetails.
+
+
+=== PAGE 373 ===
+hapter
+C 19
+PICS3D-SPECIFIC MODELS IV:
+Microcavity Model
+19.1 Theory
+The microcavity laser model is based on the energy conservation rule implied in
+Poynting’stheorem[34]:
+−→ −→
+(cid:16) (cid:17)
+→− →− →− →− ∂ →− ∂ →− →−
+B D
+∇ · × = − · − · − ·
+E H H E E J (19.1)
+∂ ∂
+t t
+Using the above, we start our simplification by neglecting the current term in
+→−
+J . This is justified by the fact that direct electrode modulation of lasers is at
+frequencies that are usually below 1 THz while the optical frequencies of interest
+are usually in a much higher range; even a LWIR or MWIR device will emit light
+ff
+near20-100THz. Alle ectsrelatedtothecurrentarethereforedecoupledfromthe
+ff
+microcavity model and are instead part of the Drift-Di usion model of Chap. 5,
+whichoperatesatnear-DCfrequencies.
+By integrating over the device volume, making use of the divergence theorem,
+ω
+andreplacingthetimederivativeswith j ,wegetthefollowingfortheremaining
+terms:
+(cid:9) $
+(cid:16) →− →− (cid:17) −→ (cid:16) →− →− →− →− (cid:17)
+× · = − ω · + ·
+E H dA j H B E D dV (19.2)
+The left hand side of the above equation expresses the output flow of photons
+across the device boundary; it is thus equivalent to the mirror loss. Therefore,
+the right-hand side of the equation must correspond to the photons generated
+inside the device in order to conserve the energy. This term thus represents all
+
+
+=== PAGE 374 ===
+372 PICS3D-SPECIFICMODELSIV:MicrocavityModel
+thephotonsgeneratedbystimulatedandspontaneousemissionprocesses,minus
+thosethatareabsorbedbyvariousinternallossmechanisms.
+We therefore assert without further proof that Eq. 19.2 is equivalent to the rate
+equationmodelinEq.15.16. Thismeansthatthemicrocavitymodelisidenticalto
+themodelusedinLASTIP:theright-handsidetermcanbeexpressedasthesum
+of the photons generated by the net modal gain and the spontaneous emission,
+withthelattertermbecomingnegligibleonceamodestartstolase.
+Because of this similarity, the microcavity model is implemented using the same
+ff
+rate equation and Jacobian as LASTIP . The two models di er in only a few key
+aspects:
+•
+Modewavelengthisselectedbasedoncavityresonanceratherassumingthat
+lasingoccursonthepeakofthemodalgain.
+•
+Modal gain is at the resonance wavelength, no matter what the peak of the
+gaincurvemaybe.
+•
+Mirror loss is computed as per Eq. 19.2 rather than being a fixed value
+correspondingtothecleavedfacets.
+•
+Not necessarily limited to a single 2D slice; depending on mesh, even 3D
+structuresmaybemodeled.
+•
+May use a full vectorial solution of Maxwell’s equations to obtain the fields
+andmirrorlossprofiles.
+•
+AlsoapplicabletoVCSELstructures.
+Asaresultofthissharedequation,themicrocavitymodelcanalsousethetransient
+andsmall-signalanalysisfeaturesofLASTIP.
+19.2 Optical solution method
+Oneparticularpracticalchallengetotheimplementationofthemicrocavitymodel
+istheselectionoftheopticalmodes. Inastandardlasermodel,theusualapproach
+ff
+is to start with a waveguide and then find the e ective index and mode shape
+associated with the mode at a particular wavelength (e.g. that of the peak gain in
+LASTIP).Thisgivesrisetoanextremumeigenvalueproblem: thereisamaximum
+valuethathasaphysicalmeaning,correspondingtothemaximumrefractiveindex
+present in the waveguide. There is a dedicated class of sparse matrix eigensolver
+algorithmsthatcanusethisupperlimittostarttheireigenvaluesearch.
+
+
+=== PAGE 375 ===
+19.2Opticalsolutionmethod 373
+However, this approach does not work in the case of the microcavity model as it
+is necessary to find the resonance frequencies of the cavity. This gives rise to a
+continuum of eigenvalues which correspond to the wavelength of the mode and
+ff
+notitse ectiveindex. Notallofthesecorrespondtomodesthatwillpeaknearthe
+activeregion;manymodesthatcanbeconsidered“spurious”arevalidnumerical
+solutionstothiseigenproblem.
+Due to the limitation of known sparse matrix eigensolver algorithms, only a few
+such eigenvalues may be found in a reasonable amount of time. It is therefore
+necessarytogiveaninitialwavelengthguessfortheresonancetotheeigensolver;
+thesolverwillthenattempttofindphysicallymeaningfulsolutionsoneitherside
+of this initial guess. This attempt is not guaranteed to be successful so a manual
+checkofthemodesfoundbythismodelisalwaysSTRONGLY recommended.
+The optical solution method itself can make use of either a scalar wave equation
+modelusingthesameFEMgridastheelectricaltransportmodelorafullvectorial
+ff
+solution of the Maxwell equations over a Yee lattice, using a finite di erence
+frequency-domain(FDFD)method. Theformercanbeseenasaninitialprototype
+ofthemicrocavitymodelandisnotrecommended. Thelatterismoreaccuratebut
+ff
+requires the same kind of dense mesh as is used in finite di erence time-domain
+models (FDTD): the Courant-Friedrich-Levy criterion imposes a minimum mesh
+λ/
+spacing of almost 20 [119] for 3D problems. In the case of a VCSEL, such small
+meshallowsfortheopticalstandingwavetoberesolvedproperly.
+In either case, solving for an outgoing wave that stretches to infinity in the real
+device must be done over a finite domain in the simulation: this requires the use
+of perfectly matched layer (PML) boundary conditions. For the scalar solver, the
+same model and commands developed for leaky waveguides may be used; refer
+toSec.12.6fordetails.
+FortheFDFDsovler,abuilt-inPMLisautomaticallyaddedinsidethesolutionover
+the FDFD grid without user intervention; this optical wave is then re-imported
+overtheFEMgridfortheremainderofthesimulation. Fig.19.1showsasketchof
+howthisisimplementedinatypicalcylindricalVCSELmodel.
+
