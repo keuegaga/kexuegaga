@@ -1,0 +1,577 @@
+
+===== PDF page 1 =====
+1
+Csuprem Tutorial
+(3D)
+Copyright 2008 Crosslight Software Inc.http://www.crosslight.com
+
+===== PDF page 2 =====
+2
+ Build a 3D substrate in Csuprem software 
+ Simplified processes for nMOSFET
+ Graphical demonstration of 3D process simulation
+ 3D device simulation by Apsys software
+Outline for a whole course of processing and device simulation
+
+===== PDF page 3 =====
+3
+We firstly show file structure in this tutorial
+x-y plane definition substrate definition
+Csuprem x-y plane
+1.
+2.
+3.
+4.
+5.
+. collection  
+editing processes
+ 
+exporting files for APSYS
+xyplane in
+xyplane in
+xyplane in
+xyplane in
+xyplane in
+zmesh zst
+⎫
+⎪
+⎪
+⎪⎪
+⎫⎧
+⎪⎪
+⎪⎪⎨
+⎪
+⎪
+⎪⎩
+⎬
+⎪
+⎪
+⎪⎭ ⎬
+⎪
+importing device structure from CsupremAPSYS    electrical simulation for th
+   
+e device
+.
+.
+main in
+main sol
+⎧
+⎪
+⎪ ⎪
+⎪ ⎪
+⎪ ⎪
+⎪ ⎪
+⎪ ⎪
+⎪ ⎪⎪⎪⎨
+⎪⎪
+⎪⎪
+⎪⎪
+⎪⎪
+⎪⎪
+⎪⎪
+⎪⎪
+⎪⎪ ⎭⎩
+⎧ ⎫
+⎨⎬
+⎭⎩
+
+===== PDF page 4 =====
+4
+Build a 3D structure
+① Set up x-y planes, each x-y plane is 
+defined in an individual file.
+② specify positions of these parallel planes 
+in z direction, which is stored in a file with 
+a fixed name zmesh.zst.
+③ Specify dimensionality(3D) in main input.
+④ Initialize 3D mesh.
+
+===== PDF page 5 =====
+5
+Build a 3D structure
+#  Mesh define #
+A line starting from “#” is a line of comment
+line x loc=0.0 tag=lft spacing=0.04
+line x loc=@gatelen/2   spacing=0.02
+line x loc=@gatelen/2+0.2 tag=rht spacing=0.04
+line y loc=0.0 tag=top spacing=0.01
+line y loc=0.1 spacing=0.03
+line y loc=0.5 spacing=0.05
+line y loc=1.0 spacing=0.1
+line y loc=2. tag=bot spacing=0.3 
+“line” command is used to specify a flag point in x or y direction. The point can have a “tag” to be cited 
+in other commands. Between these flag points, mesh points will be inserted with density 
+controlled by “spacing”. Smaller “spacing” means more mesh points.  In addition, “@gatelen” is a 
+variable whose value must be specified before its citation.
+After flag points in x and y direction are defined, they will form a rectangle 2D mesh  like a 2D matrix 
+where each mesh point acts as a matrix element.
+This is content of xyplane1.in which is same as 
+xyplane2.in, xyplane3.in, xyplane4.in and xyplane5.in
+
+===== PDF page 6 =====
+6
+elim y.dir xlo=0 xhi=@gatelen/2+0.2 ylo=0.5 yhi=2 ntimes=2
+elim x.dir xlo=0 xhi=@gatelen/2.5 ylo=0 yhi=2 ntimes=1
+“elim” command is used to eliminate mesh points in x or y direction ( x.dir or y.dir). These mesh 
+points, belonging to a rectangular area specified by “xlo”, “xhi”, “ylo”a n d  “yhi”, will be halved 
+“ntimes”t i m e s .
+region silicon xlo=lft xhi=rht ylo=top yhi=bot
+bound exposed xlo=lft xhi=rht ylo=top yhi=top
+bound backside xlo=lft xhi=rht ylo=bot yhi=bot
+“region” command specifies a type of material( silicon here) in a rectangular region defined by
+“xlo”, “xhi”, “ylo”a n d  “yhi”, here “tag” of flag point is used. 
+“bound” command defines “exposed”o r  “backside” area for the substrate.
+Build a 3D structure
+This is content of xyplane1.in which is same as 
+xyplane2.in, xyplane3.in, xyplane4.in and xyplane5.in
+
+===== PDF page 7 =====
+7
+Build a 3D structure
+① Set up x-yplanes, each x-y plane is 
+defined in an individual file.
+② specify positions of these parallel planes 
+in z direction, which is stored in a file with 
+a fixed name zmesh.zst.
+③ Specify dimensionality(3D) in main input.
+④ Initialize 3D mesh.
+
+===== PDF page 8 =====
+8
+Build a 3D structure
+begin_zst
+z_structure uniform_zseg_from=0.0   uniform_zseg_to=0.0 zplanes=1  zseg_num=1
+z_structure uniform_zseg_from=0.333 uniform_zseg_to=0.333 zplanes=1  zseg_num=2
+z_structure uniform_zseg_from=0.389  uniform_zseg_to=0.389 zplanes=1  zseg_num=3
+z_structure uniform_zseg_from=0.444 uniform_zseg_to=0.444 zplanes=1  zseg_num=4
+z_structure uniform_zseg_from=0.5  uniform_zseg_to=0.5 zplanes=1  zseg_num=5
+z_structure uniform_zseg_from=0.501 uniform_zseg_to=0.501 zplanes=1  zseg_num=6
+z_structure uniform_zseg_from=2.5  uniform_zseg_to=2.5 zplanes=1  zseg_num=7
+“z_structure” command is used to specify position of a x-y plane and is supported by both 
+Csuprem and APSYS  softwares.  x-y planes are numbered by “zseg_num” and located by 
+“uniform_zseg_from” and “uniform_zseg_to”. “zplanes” tells how many times this x-y plane 
+will be repeated before next x-y plane.  But we fix “zplanes” equals 1 in Csuprem to make an 
+uniform segment between 2 x-y planes, which helps preventing abnormal crash when doing 
+simulation of “oxidation” processing.
+This is content of zmesh.zst
+
+===== PDF page 9 =====
+9
+Build a 3D structure
+load_mesh mesh_inf=f1.msh    zseg_num=1
+load_mesh mesh_inf=f2.msh    zseg_num=2
+load_mesh mesh_inf=f3.msh    zseg_num=3
+load_mesh mesh_inf=f4.msh    zseg_num=4
+load_mesh mesh_inf=f5.msh    zseg_num=5
+load_mesh mesh_inf=f6.msh    zseg_num=6
+load_mesh mesh_inf=f7.msh    zseg_num=7
+These “load_mesh” commands are formative and repeated by times of x-y plane amount with a 
+simple rule of number increasing.
+output  sol_outf=tmp.out
+export_3dgeo   file=h_cvd.3dgeo
+These 2 lines are of fixed format, please do not modify them.
+end_zst
+This is content of zmesh.zst
+
+===== PDF page 10 =====
+10
+Build a 3D structure
+① Set up x-yplanes, each x-y plane is 
+defined in an individual file.
+② specify positions of these parallel planes 
+in z direction, which is stored in a file with 
+a fixed name zmesh.zst.
+③ Specify dimensionality(3D) in main input.
+④ Initialize 3D mesh.
+
+===== PDF page 11 =====
+11
+Build a 3D structure
+mode  three.dim
+This command tells simulator the dimensionality and if to consider interaction between 
+x-y planes( three.dim) or not to( quasi3D) for 3D simulation.  
+This is at head of main.in before
+processing simulation
+
+===== PDF page 12 =====
+12
+Build a 3D structure
+① Set up x-yplanes, each x-y plane is 
+defined in an individual file.
+② specify positions of these parallel planes 
+in z direction, which is stored in a file with 
+a fixed name zmesh.zst.
+③ Specify dimensionality(3D) in main input.
+④ Initialize 3D mesh.
+
+===== PDF page 13 =====
+13
+Build a 3D structure
+3d_mesh nsegm=7 inf=mesh
+“3d_mesh” command loads files which define x-y planes. File amount is specified by 
+“nsegm”
+init or=100
+Finally, “init” command sets up a full substrate with all necessary information. “or”i s  
+used to specify the substrate orientation. 
+“zmesh.zst” will automatically cited by simulator, users do not need to evidently include 
+it in “main.in”
+This is at head of main.in before
+processing simulation
+
+===== PDF page 14 =====
+14
+Simplified processes
+Steps
+1. 3D-STI
+2. deposit gate oxide
+3. channel implant
+4. deposit gate poly
+5. anneal after deposit
+6. etch some poly
+7. anneal after deposit
+8. ldd implant for source/drain
+9. make spacer 
+10. anneal in dry O2 atmosphere
+11. final implant for source/drain
+12. etch off oxide on source/drain region
+13. cut off some extra mesh points to save run time for device 
+simulation and left-mirror copy the structure to get a full MOSFET
+14. export final structure to an APSYS-supported file
+
+===== PDF page 15 =====
+15
+Graphical demonstration
+Substrate
+
+
+===== PDF page 16 =====
+16
+Graphical demonstration
+Step 1 STI_01_cover 
+
+
+===== PDF page 17 =====
+17
+Graphical demonstration
+Step 1 STI_02_decover
+
+
+===== PDF page 18 =====
+18
+Graphical demonstration
+Step 1 STI_03_etch_trench
+
+
+===== PDF page 19 =====
+19
+Graphical demonstration
+Step 1 STI_04_pullback
+
+
+===== PDF page 20 =====
+20
+Graphical demonstration
+Step 1 STI_05_fill
+
+
+===== PDF page 21 =====
+21
+Graphical demonstration
+Step 1 STI_06_CMP
+
+
+===== PDF page 22 =====
+22
+Graphical demonstration
+Step 2 gate oxide
+
+
+===== PDF page 23 =====
+23
+Graphical demonstration
+Step 3 channel implant
+
+
+===== PDF page 24 =====
+24
+Graphical demonstration
+Step 4 poly deposit
+
+
+===== PDF page 25 =====
+25
+Graphical demonstration
+Step 5 poly anneal
+
+
+===== PDF page 26 =====
+26
+Graphical demonstration
+Step 6 poly etch
+
+
+===== PDF page 27 =====
+27
+Graphical demonstration
+Step 7 anneal after etch
+
+
+===== PDF page 28 =====
+28
+Graphical demonstration
+Step 8 ldd implant for source/drain
+
+
+===== PDF page 29 =====
+29
+Graphical demonstration
+Step 9 make spacer
+
+
+===== PDF page 30 =====
+30
+Graphical demonstration
+Step 10 anneal in dry O2 atmosphere
+
+
+===== PDF page 31 =====
+31
+Graphical demonstration
+Step 11 final implant for source/drain
+
+
+===== PDF page 32 =====
+32
+Graphical demonstration
+Step 12 etch a window for source/drain contact
+
+
+===== PDF page 33 =====
+33
+Graphical demonstration
+Step 13 left mirror the final structure to get a full MOSFET, and some top 
+grids are etched off to save mesh for device simulation.
+
+
+===== PDF page 34 =====
+34
+3D device simulation by Apsys
+① Define a 3D MOSFET device，including 
+specifications for 3D contacts，materials, segments, 
+etc.
+② Setup for bias scan
+③ Plot results
+
+===== PDF page 35 =====
+35
+3D device simulation by Apsys
+① Define a 3D MOSFET device，including specifications for 3D contacts，materials, segments, etc.
+$file:main.sol a line starting with character “$” is a line for comment
+begin          indicates that simulation starts here
+convention positive_current_flow=inward defines a convention that the positive current 
+direction is that electron flow inward device.
+$ Let us assign contact numbers: 1=source 2=gate 3=drain 4=substrate
+define_alias alias=%Lg name=0.5
+define_alias alias=%Vd name=voltage_3
+define_alias alias=%Id name=current_3
+define_alias alias=%Vg name=voltage_2     
+“define_alias” command is used to define a alias which has a value defined by “name” and 
+will be cited below.
+3d_solution_method 3d_flow=yes indicates that this simulation will be a full-3D case.
+Part 1 of main.sol
+
+===== PDF page 36 =====
+36
+3D device simulation by Apsys
+① Define a 3D MOSFET device，including specifications for 3D contacts，materials, segments, etc.
+.
+z_structure uniform_zseg_from=0.0 uniform_zseg_to=0.0  zplanes=1 zseg_num=1
+z_structure uniform_zseg_from=0.5 uniform_zseg_to=0.5  zplanes=1 zseg_num=2
+z_structure uniform_zseg_from=0.51 uniform_zseg_to=0.51 zplanes=1 zseg_num=3
+z_structure uniform_zseg_from=1. uniform_zseg_to=1.  zplanes=1 zseg_num=4
+The upper 4 statements define positions of the x-yplanes at z direction and should be 
+copied from zmesh.szt in CSUPREM project. Also, x-yplanes are numbered in these 
+statements.
+load_mesh mesh_inf=sup.aps suprem_import=yes indicates that mesh is imported 
+from a file exported from Csuprem. The imported file name is specified by “mesh_inf”
+output sol_outf=sup.out gives a name symbol for output files during simulation.
+Part 2 of main.sol
+
+===== PDF page 37 =====
+37
+3D device simulation by Apsys
+① Define a 3D MOSFET device，including specifications for 3D contacts，materials, segments, etc.
+start_loop symbol=%iseg value_from=1 value_to=2
+“start_loop”a n d  “end_loop” define a loop operation. The variable to be looped is 
+specified by “symbol” and its value varies from “value_from”t o  “value_to”b y  
+default step of 1.
+begin_zmater zseg_num=%iseg
+“begin_zmater”a n d  “end_zmater”pack some statements to specify some 
+physical and structural information in the x-y planes numbered in “z_structure”
+command. Actually, this  x-y plane stands for a segment that starts from this x-y
+plane and ends at the next x-y plane. 
+suprem_property silicon_mater=1 oxide_mater=2 poly_mater=3 
+“suprem_property ” command gives a number for each material which is defined 
+in Csuprem. 
+load_macro name=si mater=1
+load_macro name=sio2 mater=2
+load_macro name=poly mater=3 defines material name in Apsys software and 
+numbers the material.【HINT
+】material names and numbers defined by “load_macro” commands must 
+be accordance with those defined by “suprem_property” command.
+Part 3 of main.sol
+
+===== PDF page 38 =====
+38
+3D device simulation by Apsys
+① Define a 3D MOSFET device，including specifications for 3D contacts，materials, segments, etc.
+impact_chynoweth mater=1
+impact_chynoweth mater=3 defines impact ionization rate for material numbered as 
+“mater”.
+suprem_contact num=1 xrange=(-1.5 -1.4) side=upper touch_mater=1
+suprem_contact num=2 xrange=(-%Lg %Lg) side=upper touch_mater=3 
+suprem_contact num=3 xrange=(1.4 1.5) side=upper touch_mater=1
+suprem_contact num=4 xrange=(-1.5 1.5) side=lower touch_mater=1
+“suprem_contact” command specifies position( “side”) and size( “xrange”) of a 
+contact for the imported Csuprem structure and gives a number( “num”) for this 
+contact.
+contact num=1
+contact num=2
+contact num=3
+contact num=4   defines a contact in Apsys software. Please note that the “num”i n  
+“contact” should be same as that in “suprem_contact”
+end_zmater
+end_loop
+Part 4 of main.sol
+
+===== PDF page 39 =====
+39
+3D device simulation by Apsys
+① Define a 3D MOSFET device，including specifications for 3D contacts，materials, segments, etc.
+$ ----STI segments
+start_loop symbol=%isegvalue_from=3 value_to=4 
+The previous loop specified x-y planes for MOSFET region. This loop specifies x-y planes 
+for STI.
+begin_zmater zseg_num=%iseg
+suprem_property silicon_mater=1 oxide_mater=2 poly_mater=3 
+load_macro name=simater=1
+load_macro name=sio2 mater=2
+load_macro name=poly mater=3
+impact_chynoweth mater=1
+impact_chynoweth mater=3
+suprem_contact num=2 xrange=(-%Lg %Lg) side=upper touch_mater=3 
+suprem_contact num=4 xrange=(-1.5 1.5) side=lower touch_mater=1
+contact num=2
+contact num=4
+end_zmater
+end_loop
+Part 5 of main.sol
+
+===== PDF page 40 =====
+40
+3D device simulation by Apsys
+ After physical and structural setup, we will 
+start to calculate device behavior at different 
+bias situation.
+
+===== PDF page 41 =====
+41
+3D device simulation by Apsys
+② Setup for bias scan
+newton_par damping_step=5. max_iter=100 print_flag=3
+“newton_par” command specifies a lot of parameters for Newton iteration which is a mainly mathematical method 
+applied in Apsys software. This command must be put before “equilibrium”a n d  “scan” commands. For detail 
+explain, please refer to its help text and ask technical member in Crosslight.
+equilibrium outfile_label=biaslab_0 
+“equilibirum” tells simulator calculate physical properties of the device at equilibrium state, including potential, 
+band diagram, etc. 
+newton_par damping_step=1. print_flag=3
+“newton_par” can be used before different “equilibrium”o r  “scan” commands to make different settings of Newton 
+iteration.
+start_loop symbol=%olab value_from=1 value_to=2
+integer_func symbol=%ilab value_from=0 value_to=1
+real_func symbol=%gbias value_from=0.5 value_to=1.0
+Here, “start_loop” is used to loop a series of “scan” commands. “symbol” variables specified in “start_loop”, 
+“integer_func”a n d  “real_func” commands will be changed simultaneously. 
+Part 6 of main.sol
+
+===== PDF page 42 =====
+42
+3D device simulation by Apsys
+② Setup for bias scan
+scan var=%Vg value_to=%gbias init_step= 0.5000E-01 infile_label=biaslab_%ilab outfile_label=biaslab_%olab
+scan var=%Vd value_to= 35.000E+00 scan_label=VDscan_%olab init_step= 0.5000E-01 max_step= 0.4667E+00 &&
+auto_finish=incr_current_3 auto_until=5.e-6 auto_condition=above auto2_finish=voltage_3 auto2_until=5. 
+auto2_condition=above 
+scan var=%Id value_to=250.e-6 print_step=250.e-6 scan_label=IDscan_%olab init_step=0.05e-6 max_step=5.e-6
+The upper 3 “scan” commands achieves a function that applies a voltage bias( the first “scan”) at MOSFET gate and 
+then applies a voltage( the second “scan”) and current( the third “scan”) bias at MOSFET drain( or source).  Bias 
+scan on drain is separated to 2 steps, which is an artifice for mathematical convergence.  The second “scan” will be 
+stopped when “auto_finish” condition is satisfied. We can explain the second “scan” as that when current increase 
+of contact 3( “incr_current_3”) is “above”“ 3.e-6” or when voltage bias of contact 3( “voltage_3”) is “above”“ 5.”v o l t ,  
+this “scan” will be stopped and the third “scan” will be after this. 
+The output files from these 3 “scan” commands can be used at post-processing course to get a Vd-Id curve at a 
+specified Vg( “%Vg”). Since the loop loops 2 times here, so we can get 2 Vd-Id curves at different Vg in a family 
+curve plot.
+In addition, the unit of Id( “%Id”) is Ampere since this is a 3D case. For 2D cases, Current unit is A/m2. And, “&&”i s  
+used to continue a line. For more detail explain, please refer to help text and ask technical member in Crosslight.
+end_loop
+Part 7 of main.sol
+
+===== PDF page 43 =====
+43
+3D device simulation by Apsys
+When simulator finishes device simulation, 
+we can start to plot some results.
+Here we use CrosslightView to plot a 
+family of curves for this MOSFET.
+
+===== PDF page 44 =====
+44
+3D device simulation by Apsys
+③ Plot results – curve family
+Step1 open a .std output file
+
+
+===== PDF page 45 =====
+45
+3D device simulation by Apsys
+③ Plot results – curve family
+Step2 click the focused icon to select data type which will be used to plot an single parameter-relation curve. 
+Choose the “import data from std file” then click “OK”.
+
+
+===== PDF page 46 =====
+46
+3D device simulation by Apsys
+③ Plot results – curve family
+Step3 choose .std file(s) according to “Scan Number”, then choose “voltage_i” and “current_i”, then click “OK”
+
+
+===== PDF page 47 =====
+47
+3D device simulation by Apsys
+③ Plot results – curve family
+Step4 specify contact number for “i”i n  “voltage_i” and “current_i”, then click “OK”.
+
+
+===== PDF page 48 =====
+48
+3D device simulation by Apsys
+③ Plot results – curve family
+Step5 curve family    negative sign relates to the direction of current flow. 
+
+
+===== PDF page 49 =====
+49
+3D device simulation by Apsys
+③ Plot results – curve family
+Step5 curve family    Let’s click “Option”->”Flip Y-Axis” to flip this plot.
+
+
+===== PDF page 50 =====
+50
+3D device simulation by Apsys
+③ Plot results – curve family
+Step5 curve family   done.
+

@@ -1,0 +1,429 @@
+
+===== PDF page 1 =====
+1
+CSuprem Tutorial
+(2D)
+CSuprem Tutorial
+(2D)
+Copyright 2008 Crosslight Software Inc.
+www.crosslight.com
+
+===== PDF page 2 =====
+2
+Contents Contents Contents 
+ CSuprem/Apsys introduction
+ Getting started
+ CSuprem commands
+ A simple nMOS process
+ Device simulation
+ CSuprem/Apsys introduction
+ Getting started
+ CSuprem commands
+ A simple nMOS process
+ Device simulation
+
+===== PDF page 3 =====
+3
+What is Suprem4?
+ Stanford’s 2D code 1970s to 1990s (up to 1 
+um technology).
+ Intension:  to cover process steps from 
+substrate all the way to full device structure.
+ Deposit, etch, implant, diffusion, oxidation, 
+stress analysis.
+ Core model: dopant diffusion (point defect 
+model).
+ Intended to interface to Pisces-2B (Stanford 
+device 2D simulator).
+
+===== PDF page 4 =====
+4
+What is Csuprem? 
+ Extension of technology to below 1 um (low energy 
+implant models) while maintaining full compatibility.
+ Extension of Stanford’s code to full 3D with inter-plane 
+coupling.
+ Direct use of existing 2D input decks in 3D simulation.
+ Full 3D model for implantation, diffusion, segregation & 
+oxidation.
+ Direct conversion of GDSII file into 3D simulation input 
+decks.
+ Full 3D simulation for mechanical stress,  bending and  
+vibration motions.
+ Flexibility of switching between quasi-3D and full-3D 
+modes according to speed/accuracy requirements. 
+Extension of Stanford’s code to full 3D with inter-plane 
+coupling. 
+
+===== PDF page 5 =====
+5
+Contents Contents Contents 
+ CSuprem/Apsys introduction
+ Getting started
+ CSuprem commands
+ A simple nMOS process
+ Device simulation
+ CSuprem/Apsys introduction
+ Getting started
+ CSuprem commands
+ A simple nMOS process
+ Device simulation
+
+===== PDF page 6 =====
+6
+Getting started 
+ Launch program.
+ Various modules and subprograms:  
+SimuCSuprem, main program, CrosslightView.
+ Locations of various control files.
+ Running a simple example.
+ Use of EasySetup2D.
+
+===== PDF page 7 =====
+7
+Contents Contents Contents 
+ CSuprem/Apsys introduction
+ Getting started
+ CSuprem commands
+ A simple nMOS process
+ Device simulation
+ CSuprem/Apsys introduction
+ Getting started
+ CSuprem commands
+ A simple nMOS process
+ Device simulation
+
+===== PDF page 8 =====
+8
+Line
+line x loc=0.0 tag=line x loc=0.0 tag=lft lft [spa=1][spa=1]
+line x loc=1.0               [spa=0.5]line x loc=1.0               [spa=0.5]
+line x loc=1.5 tag=line x loc=1.5 tag=rht rht [spa=0.5][spa=0.5]
+line y loc=0.0 tag=top [spa=1]line y loc=0.0 tag=top [spa=1]
+line y loc=1.0                [spa=1]line y loc=1.0                [spa=1]
+line y loc=3.0 tag=line y loc=3.0 tag=bot bot [spa=2][spa=2]
+Default spacing: shorter of Default spacing: shorter of 
+two line distancestwo line distances
+X=0, X=0, lftlft
+X=1X=1
+X=1.5, X=1.5, rhtrht
+Added line according to spacingAdded line according to spacing
+
+
+===== PDF page 9 =====
+9
+Line: Spacing
+elel
+r=dxk+1/dxk < 1.5
+el=dx1+dx2+…+dxn
+dxn =r**n*hl hlhl hrhrdXdXkk
+
+===== PDF page 10 =====
+10
+Region, Boundary
+Tag defined by Tag defined by 
+LineLine
+Note:Y axis is flippedNote:Y axis is flipped
+region silicon region silicon xloxlo==lft xhilft xhi==rht ylorht ylo=top =top yhiyhi==botbot
+bound exposed bound exposed xloxlo==lft xhilft xhi==rht ylorht ylo=top =top yhiyhi=top=top
+bound backside bound backside xloxlo==lft xhilft xhi==rht ylorht ylo==bot yhibot yhi==botbot
+materialmaterial
+exposedexposed
+backsidebackside
+reflectingreflecting reflectingreflecting
+Exposed: deposition, etch, oxidation, defect recombination and gExposed: deposition, etch, oxidation, defect recombination and generationeneration
+Backside: defect recombination and generationBackside: defect recombination and generation
+Reflecting: lateral implant scattering mirrorsReflecting: lateral implant scattering mirrors
+
+===== PDF page 11 =====
+11
+Initialize
+init boron init boron concconc=1.0e16 [orient = 100]  =1.0e16 [orient = 100]  
+orient:  substrate crystal orientation, default 100orient:  substrate crystal orientation, default 100
+boron : background doping typeboron : background doping type
+concconc:    1/cm^3 background concentration:    1/cm^3 background concentration
+Initialize sets up grid and background doping level.Initialize sets up grid and background doping level.
+(impurity is activated)(impurity is activated)
+
+===== PDF page 12 =====
+12
+Eliminate – Reducing Mesh
+eliminelimin x.dir x.dir xloxlo=0 =0 xhixhi=0.5 =0.5 yloylo=0 =0 yhiyhi=1 =1 ntimesntimes=1=1
+eliminelimin y.dir y.dir xloxlo=1 =1 xhixhi=1.5 =1.5 yloylo=0 =0 yhiyhi=1 =1 ntimesntimes=1=1
+ElimElim by x.dirby x.dir ElimElim by y.dirby y.dir
+Remove every other lineRemove every other line
+originaloriginal
+
+
+===== PDF page 13 =====
+13
+Deposit
+deposit oxide thick=1 [deposit oxide thick=1 [meshlayermeshlayer=1]=1]
+deposit oxide thick=1 deposit oxide thick=1 meshlayermeshlayer=2=2
+deposit oxide thick=1 boron deposit oxide thick=1 boron 
+concconc=1.e+19 =1.e+19 meshlayermeshlayer=2=2
+Boron at x=0.549
+
+===== PDF page 14 =====
+14
+Deposit: Space
+deposit nitride thick=1 space=0.1
+deposit nitride thick=1 [space=1]
+deposit nitride thick=1 space=0.4
+space between grid on outer edge
+original
+thick/meshlayer
+
+===== PDF page 15 =====
+15
+Mask
+original
+mask  thick=1 x1.from=0.1  x1.to=0.5  x2.from=1 x2.to=1.2
+photoresist
+x=0.1 x=0.5 x=1 x=1.2
+1um
+
+===== PDF page 16 =====
+16
+Etch: Left/right
+etch oxide right p1.x=0.5
+etch oxide left p1.x=0.5
+etch left p1.x=0.5
+
+===== PDF page 17 =====
+17
+Etch: Left/right 2
+etch right p2.x=0.5 p2.y=-1  
+p1.x=1.0  p1.y=1
+etch right p2.x=0.5 p2.y=-1  
+p1.x=1.0  p1.y=1 oxide
+
+===== PDF page 18 =====
+18
+Etch: Start Cont Done
+etch start x=0.2 y=-2  oxide 
+etch cont  x=0.2 y=0.5
+etch cont  x=0.5 y=0.5
+etch done x=1 y=-1
+etch start x=0.2 y=-2 
+etch cont  x=0.2 y=0.5
+etch cont  x=0.5 y=0.5
+etch done x=1 y=-1
+
+===== PDF page 19 =====
+19
+Etch: Dry
+etch dry nitride thick=1.5
+1.5um
+
+===== PDF page 20 =====
+20
+Etch: Avoidmask 1
+etch avoidmask depth=0.9 nitride
+Must follow mask
+original
+photoresist
+0.5um nitride
+
+===== PDF page 21 =====
+21
+Etch: Avoidmask 2
+original
+x1.right x2.left
+mask  thick=1
+x1.from=0.1  x1.to=1.5  x1.right.theta=-30
+x2.from=2.5  x2.to=3.5  x2.right.theta=30
+etch avoidmask depth=0.5 nitride 
+-300
+300
+
+===== PDF page 22 =====
+22
+Implant
+implant arsenic dose=1.e+15 
+energy=200 [angle=0] [rot=0]
+Arsenic at x=0.8
+PearsonPearson--IVIV
+distributiondistribution
+(kev)
+(1/cm2)
+(degree)
+Material: Si
+Active Arsenic 
+distribution
+Not 
+activated
+Arsenic distribution
+
+===== PDF page 23 =====
+23
+Implant Table: sup4gs.imp
+Imp     Material     Energy     Parameters of different model
+Dual Dual pearsonpearson modelmodel
+3   5   0.25  -0.0008     0.002      0.00001      4.00    0.002         0.005 0.005  6.3  688      0.25
+Pearson modelPearson model
+3   5   30.  0.1011  0.0384  -0.480  3.2746  0.0569
+Sims import modelSims import model
+3 57   1    sims  fsims_bf2_e1k_dose450e14.txt -1
+GaussianGaussian modelmodel
+2  31 10 0.0536 0.0293
+
+===== PDF page 24 =====
+24
+Diffuse
+diffuse time=10 temp=1000diffuse time=10 temp=1000
+[ final=1000][ final=1000]
+10min10min 10001000ooCC
+Boron at x=0.8
+original
+annealed
+annealed
+original
+boron Active boron
+Segregation at 
+SiO2/Si
+Temp can be ramped
+structure
+
+===== PDF page 25 =====
+25
+Diffuse With Oxygen: Dry Oxidation
+diff time=100 temp=1000
+dry [pres=1]
+Oxide grown on top
+Silicon consumed
+partial pressure of O2
+original
+diff time=100 temp=1000 Diffuse
+Material intact
+
+===== PDF page 26 =====
+26
+Diffuse With Steam: Wet Oxidation
+diff time=100 temp=1200 wet [pres=1]
+Thicker Oxide
+Partial pressure of steam
+diff time=100 temp=1000 dry [pres=1]
+Bird’s beak by wet oxidation
+meth compr
+diffuse tim=90 temp=1000 weto2 original
+
+===== PDF page 27 =====
+27
+Diffuse: Flow Control Model
+diff time=100 temp=1000 
+flow.control=t 
+O2=1.5 [pres=1] 
+diff time=100 temp=1000 
+dry pres=1=
+diff time=100 temp=1000 
+flow.control=t
+steam=3 [pres=1] 
+diff time=100 temp=1000 
+wet  pres=1=
+diff time=100 temp=1000 
+flow.control=t  
+[pres=1] H2=4 O2=1
+diff time=100 temp=1000 
+wet pres=0.5=
+Gases:  H2/O2/steam/HCl/other
+2H2+O2 =>2steam
+Wet and  dry oxidation may occur simultaneously
+Psteam=steam/all gas*pressure
+Poxygen=oxygen/all gas *pressure
+
+===== PDF page 28 =====
+28
+Method: Different Oxidation Model
+method [vert]
+method compr
+original
+compr
+viscous
+diffuse tim=90 tem=1000 weto2
+oxide stress.dep=t
+method viscous
+
+===== PDF page 29 =====
+29
+Method: Different Diffusion Model
+method [fermi]
+method two.dim
+method full.cpl
+diffuse time=30 temp=1100 dry
+oxygen enhanced 
+diffusion
+
+===== PDF page 30 =====
+30
+Default Command Setting
+File: suprem.key –complete command listing
+card command
+{
+keyword1=default;
+keyword2;
+}
+File: modelrc –default setting for physical parameters
+command  keyword1=var1 keyword2=var2
+
+===== PDF page 31 =====
+31
+Contents Contents Contents 
+ CSuprem/Apsys introduction
+ Getting started
+ CSuprem commands
+ A simple nMOS process
+ Device simulation
+ CSuprem/Apsys introduction
+ Getting started
+ CSuprem commands
+ A simple nMOS process
+ Device simulation
+
+===== PDF page 32 =====
+32
+Input decks
+ Output file numbering.
+ Quit and restart.
+ Mesh model setting using “option”.
+ Regrid and mesh-repair.
+ Going through an input deck for a simple 
+nMOS.
+
+===== PDF page 33 =====
+33
+Contents Contents Contents 
+ CSuprem/Apsys introduction
+ Getting started
+ CSuprem commands
+ A simple nMOS process
+ Device simulation
+ CSuprem/Apsys introduction
+ Getting started
+ CSuprem commands
+ A simple nMOS process
+ Device simulation
+
+===== PDF page 34 =====
+34
+APSYS for MOSFET
+ Temperature dependent impact ionization.
+ Quantum mechanical models for carrier 
+confinement and tunneling.
+ Various vertical field dependent mobility 
+models.
+ Self-heating/thermal analysis with various 
+types of thermal boundaries.
+ Convenient transient/AC analysis suitable for 
+various types of floating gate simulation.
+ Parallel computing capability for unlimited 
+mesh and multi-core CPU, suitable for 
+Window64 and Linux84 OS. 
+
+===== PDF page 35 =====
+35
+Apsys input templates
+ Getting started with Apsys:  launching Apsys.
+ Various modules and critical files.
+ Going through an IdVd template for MOSFET.
+ Using CrosslightView to get output data.
