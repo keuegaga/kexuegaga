@@ -1,6 +1,7 @@
 # Obsidian（窗口状态与缓存不入库）
 .obsidian/workspace*
 .obsidian/cache
+.obsidian/graph.json
 
 # 临时与日志文件
 *.tmp
