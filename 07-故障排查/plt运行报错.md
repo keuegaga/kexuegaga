@@ -5,8 +5,8 @@ product: Crosslight
 version: 2024
 status: draft
 source: "[[99-原始资料/专题/培训总结.pdf]] §3③；[[99-原始资料/教程与问答/Common_QAs.pdf]]（Output Data Organization）"
+last_verified: 2026-08-17
 ---
-
 # plt 运行报错
 
 ## 错误信息

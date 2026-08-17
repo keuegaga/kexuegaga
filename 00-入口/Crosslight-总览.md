@@ -4,8 +4,9 @@ type: index
 product: Crosslight
 version: 2024
 status: source
+source: -
+last_verified: 2026-08-17
 ---
-
 # Crosslight 知识库总览
 
 ## 这是什么

@@ -5,8 +5,8 @@ product: Crosslight
 version: 2024
 status: source
 source: "[[99-原始资料/通用手册/manual.pdf]] §4.1；bias-strategy 技能"
+last_verified: 2026-08-17
 ---
-
 # KCL 不守恒
 
 ## 错误信息
