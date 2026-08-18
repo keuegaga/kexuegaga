@@ -1,0 +1,52 @@
+{
+  "skill": "gain-preview-workflow",
+  "version": "0.1.0",
+  "source_book": "Crosslight Device Simulation Software General Manual — Crosslight Software Inc.",
+  "darwin_compatible": true,
+  "test_cases": [
+    {
+      "id": "should-trigger-01",
+      "type": "should_trigger",
+      "prompt": "新 InGaN 阱组分，想先看看增益峰在不在 450nm，怎么预览？",
+      "expected_behavior": "激活 gain-preview-workflow，指导生成 .gain 并跑 gain_wavel 预览",
+      "notes": "正面场景: 增益谱预览"
+    },
+    {
+      "id": "should-trigger-02",
+      "type": "should_trigger",
+      "prompt": "PICS3D 的 RTG 预览总是报错，说是增益数据问题，怎么准备 .gain？",
+      "expected_behavior": "激活 gain-preview-workflow，检查 .gain 的表格化增益/折射率准备与 include 关系",
+      "notes": "正面场景: RTG 预览前置准备"
+    },
+    {
+      "id": "should-trigger-03",
+      "type": "should_trigger",
+      "prompt": "怎么算量子阱子带和透明载流子密度？",
+      "expected_behavior": "激活 gain-preview-workflow，用 .gain 的 QW subband 与 gain_density 相关语句",
+      "notes": "正面场景: 子带与透明密度"
+    },
+    {
+      "id": "should-not-trigger-01",
+      "type": "should_not_trigger",
+      "prompt": "帮我解释一下增益谱的物理含义",
+      "expected_behavior": "不激活本 skill，纯物理知识问答",
+      "notes": "诱饵: 知识查询"
+    },
+    {
+      "id": "should-not-trigger-02",
+      "type": "should_not_trigger",
+      "prompt": "我的材料宏参数想改成新实验数据，怎么安全地覆盖？",
+      "expected_behavior": "不激活本 skill，应激活 material-macros（参数定义而非预览）",
+      "notes": "跨 skill 混淆诱饵: 材料宏"
+    },
+    {
+      "id": "edge-01",
+      "type": "edge_case",
+      "prompt": "预览的增益峰和主仿真算出来的波长对不上，哪个是对的？",
+      "expected_behavior": "激活本 skill 解释表格化 index 与主仿真逐偏置计算的差异（都可能是合理数据，主仿真更完整），并给验证路径",
+      "notes": "边界: 预览与主仿真一致性"
+    }
+  ],
+  "minimum_pass_rate": 0.8,
+  "notes": "至少 3 条 should_trigger + 2 条 should_not_trigger + 1 条 edge_case；诱饵含同书兄弟 skill 场景。"
+}
