@@ -29,6 +29,8 @@ timestamp	commit	skill	old_score	new_score	status	dimension	note	eval_mode
 2026-08-18T14:00	dee7076	material-macros	72.8	dim8: 6→8	full_test	实测表现	gaas10.mater 结构审查 + gaas10/inp13/shuji .gain include .mater 真跑通过；单位/默认库保护确认；估算 72.8→77.4	full_test
 2026-08-18T14:15	869a0f5	post-processing	65.0	1-0 better	keep	失败模式+检查点+具体性	批处理模式 R1+R2 合并；dim3 三段式表（more_output/bandgap段/手改.out/数据集范围/电流方向五类）、dim4 加 3 个 🔴 CHECKPOINT、dim5 输入输出表+get_data/plot_scan 真实语句；估算 65.0→72.8	paired
 2026-08-18T14:30	1289450	post-processing	72.8	dim8: 6→8	full_test	实测表现	gaas10 后处理全链路真跑：.plt exit 0 → gnuplot → gaas10.ps 52.8KB 新生成；数据集/AC 数据输出正常；估算 72.8→77.4	full_test
+2026-08-18T14:45	2a68f14	qw-model-selection	65.0	1-0 better	keep	失败模式+检查点+具体性	批处理模式 R1+R2 合并；dim3 三段式表（耦合阱/平带/深阱/应变/时间五类）、dim4 加 3 个 🔴 CHECKPOINT、dim5 输入输出表+valence_mixing/self_consistent/begin_complex 示例；估算 65.0→72.8	paired
+2026-08-18T15:00	926e872	qw-model-selection	72.8	dim8: 6→8	full_test	实测表现	inp13.gain 子带实测：Gamma/L/HH/LH 能级输出、mqw_profile 76 采样点、增益峰 1.291 µm；模型分级可落地；估算 72.8→77.4	full_test
 2026-08-18T09:00	baseline	post-processing	-	65.0	baseline	-	主流程 triage；dim8=dry_run	dry_run
 2026-08-18T09:00	baseline	qw-model-selection	-	65.0	baseline	-	主流程 triage；dim8=dry_run	dry_run
 2026-08-18T09:00	baseline	vcsel-modeling	-	66.8	baseline	-	主流程 triage；dim8=dry_run；篇幅较长 dim5 略高	dry_run
