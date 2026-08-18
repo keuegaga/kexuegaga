@@ -89,31 +89,52 @@ CSuprem 用一套"网格线-区域-边界"三段式语法描述结构：先定�
 
 当 skill 被激活后，agent 应按以下步骤执行:
 
+| 步骤 | 输入 | 输出 | 判停/完成标志 |
+|---|---|---|---|
+| 1 判断路线 | 用户描述（器件类型/工艺需求） | 路线结论 + 理由 | 用户确认路线 |
+| 2 2D 骨架 | 器件尺寸/层厚/掺杂/材料 | line/region/bound/init 命令块 | 每个 region/bound 引用已定义 tag |
+| 3 工艺序列 | 工艺步骤清单（淀积/掩膜/刻蚀/注入/扩散） | 完整命令序列 | 掩膜类刻蚀确认 mask 前置 |
+| 4 3D 化 | xy 平面文件 + zmesh.zst 模板 | 3D deck + 每个 etch 带 segm= | quasi3d 全平面通过 |
+| 5 导出对接 | .aps + .sol | 编号契约核对表 + 可读 .aps | suprem_* ↔ contact 编号一致 |
+| 6 验证交付 | 输入 deck | 自检清单 + 预期输出列表 | 2D→quasi3d→three.dim 逐级通过 |
+
 1. **判断路线与范围**
    - 确认用户要的是工艺仿真（CSuprem）还是直接结构建模（LayerBuilder/Layer3d/GeoEditor）。
    - 完成标准: 明确写出所选路线与理由；若是规则分层器件，转 `pics3d-laser-workflow` 并说明。
+   - 示例: "建 STI 沟槽" → CSuprem 路线；"建 FP 激光器 .layer" → pics3d-laser-workflow 路线。
+
+   🔴 CHECKPOINT · 🛑 STOP：把路线结论（工艺仿真 or 直接建模）告诉用户，用户确认后再继续——选错路线是全流程最大浪费点。
 
 2. **搭 2D 结构骨架（网格线-区域-边界）**
    - 按 `line`（tag/spacing）→ `region` → `bound` → `init` 顺序给出命令；关键界面打 tag。
    - 完成标准: 每个 region/bound 均引用已定义 tag；边界类型（exposed/backside/reflecting）按工艺作用面选择。
    - 判停条件: 若用户只要 2D 结构，跳到步骤 5 导出/验证；否则继续 3D。
+   - 示例: `line x loc=0.0 tag=lft spacing=0.4` → `region silicon xlo=lft xhi=rht ylo=top yhi=bot` → `bound exposed ...` → `init boron conc=1.0e14 orient=100`。
 
 3. **编排工艺步骤序列**
    - 按"淀积→掩膜→刻蚀→注入→扩散/氧化"逐条给出命令；刻蚀形状用 left/right 或 start/cont/done 多边形，坡角用 mask 的 theta + avoidmask。
    - 完成标准: 每个步骤说明它改变什么几何/掺杂；掩膜类刻蚀确认 mask 前置。
+   - 示例: `mask thick=1. x1.from=0. x1.to=3. x1.right.theta=2. && etch silicon avoidmask depth=0.3`。
 
 4. **3D 化（若需要）**
    - 生成 xy 平面文件（每个平面一份）、zmesh.zst（z_structure 定义 zseg_num/zplanes，zplanes=1，taper/bend/cylindrical 按需）、`mode quasi3d` 先验证、`3d_mesh nsegm=... infile=... zstfile=zmesh.zst`、`init`。
    - 把 etch 命令逐平面加 `segm=`；淀积/注入只写一次。
    - 完成标准: 每个平面文件能独立通过 2D 仿真；quasi3d 全平面跑通后再切换 `mode three.dim`。
+   - 示例: `mode three.dim` / `3d_mesh nsegm=3 infile=mymesh zstfile=zmesh.zst`；etch 逐平面 `etch oxide all segm=1 / segm=2 / segm=3`。
+
+   🔴 CHECKPOINT · 🛑 STOP：只有 quasi3d 全部平面通过且用户确认后，才允许切到 `three.dim` 正式计算；否则回到步骤 4 修平面/网格。
 
 5. **导出与对接（若需要器件仿真）**
    - `export outfile=xxx.aps xpsize=... triangle.based=... repair.mesh=yes`；在 .sol 中加 `3d_solution_method 3d_flow=yes`、复制 z_structure、`load_mesh ... suprem_import=yes`，逐平面 `begin_zmater/end_zmater` 内用 suprem_property/suprem_contact 编号并与 load_macro/contact 一致。
    - 完成标准: 材料/接触编号逐一核对；导出文件能被 APSYS 读取。
+   - 示例: `export outf=sti.aps xpsize=0.001 repair.mesh=yes`；.sol 中 `suprem_property silicon_mater=1 oxide_mater=2` + `load_macro name=si mater=1` 编号一致。
+
+   🔴 CHECKPOINT · 🛑 STOP：编号契约（suprem_property↔load_macro↔suprem_contact↔contact）逐项核对通过、且用户确认后再交付 `.aps`。
 
 6. **验证与交付**
    - 给出预期输出（生成的结构文件/掺杂分布/可导入的 .aps）与验证步骤（2D 复现 → quasi3d → three.dim；错误时按"先 2D 后 3D"定位）。
    - 完成标准: 用户拿到可运行的输入 deck + 明确的自检清单。
+   - 示例: `- [ ] 各平面 2D 通过 / - [ ] quasi3d 全平面通过 / - [ ] three.dim 趋势一致 / - [ ] .aps 可被 APSYS 读取`。
 
 ## B — 边界 (Boundary) ★
 
@@ -123,17 +144,20 @@ CSuprem 用一套"网格线-区域-边界"三段式语法描述结构：先定�
 - 仿真已发散（走 convergence-debugging）、纯网格优化（mesh-quality）、材料宏选择（material-macros）；
 - 只需结果解读/绘图（post-processing）。
 
-### 作者在书中警告的失败模式
+### 作者在书中警告的失败模式（触发 → 一线修复 → 兜底）
 
-- 不先 2D/quasi3d 验证直接全 3D：耗时且必然在个别平面处崩溃；
-- etch 漏加 `segm=`：3D 下刻蚀没有作用到所有平面（或作用错平面）；
-- 误以为淀积/注入可逐平面不同（语法不支持）；
-- `zplanes≠1` 时氧化仿真崩溃（经验规则：CSuprem 中恒为 1）；
-- suprem_property / load_macro / suprem_contact / contact 编号不一致：静默映射错误；
-- 修改 zmesh.zst 固定格式行（output/export_3dgeo）；
-- 漏设 `bound exposed`：教程点名的"最常见错误"，工艺步骤不作用于该面；
-- avoidmask 型刻蚀没有前置 mask；
-- 网格过稀导致刻蚀/氧化形貌失真。
+| 触发条件 | 一线修复 | 仍失败兜底 |
+|---|---|---|
+| 不先 2D/quasi3d 验证直接全 3D | 回退到 2D 复现，再 quasi3d 全平面跑一遍 | 逐平面单独跑 2D 定位失败平面，修其网格/区域后再合回 3D |
+| etch 漏加 `segm=`（3D 下只作用默认平面） | 每个刻蚀命令对每个 zseg_num 复制一份 | 全文检索 `etch` 行逐一核对 segm= 覆盖；仍异常则按平面重跑确认差异 |
+| 误以为淀积/注入可逐平面不同 | 差异只交给 etch + segm=；淀积/注入只写一次 | 需要平面差异的步骤拆成独立 z_segment 再细分区域 |
+| `zplanes≠1` 时氧化崩溃 | CSuprem 中 zplanes 恒为 1 | 检查 zmesh.zst 是否被误改；从 3D 示例复制模板重写 |
+| suprem_property/load_macro/suprem_contact/contact 编号不一致 | 逐平面核对编号契约 | 用编号对照表（材料/接触/平面三列）交叉核对，再导入 APSYS 验证 |
+| 修改 zmesh.zst 固定格式行（output/export_3dgeo） | 恢复原固定行 | 从官方 3D 示例复制标准 zmesh.zst 模板 |
+| 漏设 `bound exposed`（工艺不作用于该面） | 每个衬底顶面声明 exposed | CrosslightView 打开 .str 检查边界类型着色 |
+| avoidmask 型刻蚀没有前置 mask | 在 etch 前补 mask | 检查 mask 窗口/theta 与目标刻蚀区域是否匹配 |
+| 网格过稀导致刻蚀/氧化形貌失真 | 减小 line spacing 或对目标区 double_mesh | 加密后重跑，确认关键形貌随网格收敛 |
+| 对规则分层器件误用 CSuprem | 转 LayerBuilder/Layer3d 或 pics3d-laser-workflow | 直接建模也难收敛时走 convergence-debugging |
 
 ### 作者的盲点 / 时代局限
 
