@@ -66,9 +66,16 @@ related_skills:
 
 ## E — 可执行步骤 (Execution)
 
+| 步骤 | 输入 | 输出 | 判停/完成标志 |
+|---|---|---|---|
+| 1 核对材料体系与基晶格 | 衬底/缓冲层材料与弛豫状态 | lattice_base 设置 + 应变参考结论 | 用户确认基晶格 |
+| 2 开启极化自洽与独立阱 | 层文件 + .sol 参数 | set_polarization / self_consistent / independent_mqw 语句 + 能带图 | QCSE 弯曲可见 |
+| 3 验证与收敛处理 | .gain 预览 + 实验数据 | 波长/增益对比 + 收敛语句 | 关键输出与实验趋势一致 |
+
 1. **核对材料体系与基晶格**
    - 确认衬底/缓冲层材料与弛豫状态，用宏中的 lattice_base 语句设对基晶格。
    - 完成标准: 应变张量依据的参考晶格与生长条件一致。
+   - 示例: 材料宏内 `lattice_base` 设为缓冲层材料（如 AlN/AlGaN 缓冲则设对应晶格）；语句细节以手册第 13 章为准。
 
    🔴 CHECKPOINT · 🛑 STOP：把基晶格/应变参考结论（衬底+缓冲层材料、lattice_base 取值）告诉用户确认后再进入极化设置——基晶格错则后续全部白算。
 
@@ -76,12 +83,14 @@ related_skills:
    - 层文件用 set_polarization 自动生成界面电荷；.sol 加 self_consistent；MQW 每阱独立材料号（independent_mqw）。
    - 判停条件: 非极性晶面器件（极化≈0）可跳过 set_polarization，但仍需 6×6 k.p 方向设置。
    - 完成标准: 能带图中 QCSE 弯曲可见，波函数重叠合理。
+   - 示例: 层文件加 `set_polarization` 自动生成界面电荷；.sol 加 `self_consistent`（Schrödinger-Poisson 迭代）+ `independent_mqw`（每阱独立材料号）。
 
    🔴 CHECKPOINT · 🛑 STOP：用能带图确认 QCSE 弯曲与波函数重叠后再进入验证；看不到弯曲先检查 self_consistent 与 independent_mqw 是否生效。
 
 3. **验证与收敛处理**
    - 对比 .gain 预览与实验波长/增益峰；若开启电压虚高加 q_transport，低偏置难收敛用 slow transient。
    - 完成标准: 关键输出（波长/L-I/能带）与实验趋势一致。
+   - 示例: 深阱加 `q_transport`（手册 §4.10.4）；低偏置收敛用 `scan var=voltage_1 value=-3.5 var2=time value2_to=1.0`（慢瞬态，§4.8）；用 .gain 预览对比增益峰与实验波长。
 
    🔴 CHECKPOINT · 🛑 STOP：把波长/增益与实验的对比结论给用户确认后才算交付；系统性偏差（偏蓝/偏红）需先定位基晶格/组分/极化再继续。
 
