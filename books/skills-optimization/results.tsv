@@ -2,6 +2,7 @@ timestamp	commit	skill	old_score	new_score	status	dimension	note	eval_mode
 2026-08-18T09:00	baseline	bias-strategy	-	65.0	baseline	-	主流程 triage；dim8=dry_run；无 🔴 检查点/无三段式失败表	dry_run
 2026-08-18T09:00	baseline	convergence-debugging	-	65.0	baseline	-	主流程 triage；dim8=dry_run	dry_run
 2026-08-18T11:00	fa768e7	convergence-debugging	65.0	1-0 better	keep	失败模式编码+检查点	paired 主流程评估 fallback；dim3 失败模式升级为三段式表（低阻区/KCL/bandgap/绝缘宏/RTG/高阻六类）、dim4 加 3 个 🔴 CHECKPOINT；无回退；估算绝对分 65.0→69.8	paired
+2026-08-18T11:15	d427b1d	convergence-debugging	69.8	1-0 better	keep	可执行具体性+工作流	paired 主流程评估 fallback；E 段补输入/输出速查表 + newton_par/change_variable/慢瞬态/bandgap_reduction/auto_finish=rtgain 真实语句示例；dim5 提升、dim2 随簇提升；估算绝对分 69.8→72.8	paired
 2026-08-18T09:00	baseline	csuprem-complex-structure-modeling	-	81.0	baseline	-	已在 darwin 第一轮优化（73.2→81），此处为当前分	dry_run
 2026-08-18T09:00	baseline	dfb-dbr-grating-design	-	66.8	baseline	-	主流程 triage；dim8=dry_run；篇幅较长 dim5 略高	dry_run
 2026-08-18T09:00	baseline	gain-preview-workflow	-	65.0	baseline	-	主流程 triage；dim8=dry_run	dry_run
