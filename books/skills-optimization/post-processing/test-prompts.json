@@ -1,0 +1,52 @@
+{
+  "skill": "post-processing",
+  "version": "0.1.0",
+  "source_book": "Crosslight Device Simulation Software General Manual — Crosslight Software Inc.",
+  "darwin_compatible": true,
+  "test_cases": [
+    {
+      "id": "should-trigger-01",
+      "type": "should_trigger",
+      "prompt": "仿真跑完了，怎么画 L-I 曲线和某个偏置点的能带图？",
+      "expected_behavior": "激活 post-processing，给出 get_data/plot_scan/plot_1d 的 .plt 写法",
+      "notes": "正面场景: 结果绘图"
+    },
+    {
+      "id": "should-trigger-02",
+      "type": "should_trigger",
+      "prompt": "plot 报错说某个变量不可用，是怎么回事？",
+      "expected_behavior": "激活 post-processing，指出需要 more_output 重跑或变量名/数据集不对",
+      "notes": "正面场景: 变量不可用诊断"
+    },
+    {
+      "id": "should-trigger-03",
+      "type": "should_trigger",
+      "prompt": "怎么画 RTG 谱和纵向光子密度分布？",
+      "expected_behavior": "激活 post-processing，给出 gain_spectrum variable=rtg_spectrum 与纵向绘图语句",
+      "notes": "正面场景: 激光器专用后处理"
+    },
+    {
+      "id": "should-not-trigger-01",
+      "type": "should_not_trigger",
+      "prompt": "帮我解释一下 scan_data 和 xy_data 的区别",
+      "expected_behavior": "不激活本 skill 的执行流程——这是概念解释，简短回答即可",
+      "notes": "诱饵: 概念问答 vs 操作"
+    },
+    {
+      "id": "should-not-trigger-02",
+      "type": "should_not_trigger",
+      "prompt": "仿真前想先看材料增益谱，怎么预览？",
+      "expected_behavior": "不激活本 skill（仿真后的绘图），应激活 gain-preview-workflow（仿真前预览）",
+      "notes": "跨 skill 混淆诱饵: 预览 vs 后处理"
+    },
+    {
+      "id": "edge-01",
+      "type": "edge_case",
+      "prompt": "我画出来的 L-I 曲线在阈值处有个小台阶，是数据问题还是物理现象？",
+      "expected_behavior": "激活本 skill 先核对数据集/变量选取与绘图设置（如 mode 选择），若确认无误则提示转 convergence-debugging 或物理模型检查",
+      "notes": "边界: 数据异常跨后处理与物理"
+    }
+  ],
+  "minimum_pass_rate": 0.8,
+  "notes": "至少 3 条 should_trigger + 2 条 should_not_trigger + 1 条 edge_case；诱饵含同书兄弟 skill 场景。"
+}
