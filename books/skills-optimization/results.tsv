@@ -1,0 +1,13 @@
+timestamp	commit	skill	old_score	new_score	status	dimension	note	eval_mode
+2026-08-18T09:00	baseline	bias-strategy	-	65.0	baseline	-	主流程 triage；dim8=dry_run；无 🔴 检查点/无三段式失败表	dry_run
+2026-08-18T09:00	baseline	convergence-debugging	-	65.0	baseline	-	主流程 triage；dim8=dry_run	dry_run
+2026-08-18T09:00	baseline	csuprem-complex-structure-modeling	-	81.0	baseline	-	已在 darwin 第一轮优化（73.2→81），此处为当前分	dry_run
+2026-08-18T09:00	baseline	dfb-dbr-grating-design	-	66.8	baseline	-	主流程 triage；dim8=dry_run；篇幅较长 dim5 略高	dry_run
+2026-08-18T09:00	baseline	gain-preview-workflow	-	65.0	baseline	-	主流程 triage；dim8=dry_run	dry_run
+2026-08-18T09:00	baseline	gan-wurtzite-mqw	-	65.0	baseline	-	主流程 triage；dim8=dry_run	dry_run
+2026-08-18T09:00	baseline	material-macros	-	65.0	baseline	-	主流程 triage；dim8=dry_run	dry_run
+2026-08-18T09:00	baseline	mesh-quality	-	63.2	baseline	-	主流程 triage；dim8=dry_run；篇幅最短 dim5 略低	dry_run
+2026-08-18T09:00	baseline	pics3d-laser-workflow	-	66.8	baseline	-	主流程 triage；dim8=dry_run；篇幅较长 dim5 略高	dry_run
+2026-08-18T09:00	baseline	post-processing	-	65.0	baseline	-	主流程 triage；dim8=dry_run	dry_run
+2026-08-18T09:00	baseline	qw-model-selection	-	65.0	baseline	-	主流程 triage；dim8=dry_run	dry_run
+2026-08-18T09:00	baseline	vcsel-modeling	-	66.8	baseline	-	主流程 triage；dim8=dry_run；篇幅较长 dim5 略高	dry_run
