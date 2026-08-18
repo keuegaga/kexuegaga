@@ -67,10 +67,17 @@ related_skills:
 
 ## E — 可执行步骤 (Execution)
 
+| 步骤 | 输入 | 输出 | 判停/完成标志 |
+|---|---|---|---|
+| 1 生成 .gain 骨架 | 材料宏/组分/温度/波长/载流子范围 | .gain 文件（begin_gain…end_gain） | 语法无误、材料加载成功、用户确认范围 |
+| 2 选择并运行预览语句 | .gain + include 的 .mater | 增益/自发谱/折射率/电流-载流子曲线 | 增益峰与目标波长一致、透明密度合理 |
+| 3 供主仿真/RTG 使用 | 预览结论 + .sol | .sol include .gain / rtgain_phase density | RTG 模式位置合理 |
+
 1. **生成 .gain 骨架**
    - 右键 .mater 生成模板，或用 setuplastip/setuppics3d -gain 交互生成。
    - 包含 temperature、include .mater、波长范围、载流子浓度范围。
    - 完成标准: .gain 语法无误、材料加载成功。
+   - 示例: `temperature temp=0.3E+03` + `include file=gaas10.mater`（真实 gaas10.gain 骨架）；`setuplastip -gain` 可交互生成。
 
    🔴 CHECKPOINT · 🛑 STOP：把生成的 .gain 骨架与关键范围（wavel_range/conc_range/temperature）给用户确认后再运行预览；不要跳过确认直接跑。
 
@@ -79,12 +86,14 @@ related_skills:
    - 多活性区用 gain_module 指定区域。
    - 判停条件: 若增益峰远离目标波长，先修材料/组分再重跑，不要带病进主仿真。
    - 完成标准: 关键曲线（增益峰/透明密度/自发谱）与预期一致。
+   - 示例: `gain_wavel wavel_range=(0.7 0.9) conc_range=(5.e23 5.e24) curve_number=5`；`sp.rate_wavel wavel_range=... conc_range=... curve_number=20`；`current_conc conc_range=... data_point=30 use_macro=yes fit_outfile=tmp.data`（inp13.gain）。
 
    🔴 CHECKPOINT · 🛑 STOP：把预览结论（增益峰波长/透明载流子密度）告诉用户确认；增益峰偏离目标波长时，先修材料/组分重跑，得到确认后才允许进入主仿真/RTG。
 
 3. **供主仿真/RTG 使用**
    - 主仿真 include .gain（而非 .mater）；RTG 预览的 density 取 .gain 算出的合理载流子密度。
    - 完成标准: RTG 预览正常，模式位置合理。
+   - 示例: .sol 中 `include file=inp13.gain`（替代 include .mater）；`rtgain_phase density=1.25e24`（density 来自 current_conc 曲线）。
 
 ## B — 边界 (Boundary) ★
 
