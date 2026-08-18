@@ -62,9 +62,16 @@ related_skills:
 
 ## E — 可执行步骤 (Execution)
 
+| 步骤 | 输入 | 输出 | 判停/完成标志 |
+|---|---|---|---|
+| 1 目检网格 | .layer/.geo 网格参数 + 剧变区清单 | .mplt 图 + 欠采样/过密结论 | 用户确认目检结论 |
+| 2 调整数量与分布 | 目检结论 + 目标网格参数 | 修改后的 .layer/.geo 语句 | .mplt 复检通过 + 关键量收敛对比 |
+| 3 网格收敛性验证 | 加密前后两套网格 | 关键量对比表 | 关键量变化 < 可接受阈值 |
+
 1. **目检网格**
    - 生成 .mplt 并绘图，检查剧变区（界面/接触/隧穿/电流拥挤/QW/光模峰）采样。
    - 完成标准: 明确指出哪些区域可能欠采样/过密。
+   - 示例: `pics3d.exe xxx.geo` 生成 .msh 后，运行 `pics3d.exe xxx.mplt`（或 GUI 右键 .mplt → View Mesh）查看网格图。
 
    🔴 CHECKPOINT · 🛑 STOP：把目检结论（哪些区欠采样/过密、建议动作）告诉用户，用户确认后再进入调整；不要跳过目检直接加密。
 
@@ -72,12 +79,14 @@ related_skills:
    - 用 n/mesh_num、r/shift_center 或 put_mesh 控制分布；局部用 double_mesh/half_mesh。
    - 判停条件: 若无法手工定位剧变区，用 regrid 按材料参数变化自动加密。
    - 完成标准: 剧变区有足够点、低阻区不密集。
+   - 示例: `.layer` 中 `layer d=0.2 n=13 r=0.8`；`.geo` 中 `put_mesh polygon=p001 edge=[b001 b002] number=13 ratio=0.8`；局部 `double_mesh polygon=p001 edge=...` / `half_mesh`；自动加密用 `regrid`。
 
    🔴 CHECKPOINT · 🛑 STOP：调整后先重画 .mplt 目检确认分布，再跑关键量收敛性对比；确认改进生效后才交付改动。
 
 3. **网格收敛性验证**
    - 加密后重跑关键量（能带/载流子/增益/模场），若结果大幅变化说明网格未收敛，继续加密。
    - 完成标准: 关键量随网格加密变化 < 可接受阈值。
+   - 示例: 分别用加密前后网格重跑 `pics3d.exe xxx.sol`，对比目标量（如某点能带/增益峰值），差值 <1% 视为收敛。
 
 ## B — 边界 (Boundary) ★
 
