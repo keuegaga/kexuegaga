@@ -66,10 +66,17 @@ related_skills:
 
 ## E — 可执行步骤 (Execution)
 
+| 步骤 | 输入 | 输出 | 判停/完成标志 |
+|---|---|---|---|
+| 1 分级定位问题 | 报错/日志/误差表/结构改动历史 | 触发改动 + 失败偏置点 + 误差表解读 | 用户确认定位结论 |
+| 2 按排查树修复 | 定位结论 + .sol/.geo 参数 | 修改后的语句 + 收敛的偏置点 | 误差表单调下降、目标点收敛 |
+| 3 验证技巧没有污染物理 | 技巧前后两套输出 | 对比表（IV/L-I/能带） | 差异可解释 |
+
 1. **分级定位问题**
    - 检查报错信息、失败偏置点、方程/变量误差表（eqns/potential/elec/hole/other）。
    - 用简化结构（降维/去流阻层）复现问题，锁定触发改动。
    - 完成标准: 找到"哪一步改动让仿真从收敛变发散"。
+   - 示例: 检查 .log 中 `Error report for equations and variables: it# eqns potential elec hole other` 各列量级与趋势。
 
    🔴 CHECKPOINT · 🛑 STOP：把定位结论（触发改动/失败偏置点/误差表解读）告诉用户确认后再进入修复；跳过定位直接改参数是常见返工来源。
 
@@ -79,12 +86,14 @@ related_skills:
    - 第三级: 变量与技巧（change_variable、slow transient、辅助接触、bandgap_reduction 等）。
    - 判停条件: 若问题出在 PICS3D 阈值附近，直接转 `pics3d-laser-workflow` 的三步偏置检查。
    - 完成标准: 目标偏置点收敛且误差表单调下降。
+   - 示例: `newton_par damping_step=5. max_iter=100 print_flag=3`；高阻结构 `newton_par change_variable=yes`；慢瞬态 `scan var=voltage_1 value=-3.5 var2=time value2_to=1.0`；带隙降低 `equilibrium bandgap_reduction=0.2` + `scan var=bandgap_reduction value_to=0.0 var2=current_1 value2_to=10e-3`；PICS3D `scan var=current_1 value_to=20e-3 auto_finish=rtgain auto_until=0.9 auto_within=0.05`。
 
    🔴 CHECKPOINT · 🛑 STOP：每一级修复后重跑并确认误差表单调下降；与用户确认当前修复效果后再进入下一级技巧或交付。
 
 3. **验证技巧没有污染物理**
    - 对比技巧前后结果（如 bandgap_reduction 只取最后一段 IV；辅助接触电流已归零）。
    - 完成标准: 关键输出（IV/L-I/能带）在技巧引入前后一致或差异可解释。
+   - 示例: bandgap 技巧的 IV 只取恢复带隙后的最后一段；辅助接触在击穿后 `scan var=current_1` 把其电流归零再对比主电极输出。
 
    🔴 CHECKPOINT · 🛑 STOP：交付前必须完成"技巧前后对比"并向用户展示差异可解释；不可解释的差异视为未完成。
 
