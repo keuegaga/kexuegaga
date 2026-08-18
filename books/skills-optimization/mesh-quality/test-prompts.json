@@ -1,0 +1,52 @@
+{
+  "skill": "mesh-quality",
+  "version": "0.1.0",
+  "source_book": "Crosslight Device Simulation Software General Manual — Crosslight Software Inc.",
+  "darwin_compatible": true,
+  "test_cases": [
+    {
+      "id": "should-trigger-01",
+      "type": "should_trigger",
+      "prompt": "我的脊形激光器在脊角附近电流密度结果振荡，是不是网格问题？",
+      "expected_behavior": "激活 mesh-quality，建议 .mplt 目检+脊角/界面局部加密",
+      "notes": "正面场景: 局部网格诊断"
+    },
+    {
+      "id": "should-trigger-02",
+      "type": "should_trigger",
+      "prompt": "3D 仿真内存不够，网格该怎么分配才不浪费？",
+      "expected_behavior": "激活 mesh-quality，给出剧变区加密/均匀区减密的分布策略与 double_mesh 用法",
+      "notes": "正面场景: 网格智能分配"
+    },
+    {
+      "id": "should-trigger-03",
+      "type": "should_trigger",
+      "prompt": "regrid 怎么用来自动加密？",
+      "expected_behavior": "激活 mesh-quality，解释 regrid 按材料参数变化自动加密的用法",
+      "notes": "正面场景: 自动加密"
+    },
+    {
+      "id": "should-not-trigger-01",
+      "type": "should_not_trigger",
+      "prompt": "帮我画一下生成好的网格图",
+      "expected_behavior": "不激活本 skill 的优化流程——这是执行性操作提示，给出 .mplt 运行方式即可",
+      "notes": "诱饵: 操作执行 vs 方法论"
+    },
+    {
+      "id": "should-not-trigger-02",
+      "type": "should_not_trigger",
+      "prompt": "仿真在 2V 不收敛，报错信息很乱，我应该先查什么？",
+      "expected_behavior": "不激活本 skill（单一维度），应激活 convergence-debugging 做整体排查，网格只是其中一级",
+      "notes": "跨 skill 混淆诱饵: 收敛整体诊断"
+    },
+    {
+      "id": "edge-01",
+      "type": "edge_case",
+      "prompt": "网格加密后阈值电流变了 20%，这是正常的吗？",
+      "expected_behavior": "激活本 skill，说明结果随网格大幅变化=网格未收敛，需继续加密直到稳定，并检查关键区域密度",
+      "notes": "边界: 网格收敛性验证"
+    }
+  ],
+  "minimum_pass_rate": 0.8,
+  "notes": "至少 3 条 should_trigger + 2 条 should_not_trigger + 1 条 edge_case；诱饵含同书兄弟 skill 场景。"
+}
