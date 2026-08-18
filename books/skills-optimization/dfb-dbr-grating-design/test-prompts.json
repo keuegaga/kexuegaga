@@ -1,0 +1,52 @@
+{
+  "skill": "dfb-dbr-grating-design",
+  "version": "0.1.0",
+  "source_book": "Crosslight Device Simulation Software General Manual — Crosslight Software Inc.",
+  "darwin_compatible": true,
+  "test_cases": [
+    {
+      "id": "should-trigger-01",
+      "type": "should_trigger",
+      "prompt": "DFB 激光器出现双模，怎么加相移或者调 kappa 来压边模？",
+      "expected_behavior": "激活 dfb-dbr-grating-design，分析 κL/相移/啁啾对模式选择的影响并用 RTG 验证",
+      "notes": "正面场景: 边模抑制设计"
+    },
+    {
+      "id": "should-trigger-02",
+      "type": "should_trigger",
+      "prompt": "我想把光栅从简化 kappa 改成显式材料光栅，grating_compos 怎么设置？",
+      "expected_behavior": "激活 dfb-dbr-grating-design，给出 grating_compos 高低折射率材料与厚度定义流程",
+      "notes": "正面场景: 显式光栅建模"
+    },
+    {
+      "id": "should-trigger-03",
+      "type": "should_trigger",
+      "prompt": "Bragg wavelength 和参考波长设多少才合适？RTG 谱的主模不在增益峰上。",
+      "expected_behavior": "激活 dfb-dbr-grating-design，解释 λ_ref vs λ_Br 并指导 RTG 谱调腔",
+      "notes": "正面场景: 布拉格/参考波长设置"
+    },
+    {
+      "id": "should-not-trigger-01",
+      "type": "should_not_trigger",
+      "prompt": "帮我查一下 kappa_real 命令的参数列表",
+      "expected_behavior": "不激活本 skill，这是命令语法查询",
+      "notes": "诱饵: 命令字典查询"
+    },
+    {
+      "id": "should-not-trigger-02",
+      "type": "should_not_trigger",
+      "prompt": "VCSEL 的 DBR 反射率和 spacer 厚度怎么设计？",
+      "expected_behavior": "不激活本 skill，应激活 vcsel-modeling（垂直腔路径）",
+      "notes": "跨 skill 混淆诱饵: VCSEL DBR"
+    },
+    {
+      "id": "edge-01",
+      "type": "edge_case",
+      "prompt": "我的 DBR 激光器调谐电流扫描时出现模跳，功率曲线有台阶，怎么分析？",
+      "expected_behavior": "激活本 skill 分析纵模相对增益峰/DBR 反射谱的运动与模跳机制，同时配合 pics3d-laser-workflow 检查偏置扫描设置",
+      "notes": "边界: 模跳分析跨设计验证与偏置"
+    }
+  ],
+  "minimum_pass_rate": 0.8,
+  "notes": "至少 3 条 should_trigger + 2 条 should_not_trigger + 1 条 edge_case；诱饵含同书兄弟 skill 场景。"
+}
