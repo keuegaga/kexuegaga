@@ -1,0 +1,52 @@
+{
+  "skill": "qw-model-selection",
+  "version": "0.1.0",
+  "source_book": "Crosslight Device Simulation Software General Manual — Crosslight Software Inc.",
+  "darwin_compatible": true,
+  "test_cases": [
+    {
+      "id": "should-trigger-01",
+      "type": "should_trigger",
+      "prompt": "我的量子阱增益谱形状不对，是不是默认的 QW 模型不够？",
+      "expected_behavior": "激活 qw-model-selection，评估是否需要复杂 MQW/自洽/valence_mixing",
+      "notes": "正面场景: 模型升级判断"
+    },
+    {
+      "id": "should-trigger-02",
+      "type": "should_trigger",
+      "prompt": "薄垒耦合 MQW 应该用什么宏？怎么定义复杂结构？",
+      "expected_behavior": "激活 qw-model-selection，给出 cx- 宏 + begin_complex/end_complex + type=strained_complex",
+      "notes": "正面场景: 耦合阱建模"
+    },
+    {
+      "id": "should-trigger-03",
+      "type": "should_trigger",
+      "prompt": "valence_mixing 打开后慢很多，什么时候值得开？",
+      "expected_behavior": "激活 qw-model-selection，给出应变/精度需求判断与查表折中方案",
+      "notes": "正面场景: 精度速度权衡"
+    },
+    {
+      "id": "should-not-trigger-01",
+      "type": "should_not_trigger",
+      "prompt": "帮我查一下 active_reg 命令的参数",
+      "expected_behavior": "不激活本 skill，命令字典查询",
+      "notes": "诱饵: 命令查询"
+    },
+    {
+      "id": "should-not-trigger-02",
+      "type": "should_not_trigger",
+      "prompt": "GaN 量子阱的极化电荷和基晶格怎么设？",
+      "expected_behavior": "不激活本 skill（通用模型问题不覆盖 GaN 特有物理），应激活 gan-wurtzite-mqw",
+      "notes": "跨 skill 混淆诱饵: GaN 特有物理"
+    },
+    {
+      "id": "edge-01",
+      "type": "edge_case",
+      "prompt": "我的 InGaAsP 应变阱开了 valence_mixing 后增益峰蓝移，合理吗？",
+      "expected_behavior": "激活本 skill，解释 k.p 子带反交叉/负质量拟合对增益峰的影响与验证方法，必要时配合 material-macros 核对参数",
+      "notes": "边界: 模型升级后的结果解释"
+    }
+  ],
+  "minimum_pass_rate": 0.8,
+  "notes": "至少 3 条 should_trigger + 2 条 should_not_trigger + 1 条 edge_case；诱饵含同书兄弟 skill 场景。"
+}
