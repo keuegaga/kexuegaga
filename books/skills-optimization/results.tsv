@@ -20,6 +20,9 @@ timestamp	commit	skill	old_score	new_score	status	dimension	note	eval_mode
 2026-08-18T09:45	36ef46b	mesh-quality	68.0	1-0 better	keep	可执行具体性+工作流	paired 主流程评估 fallback；E 段补输入/输出速查表 + put_mesh/double_mesh/regrid 真实示例；dim5 提升、dim2 随簇提升；估算绝对分 68.0→71.0	paired
 2026-08-18T10:00	2af36aa	mesh-quality	71.0	dim8: 6→8	full_test	实测表现	gaas10 网格收敛性 full_test：网格 128→258 点，λ 0.83407295→0.83406887 µm（<0.001%）、P 9.141→9.140 mW（<0.01%）；E 段工作流端到端可执行；估算绝对分 71.0→75.6	full_test
 2026-08-18T09:00	baseline	pics3d-laser-workflow	-	66.8	baseline	-	主流程 triage；dim8=dry_run；篇幅较长 dim5 略高	dry_run
+2026-08-18T12:30	3971225	pics3d-laser-workflow	66.8	1-0 better	keep	失败模式编码+检查点	paired 主流程评估 fallback；dim3 失败模式升级为三段式表（RTG≥1/init_wave 忽略/终止值/VCSEL 合并/示例选择/宏加载七类）、dim4 加 3 个 🔴 CHECKPOINT；无回退；估算绝对分 66.8→71.6	paired
+2026-08-18T12:45	0195c7b	pics3d-laser-workflow	71.6	1-0 better	keep	可执行具体性+工作流	paired 主流程评估 fallback；E 段补输入/输出速查表 + equilibrium/auto_finish=current_1/auto_finish=rtgain/solve_rtg 真实语句示例（gaas10.sol/inp13.sol）；dim5 提升、dim2 随簇提升；估算绝对分 71.6→73.6	paired
+2026-08-18T13:00	6966ac5	pics3d-laser-workflow	73.6	dim8: 6→7	full_test(partial)	实测表现	FP 三步偏置真跑通过（gaas10：12 数据集收敛、L-I 阈值~2mA）；RTG 配置审查与 inp13.gain 数据实测；inp13 3D 求解本机崩溃（环境限制）；dim8 6→7；估算绝对分 73.6→75.9	full_test
 2026-08-18T09:00	baseline	post-processing	-	65.0	baseline	-	主流程 triage；dim8=dry_run	dry_run
 2026-08-18T09:00	baseline	qw-model-selection	-	65.0	baseline	-	主流程 triage；dim8=dry_run	dry_run
 2026-08-18T09:00	baseline	vcsel-modeling	-	66.8	baseline	-	主流程 triage；dim8=dry_run；篇幅较长 dim5 略高	dry_run
