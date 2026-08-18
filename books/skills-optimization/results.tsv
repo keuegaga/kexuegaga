@@ -11,6 +11,9 @@ timestamp	commit	skill	old_score	new_score	status	dimension	note	eval_mode
 2026-08-18T10:30	8b83878	gain-preview-workflow	69.8	1-0 better	keep	可执行具体性+工作流	paired 主流程评估 fallback；E 段补输入/输出速查表 + gain_wavel/sp.rate_wavel/current_conc/rtgain_phase 真实语句示例（gaas10.gain/inp13.gain）；dim5 提升、dim2 随簇提升；估算绝对分 69.8→72.8	paired
 2026-08-18T10:45	d4b17c6	gain-preview-workflow	72.8	dim8: 6→8	full_test	实测表现	inp13.gain 真跑：增益峰 +4805 1/m @1.291 µm、透明波长≈1.31 µm（对齐设计 1.3 µm）、子带/复合系数输出正常；E 段工作流端到端可执行；估算绝对分 72.8→77.4	full_test
 2026-08-18T09:00	baseline	gan-wurtzite-mqw	-	65.0	baseline	-	主流程 triage；dim8=dry_run	dry_run
+2026-08-18T11:45	0e9f1e9	gan-wurtzite-mqw	65.0	1-0 better	keep	失败模式编码+检查点	paired 主流程评估 fallback；dim3 失败模式升级为三段式表（基晶格/self_consistent/独立阱/q_transport/slow transient/波长偏差/晶面七类）、dim4 加 3 个 🔴 CHECKPOINT；无回退；估算绝对分 65.0→69.8	paired
+2026-08-18T12:00	7ff5de1	gan-wurtzite-mqw	69.8	1-0 better	keep	可执行具体性+工作流	paired 主流程评估 fallback；E 段补输入/输出速查表 + lattice_base/set_polarization/self_consistent/independent_mqw/q_transport/慢瞬态真实语句示例；dim5 提升、dim2 随簇提升；估算绝对分 69.8→72.8	paired
+2026-08-18T12:15	f49002d	gan-wurtzite-mqw	72.8	dim8: 6→8	full_test	实测表现	blue_LD shuji.gain 真跑：增益峰 0.43 µm（蓝光）、透明密度≈1.7e25 m⁻³、纤锌矿能级 CH=0 特征正确；E 段工作流端到端可执行；估算绝对分 72.8→77.4	full_test
 2026-08-18T09:00	baseline	material-macros	-	65.0	baseline	-	主流程 triage；dim8=dry_run	dry_run
 2026-08-18T09:00	baseline	mesh-quality	-	63.2	baseline	-	主流程 triage；dim8=dry_run；篇幅最短 dim5 略低	dry_run
 2026-08-18T09:30	ff9452d	mesh-quality	63.2	1-0 better	keep	失败模式编码+检查点	paired 主流程评估 fallback（judge spawn 已知不可用）；dim3 失败模式升级为三段式表、dim4 加 🔴 CHECKPOINT；无回退；估算绝对分 63.2→68.0	paired
