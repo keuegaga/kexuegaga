@@ -5,6 +5,7 @@ timestamp	commit	skill	old_score	new_score	status	dimension	note	eval_mode
 2026-08-18T09:00	baseline	dfb-dbr-grating-design	-	66.8	baseline	-	主流程 triage；dim8=dry_run；篇幅较长 dim5 略高	dry_run
 2026-08-18T09:00	baseline	gain-preview-workflow	-	65.0	baseline	-	主流程 triage；dim8=dry_run	dry_run
 2026-08-18T10:15	3c72335	gain-preview-workflow	65.0	1-0 better	keep	失败模式编码+检查点	paired 主流程评估 fallback；dim3 失败模式升级为三段式表（含增益峰偏离/RTG 对齐/预览 vs 主仿真差异）、dim4 加 🔴 CHECKPOINT；无回退；估算绝对分 65.0→69.8	paired
+2026-08-18T10:30	8b83878	gain-preview-workflow	69.8	1-0 better	keep	可执行具体性+工作流	paired 主流程评估 fallback；E 段补输入/输出速查表 + gain_wavel/sp.rate_wavel/current_conc/rtgain_phase 真实语句示例（gaas10.gain/inp13.gain）；dim5 提升、dim2 随簇提升；估算绝对分 69.8→72.8	paired
 2026-08-18T09:00	baseline	gan-wurtzite-mqw	-	65.0	baseline	-	主流程 triage；dim8=dry_run	dry_run
 2026-08-18T09:00	baseline	material-macros	-	65.0	baseline	-	主流程 triage；dim8=dry_run	dry_run
 2026-08-18T09:00	baseline	mesh-quality	-	63.2	baseline	-	主流程 triage；dim8=dry_run；篇幅最短 dim5 略低	dry_run
