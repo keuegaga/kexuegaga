@@ -1,0 +1,52 @@
+{
+  "skill": "bias-strategy",
+  "version": "0.1.0",
+  "source_book": "Crosslight Device Simulation Software General Manual — Crosslight Software Inc.",
+  "darwin_compatible": true,
+  "test_cases": [
+    {
+      "id": "should-trigger-01",
+      "type": "should_trigger",
+      "prompt": "这个太阳能电池仿真应该用电压偏置还是电流偏置？",
+      "expected_behavior": "激活 bias-strategy，给出高阻器件用电压偏置的判断与理由",
+      "notes": "正面场景: 偏置类型选择"
+    },
+    {
+      "id": "should-trigger-02",
+      "type": "should_trigger",
+      "prompt": "我的激光器到阈值附近电压扫描就发散，该怎么改扫描？",
+      "expected_behavior": "激活 bias-strategy，建议切电流偏置并加 auto_finish=rtgain（PICS3D）",
+      "notes": "正面场景: 激光器电流偏置"
+    },
+    {
+      "id": "should-trigger-03",
+      "type": "should_trigger",
+      "prompt": "三电极 DBR 激光器怎么同时控制增益段和调谐段的电流？",
+      "expected_behavior": "激活 bias-strategy，给出共享地+多变量 scan+符号约定",
+      "notes": "正面场景: 多电极控制"
+    },
+    {
+      "id": "should-not-trigger-01",
+      "type": "should_not_trigger",
+      "prompt": "帮我画一下仿真结果的 L-I 曲线",
+      "expected_behavior": "不激活本 skill，这是后处理，应激活 post-processing",
+      "notes": "跨 skill 混淆诱饵: 后处理"
+    },
+    {
+      "id": "should-not-trigger-02",
+      "type": "should_not_trigger",
+      "prompt": "解释一下漂移-扩散方程的基本形式",
+      "expected_behavior": "不激活本 skill，纯物理知识问答",
+      "notes": "诱饵: 知识查询"
+    },
+    {
+      "id": "edge-01",
+      "type": "edge_case",
+      "prompt": "仿真已经发散了，报错说电流控制失败，我应该先看偏置还是先看网格？",
+      "expected_behavior": "边缘情况: 提示这是收敛诊断场景，主要激活 convergence-debugging；bias-strategy 作为其中一级排查参考",
+      "notes": "边界: 偏置与调试重叠"
+    }
+  ],
+  "minimum_pass_rate": 0.8,
+  "notes": "至少 3 条 should_trigger + 2 条 should_not_trigger + 1 条 edge_case；诱饵含同书兄弟 skill 场景。"
+}
