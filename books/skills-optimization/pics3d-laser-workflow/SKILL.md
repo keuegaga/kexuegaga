@@ -71,10 +71,17 @@ related_skills:
 
 当 skill 被激活后，agent 应按以下步骤执行:
 
+| 步骤 | 输入 | 输出 | 判停/完成标志 |
+|---|---|---|---|
+| 1 建立项目基础 | 示例工程 + .layer/.geo | .msh/.mater/.doping + .gain 预览通过 | 用户确认示例选择 |
+| 2 编写三段式偏置 | 器件参数 + .sol 模板 | equilibrium/scan/auto_finish/solve_rtg 语句 | 各段终止条件与步长明确 |
+| 3 验证并迭代 | .log + .plt | 模式搜索/RTG 列表 + L-I 曲线 | 收敛且物理合理 |
+
 1. **建立项目基础（从示例出发）**
    - 在官方示例库找结构最接近的工程（FP→A_tutorial；DFB→inp13；DBR→3section_tunable；VCSEL→jim_vcsel）。
    - 完成 .layer → .geo → 网格 → .mater/.doping 的生成与检查。
    - 完成标准: 网格可生成、材料宏加载无错误、.gain 预览通过。
+   - 示例: `Layer gaas10.layer` → `pics3d.exe gaas10.geo` → `pics3d.exe gaas10.gain`（.gain 预览通过后再进入 .sol）。
 
    🔴 CHECKPOINT · 🛑 STOP：把选定的示例工程与"网格/材料/.gain 预览"检查结论告诉用户确认后再写 .sol——选错基底工程会浪费整轮流程。
 
@@ -82,6 +89,7 @@ related_skills:
    - 先 `equilibrium`；再电压扫描到 80-90% 内建电压（可 auto_finish=current）；再电流扫描 `auto_finish=rtgain`（RTG 目标建议 0.8-0.95）；最后 `solve_rtg=yes` 小步长扫描。
    - 完成标准: 每个 scan 之间有明确的终止条件与步长设置。
    - 判停条件: 若器件是 VCSEL（低阈值），把电压段与 RTG 初始化合并，用 auto2_finish 加电流下限。
+   - 示例: `equilibrium`；`scan var=voltage_1 value_to=-2 init_step=1e-3 max_step=0.1 auto_finish=current_1 auto_until=1e-3 auto_within=5e-4`；`scan var=current_1 value_to=20e-3 init_step=1e-4 max_step=1e-3 auto_finish=rtgain auto_until=0.9 auto_within=0.05`；`scan var=current_1 value_to=20e-3 init_step=1e-5 max_step=5e-4 solve_rtg=yes`（gaas10.sol / inp13.sol 真实配置）。
 
    🔴 CHECKPOINT · 🛑 STOP：逐段向用户确认扫描顺序（equilibrium → 电压 80-90% → auto_finish=rtgain → solve_rtg）与各段终止条件/步长；VCSEL 低阈值走合并分支。
 
@@ -89,6 +97,7 @@ related_skills:
    - 跑通后检查模式搜索日志（纵模波长/RTG 列表）、L-I 曲线与波强度分布。
    - 若发散: 回到第 2 步检查是否缺 auto_finish=rtgain，或把 solve_rtg 的 init_step 再调小 1-2 个数量级。
    - 完成标准: 目标偏置范围内收敛，L-I/波长曲线物理合理。
+   - 示例: 检查 .log 中模式搜索输出（纵模波长/RTG 列表）；.plt 用 `plot_scan scan_var=laser_current_1 variable=laser_power` 出 L-I 曲线。
 
    🔴 CHECKPOINT · 🛑 STOP：把模式搜索日志（纵模波长/RTG 列表）与 L-I 曲线检查结论给用户确认后才算交付；曲线异常先回到第 2 步核对偏置顺序。
 
