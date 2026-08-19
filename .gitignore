@@ -1,0 +1,8 @@
+# Obsidian 个人 UI 状态与缓存不入库
+/.obsidian/*
+!/.obsidian/app.json
+
+# 系统杂项
+.DS_Store
+Thumbs.db
+desktop.ini

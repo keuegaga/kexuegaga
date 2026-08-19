@@ -1,0 +1,158 @@
+!TEXT
+    ======================================================================
+    "QCL 设计模板"（基于 nextnano++ 官方 QCL 示例整理）
+    使用前请按注释修改：材料、层序、电场、温度、掺杂、量子区、本征值个数
+    ======================================================================
+!ENDTEXT
+
+# ======================= 可调参数（放在文件顶部，便于扫描/参数化） =======
+
+$electric_field = -48.5e5        # [V/m]，1 kV/cm = 1e5 V/m；负号代表生长方向电场
+$temperature     = 300.0         # [K]
+
+$material_well    = "GaAs"
+$material_barrier = "Al(x)Ga(1-x)As"
+$alloy_x_barrier  = 0.45
+
+$num_ev           = 20           # 量子区需要解出的本征态个数
+$grid_spacing     = 0.1          # [nm]，网格间距，建议 0.1 nm 起步
+
+# 周期层序：阱/垒厚度 [nm]，按生长方向依次写出（示例为 Page2001 结构）
+$t_bar1 = 4.6
+$t_well1 = 1.9
+$t_bar2 = 1.1
+$t_well2 = 5.4
+$t_bar3 = 1.1
+$t_well3 = 4.8
+$t_bar4 = 2.8
+$t_well4 = 3.4
+$t_bar5 = 1.7
+$t_well5 = 3.0
+$t_bar6 = 1.8
+$t_well6 = 2.8
+$t_bar7 = 2.0
+$t_well7 = 3.0
+$t_bar8 = 2.6
+$t_well8 = 3.0
+
+# 若需要掺杂（片密度 n_sheet [cm^-2] 换算成体浓度）：
+# n_vol [cm^-3] = n_sheet [cm^-2] / (掺杂层厚度 [nm] * 1e-7 [cm/nm])
+$doping_conc     = 0.0           # [cm^-3]
+
+output{
+    material_parameters{ }
+}
+
+run{
+    quantum{ }
+}
+
+global{
+    simulate1D{ }
+    crystal_zb{
+        x_hkl = [1, 0, 0]
+        y_hkl = [0, 1, 0]
+    }
+    substrate{ name = "GaAs" }   # 改成衬底材料
+    temperature = $temperature
+}
+
+contacts{
+    fermi{
+        name = "fermi_zero"
+        bias = 0.0
+    }
+}
+
+structure{
+    output_material_index{ }
+    output_region_index{ }
+
+    # 默认区域（背景材料）
+    region{
+        everywhere{ }
+        ternary_constant{
+            name = $material_barrier
+            alloy_x = $alloy_x_barrier
+        }
+        contact{ name = fermi_zero }
+    }
+
+    # ---- 以下按层序依次写 region，每一层坐标 = 上一层终点，注意无缝衔接 ----
+    # region{
+    #     line{ x = [0, $t_bar1] }
+    #     ternary_constant{ name = $material_barrier  alloy_x = $alloy_x_barrier }
+    # }
+    # region{
+    #     line{ x = [$t_bar1, $t_bar1 + $t_well1] }
+    #     binary{ name = $material_well }
+    # }
+    # ...
+
+    output_alloy_composition{ }
+    output_impurities{ }
+    output_contact_index{ }
+}
+
+grid{
+    xgrid{
+        # 每个材料界面上放一个 line{ pos = ... spacing = $grid_spacing }
+        # line{ pos = 0.0  spacing = $grid_spacing }
+        # line{ pos = 4.6  spacing = $grid_spacing }
+        # ...
+    }
+}
+
+classical{
+    Gamma{ }
+    L{ }
+    X{ }
+    HH{ }
+    LH{ }
+    SO{ }
+    output_bandedges{ averaged = no }
+    output_bandgap{ }
+    output_carrier_densities{ }
+    output_intrinsic_density{ }
+}
+
+poisson{
+    electric_field{
+        strength            = $electric_field
+        reference_potential = 2.1315   # 左端点电势参考值 [V]，用于对齐能带
+    }
+    output_potential{ }
+    output_electric_field{ }
+}
+
+quantum{
+    region{
+        name = "quantum_region"
+        x = [起点, 终点]               # 覆盖整个器件
+        no_density = yes
+        boundary{ x = dirichlet }       # 有外加电场时用 Dirichlet，勿用周期边界
+        Gamma{ num_ev = $num_ev }
+
+        output_wavefunctions{
+            max_num = 9999
+            all_k_points = yes
+            amplitudes = no
+            probabilities = yes
+        }
+
+        momentum_matrix_elements{
+            polarization{ name = "component_x" re = [1, 0, 0] }
+            Gamma{ }
+        }
+        transition_energies{ Gamma{ } }
+    }
+}
+
+# 需要校准导带带阶（CBO）时，通过 database 修改 bowing/带阶参数
+# database{
+#     bowing_zb{
+#         name = "AlGaAs_Bowing_Ga"
+#         valence = III_V
+#         valence_bands{ bandoffset = -0.091925 }
+#     }
+# }
