@@ -6,3 +6,7 @@
 .DS_Store
 Thumbs.db
 desktop.ini
+
+# 本地仿真输出（体积大、机器相关），保留绘图脚本
+/runs/*
+!/runs/plot_page2001.py
