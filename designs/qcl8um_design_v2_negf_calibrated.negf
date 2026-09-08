@@ -73,14 +73,18 @@ nextnano.NEGF{
             AlloyComposition = 0.60
             Alias = well
             EffectiveMassFromKpParameters = no
-            ConductionBandOffset = 0.0      # Unit = eV  (calibrated reference)
+            Overwrite{
+                ConductionBandOffset = 0.0      # Unit = eV  (calibrated reference)
+            }
         }
         Material{
             Name = "Al(x)In(1-x)As"
             AlloyComposition = 0.56
             Alias = barrier
             EffectiveMassFromKpParameters = no
-            ConductionBandOffset = 0.78     # Unit = eV  (nn++ kp interface step 0.775-0.788 eV)
+            Overwrite{
+                ConductionBandOffset = 0.78     # Unit = eV  (nn++ kp interface step 0.775-0.788 eV)
+            }
         }
 
         NonParabolicity = yes
