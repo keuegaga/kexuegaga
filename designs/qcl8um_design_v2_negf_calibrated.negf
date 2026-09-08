@@ -10,7 +10,7 @@
 nextnano.NEGF{
     Header{
         Author = "ciomp + Codex"
-        Content = "8 um QCL v2: CBO calibrated to nn++ kp (0.78 eV). Look for positive gain near 120-170 meV; report Gain_vs_Voltage.dat and per-bias Gain folder."
+        Content = "8 um QCL v2. Conduction band offset calibrated to 0.78 eV as in the nextnano kp design. Positive gain expected near 120 to 170 meV."
     }
 
     SweepParameters{

@@ -10,7 +10,7 @@
 nextnano.NEGF{
     Header{
         Author = "ciomp + Codex"
-        Content = "8 um QCL v3: CBO=0.69 eV (nn++ default-DB / Friedrich paper experimental anchor 8.4 um). Compare against v2 (0.78 eV -> ~156 meV)."
+        Content = "8 um QCL v3. Conduction band offset 0.69 eV, anchored to the Friedrich paper room-temperature emission near 8.4 um. Compare with v2 at 0.78 eV."
     }
 
     SweepParameters{
