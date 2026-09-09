@@ -5,7 +5,7 @@ product: CSuprem
 module: CSuprem
 version: "通用"
 status: source
-source: "[[99-原始资料/产品手册/csuprem_manual.pdf]] 第3/6章；[[99-原始资料/教程与问答/CSuprem_2D_tutorial.pdf]]；[[99-原始资料/教程与问答/CSuprem_3D_tutorial.pdf]]；C:\Csuprem\examples"
+source: '[[99-原始资料/产品手册/csuprem_manual.pdf]] 第3/6章；[[99-原始资料/教程与问答/CSuprem_2D_tutorial.pdf]]；[[99-原始资料/教程与问答/CSuprem_3D_tutorial.pdf]]；C:\Csuprem\examples'
 last_verified: 2026-08-17
 tags:
   - crosslight

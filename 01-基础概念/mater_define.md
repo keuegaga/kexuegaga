@@ -4,7 +4,7 @@ type: concept
 product: Crosslight
 version: 2024
 status: source
-source: "[[99-原始资料/通用手册/manual.pdf]] §3.5、附录B；C:\crosslig\lastip_examples\A_tutorial\1D_laser\gaas10.mater；[[99-原始资料/专题/培训总结.pdf]] §1①"
+source: '[[99-原始资料/通用手册/manual.pdf]] §3.5、附录B；C:\crosslig\lastip_examples\A_tutorial\1D_laser\gaas10.mater；[[99-原始资料/专题/培训总结.pdf]] §1①'
 last_verified: 2026-08-17
 ---
 

@@ -4,7 +4,7 @@ type: example
 product: PICS3D
 version: 2024
 status: source
-source: "C:\Users\ciomp\Documents\2024Ver_pics3d_examples\pics3d_examples\blue_LD\nakamura_light\s2.layer（官方 Nakamura 蓝光 LD 示例）"
+source: 'C:\Users\ciomp\Documents\2024Ver_pics3d_examples\pics3d_examples\blue_LD\nakamura_light\s2.layer（官方 Nakamura 蓝光 LD 示例）'
 last_verified: 2026-09-09
 tags:
   - crosslight

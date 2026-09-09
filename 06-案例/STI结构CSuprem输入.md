@@ -4,7 +4,7 @@ type: example
 product: CSuprem
 version: "通用"
 status: draft
-source: "C:\Csuprem\examples\Process_Flow\Process_flow_BCD\BCD.in + testflow2.msk；C:\Csuprem\examples\LDMOS\LDMOS_III_with_Nepi_STI\LDMOS.in；csuprem-complex-structure-modeling 技能"
+source: 'C:\Csuprem\examples\Process_Flow\Process_flow_BCD\BCD.in + testflow2.msk；C:\Csuprem\examples\LDMOS\LDMOS_III_with_Nepi_STI\LDMOS.in；csuprem-complex-structure-modeling 技能'
 last_verified: 2026-08-17
 ---
 

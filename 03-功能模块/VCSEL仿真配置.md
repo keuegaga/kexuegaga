@@ -4,7 +4,7 @@ type: reference
 product: Crosslight
 version: 2024
 status: draft
-source: "C:\crosslig\pics3d_examples\A_tutorial\MQW_active\inp13.sol；[[99-原始资料/专题/培训总结.pdf]]（VCSEL 节）；[[99-原始资料/通用手册/manual.pdf]] §4.2"
+source: 'C:\crosslig\pics3d_examples\A_tutorial\MQW_active\inp13.sol；[[99-原始资料/专题/培训总结.pdf]]（VCSEL 节）；[[99-原始资料/通用手册/manual.pdf]] §4.2'
 last_verified: 2026-08-17
 ---
 
