@@ -8,6 +8,9 @@
 *.tmp
 *.log
 
+# 巡检脚本的运行态（状态快照，不属于笔记内容）
+scripts/pics3d_watch_nakamura_LI.state.json
+
 # IDE / 系统文件
 .vs/
 .vscode/
