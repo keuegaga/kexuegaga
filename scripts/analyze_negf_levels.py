@@ -61,7 +61,7 @@ def main():
     energies = None
     ee = os.path.join(parent, "Energy_Eigenstates.dat")
     if os.path.exists(ee):
-        rows = np.loadtxt(ee, skiprows=1)
+        rows = np.atleast_2d(np.loadtxt(ee, skiprows=1))
         for r in rows:
             if abs(r[0] - float(bias)) < 1e-6:
                 energies = r[1:]

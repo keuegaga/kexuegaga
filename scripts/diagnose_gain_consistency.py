@@ -83,7 +83,7 @@ def main():
     ee = os.path.join(parent, "Energy_Eigenstates.dat")
     if os.path.exists(ee):
         bias = float(os.path.basename(bias_dir).replace("mV", ""))
-        rows = np.loadtxt(ee, skiprows=1)
+        rows = np.atleast_2d(np.loadtxt(ee, skiprows=1))
         for row in rows:
             if abs(row[0] - bias) < 1e-6:
                 energies = row[1:]
