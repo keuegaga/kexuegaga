@@ -1,0 +1,199 @@
+!TEXT
+    ======================================================================
+    Fei 2021, J. Semicond. 42, 112301 (2021)
+    "High power lambda ~ 8.5 um quantum cascade laser grown by MOCVD"
+    Lattice-matched In0.53Ga0.47As / In0.52Al0.48As on InP, 300 K.
+    Period 57.3 nm, 3 periods modelled (quantum region covers all of them).
+    Barriers are the regions below; everything else is InGaAs well material.
+    ======================================================================
+!ENDTEXT
+
+# Applied electric field [V/m]. Sign follows the electron-flow convention:
+# electrons travel along +x, so the conduction band edge falls along +x.
+$electric_field = -50e5
+
+$period          = 57.3        # [nm] one period
+$num_periods     = 3
+$num_electrons   = 60          # kp states (spin pairs count separately)
+
+run{
+    quantum{ }
+}
+
+output{
+    material_parameters{ }
+}
+
+global{
+    simulate1D{ }
+    crystal_zb{
+        x_hkl = [1, 0, 0]
+        y_hkl = [0, 1, 0]
+    }
+    substrate{ name = "InP" }
+    temperature = 300.0
+}
+
+contacts{
+    fermi{
+        name = "fermi_zero"
+        bias = 0.0
+    }
+}
+
+structure{
+    output_material_index{ }
+    output_region_index{ }
+
+    # background = quantum well material (InGaAs lattice-matched to InP)
+    region{
+        everywhere{ }
+        ternary_constant{
+            name = "In(x)Ga(1-x)As"
+            alloy_x = 0.53
+        }
+        contact{ name = fermi_zero }
+    }
+
+    # ---- the 11 AlInAs barriers of one period, repeated by array_x ----
+    region{  # injection barrier 4.0 nm
+        line{ x = [0.0, 4.0] }
+        ternary_constant{ name = "Al(x)In(1-x)As"  alloy_x = 0.48 }
+        array_x{ max = $num_periods  shift = $period }
+    }
+    region{  # barrier 1.0 nm
+        line{ x = [5.3, 6.3] }
+        ternary_constant{ name = "Al(x)In(1-x)As"  alloy_x = 0.48 }
+        array_x{ max = $num_periods  shift = $period }
+    }
+    region{  # barrier 0.9 nm
+        line{ x = [11.5, 12.4] }
+        ternary_constant{ name = "Al(x)In(1-x)As"  alloy_x = 0.48 }
+        array_x{ max = $num_periods  shift = $period }
+    }
+    region{  # barrier 1.0 nm
+        line{ x = [17.5, 18.5] }
+        ternary_constant{ name = "Al(x)In(1-x)As"  alloy_x = 0.48 }
+        array_x{ max = $num_periods  shift = $period }
+    }
+    region{  # barrier 1.6 nm
+        line{ x = [23.2, 24.8] }
+        ternary_constant{ name = "Al(x)In(1-x)As"  alloy_x = 0.48 }
+        array_x{ max = $num_periods  shift = $period }
+    }
+    region{  # barrier 2.2 nm
+        line{ x = [28.4, 30.6] }
+        ternary_constant{ name = "Al(x)In(1-x)As"  alloy_x = 0.48 }
+        array_x{ max = $num_periods  shift = $period }
+    }
+    region{  # barrier 1.8 nm
+        line{ x = [33.5, 35.3] }
+        ternary_constant{ name = "Al(x)In(1-x)As"  alloy_x = 0.48 }
+        array_x{ max = $num_periods  shift = $period }
+    }
+    region{  # barrier 1.9 nm
+        line{ x = [38.0, 39.9] }
+        ternary_constant{ name = "Al(x)In(1-x)As"  alloy_x = 0.48 }
+        array_x{ max = $num_periods  shift = $period }
+    }
+    region{  # barrier 2.0 nm
+        line{ x = [42.5, 44.5] }
+        ternary_constant{ name = "Al(x)In(1-x)As"  alloy_x = 0.48 }
+        array_x{ max = $num_periods  shift = $period }
+    }
+    region{  # barrier 2.5 nm
+        line{ x = [46.9, 49.4] }
+        ternary_constant{ name = "Al(x)In(1-x)As"  alloy_x = 0.48 }
+        array_x{ max = $num_periods  shift = $period }
+    }
+    region{  # barrier 3.1 nm
+        line{ x = [51.9, 55.0] }
+        ternary_constant{ name = "Al(x)In(1-x)As"  alloy_x = 0.48 }
+        array_x{ max = $num_periods  shift = $period }
+    }
+
+    output_alloy_composition{ }
+}
+
+grid{
+    xgrid{
+        line{ pos = 0.0    spacing = 0.2 }
+        line{ pos = 4.0    spacing = 0.2 }
+        line{ pos = 5.3    spacing = 0.2 }
+        line{ pos = 6.3    spacing = 0.2 }
+        line{ pos = 11.5   spacing = 0.2 }
+        line{ pos = 12.4   spacing = 0.2 }
+        line{ pos = 17.5   spacing = 0.2 }
+        line{ pos = 18.5   spacing = 0.2 }
+        line{ pos = 23.2   spacing = 0.2 }
+        line{ pos = 24.8   spacing = 0.2 }
+        line{ pos = 28.4   spacing = 0.2 }
+        line{ pos = 30.6   spacing = 0.2 }
+        line{ pos = 33.5   spacing = 0.2 }
+        line{ pos = 35.3   spacing = 0.2 }
+        line{ pos = 38.0   spacing = 0.2 }
+        line{ pos = 39.9   spacing = 0.2 }
+        line{ pos = 42.5   spacing = 0.2 }
+        line{ pos = 44.5   spacing = 0.2 }
+        line{ pos = 46.9   spacing = 0.2 }
+        line{ pos = 49.4   spacing = 0.2 }
+        line{ pos = 51.9   spacing = 0.2 }
+        line{ pos = 55.0   spacing = 0.2 }
+        line{ pos = 57.3   spacing = 0.2 }
+        line{ pos = 114.6  spacing = 0.2 }
+        line{ pos = 171.9  spacing = 0.2 }
+    }
+}
+
+classical{
+    Gamma{ }
+    L{ }
+    X{ }
+    HH{ }
+    LH{ }
+    SO{ }
+    output_bandedges{ averaged = no }
+    output_bandgap{ }
+}
+
+poisson{
+    electric_field{
+        strength            = $electric_field
+        reference_potential = 0.0
+    }
+    output_potential{ }
+    output_electric_field{ }
+}
+
+quantum{
+    region{
+        name = "quantum_region"
+        x = [0.0, 171.9]
+        no_density = yes
+        boundary{ x = dirichlet }
+
+        kp_8band{
+            num_electrons = $num_electrons
+        }
+
+        transition_energies{ KP8{ } }
+
+        output_wavefunctions{
+            max_num = 200
+            all_k_points = yes
+            amplitudes = no
+            probabilities = yes
+        }
+
+        momentum_matrix_elements{
+            polarization{ name = "component_x"  re = [1, 0, 0] }
+            KP8{ }
+        }
+        dipole_moment_matrix_elements{
+            polarization{ name = "component_x"  re = [1, 0, 0] }
+            KP8{ }
+            output_matrix_elements = yes
+            output_oscillator_strengths = yes
+        }
+    }
+}
