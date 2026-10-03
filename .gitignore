@@ -7,6 +7,10 @@
 Thumbs.db
 desktop.ini
 
+# 网盘同步程序的标记文件（属于本机同步配置，不入库）
+.stfolder*
+.stignore
+
 # 本地仿真输出（体积大、机器相关），保留绘图脚本
 /runs/*
 !/runs/plot_page2001.py
