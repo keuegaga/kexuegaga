@@ -41,8 +41,15 @@ def main():
     if hg is None or hs is None:
         raise SystemExit("decomposed gain / spontaneous emission files not found")
 
-    # total self-consistent gain spectrum -> peak
-    sc = np.loadtxt(os.path.join(gdir, "Gain_SelfConsistent_vs_Energy.dat"), skiprows=1)
+    # total gain spectrum -> peak (prefer self-consistent, fall back to Fermi golden rule)
+    sc_path = os.path.join(gdir, "Gain_SelfConsistent_vs_Energy.dat")
+    if not os.path.exists(sc_path):
+        cands = [f for f in os.listdir(gdir) if f.startswith("Gain_FermiGoldenRule_vs_Energy")]
+        if not cands:
+            raise SystemExit("neither self-consistent nor Fermi golden rule gain file found")
+        sc_path = os.path.join(gdir, cands[0])
+        print("note: self-consistent gain not available yet, using Fermi golden rule file")
+    sc = np.loadtxt(sc_path, skiprows=1)
     peak_i = int(np.argmax(sc[:, 1]))
     peak_e, peak_g = sc[peak_i, 0], sc[peak_i, 1]
     print(f"bias folder      : {bias_dir}")
