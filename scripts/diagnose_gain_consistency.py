@@ -41,8 +41,19 @@ def main():
     if hg is None or hs is None:
         raise SystemExit("decomposed gain / spontaneous emission files not found")
 
-    # total gain spectrum -> peak (prefer self-consistent, fall back to Fermi golden rule)
+    # total gain spectrum -> peak
+    #   "fgr"  : small-signal material gain (Fermi golden rule) - use for design work
+    #   default: self-consistent gain (photon-field / loss clamped) if available
+    force_fgr = len(sys.argv) > 2 and sys.argv[2].lower() == "fgr"
     sc_path = os.path.join(gdir, "Gain_SelfConsistent_vs_Energy.dat")
+    if force_fgr or not os.path.exists(sc_path):
+        cands = [f for f in os.listdir(gdir) if f.startswith("Gain_FermiGoldenRule_vs_Energy")]
+        if cands:
+            sc_path = os.path.join(gdir, cands[0])
+            if force_fgr:
+                print("note: using Fermi golden rule (small-signal material gain)")
+        elif not os.path.exists(sc_path):
+            raise SystemExit("no gain file found")
     if not os.path.exists(sc_path):
         cands = [f for f in os.listdir(gdir) if f.startswith("Gain_FermiGoldenRule_vs_Energy")]
         if not cands:
