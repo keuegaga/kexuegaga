@@ -1,0 +1,185 @@
+# Phase 2 validation of the Fei 2021 structure (lambda ~ 8.5 um, MOCVD, lattice matched)
+# Structure: In0.53Ga0.47As wells / Al0.48In0.52As barriers on InP, period 57.3 nm, 22 layers
+# Design operating point estimated from the band-structure model: 50 kV/cm -> 285 mV per period
+# Numerics follow the phase-0 corrected settings (lateral 400 meV / 25 meV, axial 500 meV)
+# NOTE: the published doping layers (Si, 2e17 cm^-3) were underlined in the paper and that
+#       markup was lost in our PDF, so doping is placed over the chirped injector wells
+#       [24.8, 33.5] nm giving a sheet density of about 1.7e11 cm^-2 per period.
+
+nextnano.NEGF{
+    Header{
+        Author = "ciomp + Codex"
+        Content = "Fei 2021 structure, bias scan 160 to 240 mV per period. Doping 8.7e10 per cm2, material gain taken from the Fermi golden rule output."
+    }
+
+    SweepParameters{
+        SweepType = Voltage
+        Min = 160
+        Max = 240
+        Delta = 40
+    }
+
+    OverwriteMaterialDatabase{
+        Material{
+            Name = InAs
+            DeformationPotential = -9.0
+        }
+        Material{
+            Name = GaAs
+            DeformationPotential = -9.0
+        }
+        Material{
+            Name = AlAs
+            DeformationPotential = -9.0
+        }
+        Material{
+            Name = "In(x)Ga(1-x)As"
+            DeformationPotential = 0.0
+        }
+        Material{
+            Name = "Al(x)In(1-x)As"
+            DeformationPotential = 0.0
+        }
+    }
+
+    Temperature = 300
+
+    Crystal{
+        CrystalStructure = Zincblende
+        Orientation{
+            zAxis{
+                h = 0
+                k = 0
+                l = 1
+            }
+            yAxis{
+                h = 0
+                k = 1
+                l = 0
+            }
+        }
+        MaterialSubstrate{
+            Name = InP
+        }
+        Strain = yes
+        Piezoelectricity = no
+        Pyroelectricity = no
+    }
+
+    Materials{
+        Material{
+            Name = "In(x)Ga(1-x)As"
+            AlloyComposition = 0.53
+            Alias = well
+            EffectiveMassFromKpParameters = no
+            Overwrite{
+                ConductionBandOffset = 0.0
+            }
+        }
+        Material{
+            Name = "Al(x)In(1-x)As"
+            AlloyComposition = 0.48
+            Alias = barrier
+            EffectiveMassFromKpParameters = no
+            Overwrite{
+                ConductionBandOffset = 0.53
+            }
+        }
+
+        NonParabolicity = yes
+        InPlaneNonParabolicity = yes
+        NumberOfBands = 3
+        UseConductionBandOffset = yes
+    }
+
+    Structure{
+        Layer{ Material = barrier  Thickness = 4.0 }
+        Layer{ Material = well     Thickness = 1.3 }
+        Layer{ Material = barrier  Thickness = 1.0 }
+        Layer{ Material = well     Thickness = 5.2 }
+        Layer{ Material = barrier  Thickness = 0.9 }
+        Layer{ Material = well     Thickness = 5.1 }
+        Layer{ Material = barrier  Thickness = 1.0 }
+        Layer{ Material = well     Thickness = 4.7 }
+        Layer{ Material = barrier  Thickness = 1.6 }
+        Layer{ Material = well     Thickness = 3.6 }
+        Layer{ Material = barrier  Thickness = 2.2 }
+        Layer{ Material = well     Thickness = 2.9 }
+        Layer{ Material = barrier  Thickness = 1.8 }
+        Layer{ Material = well     Thickness = 2.7 }
+        Layer{ Material = barrier  Thickness = 1.9 }
+        Layer{ Material = well     Thickness = 2.6 }
+        Layer{ Material = barrier  Thickness = 2.0 }
+        Layer{ Material = well     Thickness = 2.4 }
+        Layer{ Material = barrier  Thickness = 2.5 }
+        Layer{ Material = well     Thickness = 2.5 }
+        Layer{ Material = barrier  Thickness = 3.1 }
+        Layer{ Material = well     Thickness = 2.3 }
+
+        Doping{
+            DopingStart = 24.8
+            DopingEnd = 33.5
+            DopingSpecification = 1
+            DopingDensity = 1.0e17
+        }
+    }
+
+    Scattering{
+        MaterialForScatteringParameters = well
+        InterfaceRoughness{
+            AmplitudeInZ = 0.07
+            InterfaceAutoCorrelationType = 0
+            CorrelationLengthInXY = 8
+        }
+        AcousticPhononScattering = no
+        AcousticPhononScatteringEnergyMax = 3.0
+        ScreeningTemperatureType = 1
+        TemperatureOffsetParameter = 200
+        ImpurityScatteringStrength = 1.0
+        ElectronElectronScattering = no
+        AlloyScattering = yes
+        AlloyScatteringStrength = 0.5
+    }
+
+    Poisson = yes
+
+    LateralDiscretization{
+        MaterialForLateralMotion = well
+        Value = 25
+    }
+
+    SimulationParameter{
+        CoherenceLengthInPeriods = 1
+        SpatialGridSpacing = 0.2
+        nLateralPeriodsForBandStructure = 1
+        EnergyGridSpacing = 5
+        EminShift = 0
+        EmaxShift = 0
+        EnergyRangeLateral = 400
+        EnergyRangeAxial = 500
+        ConvergenceValueGF = 1e-4
+        ConvergenceValueCurrent = 1e-4
+        NMaxIterations = 500
+        BiasForInitialElectronicModes = 285
+    }
+
+    Output{
+        EnergyResolvedPlots = yes
+        EnergyResolvedGain = yes
+    }
+
+    Gain{
+        GainMethod = 1
+        dEPhotSelfConsistent = 20
+        EphotonMinSelfConsistent = 140
+        EphotonMaxSelfConsistent = 180
+        NMaxSelfConsistentIterations = 8
+        ConvergenceFactorGainSelfConsistent = 1e-3
+        Vmin = 140
+        Vmax = 260
+
+        FermiGoldenRule{
+            Linewidth = 10
+        }
+    }
+}
