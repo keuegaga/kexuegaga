@@ -95,6 +95,8 @@ def main():
         lines.append(material_block(kind, 8))
         lines.append(f"        array_x{{ max = $num_periods  shift = $period }}\n    }}\n")
 
+        if grade <= 0:
+            continue
         nxt = layers[(i + 1) % len(layers)][0]
         c0 = comp(kind)
         c1 = comp(nxt)
