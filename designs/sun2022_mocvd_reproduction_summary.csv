@@ -3,3 +3,6 @@ kp_f48,48,216.384,,,,,main 9um branch 135.26 meV, dipole 1.29 nm
 negf_initial,48,216.384,4069.25,1665.88,2.659,-7.272,no positive self-consistent gain
 negf_ifr_only,48,216.384,3464.67,2132.04,2.260,-5.871,IFR-only does not recover gain
 negf_lowscatter,48,216.384,2323.49,1452.86,7.450,6.898,positive unsaturated gain; threshold-like current
+standard_bias_180,39.93,180,3492.64,1422.19,, -7.747,standard physics no gain
+standard_bias_200,44.37,200,3699.56,1666.48,, -6.911,standard physics no gain
+standard_bias_220,48.80,220,3469.86,2155.40,, -6.070,standard physics no gain
