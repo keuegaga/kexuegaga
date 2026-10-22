@@ -1,0 +1,16 @@
+quantity,value,unit
+period_bias,360,mV
+temperature,300,K
+cavity_losses,2.76,per_cm
+overlap_factor,0.5,
+material_gain_at_253_meV,5.52056,per_cm
+modal_gain,2.76028,per_cm
+cavity_electric_field,8.60528e6,V_per_m
+current_density,5789.5,A_per_cm2
+effective_electron_temperature,922.738,K
+net_internal_output_power,1.7768e8,W_per_cm3
+internal_wall_plug_efficiency,0.370701,
+GF_convergence_factor,6.13517e-05,
+current_convergence_factor,9.45887e-05,
+charge_normalization_error,7.31123e-04,
+piezo_effect_on_Liu_155_meV,0,byte-identical self-consistent gain arrays
