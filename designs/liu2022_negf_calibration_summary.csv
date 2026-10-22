@@ -1,0 +1,8 @@
+case,bias_mV_per_period,doping_cm2,CBO_eV,electron_electron,current_A_per_cm2,electron_temperature_K,FGR155_meV_per_cm,selfconsistent155_meV_per_cm,modal_gain_155_per_cm,Li_output
+original_270,270,2.63e11,0.72,no,10311.7,1347.5,28.867,-9.522,-4.761,0
+calibration_295,295,2.63e11,0.72,yes,9432.6,1466.0,0.413,-18.453,-9.226,0
+calibrated_220,220,2.63e11,0.72,yes,7016.7,1118.1,5.113,-18.174,-9.087,0
+calibrated_240,240,2.63e11,0.72,yes,8034.4,1192.3,15.823,-17.203,-8.601,0
+calibrated_260,260,2.63e11,0.72,yes,8691.9,1301.1,19.885,-18.348,-9.174,0
+low_doping_240,240,7.04e10,0.72,yes,2316.0,1203.2,3.249,-4.724,-2.362,0
+low_doping_240_CBO60,240,7.04e10,0.60,yes,3215.8,1840.5,1.086,-4.943,-2.471,0

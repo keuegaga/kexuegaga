@@ -182,6 +182,7 @@ modal gain -4.76 cm^-1 versus loss 5 cm^-1
 
 ## 相关笔记
 
+- [[39-8um-NEGF校准-偏压掺杂与CBO]]
 - [[37-8um-Liu-DAU能带筛选与设计]]
 - [[35-QCL能带设计谱系-从BB到STA-RE]]
 - [[36-QCL设计法则与全外延结构权衡]]
