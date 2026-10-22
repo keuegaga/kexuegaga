@@ -1,0 +1,4 @@
+case,field_kV_per_cm,bias_mV,current_A_per_cm2,Te_K,FGR_135_meV_per_cm,selfconsistent_135_meV_per_cm,status
+kp_f48,48,216.384,,,,,main 9um branch 135.26 meV, dipole 1.29 nm
+negf_initial,48,216.384,4069.25,1665.88,2.659,-7.272,no positive self-consistent gain
+negf_lowscatter,48,216.384,2323.49,1452.86,7.450,6.898,positive unsaturated gain; threshold-like current

@@ -48,6 +48,13 @@ LIU2022 = [
     ("AlInAs", 2.9), ("InGaAs", 2.6),
 ]
 
+SUN2022 = [
+    ("AlInAs", 2.80), ("InGaAs", 3.00), ("AlInAs", 1.25), ("InGaAs", 6.27),
+    ("AlInAs", 1.00), ("InGaAs", 5.35), ("AlInAs", 0.88), ("InGaAs", 4.85),
+    ("AlInAs", 1.09), ("InGaAs", 4.16), ("AlInAs", 1.22), ("InGaAs", 3.66),
+    ("AlInAs", 1.42), ("InGaAs", 3.15), ("AlInAs", 1.68), ("InGaAs", 3.30),
+]
+
 WELL_COLOR = "#7fb3d5"      # 蓝 = 阱
 BARRIER_COLOR = "#f2c185"   # 橙 = 垒
 
@@ -107,3 +114,6 @@ if __name__ == "__main__":
     draw(LIU2022, cbo=720, field_kV_cm=44,
          title="Liu 2022 DAU 8 µm 候选（In0.60Ga0.40As/Al0.58In0.42As）：一个周期 61.4 nm",
          outfile="fig_layer_stack_liu2022_dau_f44.png", label_fontsize=6.4)
+    draw(SUN2022, cbo=811, field_kV_cm=48,
+         title="Sun 2022 MOCVD 9 µm DAU/MS（In0.593Ga0.407As/Al0.638In0.362As）：一个周期 45.08 nm",
+         outfile="fig_layer_stack_sun2022_mocvd_9um.png", label_fontsize=7.0)
