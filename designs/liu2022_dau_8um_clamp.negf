@@ -1,0 +1,194 @@
+# Liu et al., Opt. Express 30, 40704 (2022), DOI 10.1364/OE.472942
+# Strain-compensated In0.60Ga0.40As / Al0.58In0.42As dual-upper-state QCL.
+# One period = 61.4 nm, 22 layers, starting from the injection barrier.
+# Candidate: 44 kV/cm -> 270.2 mV per period.
+# PDF vector-edge recovery: Si-doped continuous span 42.6-53.1 nm
+# (layers 16-19), 2.5e17 cm^-3 -> 2.63e11 cm^-2.
+
+nextnano.NEGF{
+    Header{
+        Author = "ciomp + Codex"
+        Content = "8 um candidate from Liu 2022 DAU. 270 mV/period, Si doping 42.6-53.1 nm, clamped modal-gain test at 155 meV."
+    }
+
+    SweepParameters{
+        SweepType = Voltage
+        Min = 270
+        Max = 270
+        Delta = 10
+    }
+
+    OverwriteMaterialDatabase{
+        Material{
+            Name = InAs
+            DeformationPotential = -9.0
+        }
+        Material{
+            Name = GaAs
+            DeformationPotential = -9.0
+        }
+        Material{
+            Name = AlAs
+            DeformationPotential = -9.0
+        }
+        Material{
+            Name = "In(x)Ga(1-x)As"
+            DeformationPotential = 0.0
+        }
+        Material{
+            Name = "Al(x)In(1-x)As"
+            DeformationPotential = 0.0
+        }
+    }
+
+    Temperature = 300
+
+    Crystal{
+        CrystalStructure = Zincblende
+        Orientation{
+            zAxis{
+                h = 0
+                k = 0
+                l = 1
+            }
+            yAxis{
+                h = 0
+                k = 1
+                l = 0
+            }
+        }
+        MaterialSubstrate{
+            Name = InP
+        }
+        Strain = yes
+        Piezoelectricity = no
+        Pyroelectricity = no
+    }
+
+    Materials{
+        Material{
+            Name = "In(x)Ga(1-x)As"
+            AlloyComposition = 0.60
+            Alias = well
+            EffectiveMassFromKpParameters = no
+            Overwrite{
+                ConductionBandOffset = 0.0
+            }
+        }
+        Material{
+            Name = "Al(x)In(1-x)As"
+            AlloyComposition = 0.58
+            Alias = barrier
+            EffectiveMassFromKpParameters = no
+            Overwrite{
+                ConductionBandOffset = 0.72
+            }
+        }
+
+        NonParabolicity = yes
+        InPlaneNonParabolicity = yes
+        NumberOfBands = 3
+        UseConductionBandOffset = yes
+    }
+
+    Structure{
+        Layer{ Material = barrier  Thickness = 3.8 }
+        Layer{ Material = well     Thickness = 2.4 }
+        Layer{ Material = barrier  Thickness = 2.7 }
+        Layer{ Material = well     Thickness = 6.1 }
+        Layer{ Material = barrier  Thickness = 0.9 }
+        Layer{ Material = well     Thickness = 4.9 }
+        Layer{ Material = barrier  Thickness = 1.1 }
+        Layer{ Material = well     Thickness = 4.5 }
+        Layer{ Material = barrier  Thickness = 1.2 }
+        Layer{ Material = well     Thickness = 3.7 }
+        Layer{ Material = barrier  Thickness = 1.5 }
+        Layer{ Material = well     Thickness = 3.2 }
+        Layer{ Material = barrier  Thickness = 1.6 }
+        Layer{ Material = well     Thickness = 3.1 }
+        Layer{ Material = barrier  Thickness = 1.9 }
+        Layer{ Material = well     Thickness = 2.9 }
+        Layer{ Material = barrier  Thickness = 2.2 }
+        Layer{ Material = well     Thickness = 2.9 }
+        Layer{ Material = barrier  Thickness = 2.5 }
+        Layer{ Material = well     Thickness = 2.8 }
+        Layer{ Material = barrier  Thickness = 2.9 }
+        Layer{ Material = well     Thickness = 2.6 }
+
+        Doping{
+            DopingStart = 42.6
+            DopingEnd = 53.1
+            DopingSpecification = 1
+            DopingDensity = 2.5e17
+        }
+    }
+
+    Scattering{
+        MaterialForScatteringParameters = well
+        InterfaceRoughness{
+            AmplitudeInZ = 0.07
+            InterfaceAutoCorrelationType = 0
+            CorrelationLengthInXY = 8
+        }
+        AcousticPhononScattering = no
+        AcousticPhononScatteringEnergyMax = 3.0
+        ScreeningTemperatureType = 1
+        TemperatureOffsetParameter = 200
+        ImpurityScatteringStrength = 1.0
+        ElectronElectronScattering = no
+        AlloyScattering = yes
+        AlloyScatteringStrength = 0.5
+    }
+
+    Poisson = yes
+
+    LateralDiscretization{
+        MaterialForLateralMotion = well
+        Value = 25
+    }
+
+    SimulationParameter{
+        CoherenceLengthInPeriods = 1
+        SpatialGridSpacing = 0.2
+        nLateralPeriodsForBandStructure = 1
+        EnergyGridSpacing = 5
+        EminShift = 0
+        EmaxShift = 0
+        EnergyRangeLateral = 400
+        EnergyRangeAxial = 500
+        ConvergenceValueGF = 1e-3
+        ConvergenceValueCurrent = 1e-3
+        NMaxIterations = 120
+        BiasForInitialElectronicModes = 270
+    }
+
+    Output{
+        EnergyResolvedPlots = yes
+        EnergyResolvedGain = yes
+    }
+
+    Gain{
+        GainMethod = 1
+        dEPhotSelfConsistent = 2
+        EphotonMinSelfConsistent = 145
+        EphotonMaxSelfConsistent = 165
+        NMaxSelfConsistentIterations = 20
+        ConvergenceFactorGainSelfConsistent = 1e-3
+        Vmin = 250
+        Vmax = 290
+        CavityLosses = 5
+        OverlapFactor = 0.5
+        GainClamping = yes
+
+        FermiGoldenRule{
+            Linewidth = 10
+        }
+    }
+
+    EMfield{
+        EMmode{
+            PhotonEnergy = 155.5
+            ElectricField = 0.0
+        }
+    }
+}

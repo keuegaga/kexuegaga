@@ -1,0 +1,199 @@
+!TEXT
+    Liu et al., Opt. Express 30 (2022), DOI 10.1364/OE.472942
+    Dual-upper-state QCL, strain-compensated In0.60Ga0.40As/Al0.58In0.42As.
+    Case: f46; field: 46.0 kV/cm.
+    Barrier layers are B, well layers are W. Well-widening: none
+!ENDTEXT
+
+$electric_field = -4.6e+06
+$period = 61.4000
+$num_periods = 3
+$num_electrons = 100
+
+run{
+    strain{ }
+    quantum{ }
+}
+
+output{
+    material_parameters{ }
+}
+
+global{
+    simulate1D{ }
+    crystal_zb{
+        x_hkl = [1, 0, 0]
+        y_hkl = [0, 1, 0]
+    }
+    substrate{ name = "InP" }
+    temperature = 300.0
+}
+
+contacts{
+    fermi{
+        name = "fermi_zero"
+        bias = 0.0
+    }
+}
+
+structure{
+    output_material_index{ }
+    output_region_index{ }
+
+    region{
+        everywhere{ }
+        ternary_constant{
+            name = "In(x)Ga(1-x)As"
+            alloy_x = 0.60
+        }
+        contact{ name = "fermi_zero" }
+    }
+
+    region{  # barrier layer 1
+        line{ x = [0.0000, 3.8000] }
+        ternary_constant{ name = "Al(x)In(1-x)As" alloy_x = 0.58 }
+        array_x{ max = 3 shift = $period }
+    }
+    region{  # barrier layer 3
+        line{ x = [6.2000, 8.9000] }
+        ternary_constant{ name = "Al(x)In(1-x)As" alloy_x = 0.58 }
+        array_x{ max = 3 shift = $period }
+    }
+    region{  # barrier layer 5
+        line{ x = [15.0000, 15.9000] }
+        ternary_constant{ name = "Al(x)In(1-x)As" alloy_x = 0.58 }
+        array_x{ max = 3 shift = $period }
+    }
+    region{  # barrier layer 7
+        line{ x = [20.8000, 21.9000] }
+        ternary_constant{ name = "Al(x)In(1-x)As" alloy_x = 0.58 }
+        array_x{ max = 3 shift = $period }
+    }
+    region{  # barrier layer 9
+        line{ x = [26.4000, 27.6000] }
+        ternary_constant{ name = "Al(x)In(1-x)As" alloy_x = 0.58 }
+        array_x{ max = 3 shift = $period }
+    }
+    region{  # barrier layer 11
+        line{ x = [31.3000, 32.8000] }
+        ternary_constant{ name = "Al(x)In(1-x)As" alloy_x = 0.58 }
+        array_x{ max = 3 shift = $period }
+    }
+    region{  # barrier layer 13
+        line{ x = [36.0000, 37.6000] }
+        ternary_constant{ name = "Al(x)In(1-x)As" alloy_x = 0.58 }
+        array_x{ max = 3 shift = $period }
+    }
+    region{  # barrier layer 15
+        line{ x = [40.7000, 42.6000] }
+        ternary_constant{ name = "Al(x)In(1-x)As" alloy_x = 0.58 }
+        array_x{ max = 3 shift = $period }
+    }
+    region{  # barrier layer 17
+        line{ x = [45.5000, 47.7000] }
+        ternary_constant{ name = "Al(x)In(1-x)As" alloy_x = 0.58 }
+        array_x{ max = 3 shift = $period }
+    }
+    region{  # barrier layer 19
+        line{ x = [50.6000, 53.1000] }
+        ternary_constant{ name = "Al(x)In(1-x)As" alloy_x = 0.58 }
+        array_x{ max = 3 shift = $period }
+    }
+    region{  # barrier layer 21
+        line{ x = [55.9000, 58.8000] }
+        ternary_constant{ name = "Al(x)In(1-x)As" alloy_x = 0.58 }
+        array_x{ max = 3 shift = $period }
+    }
+
+    output_alloy_composition{ }
+}
+
+grid{
+    xgrid{
+        line{ pos = 0.0000 spacing = 0.2 }
+        line{ pos = 3.8000 spacing = 0.2 }
+        line{ pos = 6.2000 spacing = 0.2 }
+        line{ pos = 8.9000 spacing = 0.2 }
+        line{ pos = 15.0000 spacing = 0.2 }
+        line{ pos = 15.9000 spacing = 0.2 }
+        line{ pos = 20.8000 spacing = 0.2 }
+        line{ pos = 21.9000 spacing = 0.2 }
+        line{ pos = 26.4000 spacing = 0.2 }
+        line{ pos = 27.6000 spacing = 0.2 }
+        line{ pos = 31.3000 spacing = 0.2 }
+        line{ pos = 32.8000 spacing = 0.2 }
+        line{ pos = 36.0000 spacing = 0.2 }
+        line{ pos = 37.6000 spacing = 0.2 }
+        line{ pos = 40.7000 spacing = 0.2 }
+        line{ pos = 42.6000 spacing = 0.2 }
+        line{ pos = 45.5000 spacing = 0.2 }
+        line{ pos = 47.7000 spacing = 0.2 }
+        line{ pos = 50.6000 spacing = 0.2 }
+        line{ pos = 53.1000 spacing = 0.2 }
+        line{ pos = 55.9000 spacing = 0.2 }
+        line{ pos = 58.8000 spacing = 0.2 }
+        line{ pos = 61.4000 spacing = 0.2 }
+        line{ pos = 122.8000 spacing = 0.2 }
+        line{ pos = 184.2000 spacing = 0.2 }
+    }
+}
+
+classical{
+    Gamma{ }
+    L{ }
+    X{ }
+    HH{ }
+    LH{ }
+    SO{ }
+    output_bandedges{ averaged = no }
+    output_bandgap{ }
+}
+
+strain{
+    pseudomorphic_strain{ }
+    output_strain_tensor{ }
+    output_hydrostatic_strain{ }
+}
+
+poisson{
+    electric_field{
+        strength = $electric_field
+        reference_potential = 0.0
+    }
+    output_potential{ }
+    output_electric_field{ }
+}
+
+quantum{
+    region{
+        name = "quantum_region"
+        x = [0.0, 184.2000]
+        no_density = yes
+        boundary{ x = dirichlet }
+
+        kp_8band{
+            num_electrons = $num_electrons
+            avoid_spurious = yes
+        }
+
+        transition_energies{ KP8{ } }
+
+        output_wavefunctions{
+            max_num = 240
+            all_k_points = yes
+            amplitudes = no
+            probabilities = yes
+        }
+
+        momentum_matrix_elements{
+            polarization{ name = "component_x" re = [1, 0, 0] }
+            KP8{ }
+        }
+        dipole_moment_matrix_elements{
+            polarization{ name = "component_x" re = [1, 0, 0] }
+            KP8{ }
+            output_matrix_elements = yes
+            output_oscillator_strengths = yes
+        }
+    }
+}

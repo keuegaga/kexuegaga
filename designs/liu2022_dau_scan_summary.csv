@@ -1,0 +1,8 @@
+case,field_kV_per_cm,modification,main_transition_meV,wavelength_um,dipole_nm,note
+base_f48,48,none,162.7,7.62,1.61,published-design-field kp anchor
+f46,46,none,159.3,7.79,1.52,field-only screening
+f44,44,none,155.5,7.98,1.39,selected wavelength point
+f50,50,none,165.8,7.48,1.69,field-only screening
+w4p03,48,well 4 +0.30 nm,160.0,7.75,1.37,red shift with dipole loss
+w6p03,48,well 6 +0.30 nm,171.4,7.23,1.29,blue shift and state reordering
+w8p03,48,well 8 +0.30 nm,172.8,7.17,1.06,blue shift and lower dipole
