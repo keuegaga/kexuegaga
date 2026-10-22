@@ -13,6 +13,7 @@ plt.rcParams["axes.unicode_minus"] = False
 ROOT = Path(r"D:\Codex-Obsidian\QCL-nextnano")
 BASE = ROOT / "runs" / "sun2022_mocvd" / "negf_fgr_216mV" / "216.384mV" / "Gain"
 LOW = ROOT / "runs" / "sun2022_mocvd" / "negf_lowscatter_216mV" / "216.384mV" / "Gain"
+IFR = ROOT / "runs" / "sun2022_mocvd" / "negf_ifr004_216mV" / "216.384mV" / "Gain"
 OUT = ROOT / "attachments" / "fig_sun2022_gain_scattering_calibration.png"
 
 
@@ -23,9 +24,11 @@ def read(path):
 
 be, bg = read(BASE / "Gain_SelfConsistent_vs_Energy.dat")
 le, lg = read(LOW / "Gain_SelfConsistent_vs_Energy.dat")
+ie, ig = read(IFR / "Gain_SelfConsistent_vs_Energy.dat")
 
 fig, ax = plt.subplots(figsize=(10, 6))
 ax.plot(be, bg, "o-", lw=2, label="初始散射：IFR 0.08 nm，alloy 1.0")
+ax.plot(ie, ig, "^--", lw=2, label="仅降 IFR：IFR 0.04 nm，alloy 1.0")
 ax.plot(le, lg, "s-", lw=2, label="低散射：IFR 0.04 nm，alloy 0.1")
 ax.axhline(0, color="k", lw=0.8)
 ax.axvline(137.8, color="#c44e52", ls="--", lw=1.5, label="9 µm = 137.8 meV")
