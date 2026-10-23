@@ -1,0 +1,352 @@
+!TEXT
+nextnano homepage Figure 1/2 reproduction candidate.
+Official structure: MidIR_QCL_InGaAs_InAlAs_Bai_APL2011_GainClamping.negf
+Changes: voltage sweep 220:20:280 mV/period; gain and EM field removed.
+The active-region geometry and physical parameters are unchanged.
+!ENDTEXT
+
+nextnano.NEGF{  # Version = 2020-30-10
+    Header{
+        Author = "T. Grange"
+        Content = "See comments in input file."
+        # 
+        #             This is an input file of the nextnano.NEGF code written by Thomas Grange that calculates transport and gain in quantum cascade structures.
+        #             Design: 
+        #                Room Temperature quantum cascade lasers with 27% wall plug efficiency
+        #                Appl. Phys. Lett. 98, 181102 (2011); https://doi.org/10.1063/1.3586773
+        #                Y. Bai, N. Bandyopadhyay, S. Tsao, S. Slivken, and M. Razeghi
+        #             Date: 20/08/2020  
+        #         
+    }
+    
+    OverwriteMaterialDatabase{
+        Material{
+            Name = InAs
+            ConductionBandOffset = 2.300     # Unit = eV
+        }
+        
+    }
+    
+    SweepParameters{
+        SweepType = Voltage
+        Min = 220
+        Max = 280
+        Delta = 20
+    }
+    
+    Temperature = 300                        # unit = K
+    Crystal{
+        CrystalStructure = Zincblende
+        Orientation{
+            zAxis{
+                h = 0
+                k = 0
+                l = 1
+            }
+            
+            yAxis{
+                h = 0
+                k = 1
+                l = 0
+            }
+            
+        }
+        
+        MaterialSubstrate{
+            Name = InP
+        }
+        
+        Strain = yes
+        Piezoelectricity = yes
+        Pyroelectricity = yes
+    }
+    
+    Materials{
+        Material{
+            Name = "In(x)Ga(1-x)As"
+            AlloyComposition = 0.69
+            Alias = well069
+            EffectiveMassFromKpParameters = no
+        }
+        
+        Material{
+            Name = "In(x)Ga(1-x)As"
+            AlloyComposition = 0.53
+            Alias = well053
+            EffectiveMassFromKpParameters = no
+        }
+        
+        Material{
+            Name = "Al(x)In(1-x)As"
+            AlloyComposition = 0.64
+            Alias = barrier064
+            EffectiveMassFromKpParameters = no
+        }
+        
+        Material{
+            Name = "Al(x)In(1-x)As"
+            AlloyComposition = 1.0
+            Alias = barrier1
+            EffectiveMassFromKpParameters = no
+        }
+        
+        Material{
+            Name = "Al(x)In(1-x)As"
+            AlloyComposition = 0.48
+            Alias = barrier048
+            EffectiveMassFromKpParameters = no
+        }
+        
+        NonParabolicity = yes
+        InPlaneNonParabolicity = yes
+        NumberOfBands = 3
+        UseConductionBandOffset = yes
+    }
+    
+    Structure{
+        Layer{
+            Material = well069
+            Thickness = 2.9                  # unit = nm
+        }
+        
+        Layer{
+            Material = barrier064
+            Thickness = 0.4                  # unit = nm
+        }
+        
+        Layer{
+            Material = barrier1
+            Thickness = 0.58                 # unit = nm
+        }
+        
+        Layer{
+            Material = barrier064
+            Thickness = 0.4                  # unit = nm
+        }
+        
+        Layer{
+            Material = well069
+            Thickness = 2.6                  # unit = nm
+        }
+        
+        Layer{
+            Material = barrier064
+            Thickness = 0.45                 # unit = nm
+        }
+        
+        Layer{
+            Material = barrier1
+            Thickness = 0.58                 # unit = nm
+        }
+        
+        Layer{
+            Material = barrier064
+            Thickness = 0.45                 # unit = nm
+        }
+        
+        Layer{
+            Material = well069
+            Thickness = 2.3                  # unit = nm
+        }
+        
+        Layer{
+            Material = barrier064
+            Thickness = 0.5                  # unit = nm
+        }
+        
+        Layer{
+            Material = barrier1
+            Thickness = 0.58                 # unit = nm
+        }
+        
+        Layer{
+            Material = barrier064
+            Thickness = 0.5                  # unit = nm
+        }
+        
+        Layer{
+            Material = well069
+            Thickness = 2.2                  # unit = nm
+        }
+        
+        Layer{
+            Material = barrier064
+            Thickness = 0.6                  # unit = nm
+        }
+        
+        Layer{
+            Material = barrier1
+            Thickness = 0.58                 # unit = nm
+        }
+        
+        Layer{
+            Material = barrier064
+            Thickness = 0.6                  # unit = nm
+        }
+        
+        Layer{
+            Material = well069
+            Thickness = 2.2                  # unit = nm
+        }
+        
+        Layer{
+            Material = barrier064
+            Thickness = 0.6                  # unit = nm
+        }
+        
+        Layer{
+            Material = barrier1
+            Thickness = 0.58                 # unit = nm
+        }
+        
+        Layer{
+            Material = barrier064
+            Thickness = 0.6                  # unit = nm
+        }
+        
+        Layer{
+            Material = well069
+            Thickness = 2.0                  # unit = nm
+        }
+        
+        Layer{
+            Material = barrier064
+            Thickness = 0.86                 # unit = nm
+        }
+        
+        Layer{
+            Material = barrier1
+            Thickness = 0.58                 # unit = nm
+        }
+        
+        Layer{
+            Material = barrier064
+            Thickness = 0.86                 # unit = nm
+        }
+        
+        Layer{
+            Material = well069
+            Thickness = 2.0                  # unit = nm
+        }
+        
+        Layer{
+            Material = barrier064
+            Thickness = 3.2                  # unit = nm
+        }
+        
+        Layer{
+            Material = well053
+            Thickness = 1.3                  # unit = nm
+        }
+        
+        Layer{
+            Material = barrier048
+            Thickness = 1.8                  # unit = nm
+        }
+        
+        Layer{
+            Material = well069
+            Thickness = 3.8                  # unit = nm
+        }
+        
+        Layer{
+            Material = barrier064
+            Thickness = 1.6                  # unit = nm
+        }
+        
+        Layer{
+            Material = well069
+            Thickness = 3.5                  # unit = nm
+        }
+        
+        Layer{
+            Material = barrier064
+            Thickness = 0.6                  # unit = nm
+        }
+        
+        Layer{
+            Material = barrier1
+            Thickness = 0.58                 # unit = nm
+        }
+        
+        Layer{
+            Material = barrier064
+            Thickness = 0.6                  # unit = nm
+        }
+        
+        Doping{
+            DopingStart = 8.36               # unit = nm
+            DopingEnd = 16.22                # unit = nm
+            DopingSpecification = 2
+            DopingDensity = 2.0e16
+        }
+        
+        Doping{
+            DopingStart = 0.0                # unit = nm
+            DopingEnd = 43.0                 # unit = nm
+            DopingSpecification = 2
+            DopingDensity = 2.0e16
+        }
+        
+        AnalysisSeparator{
+            SeparatorPosition = 28.0
+        }
+        
+        AnalysisSeparator{
+            SeparatorPosition = 43.0
+        }
+        
+    }
+    
+    Scattering{
+        MaterialForScatteringParameters = well069
+        InterfaceRoughness{
+            AmplitudeInZ = 0.08              # unit = nm
+            InterfaceAutoCorrelationType = 1
+            CorrelationLengthInXY = 7.0      # unit = nm
+        }
+        
+        AcousticPhononScattering = no
+        AcousticPhononScatteringEnergyMax = 3.0
+        ScreeningTemperatureType = 1
+        TemperatureOffsetParameter = 200
+        # AccuracySelfConsistentElectronTemperature = 0.05
+        # ElectronTemperatureForScreening = 200
+        ImpurityScatteringStrength = 1.0
+        ElectronElectronScattering = yes
+        AlloyScattering = yes
+        AlloyScatteringStrength = 1.0
+    }
+    
+    Poisson = yes
+    LateralDiscretization{
+        MaterialForLateralMotion = well069
+        Value = 50                           # unit = meV
+    }
+    
+    SimulationParameter{
+        CoherenceLengthInPeriods = 1
+        SpatialGridSpacing = 0.2             # unit = nm
+        nLateralPeriodsForBandStructure = 1
+        CoherenceLengthInNm = 20.0
+        EnergyGridSpacing = 5                # unit = meV
+        EminShift = 0                        # unit = meV
+        EmaxShift = 0                        # unit = meV
+        EnergyRangeLateral = 500             # unit = meV
+        EnergyRangeAxial = 550               # unit = meV
+        ConvergenceValueGF = 0.005
+        ConvergenceValueCurrent = 0.1
+        NMaxIterations = 200
+        BiasForInitialElectronicModes = 350  # unit = meV
+    }
+    
+    Output{
+        EnergyResolvedPlots = yes
+    }
+    
+
+    
+
+    
+}
+
