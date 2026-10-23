@@ -19,6 +19,9 @@ import numpy as np
 ROOT = Path(r"D:\Codex-Obsidian\QCL-nextnano")
 RUN_10 = ROOT / "runs/sun2022_mocvd/negf_10p33um_clamp_160_240"
 EXACT_10 = ROOT / "runs/sun2022_mocvd/negf_10p33um_clamp_216p384"
+CONSISTENT_10 = (
+    ROOT / "runs/sun2022_mocvd/negf_10p33um_clamp_waveguide_consistent_216p384"
+)
 RUNS_9 = {
     216.384: ROOT / "runs/sun2022_mocvd/sun2022_9p17um_clamp_216p384mV_retry",
     220.0: ROOT / "runs/sun2022_mocvd/sun2022_9p17um_clamp_220mV",
@@ -352,6 +355,64 @@ def main() -> None:
     fig3.savefig(OUT / "figure3_round_comparison.png", dpi=190)
     plt.close(fig3)
 
+    consistent_li = load_li_table(CONSISTENT_10).get(216.384)
+    if consistent_li is not None:
+        corrected_rows = [
+            [
+                216.384,
+                50 * 216.384 / 1000,
+                120.0,
+                10.33,
+                3.2768,
+                0.7055,
+                2.248,
+                consistent_li["current"],
+                consistent_li["net_power"],
+                consistent_li["wpe"],
+            ]
+        ]
+        np.savetxt(
+            OUT / "waveguide_consistent_216p384.csv",
+            np.asarray(corrected_rows),
+            delimiter=",",
+            header=(
+                "bias_mV,total_voltage_V,photon_energy_meV,wavelength_um,"
+                "n_eff,overlap,modal_loss_per_cm,current_A_cm2,"
+                "net_internal_power_W_cm3,internal_WPE"
+            ),
+            comments="",
+        )
+        labels = ["9.17 µm\napprox. WG", "10.33 µm\napprox. WG", "10.33 µm\nconsistent WG"]
+        powers = [
+            li_10[216.384]["net_power"] if 216.384 in li_10 else np.nan,
+            li_10[216.384]["net_power"] if 216.384 in li_10 else np.nan,
+            consistent_li["net_power"],
+        ]
+        if 216.384 in RUNS_9:
+            li9_exact = load_li_table(RUNS_9[216.384]).get(216.384)
+            if li9_exact is not None:
+                powers[0] = li9_exact["net_power"]
+        if 216.384 in li_10:
+            powers[1] = li_10[216.384]["net_power"]
+        fig4, ax4 = plt.subplots(figsize=(7.3, 5.1))
+        bars = ax4.bar(labels, powers, color=["#7A1FA2", "#E76F51", "#2A9D8F"])
+        ax4.set_yscale("log")
+        ax4.set_ylabel("Net internal optical power (W cm$^{-3}$)")
+        ax4.set_title("Waveguide-parameter robustness at 216.384 mV")
+        ax4.grid(axis="y", alpha=0.25)
+        for bar, value in zip(bars, powers):
+            ax4.text(
+                bar.get_x() + bar.get_width() / 2,
+                value * 1.15,
+                f"{value:.3g}",
+                ha="center",
+                va="bottom",
+                fontsize=8,
+            )
+        fig4.tight_layout()
+        fig4.savefig(OUT / "figure4_waveguide_robustness.png", dpi=190)
+        plt.close(fig4)
+
     comparison = np.column_stack(
         (
             common,
@@ -391,6 +452,7 @@ def main() -> None:
                 "9.17-um clamp outputs: sun2022_9p17um_clamp_*",
                 "The no-field LDOS/I-V are independent of mode label; "
                 "this round uses actual fixed-mode photon-assisted transport.",
+                f"Waveguide-consistent 216.384 mV check: {CONSISTENT_10}",
                 "Data: current_voltage_10p33um.csv; "
                 "fixed_mode_10p33um_li.csv; round_comparison.csv",
             ]

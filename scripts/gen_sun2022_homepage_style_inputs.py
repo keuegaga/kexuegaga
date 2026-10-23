@@ -236,6 +236,36 @@ def make_10p33_clamp_sweep() -> None:
         output.write_text(text, encoding="utf-8")
         print(output)
 
+    source = (
+        ROOT / "designs/sun2022_mocvd_9um_10p33um_clamp_216p384mV.negf"
+    )
+    consistent = (
+        ROOT
+        / "designs"
+        / "sun2022_mocvd_9um_10p33um_clamp_waveguide_consistent_216p384mV.negf"
+    )
+    text = source.read_text(encoding="utf-8", errors="ignore")
+    text = replace_first(
+        text,
+        r"(?m)^(\s*CavityLosses\s*=\s*)[0-9.]+",
+        r"\g<1>2.248",
+    )
+    text = replace_first(
+        text,
+        r"(?m)^(\s*OverlapFactor\s*=\s*)[0-9.]+",
+        r"\g<1>0.7055",
+    )
+    text = replace_first(
+        text,
+        r"(?m)^(\s*Content\s*=\s*)\".*\"",
+        (
+            r'\g<1>"Sun 2022 10.33-um fixed mode at 216.384 mV; '
+            '10.33-um waveguide-consistent overlap 0.7055 and modal loss 2.248 1/cm."'
+        ),
+    )
+    consistent.write_text(text, encoding="utf-8")
+    print(consistent)
+
 
 def main() -> None:
     make_variant(
