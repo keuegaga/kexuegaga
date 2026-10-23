@@ -20,17 +20,23 @@ def value_at(path: Path, energy_mev: float) -> float:
 
 def main() -> None:
     current = np.loadtxt(RUN / "Current_vs_Voltage.dat", skiprows=1)
-    lines = ["bias_mV,current_kA_cm2,fgr_gain_135meV,selfconsistent_gain_135meV"]
+    lines = [
+        "bias_mV,current_kA_cm2,fgr_gain_135meV,selfconsistent_gain_135meV,"
+        "fgr_peak_60_180meV,fgr_peak_energy_meV"
+    ]
     for bias, current_density in current:
         gain_dir = RUN / f"{int(bias)}mV/Gain"
-        fgr = value_at(
-            gain_dir / "Gain_FermiGoldenRule_vs_Energy_[0,0,1].dat", 135.0
-        )
+        fgr_path = gain_dir / "Gain_FermiGoldenRule_vs_Energy_[0,0,1].dat"
+        fgr_data = np.loadtxt(fgr_path, skiprows=1)
+        fgr = float(fgr_data[np.argmin(np.abs(fgr_data[:, 0] - 135.0)), 1])
+        window = (fgr_data[:, 0] >= 60.0) & (fgr_data[:, 0] <= 180.0)
+        peak_row = fgr_data[window][np.argmax(fgr_data[window, 1])]
         self_consistent = value_at(
             gain_dir / "Gain_SelfConsistent_vs_Energy.dat", 135.0
         )
         lines.append(
-            f"{bias:g},{current_density / 1000:.6f},{fgr:.6f},{self_consistent:.6f}"
+            f"{bias:g},{current_density / 1000:.6f},{fgr:.6f},{self_consistent:.6f},"
+            f"{peak_row[1]:.6f},{peak_row[0]:.6f}"
         )
     OUT.parent.mkdir(parents=True, exist_ok=True)
     OUT.write_text("\n".join(lines) + "\n", encoding="utf-8")

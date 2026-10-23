@@ -11,6 +11,10 @@ material_threshold_gain,2.966,1_per_cm,waveguide and 4 mm HR cavity
 model_threshold_bias,182.85,mV_per_period,linear interpolation of bias scan
 model_threshold_current,2.05,kA_per_cm2,linear interpolation of bias scan
 fgr_threshold_current,1.716,kA_per_cm2,fermi golden rule at 9.17um
+broad_peak_threshold_current,1.708,kA_per_cm2,self-consistent broad peak 115meV
+broad_peak_at_160mV,115,meV,10.78um peak gain 2.05 per cm at 1.555kA per cm2
+broad_peak_at_183mV,115,meV,10.78um peak gain 5.41 per cm at 2.118kA per cm2
+broad_peak_at_216mV,120,meV,10.33um peak gain 9.93 per cm at 2.578kA per cm2
 paper_threshold_current,1.52,kA_per_cm2,Sun et al. 2022
 threshold_current_error,34.9,percent,(2.05-1.52)/1.52
 gain_at_paper_threshold_current,0.07,1_per_cm,at 160 mV / 1.555 kA per cm2

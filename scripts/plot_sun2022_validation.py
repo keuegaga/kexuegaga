@@ -21,6 +21,16 @@ WIDE = (
     / "runs/sun2022_mocvd/negf_alloy006_wide_216mV/216.384mV/Gain"
     / "Gain_SelfConsistent_vs_Energy.dat"
 )
+WIDE_THRESHOLD = (
+    ROOT
+    / "runs/sun2022_mocvd/negf_alloy006_threshold183_wide/183mV/Gain"
+    / "Gain_SelfConsistent_vs_Energy.dat"
+)
+WIDE_160 = (
+    ROOT
+    / "runs/sun2022_mocvd/negf_alloy006_160mV_wide/160mV/Gain"
+    / "Gain_SelfConsistent_vs_Energy.dat"
+)
 SCAN = ROOT / "runs/sun2022_mocvd/negf_alloy006_biasscan_140_220"
 OUT = ROOT / "results/qcl_validation/sun2022_negf_validation.png"
 SUMMARY = ROOT / "results/qcl_validation/sun2022_negf_validation.txt"
@@ -33,6 +43,8 @@ def read_two_columns(path: Path) -> np.ndarray:
 
 def main() -> None:
     wide = read_two_columns(WIDE)
+    wide_threshold = read_two_columns(WIDE_THRESHOLD)
+    wide_160 = read_two_columns(WIDE_160)
     scan_current = read_two_columns(SCAN / "Current_vs_Voltage.dat")
     bias = scan_current[:, 0]
     current = scan_current[:, 1]
@@ -62,7 +74,12 @@ def main() -> None:
     )
 
     fig, axes = plt.subplots(1, 2, figsize=(13, 5.4))
-    axes[0].plot(wide[:, 0], wide[:, 1], "o-", color="#16697A", lw=2)
+    axes[0].plot(wide_160[:, 0], wide_160[:, 1], "D-.",
+                 color="#6A994E", lw=1.6, label="160 mV，约 1.55 kA/cm2")
+    axes[0].plot(wide_threshold[:, 0], wide_threshold[:, 1], "^--",
+                 color="#7A5195", lw=1.8, label="183 mV，约 2.12 kA/cm2")
+    axes[0].plot(wide[:, 0], wide[:, 1], "o-", color="#16697A", lw=2,
+                 label="216 mV，约 2.58 kA/cm2")
     axes[0].axhline(threshold_gain, color="#C44536", ls="--",
                     label=f"材料增益阈值 {threshold_gain:.2f} cm-1")
     axes[0].axvline(135.26, color="#333333", ls=":", lw=1.5,
@@ -76,7 +93,7 @@ def main() -> None:
     )
     axes[0].set_xlabel("光子能量 (meV)")
     axes[0].set_ylabel("自洽材料增益 (cm-1)")
-    axes[0].set_title("216 mV/周期：宽能量窗自洽增益")
+    axes[0].set_title("宽能量窗自洽增益：偏压引起的长波峰蓝移")
     axes[0].grid(alpha=0.25)
     axes[0].legend(fontsize=8)
 
@@ -92,6 +109,13 @@ def main() -> None:
                     label=f"模型阈值≈{threshold_current_ka:.2f} kA/cm2")
     axes[1].axvline(threshold_current_ka_fgr, color="#7A5195", ls=":", lw=1.2,
                     label=f"FGR 阈值≈{threshold_current_ka_fgr:.2f} kA/cm2")
+    low_wave_gain = np.array([wide_160[:, 1].max(), wide_threshold[:, 1].max()])
+    low_wave_current_ka = np.array([1.55493, 2.11751])
+    low_wave_threshold_ka = float(
+        np.interp(threshold_gain, low_wave_gain, low_wave_current_ka)
+    )
+    axes[1].axvline(low_wave_threshold_ka, color="#6A994E", ls="-", lw=1.3,
+                    label=f"长波峰阈值≈{low_wave_threshold_ka:.2f} kA/cm2")
     axes[1].set_xlabel("电流密度 (kA/cm2)")
     axes[1].set_ylabel("自洽材料增益 (cm-1)")
     axes[1].set_title("校准合金散射后的阈值比较")
@@ -107,6 +131,9 @@ def main() -> None:
         "calibrated_alloy_strength=0.06",
         "wide_gain_peak_mev=120.0",
         "wide_gain_peak_wavelength_um=10.33",
+        "threshold_near_wide_gain_peak_mev=115.0",
+        "threshold_near_wide_gain_peak_wavelength_um=10.78",
+        f"broad_peak_threshold_current_kA_cm2={low_wave_threshold_ka:.6f}",
         f"gain_at_9p17um_216mV={wide_gain_at_135:.6f}",
         f"material_threshold_gain_cm={threshold_gain:.6f}",
         f"interpolated_threshold_bias_mV={threshold_bias:.3f}",

@@ -16,6 +16,7 @@ negf_scattering,fail,alloy_0p10_gain_at_135,4.852,1_per_cm,global peak remains a
 negf_scattering,fail,alloy_0p06_gain_at_135,6.832,1_per_cm,physically normalized dV 0.59-0.66eV
 negf_scattering,fail,true_gain_peak,120,meV,wide 60-180meV window; 10.33um dominates 9.17um
 negf_scattering,fail,model_threshold_current,2.05,kA_per_cm2,paper threshold is 1.52
+negf_scattering,fail,broad_peak_threshold_current,1.708,kA_per_cm2,free-running branch is 10.78um rather than 9.17um
 waveguide,pass,effective_index,3.296,dimensionless,scalar vertical slab model
 waveguide,pass,core_overlap,0.7506,dimensionless,active-region confinement
 waveguide,pass,mirror_loss,1.611,1_per_cm,4mm cavity R=0.29/0.95
