@@ -1,0 +1,32 @@
+quantity,value,unit,source_or_note
+alloy_term_well,5.836815,eV2,nextnano Input/AlloyScatteringTerm.dat
+alloy_term_barrier,7.337601,eV2,nextnano Input/AlloyScatteringTerm.dat
+calibrated_alloy_strength,0.06,dimensionless,equivalent dV 0.592 eV well and 0.664 eV barrier
+independent_dv_low,0.44,eV,modern random-alloy InGaAs transport fit
+independent_dv_high,0.70,eV,InGaAs/InAlAs transport literature
+gain_peak_energy,120,meV,wide self-consistent gain 60-180 meV
+gain_peak_wavelength,10.33,um,1240/120
+gain_at_9p17um_216mV,6.832,1_per_cm,self-consistent gain at 135 meV
+material_threshold_gain,2.966,1_per_cm,waveguide and 4 mm HR cavity
+model_threshold_bias,182.85,mV_per_period,linear interpolation of bias scan
+model_threshold_current,2.05,kA_per_cm2,linear interpolation of bias scan
+fgr_threshold_current,1.716,kA_per_cm2,fermi golden rule at 9.17um
+paper_threshold_current,1.52,kA_per_cm2,Sun et al. 2022
+threshold_current_error,34.9,percent,(2.05-1.52)/1.52
+gain_at_paper_threshold_current,0.07,1_per_cm,at 160 mV / 1.555 kA per cm2
+bias_140mV_current,1.121,kA_per_cm2,self-consistent scan
+bias_140mV_temperature,647,K,self-consistent scan
+bias_140mV_gain_9p17um,-2.13,1_per_cm,self-consistent scan
+bias_160mV_current,1.555,kA_per_cm2,self-consistent scan
+bias_160mV_temperature,826,K,self-consistent scan
+bias_160mV_gain_9p17um,0.07,1_per_cm,self-consistent scan
+bias_180mV_current,1.997,kA_per_cm2,self-consistent scan
+bias_180mV_temperature,1027,K,self-consistent scan
+bias_180mV_gain_9p17um,2.604,1_per_cm,self-consistent scan
+bias_200mV_current,2.371,kA_per_cm2,self-consistent scan
+bias_200mV_temperature,1261,K,self-consistent scan
+bias_200mV_gain_9p17um,5.146,1_per_cm,self-consistent scan
+bias_220mV_current,2.631,kA_per_cm2,self-consistent scan
+bias_220mV_temperature,1528,K,self-consistent scan
+bias_220mV_gain_9p17um,7.570,1_per_cm,self-consistent scan
+strict_reproduction_status,FAIL,none,wavelength and threshold current both disagree

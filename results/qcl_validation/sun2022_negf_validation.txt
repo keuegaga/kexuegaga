@@ -1,0 +1,14 @@
+calibrated_alloy_strength=0.06
+wide_gain_peak_mev=120.0
+wide_gain_peak_wavelength_um=10.33
+gain_at_9p17um_216mV=6.832001
+material_threshold_gain_cm=2.966167
+interpolated_threshold_bias_mV=182.849
+interpolated_threshold_current_kA_cm2=2.049820
+interpolated_fgr_threshold_current_kA_cm2=1.715670
+paper_threshold_current_kA_cm2=1.52
+bias_140mV_current_kA_cm2=1.121050_gain_9p17um=-2.134886
+bias_160mV_current_kA_cm2=1.554930_gain_9p17um=0.069607
+bias_180mV_current_kA_cm2=1.996500_gain_9p17um=2.604082
+bias_200mV_current_kA_cm2=2.370870_gain_9p17um=5.146360
+bias_220mV_current_kA_cm2=2.631400_gain_9p17um=7.570048
