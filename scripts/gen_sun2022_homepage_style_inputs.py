@@ -190,6 +190,53 @@ def make_clamped_variant(output: Path, bias: float) -> None:
     print(output)
 
 
+def make_10p33_clamp_sweep() -> None:
+    template = (
+        ROOT / "designs/sun2022_mocvd_9um_9p17um_clamp_216p384mV.negf"
+    )
+    for output, minimum, maximum, initial_bias in (
+        (
+            ROOT / "designs/sun2022_mocvd_9um_10p33um_clamp_160_240mV.negf",
+            "160",
+            "240",
+            "160",
+        ),
+        (
+            ROOT / "designs/sun2022_mocvd_9um_10p33um_clamp_216p384mV.negf",
+            "216.384",
+            "216.384",
+            "216.384",
+        ),
+    ):
+        text = template.read_text(encoding="utf-8", errors="ignore")
+        for key, value in (
+            ("Min", minimum),
+            ("Max", maximum),
+            ("Vmin", minimum),
+            ("Vmax", maximum),
+            ("BiasForInitialElectronicModes", initial_bias),
+            ("PhotonEnergy", "120"),
+            ("EphotonMinSelfConsistent", "115"),
+            ("EphotonMaxSelfConsistent", "125"),
+        ):
+            text = replace_first(
+                text,
+                rf"(?m)^(\s*{key}\s*=\s*)[0-9.]+",
+                rf"\g<1>{value}",
+            )
+        text = replace_first(
+            text,
+            r"(?m)^(\s*Content\s*=\s*)\".*\"",
+            (
+                r'\g<1>"Sun 2022 DAU/MS QCL, fixed 10.33-um (120 meV) '
+                f'optical mode over {minimum}-{maximum} mV/period; '
+                'modal loss 2.227 1/cm, overlap 0.751."'
+            ),
+        )
+        output.write_text(text, encoding="utf-8")
+        print(output)
+
+
 def main() -> None:
     make_variant(
         output=ROOT / "designs/sun2022_mocvd_9um_ldos_low_0_120mV.negf",
@@ -234,6 +281,7 @@ def main() -> None:
         ROOT / "designs/sun2022_mocvd_9um_9p17um_clamp_240mV.negf",
         240.0,
     )
+    make_10p33_clamp_sweep()
 
 
 if __name__ == "__main__":

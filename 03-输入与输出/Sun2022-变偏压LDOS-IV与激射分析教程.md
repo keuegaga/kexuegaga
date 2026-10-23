@@ -17,6 +17,9 @@ tags:
 
 # Sun 2022 变偏压 LDOS、I–V 与激射分析教程
 
+> 后续设计：按本页发现的 10.33 µm 自洽长波分支，见
+> [[Sun2022-10p33um第二轮设计与两轮比较]]。
+
 ## 1. 本页回答什么
 
 本页针对：
@@ -505,8 +508,15 @@ D:\Codex-Obsidian\QCL-nextnano\scripts\plot_sun2022_bias_figures.py
 D:\Codex-Obsidian\QCL-nextnano\results\sun2022_homepage_style\
 ```
 
+为进行第二轮 10.33 µm 设计而不覆盖本轮展示结果，本目录已冻结为：
+
+```text
+D:\Codex-Obsidian\QCL-nextnano\results\sun2022_round1_9p17um_and_freerun
+```
+
 ## 相关笔记
 
+- [[Sun2022-10p33um第二轮设计与两轮比较]]
 - [[41-文献复现-Sun2022-9um-MOCVD-DAU]]
 - [[44-五级验证闸门-Sun2022态映射增益与波导]]
 - [[Sun2022-NEGF完整验证报告]]

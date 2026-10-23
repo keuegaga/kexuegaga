@@ -231,6 +231,7 @@ AlloyScatteringStrength: 1.0 -> 0.1
 ## 相关笔记
 
 - [[Sun2022-变偏压LDOS-IV与激射分析教程]]
+- [[Sun2022-10p33um第二轮设计与两轮比较]]
 - [[40-官方Bai-APL2011-NEGF工作流校准]]
 - [[39-8um-NEGF校准-偏压掺杂与CBO]]
 - [[35-QCL能带设计谱系-从BB到STA-RE]]
