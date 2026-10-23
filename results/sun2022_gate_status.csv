@@ -9,6 +9,7 @@ tolerance,pass,wells_plus_minus_0p10,9.15_to_9.17,um,robust range
 tolerance,pass,barrier_sensitivity,8.95_to_9.86,um,thin barriers dominate
 tolerance,pass,composition_plus_minus_0p01,9.08_to_9.26,um,still in design window
 negf_scattering,fail,alloy_1p00_gain_at_135,-6.93,1_per_cm,standard baseline
+negf_scattering,fail,alloy_1p00_scboundary_gain_at_135,-6.93,1_per_cm,identical to default 120_to_155meV spectrum
 negf_scattering,fail,alloy_0p50_gain_at_135,-3.56,1_per_cm,official-example-like strength
 negf_scattering,fail,alloy_0p25_gain_at_135,0.042,1_per_cm,below threshold
 negf_scattering,fail,alloy_0p10_gain_at_135,4.852,1_per_cm,global peak remains at 120meV
