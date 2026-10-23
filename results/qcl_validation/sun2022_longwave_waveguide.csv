@@ -1,0 +1,3 @@
+wavelength_um,n_eff,gamma_core,mirror_loss_cm,passive_loss_cm,material_threshold_cm,first_order_bragg_period_um
+10.33,3.2768,0.7055,1.611,0.637,3.188,1.576
+10.78,3.2695,0.6887,1.611,0.646,3.277,1.648
