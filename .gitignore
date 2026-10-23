@@ -6,6 +6,13 @@
 .DS_Store
 Thumbs.db
 desktop.ini
+__pycache__/
+*.pyc
+
+# 论文整页渲染中间图；仓库只保留裁剪后的 Fig. 1 和重绘态图
+/attachments/sun2022-[1-4].png
+/attachments/sun2022_fig1-3.png
+/attachments/sun2022_fig1_zoom.png
 
 # 网盘同步程序的标记文件（属于本机同步配置，不入库）
 .stfolder*

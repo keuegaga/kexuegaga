@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 """Generate nextnano++ k.p input for the Sun 2022 9 um MOCVD QCL."""
+import argparse
 from pathlib import Path
 
 
@@ -7,44 +8,44 @@ PERIOD_LAYERS_NM = [
     2.80, 3.00, 1.25, 6.27, 1.00, 5.35, 0.88, 4.85,
     1.09, 4.16, 1.22, 3.66, 1.42, 3.15, 1.68, 3.30,
 ]
-PERIOD_NM = sum(PERIOD_LAYERS_NM)
 FIELD_KV_CM = 48.0
 PERIODS = 3
 ELECTRONS = 100
 
 
-def layout():
+def layout(layers):
+    period = sum(layers)
     x = 0.0
     barriers = []
     rows = []
-    for index, width in enumerate(PERIOD_LAYERS_NM, start=1):
+    for index, width in enumerate(layers, start=1):
         kind = "B" if index % 2 else "W"
         material = "Al0.638In0.362As" if kind == "B" else "In0.593Ga0.407As"
         if kind == "B":
             barriers.append((index, x, x + width))
         rows.append((index, kind, material, width, x, x + width))
         x += width
-    return barriers, rows
+    return period, barriers, rows
 
 
-def region_block(barriers):
+def region_block(barriers, barrier_x, period):
     out = []
     for index, start, end in barriers:
         out.extend([
             f"    region{{  # barrier layer {index}",
             f"        line{{ x = [{start:.4f}, {end:.4f}] }}",
-            '        ternary_constant{ name = "Al(x)In(1-x)As" alloy_x = 0.638 }',
-            f"        array_x{{ max = {PERIODS} shift = $period }}",
+            f'        ternary_constant{{ name = "Al(x)In(1-x)As" alloy_x = {barrier_x:.3f} }}',
+            f"        array_x{{ max = {PERIODS} shift = {period:.4f} }}",
             "    }",
         ])
     return "\n".join(out)
 
 
-def grid_block(barriers):
+def grid_block(barriers, period):
     positions = [0.0]
     for _, start, end in barriers:
         positions.extend([start, end])
-    positions.extend([PERIOD_NM * n for n in range(1, PERIODS + 1)])
+    positions.extend([period * n for n in range(1, PERIODS + 1)])
     seen = set()
     lines = []
     for pos in positions:
@@ -59,7 +60,7 @@ def grid_block(barriers):
 TEMPLATE = r"""!TEXT
     Sun et al., Opt. Express 30 (2022), DOI 10.1364/OE.469573.
     Nine-micron MOCVD DAU/MS QCL, 50 stages.
-    Well In0.593Ga0.407As; barrier Al0.638In0.362As.
+    Well In{well_x:.3f}Ga{well_ga:.3f}As; barrier Al{barrier_x:.3f}In{barrier_in:.3f}As.
     One period = {period:.4f} nm; field = {field:.1f} kV/cm.
     B = barrier, W = well in the accompanying CSV.
 !ENDTEXT
@@ -100,7 +101,7 @@ structure{{
         everywhere{{ }}
         ternary_constant{{
             name = "In(x)Ga(1-x)As"
-            alloy_x = 0.593
+            alloy_x = {well_x:.3f}
         }}
         contact{{ name = "fermi_zero" }}
     }}
@@ -175,21 +176,43 @@ quantum{{
 
 
 def main():
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--name", default="sun2022_mocvd_9um_f48")
+    parser.add_argument("--field-kvcm", type=float, default=FIELD_KV_CM)
+    parser.add_argument("--well-delta-nm", type=float, default=0.0)
+    parser.add_argument("--barrier-delta-nm", type=float, default=0.0)
+    parser.add_argument("--well-x-delta", type=float, default=0.0)
+    parser.add_argument("--barrier-x-delta", type=float, default=0.0)
+    args = parser.parse_args()
+
+    layers = []
+    for index, base_width in enumerate(PERIOD_LAYERS_NM, start=1):
+        delta = args.well_delta_nm if index % 2 == 0 else args.barrier_delta_nm
+        layers.append(base_width + delta)
+
+    well_x = 0.593 + args.well_x_delta
+    barrier_x = 0.638 + args.barrier_x_delta
+    well_ga = 1.0 - well_x
+    barrier_in = 1.0 - barrier_x
     root = Path(r"D:\Codex-Obsidian\QCL-nextnano")
     designs = root / "designs"
-    barriers, rows = layout()
+    period, barriers, rows = layout(layers)
     source = TEMPLATE.format(
-        period=PERIOD_NM,
-        field=FIELD_KV_CM,
-        field_vm=FIELD_KV_CM * 1e5,
+        period=period,
+        field=args.field_kvcm,
+        field_vm=args.field_kvcm * 1e5,
         periods=PERIODS,
         electrons=ELECTRONS,
-        regions=region_block(barriers),
-        grid=grid_block(barriers),
-        total_length=PERIOD_NM * PERIODS,
+        well_x=well_x,
+        well_ga=well_ga,
+        barrier_x=barrier_x,
+        barrier_in=barrier_in,
+        regions=region_block(barriers, barrier_x, period),
+        grid=grid_block(barriers, period),
+        total_length=period * PERIODS,
     )
-    nnp = designs / "sun2022_mocvd_9um_f48.nnp"
-    csv = designs / "sun2022_mocvd_9um_f48_layers.csv"
+    nnp = designs / f"{args.name}.nnp"
+    csv = designs / f"{args.name}_layers.csv"
     nnp.write_text(source, encoding="utf-8")
     csv.write_text(
         "layer,type,material,thickness_nm,start_nm,end_nm,doped\n"
@@ -203,7 +226,8 @@ def main():
     )
     print(nnp)
     print(csv)
-    print(f"period={PERIOD_NM:.4f} nm, bias={0.0048 * PERIOD_NM * 1000:.4f} mV")
+    bias_v = args.field_kvcm * period * 1e-4
+    print(f"period={period:.4f} nm, bias={bias_v:.6f} V ({bias_v * 1e3:.3f} mV)")
 
 
 if __name__ == "__main__":

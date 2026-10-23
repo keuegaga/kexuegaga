@@ -1,0 +1,172 @@
+!TEXT
+    Sun et al., Opt. Express 30 (2022), DOI 10.1364/OE.469573.
+    Nine-micron MOCVD DAU/MS QCL, 50 stages.
+    Well In0.593Ga0.407As; barrier Al0.638In0.362As.
+    One period = 43.8800 nm; field = 48.0 kV/cm.
+    B = barrier, W = well in the accompanying CSV.
+!ENDTEXT
+
+$electric_field = -4800000
+$period = 43.8800
+$num_periods = 3
+$num_electrons = 100
+
+run{
+    strain{ }
+    quantum{ }
+}
+
+output{ material_parameters{ } }
+
+global{
+    simulate1D{ }
+    crystal_zb{
+        x_hkl = [1, 0, 0]
+        y_hkl = [0, 1, 0]
+    }
+    substrate{ name = "InP" }
+    temperature = 300.0
+}
+
+contacts{
+    fermi{
+        name = "fermi_zero"
+        bias = 0.0
+    }
+}
+
+structure{
+    output_material_index{ }
+    output_region_index{ }
+    region{
+        everywhere{ }
+        ternary_constant{
+            name = "In(x)Ga(1-x)As"
+            alloy_x = 0.593
+        }
+        contact{ name = "fermi_zero" }
+    }
+
+    region{  # barrier layer 1
+        line{ x = [0.0000, 2.8000] }
+        ternary_constant{ name = "Al(x)In(1-x)As" alloy_x = 0.638 }
+        array_x{ max = 3 shift = 43.8800 }
+    }
+    region{  # barrier layer 3
+        line{ x = [5.6500, 6.9000] }
+        ternary_constant{ name = "Al(x)In(1-x)As" alloy_x = 0.638 }
+        array_x{ max = 3 shift = 43.8800 }
+    }
+    region{  # barrier layer 5
+        line{ x = [13.0200, 14.0200] }
+        ternary_constant{ name = "Al(x)In(1-x)As" alloy_x = 0.638 }
+        array_x{ max = 3 shift = 43.8800 }
+    }
+    region{  # barrier layer 7
+        line{ x = [19.2200, 20.1000] }
+        ternary_constant{ name = "Al(x)In(1-x)As" alloy_x = 0.638 }
+        array_x{ max = 3 shift = 43.8800 }
+    }
+    region{  # barrier layer 9
+        line{ x = [24.8000, 25.8900] }
+        ternary_constant{ name = "Al(x)In(1-x)As" alloy_x = 0.638 }
+        array_x{ max = 3 shift = 43.8800 }
+    }
+    region{  # barrier layer 11
+        line{ x = [29.9000, 31.1200] }
+        ternary_constant{ name = "Al(x)In(1-x)As" alloy_x = 0.638 }
+        array_x{ max = 3 shift = 43.8800 }
+    }
+    region{  # barrier layer 13
+        line{ x = [34.6300, 36.0500] }
+        ternary_constant{ name = "Al(x)In(1-x)As" alloy_x = 0.638 }
+        array_x{ max = 3 shift = 43.8800 }
+    }
+    region{  # barrier layer 15
+        line{ x = [39.0500, 40.7300] }
+        ternary_constant{ name = "Al(x)In(1-x)As" alloy_x = 0.638 }
+        array_x{ max = 3 shift = 43.8800 }
+    }
+
+    output_alloy_composition{ }
+}
+
+grid{
+    xgrid{
+        line{ pos = 0.0000 spacing = 0.2 }
+        line{ pos = 2.8000 spacing = 0.2 }
+        line{ pos = 5.6500 spacing = 0.2 }
+        line{ pos = 6.9000 spacing = 0.2 }
+        line{ pos = 13.0200 spacing = 0.2 }
+        line{ pos = 14.0200 spacing = 0.2 }
+        line{ pos = 19.2200 spacing = 0.2 }
+        line{ pos = 20.1000 spacing = 0.2 }
+        line{ pos = 24.8000 spacing = 0.2 }
+        line{ pos = 25.8900 spacing = 0.2 }
+        line{ pos = 29.9000 spacing = 0.2 }
+        line{ pos = 31.1200 spacing = 0.2 }
+        line{ pos = 34.6300 spacing = 0.2 }
+        line{ pos = 36.0500 spacing = 0.2 }
+        line{ pos = 39.0500 spacing = 0.2 }
+        line{ pos = 40.7300 spacing = 0.2 }
+        line{ pos = 43.8800 spacing = 0.2 }
+        line{ pos = 87.7600 spacing = 0.2 }
+        line{ pos = 131.6400 spacing = 0.2 }
+    }
+}
+
+classical{
+    Gamma{ }
+    L{ }
+    X{ }
+    HH{ }
+    LH{ }
+    SO{ }
+    output_bandedges{ averaged = no }
+    output_bandgap{ }
+}
+
+strain{
+    pseudomorphic_strain{ }
+    output_strain_tensor{ }
+    output_hydrostatic_strain{ }
+}
+
+poisson{
+    electric_field{
+        strength = $electric_field
+        reference_potential = 0.0
+    }
+    output_potential{ }
+    output_electric_field{ }
+}
+
+quantum{
+    region{
+        name = "quantum_region"
+        x = [0.0, 131.6400]
+        no_density = yes
+        boundary{ x = dirichlet }
+        kp_8band{
+            num_electrons = $num_electrons
+            avoid_spurious = yes
+        }
+        transition_energies{ KP8{ } }
+        output_wavefunctions{
+            max_num = 240
+            all_k_points = yes
+            amplitudes = no
+            probabilities = yes
+        }
+        momentum_matrix_elements{
+            polarization{ name = "component_x" re = [1, 0, 0] }
+            KP8{ }
+        }
+        dipole_moment_matrix_elements{
+            polarization{ name = "component_x" re = [1, 0, 0] }
+            KP8{ }
+            output_matrix_elements = yes
+            output_oscillator_strengths = yes
+        }
+    }
+}

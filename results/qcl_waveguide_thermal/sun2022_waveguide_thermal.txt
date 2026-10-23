@@ -1,0 +1,12 @@
+wavelength_um=9.17
+n_core=3.46
+n_InP=3.1
+n_eff=3.296316
+gamma_core=0.750633
+mirror_loss_cm=1.611460
+passive_loss_cm=0.615044
+modal_threshold_gain_cm=2.226504
+material_threshold_gain_cm=2.966167
+ideal_vertical_Rth_K_per_W=15.915406
+threshold_current_A=0.638400
+threshold_heat_W=6.703200

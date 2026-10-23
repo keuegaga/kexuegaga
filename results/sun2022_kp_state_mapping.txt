@@ -1,0 +1,60 @@
+States with centroid in physical period [0, 45.08) nm
+state   E_meV    centroid_nm  local_nm  layer
+   39  2285.232       30.365    30.365  W10
+   40  2285.232       30.365    30.365  W10
+   41  2293.379       43.376    43.376  W16
+   42  2293.379       43.376    43.376  W16
+   43  2303.128       37.219    37.219  W14
+   44  2303.128       37.219    37.219  W14
+   45  2316.383       32.319    32.319  W12
+   46  2316.383       32.319    32.319  W12
+   49  2336.490       23.449    23.449  W8
+   50  2336.490       23.449    23.449  W8
+   51  2356.954       27.186    27.186  W10
+   52  2356.954       27.186    27.186  W10
+   55  2380.622       23.509    23.509  W8
+   56  2380.622       23.509    23.509  W8
+   59  2399.478       31.918    31.918  W12
+   60  2399.478       31.918    31.918  W12
+   73  2515.878        6.211     6.211  B3
+   74  2515.878        6.211     6.211  B3
+   79  2575.634       15.471    15.471  W6
+   80  2575.634       15.471    15.471  W6
+   85  2620.947       17.190    17.190  W6
+   86  2620.947       17.190    17.190  W6
+   91  2669.526       23.264    23.264  W8
+   92  2669.526       23.264    23.264  W8
+   95  2709.357       30.579    30.579  W10
+   96  2709.357       30.579    30.579  W10
+
+Strongest transitions with 90-200 meV, same selected period
+ 60-> 79 dE= 176.16 meV lambda= 7.04 um |z|=  1.465 nm O=    2.147 x_upper= 15.5 x_lower= 31.9
+ 59-> 80 dE= 176.16 meV lambda= 7.04 um |z|=  1.465 nm O=    2.147 x_upper= 15.5 x_lower= 31.9
+ 56-> 79 dE= 195.01 meV lambda= 6.36 um |z|=  1.354 nm O=    1.833 x_upper= 15.5 x_lower= 23.5
+ 55-> 80 dE= 195.01 meV lambda= 6.36 um |z|=  1.354 nm O=    1.833 x_upper= 15.5 x_lower= 23.5
+ 56-> 73 dE= 135.26 meV lambda= 9.17 um |z|=  1.287 nm O=    1.657 x_upper=  6.2 x_lower= 23.5
+ 55-> 74 dE= 135.26 meV lambda= 9.17 um |z|=  1.287 nm O=    1.657 x_upper=  6.2 x_lower= 23.5
+ 60-> 73 dE= 116.40 meV lambda=10.65 um |z|=  0.846 nm O=    0.715 x_upper=  6.2 x_lower= 31.9
+ 59-> 74 dE= 116.40 meV lambda=10.65 um |z|=  0.846 nm O=    0.715 x_upper=  6.2 x_lower= 31.9
+ 56-> 80 dE= 195.01 meV lambda= 6.36 um |z|=  0.834 nm O=    0.696 x_upper= 15.5 x_lower= 23.5
+ 55-> 79 dE= 195.01 meV lambda= 6.36 um |z|=  0.834 nm O=    0.696 x_upper= 15.5 x_lower= 23.5
+ 52-> 74 dE= 158.92 meV lambda= 7.80 um |z|=  0.786 nm O=   0.6171 x_upper=  6.2 x_lower= 27.2
+ 51-> 73 dE= 158.92 meV lambda= 7.80 um |z|=  0.786 nm O=   0.6171 x_upper=  6.2 x_lower= 27.2
+ 74-> 85 dE= 105.07 meV lambda=11.80 um |z|=  0.526 nm O=    0.277 x_upper= 17.2 x_lower=  6.2
+ 73-> 86 dE= 105.07 meV lambda=11.80 um |z|=  0.526 nm O=    0.277 x_upper= 17.2 x_lower=  6.2
+ 56-> 74 dE= 135.26 meV lambda= 9.17 um |z|=  0.512 nm O=   0.2623 x_upper=  6.2 x_lower= 23.5
+ 55-> 73 dE= 135.26 meV lambda= 9.17 um |z|=  0.512 nm O=   0.2623 x_upper=  6.2 x_lower= 23.5
+ 50-> 74 dE= 179.39 meV lambda= 6.91 um |z|=  0.390 nm O=   0.1522 x_upper=  6.2 x_lower= 23.4
+ 49-> 73 dE= 179.39 meV lambda= 6.91 um |z|=  0.390 nm O=   0.1522 x_upper=  6.2 x_lower= 23.4
+ 74-> 86 dE= 105.07 meV lambda=11.80 um |z|=  0.358 nm O=   0.1284 x_upper= 17.2 x_lower=  6.2
+ 73-> 85 dE= 105.07 meV lambda=11.80 um |z|=  0.358 nm O=   0.1284 x_upper= 17.2 x_lower=  6.2
+ 60-> 80 dE= 176.16 meV lambda= 7.04 um |z|=  0.251 nm O=  0.06316 x_upper= 15.5 x_lower= 31.9
+ 59-> 79 dE= 176.16 meV lambda= 7.04 um |z|=  0.251 nm O=  0.06316 x_upper= 15.5 x_lower= 31.9
+ 80-> 92 dE=  93.89 meV lambda=13.21 um |z|=  0.227 nm O=  0.05151 x_upper= 23.3 x_lower= 15.5
+ 79-> 91 dE=  93.89 meV lambda=13.21 um |z|=  0.227 nm O=  0.05151 x_upper= 23.3 x_lower= 15.5
+ 74-> 92 dE= 153.65 meV lambda= 8.07 um |z|=  0.216 nm O=  0.04656 x_upper= 23.3 x_lower=  6.2
+ 73-> 91 dE= 153.65 meV lambda= 8.07 um |z|=  0.216 nm O=  0.04656 x_upper= 23.3 x_lower=  6.2
+ 50-> 73 dE= 179.39 meV lambda= 6.91 um |z|=  0.163 nm O=  0.02645 x_upper=  6.2 x_lower= 23.4
+ 49-> 74 dE= 179.39 meV lambda= 6.91 um |z|=  0.163 nm O=  0.02645 x_upper=  6.2 x_lower= 23.4
+ 80-> 95 dE= 133.72 meV lambda= 9.27 um |z|=  0.134 nm O=  0.01795 x_upper= 30.6 x_lower= 15.5
+ 79-> 96 dE= 133.72 meV lambda= 9.27 um |z|=  0.134 nm O=  0.01795 x_upper= 30.6 x_lower= 15.5

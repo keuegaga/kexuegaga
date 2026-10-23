@@ -50,42 +50,42 @@ structure{
     region{  # barrier layer 1
         line{ x = [0.0000, 2.8000] }
         ternary_constant{ name = "Al(x)In(1-x)As" alloy_x = 0.638 }
-        array_x{ max = 3 shift = $period }
+        array_x{ max = 3 shift = 45.0800 }
     }
     region{  # barrier layer 3
         line{ x = [5.8000, 7.0500] }
         ternary_constant{ name = "Al(x)In(1-x)As" alloy_x = 0.638 }
-        array_x{ max = 3 shift = $period }
+        array_x{ max = 3 shift = 45.0800 }
     }
     region{  # barrier layer 5
         line{ x = [13.3200, 14.3200] }
         ternary_constant{ name = "Al(x)In(1-x)As" alloy_x = 0.638 }
-        array_x{ max = 3 shift = $period }
+        array_x{ max = 3 shift = 45.0800 }
     }
     region{  # barrier layer 7
         line{ x = [19.6700, 20.5500] }
         ternary_constant{ name = "Al(x)In(1-x)As" alloy_x = 0.638 }
-        array_x{ max = 3 shift = $period }
+        array_x{ max = 3 shift = 45.0800 }
     }
     region{  # barrier layer 9
         line{ x = [25.4000, 26.4900] }
         ternary_constant{ name = "Al(x)In(1-x)As" alloy_x = 0.638 }
-        array_x{ max = 3 shift = $period }
+        array_x{ max = 3 shift = 45.0800 }
     }
     region{  # barrier layer 11
         line{ x = [30.6500, 31.8700] }
         ternary_constant{ name = "Al(x)In(1-x)As" alloy_x = 0.638 }
-        array_x{ max = 3 shift = $period }
+        array_x{ max = 3 shift = 45.0800 }
     }
     region{  # barrier layer 13
         line{ x = [35.5300, 36.9500] }
         ternary_constant{ name = "Al(x)In(1-x)As" alloy_x = 0.638 }
-        array_x{ max = 3 shift = $period }
+        array_x{ max = 3 shift = 45.0800 }
     }
     region{  # barrier layer 15
         line{ x = [40.1000, 41.7800] }
         ternary_constant{ name = "Al(x)In(1-x)As" alloy_x = 0.638 }
-        array_x{ max = 3 shift = $period }
+        array_x{ max = 3 shift = 45.0800 }
     }
 
     output_alloy_composition{ }
