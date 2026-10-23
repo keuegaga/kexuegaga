@@ -1,0 +1,155 @@
+# Sun et al., Opt. Express 30 (2022), DOI 10.1364/OE.469573.
+# Fifty-stage MOCVD 9 um DAU/MS QCL.
+# Period: 45.08 nm; 48 kV/cm -> 216.384 mV per period.
+# Doping: layers 13-14, 35.53-40.10 nm, 1.5e17 per cm3
+# (= 6.86e10 per cm2), matching the reported 0.68e11 per cm2.
+
+nextnano.NEGF{
+    Header{
+        Author = "ciomp + Codex"
+        Content = "Sun 2022 sensitivity case; well_delta=0 nm; barrier_delta=0.1 nm; composition_delta=0; doping_scale=1; IFR=0.08 nm; alloy=0.06; bias=220.224 mV."
+    }
+
+    SweepParameters{
+        SweepType = Voltage
+        Min = 220.224000
+        Max = 220.224000
+        Delta = 10
+    }
+
+    OverwriteMaterialDatabase{
+        Material{ Name = InAs  DeformationPotential = -9.0 }
+        Material{ Name = GaAs  DeformationPotential = -9.0 }
+        Material{ Name = AlAs  DeformationPotential = -9.0 }
+        Material{ Name = "In(x)Ga(1-x)As"  DeformationPotential = 0.0 }
+        Material{ Name = "Al(x)In(1-x)As"  DeformationPotential = 0.0 }
+    }
+
+    Temperature = 300
+
+    Crystal{
+        CrystalStructure = Zincblende
+        Orientation{
+            zAxis{ h = 0  k = 0  l = 1 }
+            yAxis{ h = 0  k = 1  l = 0 }
+        }
+        MaterialSubstrate{ Name = InP }
+        Strain = yes
+        Piezoelectricity = yes
+        Pyroelectricity = yes
+    }
+
+    Materials{
+        Material{
+            Name = "In(x)Ga(1-x)As"
+            AlloyComposition = 0.593
+            Alias = well
+            EffectiveMassFromKpParameters = no
+            Overwrite{
+                ConductionBandOffset = 0.0
+                ElectronMass = 0.043
+            }
+        }
+        Material{
+            Name = "Al(x)In(1-x)As"
+            AlloyComposition = 0.638
+            Alias = barrier
+            EffectiveMassFromKpParameters = no
+            Overwrite{
+                ConductionBandOffset = 0.773
+                ElectronMass = 0.089
+            }
+        }
+
+        NonParabolicity = yes
+        InPlaneNonParabolicity = yes
+        NumberOfBands = 3
+        UseConductionBandOffset = yes
+    }
+
+    Structure{
+        Layer{ Material = barrier  Thickness = 2.900 }
+        Layer{ Material = well     Thickness = 3.000 }
+        Layer{ Material = barrier  Thickness = 1.350 }
+        Layer{ Material = well     Thickness = 6.270 }
+        Layer{ Material = barrier  Thickness = 1.100 }
+        Layer{ Material = well     Thickness = 5.350 }
+        Layer{ Material = barrier  Thickness = 0.980 }
+        Layer{ Material = well     Thickness = 4.850 }
+        Layer{ Material = barrier  Thickness = 1.190 }
+        Layer{ Material = well     Thickness = 4.160 }
+        Layer{ Material = barrier  Thickness = 1.320 }
+        Layer{ Material = well     Thickness = 3.660 }
+        Layer{ Material = barrier  Thickness = 1.520 }
+        Layer{ Material = well     Thickness = 3.150 }
+        Layer{ Material = barrier  Thickness = 1.780 }
+        Layer{ Material = well     Thickness = 3.300 }
+
+        Doping{
+            DopingStart = 35.53
+            DopingEnd = 40.10
+            DopingSpecification = 1
+            DopingDensity = 1.5e+17
+        }
+    }
+
+    Scattering{
+        MaterialForScatteringParameters = well
+        InterfaceRoughness{
+            AmplitudeInZ = 0.08
+            InterfaceAutoCorrelationType = 1
+            CorrelationLengthInXY = 7.0
+        }
+        AcousticPhononScattering = no
+        AcousticPhononScatteringEnergyMax = 3.0
+        ScreeningTemperatureType = 1
+        TemperatureOffsetParameter = 200
+        ImpurityScatteringStrength = 1.0
+        ElectronElectronScattering = yes
+        AlloyScattering = yes
+        AlloyScatteringStrength = 0.06
+    }
+
+    Poisson = yes
+
+    LateralDiscretization{
+        MaterialForLateralMotion = well
+        Value = 50
+    }
+
+    SimulationParameter{
+        CoherenceLengthInPeriods = 1
+        SpatialGridSpacing = 0.2
+        nLateralPeriodsForBandStructure = 1
+        CoherenceLengthInNm = 20.0
+        EnergyGridSpacing = 5
+        EminShift = 0
+        EmaxShift = 0
+        EnergyRangeLateral = 500
+        EnergyRangeAxial = 550
+        ConvergenceValueGF = 1e-3
+        ConvergenceValueCurrent = 1e-3
+        NMaxIterations = 160
+        BiasForInitialElectronicModes = 220.224000
+    }
+
+    Output{
+        EnergyResolvedPlots = no
+        EnergyResolvedGain = no
+    }
+
+    Gain{
+        GainMethod = 1
+        dEPhotSelfConsistent = 5
+        EphotonMinSelfConsistent = 120
+        EphotonMaxSelfConsistent = 120
+        NMaxSelfConsistentIterations = 20
+        ConvergenceFactorGainSelfConsistent = 1e-3
+        Vmin = 220.224000
+        Vmax = 220.224000
+
+        FermiGoldenRule{
+            Linewidth = 10
+        }
+    }
+}

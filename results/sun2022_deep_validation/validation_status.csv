@@ -1,0 +1,9 @@
+item,status,finding
+"temperature","conditional-pass","293-333 K retains MW/cm3-class internal power; 353 K drops to 0.353 MW/cm3"
+"mode_competition","pass","10.78 um strongest; 10.16/10.33 um nearly equal; 9.17 um fails"
+"coherence_1_to_2","fail","2-period state becomes high-current, high-Te, negative-gain; full gain output unavailable"
+"coherence_3","fail","3-period reduced run fails at iteration 0 with NaN/LAPACK error"
+"single_factor_tolerance","conditional-pass","all tested one-factor cases retain gain above 3.19 /cm; not yet a full factorial or correlated-disorder study"
+"fine_gain","pass","2 meV grid finds maximum at 122 meV = 10.16 um"
+"scattering_lifetime","warning","upper-manifold lifetimes remain far shorter than the paper values"
+"density_matrix","warning","off-diagonal coherences reach about 0.008 and cannot be reduced to a simple two-level rate-equation picture"

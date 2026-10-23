@@ -1,0 +1,7 @@
+2-period full-output run:
+  converged electronically but failed while writing the gain/L-I output due memory; core values: J=6337.09 A/cm2, material gain from emitted power=-12.1082 /cm, modal gain=-8.54234 /cm, optical field approximately zero.
+2-period reduced-output retry:
+  failed at NEGF iteration 0 with NaN self-energy and an invalid LAPACK matrix factorization.
+3-period reduced-output run:
+  NEGF iteration 0 failed numerically with NaN self-energy and an invalid LAPACK matrix factorization.
+Conclusion: one-period operation should be treated as an upper-confidence model, not a validated multi-period result.
