@@ -1,6 +1,7 @@
 # Obsidian 个人 UI 状态与缓存不入库
 /.obsidian/*
 !/.obsidian/app.json
+!/.obsidian/templates.json
 
 # 系统杂项
 .DS_Store
@@ -13,6 +14,9 @@ __pycache__/
 /attachments/sun2022-[1-4].png
 /attachments/sun2022_fig1-3.png
 /attachments/sun2022_fig1_zoom.png
+
+# 用户提供的原始终稿；保留在 Obsidian 中但默认不入 Git
+/99-原始资料/High-performance quantum cascade lasers at λ~9um grown by MOCVD.md
 
 # 网盘同步程序的标记文件（属于本机同步配置，不入库）
 .stfolder*

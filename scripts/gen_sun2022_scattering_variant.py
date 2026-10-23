@@ -18,6 +18,7 @@ def main() -> None:
     parser.add_argument("strength", type=float)
     parser.add_argument("output", type=Path)
     parser.add_argument("--self-consistent-boundary", action="store_true")
+    parser.add_argument("--acoustic-phonon", action="store_true")
     parser.add_argument("--ephoton-min", type=float, default=120.0)
     parser.add_argument("--ephoton-max", type=float, default=155.0)
     parser.add_argument("--bias-min", type=float, default=216.384)
@@ -47,6 +48,11 @@ def main() -> None:
         text = text.replace(
             "        GainMethod = 1\n",
             "        GainMethod = 1\n        SelfConsistentBoundary = yes\n",
+        )
+    if args.acoustic_phonon:
+        text = text.replace(
+            "        AcousticPhononScattering = no",
+            "        AcousticPhononScattering = yes",
         )
     text = text.replace(
         "        EphotonMinSelfConsistent = 120\n"

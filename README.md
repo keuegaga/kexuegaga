@@ -1,110 +1,75 @@
 # QCL-nextnano 知识仓库
 
-> 量子级联激光器（Quantum Cascade Laser, QCL）设计与 nextnano 仿真学习笔记。
-> 内容基于 nextnano 官方文档与本地安装（2025_08_21 版）的示例文件整理。
+量子级联激光器设计、nextnano++ / nextnano.NEGF 计算、文献复现与实验决策知识库。
 
-## 这个仓库是什么
+## 从这里开始
 
-一个 **Obsidian 笔记仓库**（vault），用于系统学习：
+在 Obsidian 中打开本目录后，从：
 
-1. QCL 的工作原理与设计物理
-2. nextnano++ / nextnano³ / nextnano.NEGF 的用法
-3. 从文献复现到自主设计完整 QCL 的流程
+- `00-入口/知识库首页.md`
+- `00-入口/当前验证状态与结论.md`
+- `06-验证与决策/Sun2022-NEGF完整验证报告.md`
 
-## 如何使用
+开始阅读。
 
-- 在 Obsidian 中打开文件夹：`D:\Codex-Obsidian\QCL-nextnano`
-- 建议按编号顺序阅读（01 → 12），中途可随时跳到感兴趣的主题
-- 笔记中所有双链（wikilink）均指向仓库内其他笔记
-- 本地 nextnano 示例文件路径在笔记中以 `C:\Program Files\nextnano\2025_08_21\...` 给出
+## 当前结论
 
-## 学习路线（MOC）
+- Sun 2022 有源区的 k·p 9.17 µm 跃迁已复现。
+- 物理归一化 NEGF 的实际宽窗首选分支为 10.8 µm（阈值附近）至 10.33 µm（较高电流）。
+- 强制使用 9.17 µm 光模的模型阈值约 2.05 kA/cm²。
+- 自由运行长波峰阈值约 1.71 kA/cm²；论文阈值为 1.52 kA/cm²。
+- 当前 NEGF 尚不能认证 Sun 结构一定按论文 9 µm 激射，因此尚未修改 v3 层序。
 
-### 第一站：原理
-- [[01-QCL工作原理与物理基础]]
+## 目录
 
-### 第二站：工具
-- [[02-nextnano软件体系与工作流]]
-- [[03-输入文件语法入门]]
+```text
+00-入口/             首页、规范、当前结论
+01-基础理论/         QCL 物理、子带、能带设计
+02-软件与安装/       nextnano 产品、安装、CLI
+03-输入与输出/       语法、材料、NEGF 输入和输出
+04-设计流程/         设计 Checklist、实验流程
+05-案例与文献/       官方例子、Fei/Liu/Sun 文献复现
+06-验证与决策/       校准、鲁棒性、波导、完整报告
+07-故障排查/         FAQ 和错误排查
+08-术语与索引/       文献库、术语、总索引
+09-历史迭代/         8 µm / Fei2021 / Liu2022 历史路线
+_templates/          Obsidian 模板
+attachments/         图片与动画
+designs/             .nnp / .negf 输入
+scripts/             可复现分析脚本
+results/             小型结果、图像和 CSV
+runs/                本地 nextnano 原始输出，不入 Git
+QCL_references/      文献与参考资料
+```
 
-### 第三站：复现官方示例（最有效的入门方式）
-- [[04-示例1-Page2001-9um-GaAs-QCL]]
-- [[05-示例2-Capasso简单级联与THz参数化]]
+## 推荐路线
 
-### 第四站：设计物理与数值
-- [[06-材料体系与能带参数]]
-- [[07-子带间跃迁-矩阵元-增益]]
-- [[08-边界条件-网格-数值技巧]]
+```text
+基础理论
+→ 输入语法
+→ nextnano++ 能带
+→ nextnano.NEGF 输运
+→ 宽窗增益和位置分辨增益
+→ 波导和热学
+→ 鲁棒性与独立验证
+→ 外延定版
+```
 
-### 第五站：动手设计
-- [[09-QCL设计流程Checklist]]
-- [[10-常见问题FAQ]]
+## 本地软件
 
-### 第六站：进阶
-- [[11-文献库]]
-- [[12-进阶-NEGF输运与增益优化]]
+- nextnano++：
+  `C:\Program Files\nextnano\2025_08_21\nextnano++\bin\nextnano++_Intel_64bit.exe`
+- nextnano.NEGF：
+  `C:\Program Files\nextnano\2025_08_21\nextnano.NEGF\bin\nextnano.NEGF_win.exe`
+- NEGF database：
+  `C:\Program Files\nextnano\2025_08_21\nextnano.NEGF\database\Material_Database.negf`
+- NEGF license：
+  `D:\08-Study\Nextnano\License_nnNEGF.lic`
 
-### 实操记录
-- [[13-命令行运行nextnano-与结果验证]]
-- [[04-示例1-Page2001-9um-GaAs-QCL]]（已在本机跑通并验证）
-- [[14-QCL-8um设计-Friedrich-InP平台]]（8 µm 第一版设计）
-- [[15-NEGF首次验证与优化-8um设计]]（NEGF v1 诊断 + v2 校准方案）
-- [[16-NEGF输入文件逐行讲解]]（.negf 输入语法教学）
-- [[17-NEGF输出数据逐步分析]]（输出文件阅读指南）
-- [[18-结果解读与实验指导]]（V2/V3 正增益 + 8 µm 修正 + 器件测试）
-- [[19-阱宽与偏压扫描-8um设计迭代]]（本机跑完两组扫描 + 增益异常核查）
-- [[20-参考文献-Fei2021-8.5um-MOCVD-QCL]]（文献精读 + 下一阶段方案）
-- [[21-QCL能带设计-从入门到精通]]（阱垒啁啾原理 + 全结构设计手段清单）
-- [[22-阶段0-数值修正与增益重估]]（修正 NEGF 数值设置 + 正增益假象的确认）
-- [[23-阶段1-Fei2021能带模型]]（新基线的 kp-8band 建模与波长核对）
-- [[24-阶段2-NEGF验证Fei2021结构]]（首次在自建结构上通过可信性检查）
-- [[25-第1步-降掺杂重跑结果]]（降掺杂结果 + 材料增益/自洽增益的重要更正）
-- [[26-偏压扫描结果-Fei2021结构]]（4 个偏压点的材料增益与波长趋势）
-- [[27-路线B-界面渐变测试]]（渐变建模 + 排除渐变作为波长偏差来源 + 有源区灵敏度）
-- [[28-8微米QCL设计-最终版]]（历史设计记录；后续钳制验证已否定“最终版”结论，见 29）
-- [[29-第1步-腔损耗与钳制验证]]（钳制路径验证 + 设计判定不激射的重要反转）
-- [[30-层序复核-Fei2021]]（字体级逐层复核，确认层序无误）
-- [[31-钳制偏压扫描-Fei2021原结构]]（原结构：任何偏压都不激射）
-- [[32-带钳制偏压扫描结果-设计结构]]（设计结构：四个偏压均不激射 + 官方案例验证工作流）
-- [[33-参数对照实验-掺杂位置与带阶]]（掺杂位置与带阶均排除；诊断状态总表与三个下一步选项）
-- [[34-模型层面排查-相干长度与数值设置]]（相干长度/能量窗/网格三项测试：两项崩溃、一项无影响）
-- [[35-QCL能带设计谱系-从BB到STA-RE]]（21 篇文献的结构家族、机制、性能与代价）
-- [[36-QCL设计法则与全外延结构权衡]]（从主动区到波导、工艺和验证链）
-- [[37-8um-Liu-DAU能带筛选与设计]]（新 DAU 基线与 44 kV/cm/7.98 µm 候选）
-- [[38-8um-Liu-DAU-NEGF验证与负结果]]（FGR 正、自洽负；当前 270 mV 版本未通过激射判据）
-- [[39-8um-NEGF校准-偏压掺杂与CBO]]（文献点、220–260 mV、低掺杂和 CBO 对照）
-- [[40-官方Bai-APL2011-NEGF工作流校准]]（官方已知激射案例成功复现钳制增益 = 腔损耗）
-- [[41-文献复现-Sun2022-9um-MOCVD-DAU]]（9 µm 结构完整层序、k·p 复现与 NEGF 散射校准）
-- [[42-QCL物理约束设计原则与实验鲁棒性]]（参数可信度分级、禁止用非物理调参制造正增益）
-- [[43-Sun2022-9um-v2实验制造基线]]（冻结已验证有源区，补齐外延、工艺与验收条件）
-- [[44-五级验证闸门-Sun2022态映射增益与波导]]（E1–E5 态映射、散射敏感性、腔损耗与热学筛选；当前 V3 闸门未通过）
-- [[45-合金散射独立归一化与NEGF严格复现结论]]（合金势归一化、10.3–10.8 µm 长波分支与阈值电流复核；NEGF 尚不足以认证 Sun 结构）
+## 快速入口
 
-## 一句话设计流程
-
-> 定目标波长 → 选材料体系 → 查/设计周期层序（阱/垒厚度）→ 在 nextnano++ 中建立 1D 结构并加偏置电场 → 解 Schrödinger 方程 → 核对跃迁能量与偶极矩阵元 → 加掺杂做自洽求解 → 用 nextnano.NEGF 算输运与增益 → 迭代优化。
-
-详见 [[09-QCL设计流程Checklist]]。
-
-## 本地 nextnano 安装
-
-- 安装根目录：`C:\Program Files\nextnano\2025_08_21`
-- QCL 示例（nextnano++）：`C:\Program Files\nextnano\2025_08_21\nextnano++\examples\quantum_cascade_lasers`
-- QCL 示例（nextnano³）：`C:\Program Files\nextnano\2025_08_21\nextnano3\examples\quantum_cascade_lasers`
-- NEGF：`C:\Program Files\nextnano\2025_08_21\nextnano.NEGF`
-
-## 官方资料链接
-
-- QCL 教程页：<https://www.nextnano.com/docu/nextnanoplus/latest/examples/qcl_realistic.html>
-- 示例总览：<https://www.nextnano.com/docu/nextnanoplus/latest/examples/index.html>
-- nextnano.NEGF：<https://www.nextnano.com/docu/nextnano.NEGF/>
-
-## 我的 QCL 设计项目（占位）
-
-- [ ] 确定目标波长 / 光子能量
-- [ ] 选择材料体系
-- [ ] 找到/设计参考周期层序
-- [ ] 建立并跑通第一个 nextnano++ 输入文件
-- [ ] 核对跃迁能量与偶极矩阵元
-- [ ] 完成自洽计算与增益估算
-- [ ] （进阶）NEGF 输运与优化
+- `00-入口/知识库首页.md`
+- `03-输入与输出/Sun2022验证输入逐行注释.md`
+- `03-输入与输出/变电压粒子数反转动画.md`
+- `06-验证与决策/Sun2022-NEGF完整验证报告.md`
+- `06-验证与决策/45-合金散射独立归一化与NEGF严格复现结论.md`

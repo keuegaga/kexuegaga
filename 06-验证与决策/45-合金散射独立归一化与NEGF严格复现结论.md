@@ -1,3 +1,18 @@
+---
+title: 合金散射独立归一化与 NEGF 严格复现结论
+type: validation
+product: nextnano.NEGF
+version: 2025.08.21
+status: conflict
+source: designs/sun2022_mocvd_9um_alloy006_independent_dv060_biasscan.negf
+last_verified: 2026-10-23
+tags:
+  - qcl
+  - sun2022
+  - alloy-scattering
+  - negf
+---
+
 # 合金散射独立归一化与 NEGF 严格复现结论
 
 日期：2026-10-23
@@ -166,7 +181,7 @@
 
 若只允许 9.17 µm 模式激射，需要约 2.05 kA/cm²；若让自由运行 FP 激光选择全局最高增益，模型会优先选择约 1.71 kA/cm²、10.78 µm 的长波分支。
 
-![NEGF 严格复现检查](results/qcl_validation/sun2022_negf_validation.png)
+![NEGF 严格复现检查](../results/qcl_validation/sun2022_negf_validation.png)
 
 位置分辨自洽增益进一步说明，10.33 µm 分支不是周期边界伪影：
 
@@ -179,7 +194,14 @@
 
 10.33 µm 与 9.17 µm 均起源于同一有源区/W4 附近，且在每周期重复出现。不同之处是前者的空间平均、峰值和正增益分布均更强，因此“10.33 µm 优先”是自洽谱和位置分辨结果共同给出的，不是某个单点或边界效应。
 
-![位置分辨自洽增益](results/qcl_validation/sun2022_position_resolved_gain.png)
+![位置分辨自洽增益](../results/qcl_validation/sun2022_position_resolved_gain.png)
+
+183 mV 的两个单变量控制实验也与基线逐行相同：
+
+- 打开 `AcousticPhononScattering=yes`：当前版本明确提示 acoustic phonon 尚未实现并自动置零；
+- 打开 `SelfConsistentBoundary=yes`：宽窗自洽谱不变。
+
+因此长波分支不是自洽边界选项造成的，同时也表明当前版本无法评估 acoustic phonon 的影响。
 
 ## 6. 对“Sun 原始有源区”的最终可信度定义
 

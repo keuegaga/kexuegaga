@@ -1,0 +1,196 @@
+# =============================================================================
+# Sun et al., Opt. Express 30, 37272 (2022), DOI 10.1364/OE.469573
+# Reproducible, physically normalized NEGF validation input.
+#
+# Period: 45.08 nm. Design field: 48 kV/cm = 216.384 mV/period.
+# This file scans the range around threshold and below the design bias.
+# The alloy strength is normalized from independent InGaAs/InAlAs dV data.
+# The file is intentionally verbose because it is also the teaching master.
+# =============================================================================
+
+nextnano.NEGF{
+    # Metadata is written to the run output and is useful for audit trails.
+    Header{
+        Author = "ciomp + Codex"
+        Content = "Sun 2022 validation; independent masses/CBO; IFR 0.08 nm/7 nm; physical alloy strength 0.06."
+    }
+
+    # Voltage means potential drop per period, not total device voltage.
+    # 50 periods at 216.384 mV correspond to 10.819 V active-region drop.
+    SweepParameters{
+        SweepType = Voltage
+        Min = 140
+        Max = 220
+        Delta = 20
+    }
+
+    # The binary deformation potentials are reset to avoid inconsistent
+    # database defaults when the ternary parameters are overwritten below.
+    OverwriteMaterialDatabase{
+        Material{ Name = InAs  DeformationPotential = -9.0 }
+        Material{ Name = GaAs  DeformationPotential = -9.0 }
+        Material{ Name = AlAs  DeformationPotential = -9.0 }
+        Material{ Name = "In(x)Ga(1-x)As"  DeformationPotential = 0.0 }
+        Material{ Name = "Al(x)In(1-x)As"  DeformationPotential = 0.0 }
+    }
+
+    # Lattice temperature of the simulation. It is not the hot-electron temperature.
+    Temperature = 300
+
+    # Zincblende InP platform. Strain and polarization are enabled because the
+    # wells/barriers are strain compensated and not lattice matched individually.
+    Crystal{
+        CrystalStructure = Zincblende
+        Orientation{
+            zAxis{ h = 0  k = 0  l = 1 }
+            yAxis{ h = 0  k = 1  l = 0 }
+        }
+        MaterialSubstrate{ Name = InP }
+        Strain = yes
+        Piezoelectricity = yes
+        Pyroelectricity = yes
+    }
+
+    # Independent material calibration:
+    # well m*=0.043 m0; barrier m*=0.089 m0; CBO=0.773 eV.
+    # The value 0.0 for the well CBO is a relative reference, not zero physics.
+    Materials{
+        Material{
+            Name = "In(x)Ga(1-x)As"
+            AlloyComposition = 0.593
+            Alias = well
+            EffectiveMassFromKpParameters = no
+            Overwrite{
+                ConductionBandOffset = 0.0
+                ElectronMass = 0.043
+            }
+        }
+        Material{
+            Name = "Al(x)In(1-x)As"
+            AlloyComposition = 0.638
+            Alias = barrier
+            EffectiveMassFromKpParameters = no
+            Overwrite{
+                ConductionBandOffset = 0.773
+                ElectronMass = 0.089
+            }
+        }
+
+        # Nonparabolicity is retained in the axial and in-plane directions.
+        # Three bands are used because production NEGF is currently available
+        # for the conduction/light-hole/split-off model in this workflow.
+        NonParabolicity = yes
+        InPlaneNonParabolicity = yes
+        NumberOfBands = 3
+        UseConductionBandOffset = yes
+    }
+
+    # Exactly one period, starting from the injector barrier.
+    # B/W layer order is documented in the companion CSV; this comment never
+    # uses font weight to distinguish wells and barriers.
+    Structure{
+        Layer{ Material = barrier  Thickness = 2.80 }
+        Layer{ Material = well     Thickness = 3.00 }
+        Layer{ Material = barrier  Thickness = 1.25 }
+        Layer{ Material = well     Thickness = 6.27 }
+        Layer{ Material = barrier  Thickness = 1.00 }
+        Layer{ Material = well     Thickness = 5.35 }
+        Layer{ Material = barrier  Thickness = 0.88 }
+        Layer{ Material = well     Thickness = 4.85 }
+        Layer{ Material = barrier  Thickness = 1.09 }
+        Layer{ Material = well     Thickness = 4.16 }
+        Layer{ Material = barrier  Thickness = 1.22 }
+        Layer{ Material = well     Thickness = 3.66 }
+        Layer{ Material = barrier  Thickness = 1.42 }
+        Layer{ Material = well     Thickness = 3.15 }
+        Layer{ Material = barrier  Thickness = 1.68 }
+        Layer{ Material = well     Thickness = 3.30 }
+
+        # Si doping spans layers 13-14.
+        # 1.5e17 cm^-3 over 4.57 nm gives 6.855e10 cm^-2 per period.
+        Doping{
+            DopingStart = 35.53
+            DopingEnd = 40.10
+            DopingSpecification = 1
+            DopingDensity = 1.5e17
+        }
+    }
+
+    # Scattering configuration is a model input and must be reported explicitly.
+    # IFR uses one Gaussian interface realization; it is not a fitted parameter.
+    Scattering{
+        MaterialForScatteringParameters = well
+        InterfaceRoughness{
+            AmplitudeInZ = 0.08
+            InterfaceAutoCorrelationType = 1
+            CorrelationLengthInXY = 7.0
+        }
+        # Acoustic scattering is disabled in this baseline. Treat the acoustic
+        # contribution as an uncertainty and test it separately.
+        AcousticPhononScattering = no
+        AcousticPhononScatteringEnergyMax = 3.0
+        ScreeningTemperatureType = 1
+        TemperatureOffsetParameter = 200
+        ImpurityScatteringStrength = 1.0
+        ElectronElectronScattering = yes
+        AlloyScattering = yes
+        # Independent normalization: 0.06 maps to dV~0.59 eV in wells and
+        # dV~0.66 eV in barriers, inside the 0.44-0.70 eV literature band.
+        AlloyScatteringStrength = 0.06
+    }
+
+    # Solve Poisson and NEGF self-consistently.
+    Poisson = yes
+
+    # The lateral discretization defines the in-plane mode set used to construct
+    # the 3D density of states and scattering matrix elements.
+    LateralDiscretization{
+        MaterialForLateralMotion = well
+        Value = 50
+    }
+
+    # CoherenceLengthInPeriods=1 is the periodic QCL baseline.
+    # The axial window must include the upper/lower states and the injector.
+    SimulationParameter{
+        CoherenceLengthInPeriods = 1
+        SpatialGridSpacing = 0.2
+        nLateralPeriodsForBandStructure = 1
+        CoherenceLengthInNm = 20.0
+        EnergyGridSpacing = 5
+        EminShift = 0
+        EmaxShift = 0
+        EnergyRangeLateral = 500
+        EnergyRangeAxial = 550
+        ConvergenceValueGF = 1e-3
+        ConvergenceValueCurrent = 1e-3
+        NMaxIterations = 160
+        # Start the initial modes at the lowest swept bias for stability.
+        BiasForInitialElectronicModes = 140
+    }
+
+    # These outputs are needed for state mapping, population animation,
+    # spatial gain and the detailed report.
+    Output{
+        EnergyResolvedPlots = yes
+        EnergyResolvedGain = yes
+    }
+
+    # GainMethod=1 is the self-consistent linear response.
+    # The companion wide-window run uses 60-180 meV; this inner scan uses
+    # 120-155 meV for comparing the 9 um region efficiently.
+    Gain{
+        GainMethod = 1
+        dEPhotSelfConsistent = 5
+        EphotonMinSelfConsistent = 120
+        EphotonMaxSelfConsistent = 155
+        NMaxSelfConsistentIterations = 20
+        ConvergenceFactorGainSelfConsistent = 1e-3
+        Vmin = 140
+        Vmax = 220
+
+        # FGR is retained as an independent gain method for cross-checking.
+        FermiGoldenRule{
+            Linewidth = 10
+        }
+    }
+}

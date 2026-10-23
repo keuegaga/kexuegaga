@@ -1,0 +1,4 @@
+case,bias_mV,current_kA_cm2,peak_meV,result,note
+baseline,183,2.11751,115,computed,reference self-consistent spectrum
+acoustic_phonon_yes,183,2.11751,115,identical,nextnano reports acoustic scattering not implemented and sets it to zero
+self_consistent_boundary_yes,183,2.11751,115,identical,boundary implementation does not explain long-wavelength peak
